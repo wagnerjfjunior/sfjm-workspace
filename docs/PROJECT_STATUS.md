@@ -2,7 +2,7 @@
 
 ## Status date
 
-2026-07-19
+2026-07-20
 
 ## Canonical product repository
 
@@ -12,9 +12,19 @@ The `main` branch of this repository is the canonical source of product state.
 
 ## Current state
 
-The repository contains an initial HTML prototype of the SFJM Workspace and a minimal README.
+Pull request #1, `docs: add canonical continuity layer`, was merged into `main` on 2026-07-20.
 
-The product direction already established is:
+Merge commit:
+
+`69208a0557c94f307842652629a66e41b6e671f5`
+
+The repository now contains:
+
+- the initial HTML prototype of the SFJM Workspace;
+- the canonical continuity documentation layer;
+- versioned product status, next safe action, product vision, UX decisions, product/protocol boundary and current handoff.
+
+The approved product direction remains:
 
 - dark, futuristic and premium operational interface;
 - continuity state as the primary hierarchy;
@@ -23,30 +33,28 @@ The product direction already established is:
 - canonical sources and timeline in the secondary column;
 - primary navigation beginning with `Continue`.
 
-The current prototype is demonstrative. Claims such as `Continuável`, confidence percentages, synchronization state, preservation percentages and absence of conflicts are not yet backed by operational integrations or canonical state evaluation.
+The current prototype remains demonstrative. Claims such as `Continuável`, confidence percentages, synchronization state, preservation percentages and absence of conflicts are not yet backed by operational integrations or canonical state evaluation.
 
 ## Current delivery boundary
 
-This stage is limited to establishing the canonical continuity layer for the product.
+The initial canonical documentation bootstrap is complete in `main`.
 
-The SFJM Workspace is separate from the SFJM protocol repository `wagnerjfjunior/StopJuniorMode`.
+The SFJM Workspace remains separate from the SFJM protocol repository `wagnerjfjunior/StopJuniorMode`.
 
 Product decisions, interface changes and implementation details in this repository do not modify the SFJM protocol.
 
 ## Current authorized scope
 
-The current authorized change is documentation-only and limited to:
+The current authorized change is a documentation-only post-merge reconciliation limited to:
 
 - `docs/PROJECT_STATUS.md`
 - `docs/NEXT_SAFE_ACTION.md`
-- `docs/PRODUCT_VISION.md`
-- `docs/UX_DECISIONS.md`
-- `docs/SFJM_BOUNDARY.md`
 - `handoffs/CURRENT.md`
 
-## Not authorized in this stage
+## Not authorized in this change
 
-- redesigning or replacing the existing prototype;
+- modifying the HTML prototype;
+- redesigning or replacing the existing product direction;
 - implementing authentication, database, APIs or automatic synchronization;
 - integrating GitHub, Google Drive or Vercel;
 - deploying the product;
@@ -55,4 +63,6 @@ The current authorized change is documentation-only and limited to:
 
 ## Current continuity assessment
 
-The product is not yet operationally continuable from canonical documentation alone until this documentation set is reviewed and merged into `main`.
+The initial continuity layer is now canonical in `main`.
+
+A new conversation can assume the project safely only after it verifies the live repository state, reads the canonical entry documents and identifies the current next safe action without relying on conversation memory.

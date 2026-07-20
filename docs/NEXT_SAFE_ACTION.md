@@ -1,56 +1,58 @@
 # SFJM Workspace — Next Safe Action
 
-## Current pull request state
+## Completed gate
 
-The canonical continuity documentation is contained in pull request #1:
+Pull request #1, `docs: add canonical continuity layer`, was merged into `main` on 2026-07-20.
 
-`docs: add canonical continuity layer`
+Merge commit:
 
-Branch:
+`69208a0557c94f307842652629a66e41b6e671f5`
 
-`docs/canonical-continuity-layer`
+The initial canonical documentation bootstrap is therefore complete.
 
-The Draft pull request already exists. Its creation is a completed gate and must not be repeated.
+## Current change
 
-The user explicitly authorized the minimum governance correction and the transition of pull request #1 to Ready for review.
+The current branch exists only to reconcile the versioned state after that merge.
+
+Authorized files:
+
+- `docs/PROJECT_STATUS.md`
+- `docs/NEXT_SAFE_ACTION.md`
+- `handoffs/CURRENT.md`
 
 ## Single next safe action
 
-After the corrective commit and Ready transition, execute a new independent read-only audit of the exact live head of pull request #1 against the current canonical `main`.
+Complete an independent read-only audit of the exact live head of the post-merge reconciliation pull request against the current canonical `main`.
 
-The audit must confirm that the six documents:
+The audit must confirm that the three documents:
 
-- describe the current repository and pull request state without relying on conversation memory;
+- correctly state that pull request #1 is merged;
+- identify the merge commit accurately;
+- remove obsolete language that treats the PR #1 audit, Ready transition or merge as future work;
 - preserve the approved product direction;
 - keep the SFJM Workspace separate from the SFJM protocol repository;
 - do not authorize implementation, integration, deployment or redesign;
 - do not present demonstrative prototype data as verified operational facts;
 - remain internally and cross-document consistent;
-- identify the exact live base, merge base and branch head being audited;
-- contain exactly the authorized six-file scope;
-- correctly recognize that pull request #1 already exists and is Ready for review.
+- contain exactly the authorized three-file scope.
 
 ## Completion condition
 
-This action is complete only when an independent read-only audit of the exact live corrective head returns no blocking finding.
+This reconciliation gate is complete only when:
 
-A successful audit completes only this gate. It does not authorize merge.
+1. an independent read-only audit of the exact live head returns no blocking finding;
+2. the user separately authorizes transition from Draft to Ready;
+3. the user separately authorizes merge after a fresh state verification.
 
-## Independent remaining gate
+Ready status does not authorize merge.
 
-Merge is a separate action and requires:
+## Product action after successful reconciliation merge
 
-1. fresh state verification;
-2. a successful independent audit of the exact live head;
-3. explicit user authorization to merge.
+After this reconciliation is merged into `main`, the next product action may be planned from the new canonical state.
 
-Authorization to correct the documents or mark the pull request Ready does not authorize merge.
+The currently approved visual priority is to improve the density of the existing HTML prototype for common notebook screens at 100% zoom while preserving legibility and the approved hierarchy.
 
-## Action after successful merge
-
-Only after this documentation layer is merged into `main` may the next product action be reassessed from the new canonical state.
-
-The currently known visual priority is to improve layout density for normal notebook screens at 100% zoom while preserving legibility and the approved hierarchy. This is a future implementation candidate, not authorization to modify the prototype now.
+This statement records the known priority. It does not authorize modification of the prototype in the current documentation-only change.
 
 ## Expiration conditions
 
@@ -59,7 +61,7 @@ This next safe action expires if:
 - the live branch head changes for any reason;
 - the base branch or base SHA changes;
 - the merge base changes;
-- the authorized six-file scope changes;
-- the pull request state changes after it is verified;
+- the authorized three-file scope changes;
+- the pull request state changes after verification;
 - the user changes the authorization;
 - evidence shows that any statement in these documents is inconsistent with the repository.
