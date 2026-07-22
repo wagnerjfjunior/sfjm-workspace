@@ -10,55 +10,104 @@ The `main` branch is the canonical product state.
 
 This handoff is a versioned transition snapshot. It does not override live GitHub state.
 
-## Completed canonical gate
+## Completed gates
 
-Pull request #1:
+Pull request #2:
 
-`docs: add canonical continuity layer`
+`docs: reconcile canonical state after PR 1 merge`
 
 State:
 
 - merged;
 - merged on 2026-07-20;
-- merge commit: `69208a0557c94f307842652629a66e41b6e671f5`.
+- merge commit: `fbfa46ffd02b3f5309d79ccb3c8388786cd0035c`.
 
-The initial canonical continuity documentation layer is therefore present in `main`.
+Pull request #3:
+
+`style: improve workspace density for notebook screens`
+
+State:
+
+- merged;
+- merged on 2026-07-21;
+- merge commit: `cc59211668557a2322637267382eb0177334ac09`.
+
+The canonical reconciliation and notebook-density refinement are therefore present in `main`.
 
 ## Current reconciliation branch
 
 Branch:
 
-`agent/reconcile-post-merge-state`
+`agent/reconcile-nextjs-bootstrap-state`
 
 Purpose:
 
-Reconcile the canonical documentation after the merge of pull request #1.
+Reconcile the canonical documentation after pull requests #2 and #3 and authorize the next frontend implementation phase.
 
-The exact live head SHA, base SHA, merge base, ahead/behind relationship and pull request number must be resolved live from GitHub by the independent audit. A versioned file cannot truthfully pin the SHA of the commit that contains itself.
+The exact live head SHA, base SHA, merge base, ahead/behind relationship and pull request number must be resolved live by the independent audit. A versioned file cannot truthfully pin the SHA of the commit that contains itself.
 
 ## Confirmed product state
 
-- The repository contains an initial HTML prototype.
-- The approved product direction is dark, futuristic, premium and operational.
+- The repository contains the approved HTML prototype.
+- The prototype has completed the approved notebook-density refinement.
+- The approved product direction remains dark, futuristic, premium and operational.
 - The Home hierarchy prioritizes continuity state and the safe next action.
 - Preserved contexts remain above journey view.
 - Canonical sources and timeline remain in the secondary column.
 - Primary navigation begins with `Continue`.
 - The prototype remains demonstrative and does not prove real continuity, synchronization, confidence or preservation state.
+- The HTML prototype is the approved visual reference, not the permanent application architecture.
 - The SFJM Workspace remains a product separate from the SFJM protocol repository.
-- The current authorized work remains documentation-only.
 
-## Authorized changed files
+## Approved next stack
 
-- `docs/PROJECT_STATUS.md`
-- `docs/NEXT_SAFE_ACTION.md`
-- `handoffs/CURRENT.md`
+- Next.js;
+- React;
+- TypeScript;
+- App Router;
+- structured application CSS;
+- ESLint.
+
+## Current authorized work
+
+The current reconciliation is documentation-only and limited to:
+
+- `docs/PROJECT_STATUS.md`;
+- `docs/NEXT_SAFE_ACTION.md`;
+- `handoffs/CURRENT.md`.
 
 No other file is authorized in this reconciliation.
 
+After this reconciliation is audited and merged through separate gates, the next implementation branch may:
+
+- bootstrap the real frontend application;
+- migrate only the approved Home from `index.html` into typed React components;
+- preserve the approved appearance, hierarchy and responsive behavior;
+- isolate demonstrative data from presentation components;
+- remain frontend-only.
+
+## Blocked actions
+
+The current reconciliation does not authorize implementation.
+
+The subsequent Home migration does not authorize:
+
+- backend;
+- authentication;
+- database or Supabase;
+- APIs or automatic synchronization;
+- GitHub, Google Drive, Vercel or Greenn Sales integration;
+- deployment or Vercel configuration changes;
+- redesign of the approved Home;
+- migration of additional pages;
+- production operational claims;
+- modification of `wagnerjfjunior/StopJuniorMode`.
+
+These are authorization boundaries, not limitations of repository access.
+
 ## Single next safe action
 
-Execute an independent read-only audit of the exact live head of the post-merge reconciliation pull request against the current canonical `main`.
+Execute an independent read-only audit of the exact live head of the current three-document reconciliation pull request against the current canonical `main`.
 
 The audit must verify:
 
@@ -66,17 +115,16 @@ The audit must verify:
 - pull request state;
 - base branch and live base SHA;
 - head branch and exact live head SHA;
-- merge base;
-- ahead/behind relationship;
+- merge base and ahead/behind relationship;
 - exact three-file scope;
-- accurate representation of pull request #1 as merged;
-- accurate merge commit reference;
-- removal of obsolete pre-merge gates;
-- cross-document consistency;
+- accurate representation of pull requests #2 and #3 as merged;
+- accurate merge commit references;
+- removal of obsolete reconciliation and prototype-modification gates;
+- explicit but bounded authorization of the Next.js, React and TypeScript Home migration;
 - preservation of approved UX decisions;
 - separation between Workspace product and SFJM protocol;
 - absence of unsupported operational claims;
-- absence of implementation or deployment authorization.
+- absence of backend, integration or deployment authorization.
 
 ## Independent remaining gates
 
@@ -88,21 +136,6 @@ This reconciliation requires:
 4. explicit user authorization to merge.
 
 Ready status does not authorize merge.
-
-## Blocked actions
-
-Until this reconciliation is audited and separately authorized through its remaining gates:
-
-- do not modify the prototype;
-- do not redesign the product;
-- do not add integrations, authentication, APIs or database work;
-- do not deploy;
-- do not alter Vercel or Google Drive;
-- do not modify `wagnerjfjunior/StopJuniorMode`;
-- do not mark demonstrative indicators as verified facts;
-- do not merge the reconciliation pull request.
-
-These are authorization gates, not limitations of repository access.
 
 ## Handoff expiration
 
