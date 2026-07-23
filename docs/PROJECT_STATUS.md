@@ -2,7 +2,7 @@
 
 ## Status date
 
-2026-07-22
+2026-07-23
 
 ## Canonical product repository
 
@@ -12,85 +12,55 @@ The `main` branch of this repository is the canonical source of product state.
 
 ## Current canonical state
 
-Pull request #2, `docs: reconcile canonical state after PR 1 merge`, was merged into `main` on 2026-07-20.
+Pull request #5, `feat: bootstrap Next.js and migrate approved Home`, was merged into `main` on 2026-07-23.
 
 Merge commit:
 
-`fbfa46ffd02b3f5309d79ccb3c8388786cd0035c`
+`b12d644a16a542ad87020b576a98ebe89fbbc52b`
 
-Pull request #3, `style: improve workspace density for notebook screens`, was merged into `main` on 2026-07-21.
-
-Merge commit:
-
-`cc59211668557a2322637267382eb0177334ac09`
-
-There are no open pull requests at the time this state was reconciled.
+The approved Home is now implemented as a typed Next.js frontend using React, TypeScript and App Router.
 
 The repository now contains:
 
-- the approved HTML prototype of the SFJM Workspace;
-- the canonical continuity documentation layer;
-- the completed notebook-density refinement;
-- versioned product status, next safe action, product vision, UX decisions, product/protocol boundary and current handoff.
+- the preserved `index.html` visual reference;
+- a real Next.js application bootstrap;
+- the approved Home migrated into typed React components;
+- demonstrative data isolated in `data/workspace-demo.ts`;
+- structured application CSS and ESLint configuration;
+- the canonical continuity documentation layer.
 
-## Approved product direction
+## Confirmed implementation boundary
+
+The merged implementation remains frontend-only.
+
+It does not include:
+
+- backend behavior;
+- authentication;
+- database or Supabase;
+- production APIs;
+- automatic synchronization;
+- real GitHub, Google Drive, Vercel or Greenn Sales integrations;
+- deployment configuration;
+- additional application pages;
+- modification of `wagnerjfjunior/StopJuniorMode`.
+
+All continuity indicators, percentages, synchronization states and preserved-context claims remain demonstrative until backed by real integrations and canonical evaluation logic.
+
+## Approved product direction preserved
 
 - dark, futuristic and premium operational interface;
 - continuity state as the primary hierarchy;
 - safe next action as the primary operational control;
 - preserved contexts above journey view;
 - canonical sources and timeline in the secondary column;
-- primary navigation beginning with `Continue`.
-
-The HTML prototype remains demonstrative. Claims such as `Continuável`, confidence percentages, synchronization state, preservation percentages and absence of conflicts are not yet backed by operational integrations or canonical state evaluation.
-
-The prototype is now the approved visual reference for the next implementation phase. It is not the permanent application architecture.
-
-## Approved implementation stack
-
-The next application phase is authorized to use:
-
-- Next.js;
-- React;
-- TypeScript;
-- App Router;
-- structured application CSS;
-- ESLint.
-
-## Current delivery boundary
-
-The next product phase is limited to bootstrapping the real application and migrating only the approved Home interface from the monolithic HTML prototype into typed React components.
-
-The migration must:
-
-- preserve the approved appearance and information hierarchy;
-- preserve existing demonstrative content and behavior;
-- isolate demonstrative data from the presentation layer;
-- establish typed components and a maintainable application structure;
-- remain frontend-only.
-
-## Not authorized in this phase
-
-- backend implementation;
-- authentication;
-- database or Supabase;
-- production APIs;
-- automatic synchronization;
-- GitHub, Google Drive, Vercel or Greenn Sales integration;
-- deployment or Vercel configuration changes;
-- redesign of the approved Home;
-- expansion to production architecture beyond the authorized frontend bootstrap;
-- modification of `wagnerjfjunior/StopJuniorMode`;
-- presentation of demonstrative indicators as verified operational facts.
-
-## Product and protocol boundary
-
-The SFJM Workspace remains separate from the SFJM protocol repository `wagnerjfjunior/StopJuniorMode`.
-
-Product decisions, interface changes and implementation details in this repository do not modify the SFJM protocol.
+- primary navigation beginning with `Continue`;
+- responsive notebook and mobile behavior.
 
 ## Current continuity assessment
 
-The previous reconciliation and visual-density gates are complete in `main`.
+The frontend bootstrap and approved Home migration are complete in `main`.
 
-A new conversation can assume the project safely only after it verifies the live repository state, reads the canonical entry documents and follows the versioned next safe action without relying on conversation memory.
+The documentation must now be reconciled to this merged state before any new implementation direction is authorized.
+
+A new conversation must verify the live repository state, read the canonical entry documents and follow the versioned next safe action without relying on conversation memory.
