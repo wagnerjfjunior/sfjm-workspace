@@ -12,61 +12,67 @@ This handoff is a versioned transition snapshot. It does not override live GitHu
 
 ## Completed gates
 
-Pull request #2:
+Pull request #4:
 
-`docs: reconcile canonical state after PR 1 merge`
-
-State:
-
-- merged;
-- merged on 2026-07-20;
-- merge commit: `fbfa46ffd02b3f5309d79ccb3c8388786cd0035c`.
-
-Pull request #3:
-
-`style: improve workspace density for notebook screens`
+`docs: authorize Next.js Home migration from canonical state`
 
 State:
 
 - merged;
-- merged on 2026-07-21;
-- merge commit: `cc59211668557a2322637267382eb0177334ac09`.
+- merged on 2026-07-23;
+- merge commit: `eb03e80e70c9aa55d590b5404849b6595f961107`.
 
-The canonical reconciliation and notebook-density refinement are therefore present in `main`.
+Pull request #5:
+
+`feat: bootstrap Next.js and migrate approved Home`
+
+State:
+
+- merged;
+- merged on 2026-07-23 using squash;
+- audited head: `6725348a856ef4b5e1aad841e920c4c2449a1482`;
+- merge commit: `b12d644a16a542ad87020b576a98ebe89fbbc52b`.
+
+Pull request #8:
+
+`docs: add canonical reconciliation guardrails`
+
+State:
+
+- merged;
+- merged on 2026-07-23 using squash;
+- audited head: `51adbeccdaca4da8ca29517969e1a427f43f7f42`;
+- merge commit: `38c8cd5858b8f8dab33c5ce38fcdd8b943cc88c8`.
+
+The authorized frontend bootstrap, approved Home migration and reconciliation guardrails are present in canonical `main`.
 
 ## Current reconciliation branch
 
 Branch:
 
-`agent/reconcile-nextjs-bootstrap-state`
+`agent/reconcile-post-pr8-state`
 
 Purpose:
 
-Reconcile the canonical documentation after pull requests #2 and #3 and authorize the next frontend implementation phase.
+Reconcile the canonical continuity documents after PR #8 and remove obsolete instructions that still describe the frontend bootstrap or guardrail merge as pending work.
 
 The exact live head SHA, base SHA, merge base, ahead/behind relationship and pull request number must be resolved live by the independent audit. A versioned file cannot truthfully pin the SHA of the commit that contains itself.
 
 ## Confirmed product state
 
-- The repository contains the approved HTML prototype.
-- The prototype has completed the approved notebook-density refinement.
-- The approved product direction remains dark, futuristic, premium and operational.
-- The Home hierarchy prioritizes continuity state and the safe next action.
-- Preserved contexts remain above journey view.
-- Canonical sources and timeline remain in the secondary column.
+- The approved `index.html` remains preserved as the visual reference.
+- The repository contains a real Next.js frontend application.
+- React, TypeScript, App Router, structured CSS and ESLint are configured.
+- The approved Home is migrated into typed React components.
+- Demonstrative data is isolated in `data/workspace-demo.ts`.
+- Mobile navigation and the demonstrative action modal are preserved.
+- The Home hierarchy still prioritizes Estado de Continuidade and Próxima Ação Segura.
+- Contextos Preservados remains above Visão da Jornada.
+- Fontes Canônicas and Linha do Tempo remain in the secondary column.
 - Primary navigation begins with `Continue`.
-- The prototype remains demonstrative and does not prove real continuity, synchronization, confidence or preservation state.
-- The HTML prototype is the approved visual reference, not the permanent application architecture.
-- The SFJM Workspace remains a product separate from the SFJM protocol repository.
-
-## Approved next stack
-
-- Next.js;
-- React;
-- TypeScript;
-- App Router;
-- structured application CSS;
-- ESLint.
+- The interface remains demonstrative and does not prove real continuity, synchronization, confidence or preservation state.
+- Canonical reconciliation guardrails are versioned in the product repository.
+- The SFJM Workspace remains separate from the SFJM protocol repository.
 
 ## Current authorized work
 
@@ -78,28 +84,30 @@ The current reconciliation is documentation-only and limited to:
 
 No other file is authorized in this reconciliation.
 
-After this reconciliation is audited and merged through separate gates, the next implementation branch may:
+No subsequent implementation phase is authorized by this handoff.
 
-- bootstrap the real frontend application;
-- migrate only the approved Home from `index.html` into typed React components;
-- preserve the approved appearance, hierarchy and responsive behavior;
-- isolate demonstrative data from presentation components;
-- remain frontend-only.
+## Non-blocking backlog candidates
+
+The PR #5 audit recorded two optional improvements:
+
+- reduce the Client Component boundary;
+- pin dependency versions and add a versioned lockfile.
+
+They remain future improvements and are not automatic gates or authorization.
 
 ## Blocked actions
 
-The current reconciliation does not authorize implementation.
+The current reconciliation does not authorize:
 
-The subsequent Home migration does not authorize:
-
+- application source changes;
 - backend;
 - authentication;
 - database or Supabase;
 - APIs or automatic synchronization;
-- GitHub, Google Drive, Vercel or Greenn Sales integration;
+- real GitHub, Google Drive, Vercel or Greenn Sales integration;
 - deployment or Vercel configuration changes;
-- redesign of the approved Home;
 - migration of additional pages;
+- redesign of the approved Home;
 - production operational claims;
 - modification of `wagnerjfjunior/StopJuniorMode`.
 
@@ -107,7 +115,7 @@ These are authorization boundaries, not limitations of repository access.
 
 ## Single next safe action
 
-Execute an independent read-only audit of the exact live head of the current three-document reconciliation pull request against the current canonical `main`.
+Execute an independent read-only audit of the exact live head of the current three-document reconciliation pull request against current canonical `main`.
 
 The audit must verify:
 
@@ -117,14 +125,15 @@ The audit must verify:
 - head branch and exact live head SHA;
 - merge base and ahead/behind relationship;
 - exact three-file scope;
-- accurate representation of pull requests #2 and #3 as merged;
-- accurate merge commit references;
-- removal of obsolete reconciliation and prototype-modification gates;
-- explicit but bounded authorization of the Next.js, React and TypeScript Home migration;
+- accurate representation of PRs #4, #5 and #8 as merged;
+- accurate audited-head and merge-commit references;
+- accurate recording of the completed frontend bootstrap;
+- accurate recording of the merged reconciliation guardrails;
+- removal of obsolete pending-work instructions;
 - preservation of approved UX decisions;
 - separation between Workspace product and SFJM protocol;
 - absence of unsupported operational claims;
-- absence of backend, integration or deployment authorization.
+- absence of new implementation, backend, integration or deployment authorization.
 
 ## Independent remaining gates
 
