@@ -2,7 +2,7 @@
 
 ## Status date
 
-2026-07-22
+2026-07-23
 
 ## Canonical product repository
 
@@ -12,76 +12,91 @@ The `main` branch of this repository is the canonical source of product state.
 
 ## Current canonical state
 
-Pull request #2, `docs: reconcile canonical state after PR 1 merge`, was merged into `main` on 2026-07-20.
+Pull request #4, `docs: authorize Next.js Home migration from canonical state`, was merged into `main` on 2026-07-23.
 
 Merge commit:
 
-`fbfa46ffd02b3f5309d79ccb3c8388786cd0035c`
+`eb03e80e70c9aa55d590b5404849b6595f961107`
 
-Pull request #3, `style: improve workspace density for notebook screens`, was merged into `main` on 2026-07-21.
+Pull request #5, `feat: bootstrap Next.js and migrate approved Home`, was merged into `main` on 2026-07-23 using squash.
 
 Merge commit:
 
-`cc59211668557a2322637267382eb0177334ac09`
+`b12d644a16a542ad87020b576a98ebe89fbbc52b`
 
-There are no open pull requests at the time this state was reconciled.
+The authorized frontend bootstrap and approved Home migration are therefore complete in canonical `main`.
+
+## Implemented product state
 
 The repository now contains:
 
-- the approved HTML prototype of the SFJM Workspace;
-- the canonical continuity documentation layer;
-- the completed notebook-density refinement;
-- versioned product status, next safe action, product vision, UX decisions, product/protocol boundary and current handoff.
+- the preserved `index.html` visual reference;
+- a real Next.js frontend application;
+- React and TypeScript configuration;
+- App Router root layout and Home route;
+- structured application CSS;
+- ESLint flat configuration;
+- the approved Home migrated into typed React components;
+- demonstrative data isolated in `data/workspace-demo.ts`;
+- preserved mobile navigation and demonstrative action modal;
+- an explicit notice that displayed state is demonstrative.
 
-## Approved product direction
+The Vercel check attached to the exact audited PR #5 head completed successfully before merge.
+
+## Preserved product direction
 
 - dark, futuristic and premium operational interface;
 - continuity state as the primary hierarchy;
 - safe next action as the primary operational control;
 - preserved contexts above journey view;
 - canonical sources and timeline in the secondary column;
-- primary navigation beginning with `Continue`.
+- primary navigation beginning with `Continue`;
+- compact notebook density and responsive mobile behavior.
 
-The HTML prototype remains demonstrative. Claims such as `Continuável`, confidence percentages, synchronization state, preservation percentages and absence of conflicts are not yet backed by operational integrations or canonical state evaluation.
+## Demonstrative-state boundary
 
-The prototype is now the approved visual reference for the next implementation phase. It is not the permanent application architecture.
+The current interface remains demonstrative.
 
-## Approved implementation stack
+Claims such as `Continuável`, confidence percentages, synchronization state, preservation percentages, source health and absence of conflicts are not verified operational facts.
 
-The next application phase is authorized to use:
-
-- Next.js;
-- React;
-- TypeScript;
-- App Router;
-- structured application CSS;
-- ESLint.
+No backend, canonical-state evaluator or real integration currently supports those indicators.
 
 ## Current delivery boundary
 
-The next product phase is limited to bootstrapping the real application and migrating only the approved Home interface from the monolithic HTML prototype into typed React components.
+The frontend bootstrap authorized by PR #4 is complete.
 
-The migration must:
+This documentation reconciliation is limited to:
 
-- preserve the approved appearance and information hierarchy;
-- preserve existing demonstrative content and behavior;
-- isolate demonstrative data from the presentation layer;
-- establish typed components and a maintainable application structure;
-- remain frontend-only.
+- `docs/PROJECT_STATUS.md`;
+- `docs/NEXT_SAFE_ACTION.md`;
+- `handoffs/CURRENT.md`.
 
-## Not authorized in this phase
+No application source file is authorized in this reconciliation.
+
+No further implementation phase is authorized until a later scope is defined from canonical evidence and explicitly approved by the user.
+
+## Non-blocking future improvements
+
+The independent audit of PR #5 recorded two optional improvements:
+
+- reduce the Client Component boundary so only interactive controls require hydration;
+- replace floating `latest` dependencies with pinned versions and a versioned lockfile.
+
+These items are backlog candidates. They were not blocking for PR #5 and do not automatically authorize a new implementation branch.
+
+## Not authorized
 
 - backend implementation;
 - authentication;
 - database or Supabase;
 - production APIs;
 - automatic synchronization;
-- GitHub, Google Drive, Vercel or Greenn Sales integration;
+- real GitHub, Google Drive, Vercel or Greenn Sales integration;
 - deployment or Vercel configuration changes;
+- migration of additional pages;
 - redesign of the approved Home;
-- expansion to production architecture beyond the authorized frontend bootstrap;
-- modification of `wagnerjfjunior/StopJuniorMode`;
-- presentation of demonstrative indicators as verified operational facts.
+- presentation of demonstrative indicators as verified facts;
+- modification of `wagnerjfjunior/StopJuniorMode`.
 
 ## Product and protocol boundary
 
@@ -91,6 +106,6 @@ Product decisions, interface changes and implementation details in this reposito
 
 ## Current continuity assessment
 
-The previous reconciliation and visual-density gates are complete in `main`.
+Canonical `main` contains the completed frontend bootstrap and approved Home migration.
 
-A new conversation can assume the project safely only after it verifies the live repository state, reads the canonical entry documents and follows the versioned next safe action without relying on conversation memory.
+A new conversation can assume the project safely only after it verifies live GitHub state, reads the canonical entry documents and follows the versioned next safe action without relying on conversation memory.
