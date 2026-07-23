@@ -10,94 +10,61 @@ The `main` branch is the canonical product state.
 
 This handoff is a versioned transition snapshot. It does not override live GitHub state.
 
-## Completed gates
+## Completed gate
 
-Pull request #2:
+Pull request #5:
 
-`docs: reconcile canonical state after PR 1 merge`
-
-State:
-
-- merged;
-- merged on 2026-07-20;
-- merge commit: `fbfa46ffd02b3f5309d79ccb3c8388786cd0035c`.
-
-Pull request #3:
-
-`style: improve workspace density for notebook screens`
+`feat: bootstrap Next.js and migrate approved Home`
 
 State:
 
 - merged;
-- merged on 2026-07-21;
-- merge commit: `cc59211668557a2322637267382eb0177334ac09`.
+- merged on 2026-07-23;
+- merge commit: `b12d644a16a542ad87020b576a98ebe89fbbc52b`.
 
-The canonical reconciliation and notebook-density refinement are therefore present in `main`.
+The real frontend bootstrap and approved Home migration are therefore present in `main`.
+
+## Confirmed product state
+
+- The repository contains a Next.js application using React, TypeScript and App Router.
+- The approved Home was migrated into typed React components.
+- Demonstrative data is isolated in `data/workspace-demo.ts`.
+- The original `index.html` remains preserved as the approved visual reference.
+- The approved hierarchy, notebook density and mobile behavior remain the intended product direction.
+- The application is frontend-only.
+- Continuity, synchronization, confidence and preservation indicators remain demonstrative.
+- The SFJM Workspace remains separate from the SFJM protocol repository `wagnerjfjunior/StopJuniorMode`.
 
 ## Current reconciliation branch
 
 Branch:
 
-`agent/reconcile-nextjs-bootstrap-state`
+`agent/reconcile-canonical-after-pr5`
 
 Purpose:
 
-Reconcile the canonical documentation after pull requests #2 and #3 and authorize the next frontend implementation phase.
+Reconcile the canonical documentation after the merge of pull request #5.
 
-The exact live head SHA, base SHA, merge base, ahead/behind relationship and pull request number must be resolved live by the independent audit. A versioned file cannot truthfully pin the SHA of the commit that contains itself.
-
-## Confirmed product state
-
-- The repository contains the approved HTML prototype.
-- The prototype has completed the approved notebook-density refinement.
-- The approved product direction remains dark, futuristic, premium and operational.
-- The Home hierarchy prioritizes continuity state and the safe next action.
-- Preserved contexts remain above journey view.
-- Canonical sources and timeline remain in the secondary column.
-- Primary navigation begins with `Continue`.
-- The prototype remains demonstrative and does not prove real continuity, synchronization, confidence or preservation state.
-- The HTML prototype is the approved visual reference, not the permanent application architecture.
-- The SFJM Workspace remains a product separate from the SFJM protocol repository.
-
-## Approved next stack
-
-- Next.js;
-- React;
-- TypeScript;
-- App Router;
-- structured application CSS;
-- ESLint.
-
-## Current authorized work
-
-The current reconciliation is documentation-only and limited to:
+Authorized scope:
 
 - `docs/PROJECT_STATUS.md`;
 - `docs/NEXT_SAFE_ACTION.md`;
 - `handoffs/CURRENT.md`.
 
-No other file is authorized in this reconciliation.
+No application source file is authorized in this reconciliation.
 
-After this reconciliation is audited and merged through separate gates, the next implementation branch may:
+The exact live head SHA, base SHA, merge base, ahead/behind relationship and pull request number must be resolved live during independent audit.
 
-- bootstrap the real frontend application;
-- migrate only the approved Home from `index.html` into typed React components;
-- preserve the approved appearance, hierarchy and responsive behavior;
-- isolate demonstrative data from presentation components;
-- remain frontend-only.
+## Current boundaries
 
-## Blocked actions
-
-The current reconciliation does not authorize implementation.
-
-The subsequent Home migration does not authorize:
+This reconciliation does not authorize:
 
 - backend;
 - authentication;
 - database or Supabase;
-- APIs or automatic synchronization;
-- GitHub, Google Drive, Vercel or Greenn Sales integration;
-- deployment or Vercel configuration changes;
+- production APIs or automatic synchronization;
+- real GitHub, Google Drive, Vercel or Greenn Sales integration;
+- deployment configuration changes;
 - redesign of the approved Home;
 - migration of additional pages;
 - production operational claims;
@@ -107,30 +74,17 @@ These are authorization boundaries, not limitations of repository access.
 
 ## Single next safe action
 
-Execute an independent read-only audit of the exact live head of the current three-document reconciliation pull request against the current canonical `main`.
+After this reconciliation is audited and merged through separate gates, perform a dedicated read-only validation of the frontend now present in canonical `main`.
 
-The audit must verify:
+The validation must use current repository and deployment evidence to confirm the merged application structure, visual preservation, demonstrative-data boundary, available build and lint evidence, and any concrete defect or gap.
 
-- repository and pull request identity;
-- pull request state;
-- base branch and live base SHA;
-- head branch and exact live head SHA;
-- merge base and ahead/behind relationship;
-- exact three-file scope;
-- accurate representation of pull requests #2 and #3 as merged;
-- accurate merge commit references;
-- removal of obsolete reconciliation and prototype-modification gates;
-- explicit but bounded authorization of the Next.js, React and TypeScript Home migration;
-- preservation of approved UX decisions;
-- separation between Workspace product and SFJM protocol;
-- absence of unsupported operational claims;
-- absence of backend, integration or deployment authorization.
+It must then identify one smallest bounded next implementation slice. It must not authorize multiple tracks or broaden the product by assumption.
 
 ## Independent remaining gates
 
 This reconciliation requires:
 
-1. a successful independent audit of the exact live head;
+1. an independent read-only audit of the exact live head;
 2. explicit user authorization to transition the pull request from Draft to Ready;
 3. fresh state verification;
 4. explicit user authorization to merge.
@@ -146,12 +100,12 @@ This handoff becomes invalid immediately if any of the following changes after a
 - base branch;
 - base SHA;
 - head branch;
-- head SHA, for any reason;
+- head SHA;
 - merge base;
 - ahead/behind relationship;
 - authorized three-file scope;
 - user authorization;
-- audit evidence or repository evidence relevant to the documented state.
+- relevant audit or repository evidence.
 
 Any new commit invalidates a previously audited snapshot.
 
