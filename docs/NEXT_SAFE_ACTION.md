@@ -1,100 +1,73 @@
 # SFJM Workspace — Next Safe Action
 
-## Completed gates
+## Completed gate
 
-Pull request #2, `docs: reconcile canonical state after PR 1 merge`, was merged into `main` on 2026-07-20.
-
-Merge commit:
-
-`fbfa46ffd02b3f5309d79ccb3c8388786cd0035c`
-
-Pull request #3, `style: improve workspace density for notebook screens`, was merged into `main` on 2026-07-21.
+Pull request #5, `feat: bootstrap Next.js and migrate approved Home`, was merged into `main` on 2026-07-23.
 
 Merge commit:
 
-`cc59211668557a2322637267382eb0177334ac09`
+`b12d644a16a542ad87020b576a98ebe89fbbc52b`
 
-The canonical documentation reconciliation and notebook-density refinement are complete.
+The Next.js bootstrap and approved Home migration are complete.
 
-## Current reconciliation change
+## Current reconciliation scope
 
-The current branch exists only to reconcile the versioned state after those completed merges and to authorize the next frontend implementation phase.
+The current branch exists only to reconcile the canonical documentation with the state now present in `main`.
 
-Authorized files in this reconciliation:
+Authorized files:
 
 - `docs/PROJECT_STATUS.md`;
 - `docs/NEXT_SAFE_ACTION.md`;
 - `handoffs/CURRENT.md`.
 
-No application source file is authorized in this documentation-only reconciliation.
+No application source file is authorized in this reconciliation.
 
 ## Single next safe action after this reconciliation is merged
 
-Create a dedicated implementation branch from the reconciled `main` and bootstrap the SFJM Workspace as a real frontend application using:
+Perform a dedicated read-only validation of the merged frontend in canonical `main` and determine the smallest next implementation slice supported by repository evidence.
 
-- Next.js;
-- React;
-- TypeScript;
-- App Router;
-- structured application CSS;
-- ESLint.
+The validation must confirm:
 
-The implementation must migrate only the approved Home from the existing monolithic `index.html` into typed React components.
+- the application structure created by PR #5;
+- preservation of the approved Home hierarchy and responsive behavior;
+- explicit separation of demonstrative data from presentation components;
+- absence of backend, authentication, database, production API and real integration behavior;
+- the current build, lint and deployment-check evidence available in GitHub or Vercel;
+- any concrete defect or gap that must be resolved before authorizing further product expansion.
 
-It must:
-
-- preserve the approved visual direction and hierarchy;
-- preserve the sidebar beginning with `Continue`;
-- keep Estado de Continuidade and Próxima Ação Segura as the primary hierarchy;
-- keep Contextos Preservados above Visão da Jornada;
-- keep Fontes Canônicas and Linha do Tempo in the secondary column;
-- preserve responsive notebook and mobile behavior;
-- keep all current data explicitly demonstrative;
-- isolate demonstrative data from components;
-- avoid redesign or new product requirements.
+The result must identify one bounded next action. It must not create a broad roadmap or authorize multiple implementation tracks.
 
 ## Explicitly blocked actions
 
-The next implementation phase does not authorize:
+Until the validation above is completed and a new bounded action is versioned, do not authorize:
 
 - backend implementation;
 - authentication;
 - database or Supabase;
-- APIs or automatic synchronization;
+- production APIs or automatic synchronization;
 - GitHub, Google Drive, Vercel or Greenn Sales integration;
-- deployment or Vercel configuration changes;
+- deployment configuration changes;
+- migration of additional pages;
+- redesign of the approved Home;
 - production operational claims;
-- migration of additional pages beyond the Home;
 - modification of `wagnerjfjunior/StopJuniorMode`.
 
 ## Required delivery flow
 
-The frontend bootstrap must follow this sequence:
-
-1. verify the live reconciled `main`;
-2. create a dedicated branch;
-3. limit the diff to the authorized frontend bootstrap and Home migration;
-4. validate locally;
-5. open a Draft pull request;
-6. obtain an independent audit of the exact live head;
-7. require separate authorization for Ready for review;
-8. require separate authorization for merge.
+1. merge this documentation-only reconciliation after independent audit and separate authorization;
+2. verify the resulting live `main`;
+3. validate the merged frontend using current repository and deployment evidence;
+4. version one bounded next safe action;
+5. create a dedicated branch only after that action is authorized;
+6. use Draft PR, independent audit, separate Ready authorization and separate merge authorization.
 
 Ready status does not authorize merge.
-
-## Completion condition for the current reconciliation
-
-This documentation reconciliation is complete only when:
-
-1. an independent read-only audit of the exact live head returns no blocking finding;
-2. the user separately authorizes transition from Draft to Ready;
-3. the user separately authorizes merge after a fresh state verification.
 
 ## Expiration conditions
 
 This next safe action expires if:
 
-- the current reconciliation head changes after audit;
+- the reconciliation head changes after audit;
 - the base branch, base SHA or merge base changes;
 - the authorized three-file scope changes;
 - the pull request state changes after verification;
