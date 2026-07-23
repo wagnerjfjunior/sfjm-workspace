@@ -1,67 +1,102 @@
 # SFJM Workspace — Next Safe Action
 
-## Completed gate
+## Completed gates
 
-Pull request #1, `docs: add canonical continuity layer`, was merged into `main` on 2026-07-20.
+Pull request #2, `docs: reconcile canonical state after PR 1 merge`, was merged into `main` on 2026-07-20.
 
 Merge commit:
 
-`69208a0557c94f307842652629a66e41b6e671f5`
+`fbfa46ffd02b3f5309d79ccb3c8388786cd0035c`
 
-The initial canonical documentation bootstrap is therefore complete.
+Pull request #3, `style: improve workspace density for notebook screens`, was merged into `main` on 2026-07-21.
 
-## Current change
+Merge commit:
 
-The current branch exists only to reconcile the versioned state after that merge.
+`cc59211668557a2322637267382eb0177334ac09`
 
-Authorized files:
+The canonical documentation reconciliation and notebook-density refinement are complete.
 
-- `docs/PROJECT_STATUS.md`
-- `docs/NEXT_SAFE_ACTION.md`
-- `handoffs/CURRENT.md`
+## Current reconciliation change
 
-## Single next safe action
+The current branch exists only to reconcile the versioned state after those completed merges and to authorize the next frontend implementation phase.
 
-Complete an independent read-only audit of the exact live head of the post-merge reconciliation pull request against the current canonical `main`.
+Authorized files in this reconciliation:
 
-The audit must confirm that the three documents:
+- `docs/PROJECT_STATUS.md`;
+- `docs/NEXT_SAFE_ACTION.md`;
+- `handoffs/CURRENT.md`.
 
-- correctly state that pull request #1 is merged;
-- identify the merge commit accurately;
-- remove obsolete language that treats the PR #1 audit, Ready transition or merge as future work;
-- preserve the approved product direction;
-- keep the SFJM Workspace separate from the SFJM protocol repository;
-- do not authorize implementation, integration, deployment or redesign;
-- do not present demonstrative prototype data as verified operational facts;
-- remain internally and cross-document consistent;
-- contain exactly the authorized three-file scope.
+No application source file is authorized in this documentation-only reconciliation.
 
-## Completion condition
+## Single next safe action after this reconciliation is merged
 
-This reconciliation gate is complete only when:
+Create a dedicated implementation branch from the reconciled `main` and bootstrap the SFJM Workspace as a real frontend application using:
+
+- Next.js;
+- React;
+- TypeScript;
+- App Router;
+- structured application CSS;
+- ESLint.
+
+The implementation must migrate only the approved Home from the existing monolithic `index.html` into typed React components.
+
+It must:
+
+- preserve the approved visual direction and hierarchy;
+- preserve the sidebar beginning with `Continue`;
+- keep Estado de Continuidade and Próxima Ação Segura as the primary hierarchy;
+- keep Contextos Preservados above Visão da Jornada;
+- keep Fontes Canônicas and Linha do Tempo in the secondary column;
+- preserve responsive notebook and mobile behavior;
+- keep all current data explicitly demonstrative;
+- isolate demonstrative data from components;
+- avoid redesign or new product requirements.
+
+## Explicitly blocked actions
+
+The next implementation phase does not authorize:
+
+- backend implementation;
+- authentication;
+- database or Supabase;
+- APIs or automatic synchronization;
+- GitHub, Google Drive, Vercel or Greenn Sales integration;
+- deployment or Vercel configuration changes;
+- production operational claims;
+- migration of additional pages beyond the Home;
+- modification of `wagnerjfjunior/StopJuniorMode`.
+
+## Required delivery flow
+
+The frontend bootstrap must follow this sequence:
+
+1. verify the live reconciled `main`;
+2. create a dedicated branch;
+3. limit the diff to the authorized frontend bootstrap and Home migration;
+4. validate locally;
+5. open a Draft pull request;
+6. obtain an independent audit of the exact live head;
+7. require separate authorization for Ready for review;
+8. require separate authorization for merge.
+
+Ready status does not authorize merge.
+
+## Completion condition for the current reconciliation
+
+This documentation reconciliation is complete only when:
 
 1. an independent read-only audit of the exact live head returns no blocking finding;
 2. the user separately authorizes transition from Draft to Ready;
 3. the user separately authorizes merge after a fresh state verification.
 
-Ready status does not authorize merge.
-
-## Product action after successful reconciliation merge
-
-After this reconciliation is merged into `main`, the next product action may be planned from the new canonical state.
-
-The currently approved visual priority is to improve the density of the existing HTML prototype for common notebook screens at 100% zoom while preserving legibility and the approved hierarchy.
-
-This statement records the known priority. It does not authorize modification of the prototype in the current documentation-only change.
-
 ## Expiration conditions
 
 This next safe action expires if:
 
-- the live branch head changes for any reason;
-- the base branch or base SHA changes;
-- the merge base changes;
+- the current reconciliation head changes after audit;
+- the base branch, base SHA or merge base changes;
 - the authorized three-file scope changes;
 - the pull request state changes after verification;
 - the user changes the authorization;
-- evidence shows that any statement in these documents is inconsistent with the repository.
+- repository evidence contradicts any statement in these documents.
