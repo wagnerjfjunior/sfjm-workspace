@@ -11,15 +11,16 @@ Observed on: 2026-07-24
 - Project: FECH.AI
 - Canonical repository: `wagnerjfjunior/fecha.ai`
 - Canonical branch: `main`
-- Live `main` observed for this snapshot: `93123ac0f44aca9b64892bd75ac548ea40161e10`
-- Main tip message: `docs(sfjm): close PR 96 continuity cycle (#97)`
+- Live `main` observed for this snapshot: `8a2eb00a9dcd46d7ee346741ca27c6081af52124`
+- Main tip message: `docs(sfjm): reconcile F1-01 state after PR 94 merge (#98)`
+- Open pull requests observed: `NONE`
 - Workspace repository: `wagnerjfjunior/sfjm-workspace`
 
 The FECH.AI repository remains the only canonical source for FECH.AI product, governance, runtime and security state. This Workspace record is a bounded external-project context snapshot and must not override FECH.AI versioned evidence.
 
 ## SFJM application state inside FECH.AI
 
-The SFJM documentation and continuity layer inside FECH.AI is complete through the merged continuity cycle represented by PRs #95, #96 and #97.
+The SFJM documentation and continuity layer inside FECH.AI is complete and reconciled through the merged continuity cycle represented by PRs #95, #96, #97 and the later product-state reconciliation in PR #98.
 
 This completion means:
 
@@ -36,20 +37,21 @@ It does not mean:
 - runtime or Supabase was validated;
 - tenant isolation was proven;
 - WDP was awarded;
-- PR #94 was corrected, accepted or merged.
+- F1-01 checkpoint acceptance was granted.
 
-## Current product-governance exception
+## F1-01 product-governance state
 
-FECH.AI PR #94, `docs(m1): add F1-01 acceptance evidence map`, remains a separate product-governance artifact.
+FECH.AI PR #94, `docs(m1): add F1-01 acceptance evidence map`, is closed and squash-merged.
 
-Last verified audit target:
+Final verified state:
 
-- head: `140e92dd12c72eae5f90fa55b5b125bbedf6fbaa`;
-- result: `FAIL`;
-- reason: the F1-01 map contains incomplete or incorrectly classified M1 paths and unresolved review findings;
-- consequence: F1-01 cannot be accepted from the current PR state.
+- final head: `a7e64c6ed817c03c4dbce7e1b9642e20360b3010`;
+- squash commit: `1caf90c60681771af6609b96ee840b190668fa0f`;
+- reaudit result: `PASS WITH RESIDUAL RISK`;
+- review threads: 6 resolved, 0 open;
+- post-merge reconciliation: PR #98 merged into `main`.
 
-The PR #94 finding does not reopen or invalidate the completed SFJM continuity-layer installation. It blocks only conclusions or actions that depend on a correct F1-01 evidence map.
+The F1-01 evidence map is merged, but checkpoint acceptance remains `NOT GRANTED`. The merge does not grant Security Go, validate runtime or Supabase, prove tenant isolation, confirm MVP Família readiness or award WDP.
 
 ## Workspace representation boundary
 
@@ -65,7 +67,7 @@ This record authorizes no automatic behavior. It does not implement:
 - Supabase integration;
 - runtime or deployment monitoring;
 - automatic state scoring;
-- automatic approval, merge, Security Go, F1-01 acceptance or WDP decisions.
+- automatic approval, merge, Security Go, checkpoint acceptance or WDP decisions.
 
 Any Workspace interface derived from this record must label the data as demonstrative or manually verified and must include the source repository, observed SHA and observation date.
 
@@ -74,12 +76,16 @@ Any Workspace interface derived from this record must label the data as demonstr
 - SFJM continuity layer in FECH.AI: `COMPLETE`
 - FECH.AI product lifecycle: `ACTIVE`
 - Active phase: `MVP 1 — Família`
+- Open pull requests: `NONE`
+- F1-01 evidence map: `MERGED`
+- F1-01 checkpoint acceptance: `NOT GRANTED`
 - Security Go: `NOT GRANTED`
 - MVP Família readiness: `NOT CONFIRMED`
-- F1-01 acceptance: `NOT CONFIRMED`
 - Runtime validation: `NOT CONFIRMED`
 - Supabase live security state: `NOT CONFIRMED`
-- WDP: `NOT AWARDED`
+- Tenant isolation: `NOT PROVEN`
+- WDP: `0 / NOT AWARDED`
+- Next workstream: `F1-02 PLANNED / READ-ONLY / NOT AUTHORIZED FOR EXECUTION`
 - Workspace synchronization: `NOT IMPLEMENTED`
 
 ## Canonical sources to consult
@@ -90,21 +96,22 @@ In `wagnerjfjunior/fecha.ai`, resolve live and read at minimum:
 - `docs/sfjm/INDEX.md`;
 - `docs/sfjm/CURRENT_STATE.md`;
 - `docs/sfjm/NEXT_SAFE_ACTION.md`;
+- `docs/sfjm/BLOCKED_ACTIONS.md`;
 - `docs/sfjm/AUTHORIZATIONS.md`;
 - `docs/sfjm/EVIDENCE_FRESHNESS.md`;
 - `docs/sfjm/handoffs/CURRENT.md`.
 
-For F1-01 work, also resolve the live state of PR #94 and the applicable B0, M1 and product-scope records.
+For F1-01 or F1-02 work, also resolve the applicable B0, M1 and product-scope records and the live pull-request state.
 
 ## Refresh rule
 
 This snapshot becomes stale when any of the following changes:
 
 - FECH.AI `main` tip;
-- PR #94 head, state, diff, reviews or threads;
+- open pull-request set;
 - FECH.AI authorization state;
-- active product phase;
-- Security Go, F1-01, runtime, Supabase or WDP decision;
+- active product phase or selected workstream;
+- Security Go, F1-01, runtime, Supabase, tenant isolation or WDP decision;
 - the Workspace representation contract.
 
 A stale snapshot must be revalidated against live GitHub before it supports any current conclusion.
@@ -116,4 +123,4 @@ After independent review of this documentation-only record, select one bounded W
 1. expose FECH.AI as a manually verified demonstrative project card using this contract; or
 2. refresh this external-project snapshot if FECH.AI canonical state changes.
 
-Neither option authorizes automatic integration or changes in `wagnerjfjunior/fecha.ai`.
+Neither option authorizes automatic integration, F1-02 execution or changes in `wagnerjfjunior/fecha.ai`.
