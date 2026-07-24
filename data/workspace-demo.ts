@@ -40,13 +40,22 @@ export const workspaceDemo = {
     {
       name: "FECH.AI",
       kind: "Projeto externo",
-      continuityState: "Aguardando decisão",
+      continuityState: "F1-01 sem checkpoint acceptance",
       nextSafeAction: "Definir o próximo gate de F1-01 antes de iniciar F1-02.",
-      blockers: ["Security Go não concedido", "Runtime e Supabase live não confirmados", "F1-02 sem autorização de execução"],
+      blockers: [
+        "F1-01 evidence map mergeado",
+        "F1-01 checkpoint acceptance não concedido",
+        "Security Go não concedido",
+        "Runtime não confirmado",
+        "Supabase live security não confirmada",
+        "Tenant isolation não provada",
+        "WDP não concedido",
+        "F1-02 sem autorização de execução"
+      ],
       repository: "wagnerjfjunior/fecha.ai",
       observedSha: "8a2eb00a9dcd46d7ee346741ca27c6081af52124",
       observedAt: "24 Jul 2026",
-      verification: "Snapshot manual verificado"
+      verification: "Snapshot manual verificado · sem sincronização automática"
     }
   ] satisfies ExternalProject[],
   contexts: [
