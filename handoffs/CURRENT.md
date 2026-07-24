@@ -55,17 +55,28 @@ State:
 - audited head: `f5e47af23a13b955c1183a7d5103ed850c4cc1f2`;
 - merge commit: `9497f1228e61976636d58fb851cc9e0b661fe4b8`.
 
-The authorized frontend bootstrap, approved Home migration, reconciliation guardrails and post-PR #8 continuity reconciliation are present in canonical `main`.
+Pull request #10:
+
+`docs: reconcile canonical state after PR 9 merge`
+
+State:
+
+- merged;
+- merged on 2026-07-23;
+- audited head: `631eb6cb4816e80658bcba71a67c50d8c131b26d`;
+- merge commit: `77240e9c4f15e103e5ff81a056a478d8190ebfae`.
+
+The authorized frontend bootstrap, approved Home migration, reconciliation guardrails and continuity reconciliation through PR #10 are present in canonical `main`.
 
 ## Current reconciliation branch
 
 Branch:
 
-`agent/reconcile-post-pr9-state`
+`agent/reconcile-post-pr10-state`
 
 Purpose:
 
-Reconcile the canonical continuity documents after PR #9 and remove obsolete instructions that still describe the PR #9 audit, Ready transition or merge as pending work.
+Reconcile the canonical continuity documents after PR #10 and remove obsolete instructions that still describe the PR #10 audit, Ready transition or merge as pending work.
 
 The exact live head SHA, base SHA, merge base, ahead/behind relationship and pull request number must be resolved live by the independent audit. A versioned file cannot truthfully pin the SHA of the commit that contains itself.
 
@@ -126,25 +137,9 @@ These are authorization boundaries, not limitations of repository access.
 
 ## Single next safe action
 
-Execute an independent read-only audit of the exact live head of the current three-document reconciliation pull request against current canonical `main`.
+Complete this documentation-only reconciliation so canonical `main` records the conclusion of the PR #10 cycle and no longer describes the PR #10 audit, Ready transition or merge as pending work.
 
-The audit must verify:
-
-- repository and pull request identity;
-- pull request state;
-- base branch and live base SHA;
-- head branch and exact live head SHA;
-- merge base and ahead/behind relationship;
-- exact three-file scope;
-- accurate representation of PRs #4, #5, #8 and #9 as merged;
-- accurate audited-head and merge-commit references;
-- accurate recording of the completed frontend bootstrap;
-- accurate recording of the completed PR #9 continuity reconciliation;
-- removal of obsolete pending-work instructions for PR #9;
-- preservation of approved UX decisions;
-- separation between Workspace product and SFJM protocol;
-- absence of unsupported operational claims;
-- absence of new implementation, backend, integration, infrastructure or deployment authorization.
+After this reconciliation is merged, inspect current canonical evidence and select one bounded product action for separate user authorization. Do not implement that action as part of this reconciliation.
 
 ## Independent remaining gates
 

@@ -48,7 +48,17 @@ Merge commit:
 
 `9497f1228e61976636d58fb851cc9e0b661fe4b8`
 
-The authorized frontend bootstrap, approved Home migration, canonical reconciliation guardrails and post-PR #8 continuity reconciliation are present in canonical `main`.
+Pull request #10, `docs: reconcile canonical state after PR 9 merge`, was merged into `main` on 2026-07-23.
+
+Audited head:
+
+`631eb6cb4816e80658bcba71a67c50d8c131b26d`
+
+Merge commit:
+
+`77240e9c4f15e103e5ff81a056a478d8190ebfae`
+
+The authorized frontend bootstrap, approved Home migration, reconciliation guardrails and continuity reconciliation through PR #10 are present in canonical `main`.
 
 ## Implemented product state
 
@@ -86,7 +96,7 @@ No backend, canonical-state evaluator or real integration currently supports tho
 
 ## Current delivery boundary
 
-The frontend bootstrap and the post-merge documentation reconciliation are complete.
+The frontend bootstrap and the authorized documentation reconciliation cycle through PR #10 are complete.
 
 No new implementation phase is automatically authorized.
 
@@ -126,6 +136,6 @@ Product decisions, interface changes and implementation details in this reposito
 
 ## Current continuity assessment
 
-Canonical `main` contains the completed frontend bootstrap, approved Home migration, reconciliation guardrails and reconciled continuity state through PR #9.
+Canonical `main` contains the completed frontend bootstrap, approved Home migration, reconciliation guardrails and reconciled continuity state through PR #10.
 
 A new conversation can assume the project safely only after it verifies live GitHub state, reads the canonical entry documents and follows the versioned next safe action without relying on conversation memory.
