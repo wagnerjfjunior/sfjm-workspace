@@ -38,11 +38,21 @@ Merge commit:
 
 `38c8cd5858b8f8dab33c5ce38fcdd8b943cc88c8`
 
-The authorized frontend bootstrap, approved Home migration and canonical reconciliation guardrails are therefore present in canonical `main`.
+Pull request #9, `docs: reconcile canonical state after PR 8 merge`, was merged into `main` on 2026-07-23.
+
+Audited head:
+
+`f5e47af23a13b955c1183a7d5103ed850c4cc1f2`
+
+Merge commit:
+
+`9497f1228e61976636d58fb851cc9e0b661fe4b8`
+
+The authorized frontend bootstrap, approved Home migration, canonical reconciliation guardrails and post-PR #8 continuity reconciliation are present in canonical `main`.
 
 ## Implemented product state
 
-The repository now contains:
+The repository contains:
 
 - the preserved `index.html` visual reference;
 - a real Next.js frontend application;
@@ -76,17 +86,11 @@ No backend, canonical-state evaluator or real integration currently supports tho
 
 ## Current delivery boundary
 
-The frontend bootstrap authorized by PR #4 is complete.
+The frontend bootstrap and the post-merge documentation reconciliation are complete.
 
-This documentation reconciliation is limited to:
+No new implementation phase is automatically authorized.
 
-- `docs/PROJECT_STATUS.md`;
-- `docs/NEXT_SAFE_ACTION.md`;
-- `handoffs/CURRENT.md`.
-
-No application source file is authorized in this reconciliation.
-
-No further implementation phase is authorized until one clearly defined product action is derived from canonical evidence and explicitly approved by the user.
+The next product action must be selected from current canonical evidence, defined as one bounded change and explicitly authorized by the user before any implementation branch is created.
 
 ## Non-blocking future improvements
 
@@ -95,11 +99,13 @@ The independent audit of PR #5 recorded two optional improvements:
 - reduce the Client Component boundary so only interactive controls require hydration;
 - replace floating `latest` dependencies with pinned versions and a versioned lockfile.
 
-These items remain backlog candidates. They were not blocking for PR #5 and do not automatically authorize a new implementation branch.
+These items remain backlog candidates. They are not delivery blockers and do not automatically become the next implementation action.
 
 ## Not authorized
 
-- frontend source changes during this reconciliation;
+Without separate explicit authorization:
+
+- frontend source changes;
 - backend implementation;
 - authentication;
 - database or Supabase;
@@ -120,6 +126,6 @@ Product decisions, interface changes and implementation details in this reposito
 
 ## Current continuity assessment
 
-Canonical `main` contains the completed frontend bootstrap, approved Home migration and reconciliation guardrails.
+Canonical `main` contains the completed frontend bootstrap, approved Home migration, reconciliation guardrails and reconciled continuity state through PR #9.
 
 A new conversation can assume the project safely only after it verifies live GitHub state, reads the canonical entry documents and follows the versioned next safe action without relying on conversation memory.
