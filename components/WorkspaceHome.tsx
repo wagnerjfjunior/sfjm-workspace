@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { workspaceDemo, type SourceRow } from "@/data/workspace-demo";
+import { workspaceDemo, type ExternalProject, type SourceRow } from "@/data/workspace-demo";
 
 function Sidebar({ open }: { open: boolean }) {
   return (
@@ -106,6 +106,52 @@ function NextSafeAction({ onContinue }: { onContinue: () => void }) {
   );
 }
 
+function ProjectCard({ project }: { project: ExternalProject }) {
+  return (
+    <article className="projectCard">
+      <div className="projectHeader">
+        <div>
+          <span className="projectKind">{project.kind}</span>
+          <h4>{project.name}</h4>
+        </div>
+        <span className="projectState">{project.continuityState}</span>
+      </div>
+      <div className="projectAction">
+        <span>Próxima ação segura observada</span>
+        <strong>{project.nextSafeAction}</strong>
+      </div>
+      <div className="projectGrid">
+        <div>
+          <span>Bloqueios preservados</span>
+          <ul>
+            {project.blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}
+          </ul>
+        </div>
+        <div className="projectSource">
+          <span>Fonte canônica externa</span>
+          <strong>{project.repository}</strong>
+          <code>{project.observedSha}</code>
+          <small>{project.verification} · {project.observedAt}</small>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function ExternalProjects() {
+  return (
+    <article className="panel panelInner" id="projects">
+      <div className="sectionTitle">
+        <h3>Projetos para continuar</h3>
+        <span className="manualBadge">Snapshots manuais</span>
+      </div>
+      <div className="projectList">
+        {workspaceDemo.externalProjects.map((project) => <ProjectCard project={project} key={project.name} />)}
+      </div>
+    </article>
+  );
+}
+
 function PreservedContexts() {
   return (
     <article className="panel panelInner">
@@ -199,6 +245,7 @@ export function WorkspaceHome() {
             <section className="stack">
               <ContinuityState />
               <NextSafeAction onContinue={() => setModalOpen(true)} />
+              <ExternalProjects />
               <PreservedContexts />
               <JourneyOverview />
               <article className="panel footer">
