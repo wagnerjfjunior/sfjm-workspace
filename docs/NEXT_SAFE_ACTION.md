@@ -1,84 +1,73 @@
 # SFJM Workspace — Next Safe Action
 
-## Confirmed state
+## Completed gates
 
-Canonical `main` already contains:
+The canonical `main` branch contains the approved Home migration, reconciliation guardrails, continuity updates through PR #12, the FECH.AI external project context merged by PR #13, and FECH.AI exposed in `Continue` through merged PR #15.
 
-- the approved Home migration;
-- reconciliation guardrails;
-- Chat2 migration state;
-- FECH.AI external project context documentation;
-- FECH.AI exposed in `Continue` through PR #15.
-
-Current `main` for this reconciliation:
+Current `main` / PR #15 commit:
 
 `5b0463d13e97af1b836f0576e2192960aa75f3ed`
 
-The previous next action — create a branch to add FECH.AI to `Continue` — has already been consumed by merged PR #15 and is therefore obsolete.
+## Current reconciliation change
 
-## Single next safe action
+This branch exists only to reconcile the three canonical continuity documents after PR #15.
+
+Authorized files:
+
+- `docs/PROJECT_STATUS.md`;
+- `docs/NEXT_SAFE_ACTION.md`;
+- `handoffs/CURRENT.md`.
+
+No application source file is part of this reconciliation.
+
+The prior next action — create a branch to expose FECH.AI in `Continue` — has already been consumed by PR #15 and is obsolete.
+
+## Single next safe action after this PR
 
 **Obtain an explicit user decision before selecting the next bounded SFJM Workspace product initiative.**
 
 Until that decision exists:
 
-- preserve the current product state;
+- preserve current product state;
 - permit read-only inspection and continuity verification;
-- do not infer a new feature from the completion of PR #15;
+- do not infer a new feature from completion of PR #15;
 - do not start backend, synchronization, monitoring, deployment or redesign work.
 
-## Decision requirements
+A new Workspace initiative is selected only when the user explicitly defines its objective, bounded product scope and authority.
 
-A new Workspace initiative is selected only when the user explicitly identifies:
+## Required delivery flow
 
-1. objective;
-2. bounded product scope;
-3. expected files/surfaces when known;
-4. authorization level;
-5. required review/merge gates.
+For this reconciliation:
 
-Without that, record:
+1. keep the pull request Draft;
+2. validate the exact live diff;
+3. obtain an independent read-only audit of the exact live head;
+4. fix and re-audit every valid finding;
+5. perform a fresh live state verification;
+6. require separate user authorization for merge.
 
-`CURRENT_NEXT_PRODUCT_INITIATIVE: NOT_SELECTED`.
+For any later implementation, repeat the normal bounded branch/Draft PR/audit/merge-authorization flow.
 
-## Product/protocol boundary
-
-This record governs `wagnerjfjunior/sfjm-workspace` only.
-
-It does not authorize changes to:
-
-- `wagnerjfjunior/StopJuniorMode`;
-- `wagnerjfjunior/fecha.ai`;
-- any other consumer project.
-
-## Explicitly blocked without separate authorization
+## Explicitly blocked actions
 
 - backend implementation;
 - authentication;
-- database/Supabase;
-- production APIs;
-- automatic synchronization;
+- database or Supabase;
+- APIs or automatic synchronization;
 - GitHub ingestion, webhook, cron or background monitoring;
 - write-back to FECH.AI;
-- deployments/Vercel changes;
-- redesign of approved Home;
+- deployment or Vercel configuration changes;
+- redesign of the approved Home;
 - production operational claims;
-- treating demonstrative indicators as verified live facts.
+- modification of `wagnerjfjunior/StopJuniorMode`;
+- modification of `wagnerjfjunior/fecha.ai`.
 
-## Delivery governance for any future implementation
+## Product/protocol boundary
 
-When a new initiative is selected:
-
-1. resolve `main` live;
-2. create a dedicated branch;
-3. keep diff bounded;
-4. open Draft PR;
-5. independently audit the exact head;
-6. fix/re-review valid findings;
-7. require explicit merge authorization.
-
-Ready/reviewability does not imply merge authorization.
+This record governs `wagnerjfjunior/sfjm-workspace` only. It does not select or authorize a protocol change in `wagnerjfjunior/StopJuniorMode` or a consumer-project change elsewhere.
 
 ## Expiration conditions
 
-Re-evaluate this action when `main`, authorization, product boundary or a new explicit product decision changes materially.
+Any audit expires if repository, PR state, base, head, merge base, diff scope, authorization or relevant canonical evidence changes.
+
+Any new commit invalidates a previously audited snapshot.
