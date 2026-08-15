@@ -10,6 +10,14 @@
 
 The `main` branch of this repository is the canonical source of product state.
 
+Canonical product-state priority remains:
+
+1. live `main`;
+2. `handoffs/CURRENT.md`;
+3. this `docs/PROJECT_STATUS.md`;
+4. `docs/NEXT_SAFE_ACTION.md`;
+5. other versioned product documents.
+
 ## Current canonical state
 
 The following delivery cycles are merged in canonical `main`:
@@ -21,6 +29,10 @@ The following delivery cycles are merged in canonical `main`:
 - PR #12 — Chat 2 migration state reflected in the Workspace UI and demonstrative data;
 - PR #13 — FECH.AI registered as a documentation-only external project context;
 - PR #15 — FECH.AI added to the `Continue` experience as a manually verified/demonstrative external project context.
+
+PR #13 merge commit / FECH.AI documentation-context custody anchor:
+
+`721fe879c7dfd72d976c7968224794e3f6762bab`
 
 Current `main` / PR #15 commit:
 
@@ -75,11 +87,15 @@ BACKEND_MONITORING: NOT_IMPLEMENTED
 CURRENT_NEXT_PRODUCT_INITIATIVE: NOT_SELECTED
 ```
 
-## Current next safe action
+## Current reconciliation next safe action
 
-Authority: `docs/NEXT_SAFE_ACTION.md`.
+For the current Draft reconciliation, the immediate next safe action is an independent read-only audit of the exact live head. Supporting procedural detail is maintained in `docs/NEXT_SAFE_ACTION.md`; that file does not override the canonical product-state priority above.
 
-The next safe action is to obtain an explicit user decision before selecting a new bounded Workspace product initiative. No new implementation is inferred from completion of PR #15.
+If a valid blocking finding is found, it must be corrected and the new exact head re-audited. Non-blocking findings do not automatically become delivery gates.
+
+After audit passes, Ready requires separate user authorization for the exact audited head, followed by fresh live-state verification before separate merge authorization.
+
+The later post-reconciliation product candidate is to obtain an explicit user decision before selecting a new bounded Workspace product initiative. No new implementation is inferred from completion of PR #15.
 
 ## Still not authorized
 
