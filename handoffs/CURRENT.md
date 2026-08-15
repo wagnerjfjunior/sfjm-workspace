@@ -4,80 +4,82 @@
 
 Repository: `wagnerjfjunior/sfjm-workspace`
 
-Base branch: `main`
+Base branch: `main`.
 
-The `main` branch is the canonical product state. This handoff does not override live GitHub state.
+`main` is the canonical product state. This handoff does not override live GitHub state.
 
-## Completed gates
+## Confirmed product history
 
 Canonical `main` contains:
 
 - the approved Next.js Home migration;
 - reconciliation guardrails and continuity updates;
-- Chat 2 migration state reflected in the demonstrative Workspace experience through PR #12;
-- FECH.AI registered as a documentation-only external project context through PR #13.
+- Chat2 migration state reflected in the demonstrative Workspace experience;
+- FECH.AI registered as a documentation-only external project context;
+- FECH.AI exposed in the `Continue` experience by PR #15.
 
-PR #13 merge commit:
+Current `main` resolved for this reconciliation:
 
-`721fe879c7dfd72d976c7968224794e3f6762bab`
+`5b0463d13e97af1b836f0576e2192960aa75f3ed`
 
-## Current reconciliation branch
+Commit message: `feat: add FECH.AI project context to Continue (#15)`.
 
-Branch:
+## Continuity correction
 
-`agent/reconcile-post-pr13-state`
+The previous continuity documents still described FECH.AI visual exposure as a future implementation action even though PR #15 is already merged in canonical `main`.
 
-Purpose:
+That future-action description is stale and is removed by this reconciliation.
 
-Reconcile the canonical continuity documents after PR #13 and select the FECH.AI visual project context as the next bounded product action.
+```text
+FECHAI_DOCUMENTATION_CONTEXT: MERGED
+FECHAI_CONTINUE_VISUAL_CONTEXT: MERGED / PR #15
+AUTOMATIC_SYNC: NOT_IMPLEMENTED
+BACKEND: NOT_IMPLEMENTED
+CURRENT_NEXT_PRODUCT_INITIATIVE: NOT_SELECTED
+```
 
-Authorized files in this branch:
+## Implemented product boundary
 
-- `docs/PROJECT_STATUS.md`;
-- `docs/NEXT_SAFE_ACTION.md`;
-- `handoffs/CURRENT.md`.
+The repository contains a real Next.js frontend and demonstrative continuity UI. FECH.AI is shown as a bounded manually verified/demonstrative external project context.
 
-No application source file is authorized in this reconciliation.
+This does **not** establish:
 
-## Confirmed product state
+- automatic synchronization;
+- live background monitoring;
+- backend ingestion;
+- write-back;
+- verified confidence percentages;
+- production continuity guarantees;
+- authority transfer from FECH.AI to the Workspace.
 
-- The approved `index.html` remains preserved as the visual reference.
-- The repository contains a real Next.js frontend application.
-- The approved Home is migrated into typed React components.
-- Demonstrative data remains isolated in `data/workspace-demo.ts`.
-- Mobile navigation and the demonstrative action modal are preserved.
-- The Home hierarchy prioritizes Estado de Continuidade and Próxima Ação Segura.
-- Contextos Preservados remains above Visão da Jornada.
-- Fontes Canônicas and Linha do Tempo remain in the secondary column.
-- Primary navigation begins with `Continue`.
-- The interface remains demonstrative and does not prove real continuity, synchronization or confidence.
-- FECH.AI now has a bounded canonical context record at `docs/projects/fechai/PROJECT_CONTEXT.md`.
+FECH.AI remains authoritative for FECH.AI state.
 
-## Next bounded product action
+## Current next safe action
 
-After this reconciliation is independently audited and merged, create a separate implementation branch to add FECH.AI to the `Continue` experience as a manually verified demonstrative external project context.
+See `docs/NEXT_SAFE_ACTION.md`.
 
-Expected implementation scope:
+Derived summary:
 
-- `components/WorkspaceHome.tsx`;
-- `data/workspace-demo.ts`;
-- `app/globals.css` only if a minimal layout adjustment is required.
+> Obtain an explicit user decision before selecting the next bounded SFJM Workspace product initiative.
 
-Required behavior:
+No new implementation is inferred from the completion of PR #15.
 
-- preserve the approved Home hierarchy and visual direction;
-- show repository, observed SHA and observation date;
-- show bounded state and next safe action;
-- label the data as manually verified or demonstrative;
-- do not implement synchronization, backend, monitoring or write-back.
+## Preserved product/protocol boundary
 
-## Blocked actions
+`wagnerjfjunior/sfjm-workspace` owns product state and UI implementation.
+
+`wagnerjfjunior/StopJuniorMode` owns the SFJM protocol.
+
+A change in one repository does not silently change the other.
+
+## Blocked without separate authorization
 
 - backend;
 - authentication;
 - database or Supabase;
-- APIs or automatic synchronization;
-- GitHub ingestion, webhook, cron or background monitoring;
+- production APIs;
+- automatic synchronization;
+- GitHub ingestion/webhooks/cron/background monitoring;
 - write-back to FECH.AI;
 - deployment or Vercel configuration changes;
 - redesign of the approved Home;
@@ -85,19 +87,6 @@ Required behavior:
 - modification of `wagnerjfjunior/StopJuniorMode`;
 - modification of `wagnerjfjunior/fecha.ai`.
 
-## Independent remaining gates
-
-This reconciliation requires:
-
-1. independent audit of the exact live head;
-2. explicit authorization for Ready for review;
-3. fresh live state verification;
-4. explicit authorization for merge.
-
-Ready status does not authorize merge.
-
 ## Handoff expiration
 
-This handoff becomes invalid if repository, PR state, base, head, merge base, exact three-file scope, authorization or relevant canonical evidence changes.
-
-Any new commit invalidates a previously audited snapshot.
+Revalidate this handoff if repository, `main`, relevant PR state, authority, product boundary or next-safe-action record changes materially.
