@@ -86,7 +86,7 @@ The next safe action is to obtain an explicit user decision before selecting a n
 - backend implementation;
 - authentication;
 - database or Supabase;
-- production APIs;
+- APIs;
 - automatic synchronization;
 - real GitHub, Google Drive, Vercel or Greenn Sales integration;
 - deployment or Vercel configuration changes;
