@@ -8,7 +8,7 @@
 
 `wagnerjfjunior/sfjm-workspace`
 
-`main` is the canonical product state.
+The `main` branch of this repository is the canonical source of product state.
 
 ## Current canonical state
 
@@ -18,11 +18,11 @@ The following delivery cycles are merged in canonical `main`:
 - PR #5 — Next.js bootstrap and approved Home migration;
 - PR #8 — canonical reconciliation guardrails;
 - PRs #9, #10 and #11 — continuity reconciliation cycles;
-- PR #12 — Chat2 migration state reflected in the Workspace UI and demonstrative data;
+- PR #12 — Chat 2 migration state reflected in the Workspace UI and demonstrative data;
 - PR #13 — FECH.AI registered as a documentation-only external project context;
-- PR #15 — FECH.AI added to the `Continue` experience as a demonstrative bounded project context.
+- PR #15 — FECH.AI added to the `Continue` experience as a manually verified/demonstrative external project context.
 
-Current `main` for this reconciliation:
+Current `main` / PR #15 commit:
 
 `5b0463d13e97af1b836f0576e2192960aa75f3ed`
 
@@ -30,60 +30,56 @@ Current `main` for this reconciliation:
 
 The repository contains:
 
-- preserved visual reference;
+- the preserved `index.html` visual reference;
 - a real Next.js frontend application;
-- React/TypeScript/App Router/CSS/ESLint;
-- typed Home components;
-- demonstrative data isolated from canonical external sources;
-- mobile navigation and demonstrative action modal;
-- continuity/reconciliation guardrails;
-- canonical FECH.AI external-project context documentation;
-- FECH.AI visible in `Continue` through PR #15.
+- React, TypeScript, App Router, structured CSS and ESLint;
+- the approved Home migrated into typed React components;
+- demonstrative data isolated in `data/workspace-demo.ts`;
+- preserved mobile navigation and demonstrative action modal;
+- explicit labeling that displayed continuity state is demonstrative;
+- versioned reconciliation guardrails;
+- a canonical external-project context record for FECH.AI at `docs/projects/fechai/PROJECT_CONTEXT.md`;
+- FECH.AI represented in `Continue` through merged PR #15.
+
+## Preserved product direction
+
+- dark, futuristic and premium operational interface;
+- continuity state as the primary hierarchy;
+- safe next action as the primary operational control;
+- preserved contexts above journey view;
+- canonical sources and timeline in the secondary column;
+- primary navigation beginning with `Continue`;
+- compact notebook density and responsive mobile behavior.
 
 ## Demonstrative-state boundary
 
 The current interface remains demonstrative.
 
-The following are not established operational facts unless independently supported:
+Claims such as `Continuável`, confidence percentages, synchronization state, preservation percentages, source health and absence of conflicts are not verified operational facts.
 
-- automatic synchronization;
-- verified confidence percentages;
-- preservation percentages;
-- source-health guarantees;
-- absence of conflicts;
-- backend monitoring;
-- production continuity guarantees.
+No backend, canonical-state evaluator or real integration supports those indicators.
 
 FECH.AI remains authoritative for FECH.AI state.
 
-## Continuity drift corrected by current reconciliation
+## Current delivery boundary
 
-Prior continuity documents said FECH.AI was not yet represented visually and selected its future implementation as the next bounded product action.
+The previous delivery boundary said FECH.AI had canonical documentation but was not yet represented visually. That state is obsolete because PR #15 is merged.
 
-That statement is stale because PR #15 is already merged.
+Current bounded state:
 
 ```text
-FECHAI_VISUAL_CONTEXT: IMPLEMENTED / DEMONSTRATIVE
-FECHAI_PR15: MERGED
-OLD_NEXT_ACTION_ADD_FECHAI_TO_CONTINUE: CONSUMED / OBSOLETE
+FECHAI_DOCUMENTATION_CONTEXT: MERGED
+FECHAI_CONTINUE_VISUAL_CONTEXT: MERGED / DEMONSTRATIVE
+AUTOMATIC_SYNCHRONIZATION: NOT_IMPLEMENTED
+BACKEND_MONITORING: NOT_IMPLEMENTED
 CURRENT_NEXT_PRODUCT_INITIATIVE: NOT_SELECTED
 ```
-
-## Current product direction
-
-Preserve:
-
-- approved Home hierarchy and visual direction;
-- continuity state as primary hierarchy;
-- safe-next-action discipline;
-- explicit demonstrative labeling;
-- separation between product presentation and canonical external project authority.
 
 ## Current next safe action
 
 Authority: `docs/NEXT_SAFE_ACTION.md`.
 
-No new product implementation is selected in canonical state. The next safe action is to obtain an explicit user decision before opening a new bounded Workspace initiative.
+The next safe action is to obtain an explicit user decision before selecting a new bounded Workspace product initiative. No new implementation is inferred from completion of PR #15.
 
 ## Still not authorized
 
@@ -92,16 +88,15 @@ No new product implementation is selected in canonical state. The next safe acti
 - database or Supabase;
 - production APIs;
 - automatic synchronization;
-- real-time GitHub/Drive/Vercel/Greenn ingestion;
-- write-back;
+- real GitHub, Google Drive, Vercel or Greenn Sales integration;
 - deployment or Vercel configuration changes;
 - redesign of the approved Home;
 - presentation of demonstrative indicators as verified facts;
 - modification of `wagnerjfjunior/StopJuniorMode`;
-- modification of `wagnerjfjunior/fecha.ai`.
+- changes in `wagnerjfjunior/fecha.ai`.
 
 ## Product and protocol boundary
 
-The SFJM Workspace product remains separate from the SFJM protocol repository `wagnerjfjunior/StopJuniorMode`.
+The SFJM Workspace remains separate from the SFJM protocol repository `wagnerjfjunior/StopJuniorMode`.
 
-Product implementation does not modify the protocol automatically, and protocol changes do not mutate Workspace product state automatically.
+Product decisions and interface implementation in this repository do not modify the SFJM protocol.
