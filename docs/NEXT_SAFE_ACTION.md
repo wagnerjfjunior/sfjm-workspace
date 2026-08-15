@@ -4,6 +4,10 @@
 
 The canonical `main` branch contains the approved Home migration, reconciliation guardrails, continuity updates through PR #12, the FECH.AI external project context merged by PR #13, and FECH.AI exposed in `Continue` through merged PR #15.
 
+PR #13 merge commit / FECH.AI documentation-context custody anchor:
+
+`721fe879c7dfd72d976c7968224794e3f6762bab`
+
 Current `main` / PR #15 commit:
 
 `5b0463d13e97af1b836f0576e2192960aa75f3ed`
@@ -20,33 +24,38 @@ Authorized files:
 
 No application source file is part of this reconciliation.
 
-The prior next action — create a branch to expose FECH.AI in `Continue` — has already been consumed by PR #15 and is obsolete.
+The prior product action — create a branch to expose FECH.AI in `Continue` — has already been consumed by PR #15 and is obsolete.
 
-## Single next safe action after this PR
+## Single immediate next safe action
 
-**Obtain an explicit user decision before selecting the next bounded SFJM Workspace product initiative.**
+**Obtain an independent read-only audit of the exact live head of this reconciliation.**
 
-Until that decision exists:
+This is the immediate action for the current Draft state. It does not authorize a product initiative, Ready transition, or merge by itself.
 
-- preserve current product state;
-- permit read-only inspection and continuity verification;
-- do not infer a new feature from completion of PR #15;
-- do not start backend, synchronization, monitoring, deployment or redesign work.
+If the audit finds a valid **blocking** finding, correct it and re-audit the new exact head. Valid non-blocking clarity/formatting/maintainability findings may be recorded for later work and do not automatically become delivery gates.
 
-A new Workspace initiative is selected only when the user explicitly defines its objective, bounded product scope and authority.
+## Post-reconciliation candidate action
+
+After this reconciliation is independently audited, separately authorized for Ready, freshly revalidated against live state, and merged under separate merge authorization, the next product candidate is:
+
+> Obtain an explicit user decision before selecting the next bounded SFJM Workspace product initiative.
+
+That later decision is not the current next safe action and does not pre-authorize implementation.
 
 ## Required delivery flow
 
 For this reconciliation:
 
 1. keep the pull request Draft;
-2. validate the exact live diff;
+2. validate the exact live diff and changed-file scope;
 3. obtain an independent read-only audit of the exact live head;
-4. fix and re-audit every valid finding;
-5. perform a fresh live state verification;
-6. require separate user authorization for merge.
+4. correct and re-audit every valid **blocking** finding; record non-blocking findings without automatically gating delivery;
+5. require separate user authorization for Ready for review over the exact audited head;
+6. mark Ready only after that authorization applies to the exact audited head;
+7. perform a fresh live-state verification unconditionally after audit/Ready and before requesting merge authorization;
+8. require separate user authorization for merge over the approved head.
 
-For any later implementation, repeat the normal bounded branch/Draft PR/audit/merge-authorization flow.
+Any new commit invalidates the prior audited snapshot and any Ready authorization tied to that snapshot until the new head is audited again.
 
 ## Explicitly blocked actions
 
@@ -66,8 +75,16 @@ For any later implementation, repeat the normal bounded branch/Draft PR/audit/me
 
 This record governs `wagnerjfjunior/sfjm-workspace` only. It does not select or authorize a protocol change in `wagnerjfjunior/StopJuniorMode` or a consumer-project change elsewhere.
 
+Canonical product-state priority remains:
+
+1. live `main`;
+2. `handoffs/CURRENT.md`;
+3. `docs/PROJECT_STATUS.md`;
+4. this supporting next-action detail;
+5. other versioned product documents.
+
 ## Expiration conditions
 
-Any audit expires if repository, PR state, base, head, merge base, diff scope, authorization or relevant canonical evidence changes.
+Any audit expires if repository, PR state, base, head, merge base, ahead/behind relationship, changed-file scope, authorization or relevant canonical evidence changes.
 
 Any new commit invalidates a previously audited snapshot.
