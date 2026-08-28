@@ -68,9 +68,9 @@ function ContinuityState() {
         </div>
       </div>
       <div className="confidence">
-        <div className="ring programRing">
+        <div className="ring programRing" style={{ background: `conic-gradient(var(--green) 0 ${workspaceDemo.fechaiProgram.overallProgress * 3.6}deg,#172238 ${workspaceDemo.fechaiProgram.overallProgress * 3.6}deg)` }}>
           <div className="ringContent">
-            <strong>{workspaceDemo.fechaiProgram.overallProgress.toFixed(0)}%</strong>
+            <strong>{workspaceDemo.fechaiProgram.overallProgress.toFixed(2)}%</strong>
             <span>gates aceitos</span>
             <span>snapshot manual</span>
           </div>
