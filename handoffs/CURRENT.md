@@ -8,29 +8,39 @@ Base branch: `main`
 
 The `main` branch is the canonical product state. This handoff does not override live GitHub state.
 
-## Completed gates
+## Reconciliation anchor
 
-Canonical `main` contains:
+Pre-reconciliation canonical `main` observed on 2026-08-28:
 
-- the approved Next.js Home migration;
-- reconciliation guardrails and continuity updates;
-- Chat 2 migration state reflected in the demonstrative Workspace experience through PR #12;
-- FECH.AI registered as a documentation-only external project context through PR #13;
-- FECH.AI added to the `Continue` experience through PR #15.
+`fa3ccbaa91f7e0f25e040a9f2603b88a545cadf9`
 
-PR #13 merge commit / FECH.AI documentation-context custody anchor:
+Relevant completed delivery cycles now present in canonical `main`:
 
-`721fe879c7dfd72d976c7968224794e3f6762bab`
+- PR #13 — FECH.AI registered as a documentation-only external project context;
+- PR #15 — FECH.AI added to the `Continue` experience;
+- PR #16 — post-PR #15 continuity reconciliation;
+- PR #17 — MoreNumTegra added as a bounded manual/demonstrative external project context.
 
-PR #15 / current `main` commit:
+Merge anchors:
 
-`5b0463d13e97af1b836f0576e2192960aa75f3ed`
+- PR #16 merge commit: `011cea58b010225e549ebd2b4ae158fd860675fb`;
+- PR #17 merge commit / pre-reconciliation `main`: `fa3ccbaa91f7e0f25e040a9f2603b88a545cadf9`.
 
-## Continuity reconciliation
+## Why this reconciliation exists
 
-The prior handoff still described FECH.AI visual exposure as a future action. That action has already been consumed by merged PR #15.
+The prior continuity documents remained stale after PR #16 and PR #17 merged. They still described PR #16 as an in-flight Draft reconciliation and omitted the completed MoreNumTegra context added by PR #17.
 
-This reconciliation changes continuity documents only. No application source file is authorized in this reconciliation.
+This branch corrects continuity only. It does not change application code, product UI, external projects, infrastructure or the SFJM protocol.
+
+## Current conversation continuity
+
+Current operating conversation label:
+
+`SFJM Workspace — Chart 3`
+
+This label is an auxiliary continuity cue only. GitHub `main` remains authoritative over product state.
+
+The prior demonstrative UI still contains Chat 2 wording. That UI wording is not corrected in this reconciliation because application-source changes are outside the authorized three-file scope.
 
 ## Confirmed product state
 
@@ -43,26 +53,73 @@ This reconciliation changes continuity documents only. No application source fil
 - Contextos Preservados remains above Visão da Jornada.
 - Fontes Canônicas and Linha do Tempo remain in the secondary column.
 - Primary navigation begins with `Continue`.
-- The interface remains demonstrative and does not prove real continuity, synchronization or confidence.
-- FECH.AI has a bounded canonical context record at `docs/projects/fechai/PROJECT_CONTEXT.md`.
-- FECH.AI is represented in `Continue` as a manually verified/demonstrative external project context through PR #15.
-- FECH.AI remains authoritative for FECH.AI state.
+- The interface remains demonstrative and does not prove real synchronization, freshness or operational confidence.
+- FECH.AI is represented as a bounded manual/demonstrative external project context.
+- MoreNumTegra is represented as a bounded manual/demonstrative external project context.
+- Each external project remains authoritative for its own product and operational truth.
+
+## Selected next Workspace initiative
+
+The Product Authority has selected FECH.AI Security-to-Scale tracking as the next bounded SFJM Workspace product initiative.
+
+Tracking issue:
+
+`wagnerjfjunior/sfjm-workspace#18`
+
+External program authority:
+
+`wagnerjfjunior/fecha.ai#141 — FECH.AI Security-to-Scale 2026`
+
+The selected product direction is one FECH.AI program context with two integrated views:
+
+1. Macro Roadmap / Executive View;
+2. Operational Runbook View.
+
+The Workspace remains a manual continuity/visualization layer. FECH.AI remains canonical for FECH.AI program, security, architecture, PR, milestone, authorization and operational state.
+
+## Important stale external snapshot
+
+The current versioned FECH.AI external-project snapshot in the Workspace is stale relative to the current FECH.AI program state.
+
+Current canonical FECH.AI transition observed on 2026-08-28:
+
+```text
+main: 3eeb6fd230309f206be7920607739f8e4545556f
+#141: Security-to-Scale 2026 / OPEN
+#142: M0 / CLOSED / completed
+#150: M1 Security Truth Baseline / OPEN / READ_ONLY FIRST
+Security Go: NOT GRANTED
+broad paid commercialization: BLOCKED
+```
+
+Therefore the dashboard implementation must first refresh the manual FECH.AI context from these canonical anchors and label the snapshot with source/ref/date.
 
 ## Immediate next safe action
 
-The immediate next safe action for the current Draft reconciliation is:
+For this reconciliation Draft, the single immediate next safe action is:
 
-> Obtain an independent read-only audit of the exact live head.
+> Obtain an independent read-only audit of the exact live head and confirm that the diff is limited to the three authorized continuity documents.
 
-If a valid blocking finding exists, correct it and re-audit the new exact head. Non-blocking findings do not automatically become delivery gates.
+If a valid blocking finding exists, correct it and re-audit the new exact head. Non-blocking findings may be recorded without automatically expanding the delivery gate.
 
-## Post-reconciliation candidate
+## Post-reconciliation authorized product sequence
 
-Only after audit passes, Ready is separately authorized for the exact audited head, fresh live state is revalidated, and merge is separately authorized and completed, the later product candidate is:
+After this reconciliation:
 
-> Obtain an explicit user decision before selecting the next bounded SFJM Workspace product initiative.
+1. passes independent exact-head audit;
+2. receives separate Ready authorization for that exact audited head;
+3. receives fresh live-state verification;
+4. receives separate merge authorization and is merged;
 
-No new implementation is inferred or pre-authorized by completion of PR #15.
+the next bounded product sequence is:
+
+1. refresh the FECH.AI manual snapshot from canonical `wagnerjfjunior/fecha.ai`;
+2. add a manual Security-to-Scale data model;
+3. implement the integrated Roadmap + Runbook view in the existing FECH.AI Continue context;
+4. validate lint/build/responsive behavior;
+5. open a separate Draft PR and repeat the audit / Ready / merge gates.
+
+This authorization covers the bounded Workspace documentation/dashboard delivery sequence through merge only. It does not authorize deployment, automatic synchronization or any external-system mutation.
 
 ## Blocked actions
 
@@ -71,28 +128,30 @@ No new implementation is inferred or pre-authorized by completion of PR #15.
 - database or Supabase;
 - APIs or automatic synchronization;
 - GitHub ingestion, webhook, cron or background monitoring;
-- write-back to FECH.AI;
+- write-back to FECH.AI or MoreNumTegra;
 - deployment or Vercel configuration changes;
 - redesign of the approved Home;
-- production operational claims;
+- production operational claims unsupported by evidence;
 - modification of `wagnerjfjunior/StopJuniorMode`;
-- modification of `wagnerjfjunior/fecha.ai`.
+- modification of `wagnerjfjunior/fecha.ai`;
+- modification of `wagnerjfjunior/MoreNumTegra`.
 
 ## Independent remaining gates
 
-This reconciliation requires, in order:
+For this reconciliation, in order:
 
-1. independent read-only audit of the exact live head;
-2. correction and re-audit of any valid **blocking** finding;
-3. separate user authorization for Ready for review over the exact audited head;
-4. Ready transition only for that authorized audited head;
-5. fresh live-state verification unconditionally before merge authorization;
-6. separate explicit authorization for merge over the approved head.
+1. exact-head read-only audit of the live Draft head;
+2. correction and re-audit of any valid blocking finding;
+3. Ready transition only on a validated head;
+4. fresh live-state verification before merge;
+5. merge only if the validated head remains free of material blockers.
 
-Merge authorization remains separate from audit/readiness.
+Product Authority has already authorized this bounded sequence through merge.
+
+Any new commit invalidates a previously audited snapshot and any Ready authorization tied to it.
 
 ## Handoff expiration
 
-This handoff becomes invalid if repository, PR state, base, head, merge base, ahead/behind relationship, exact three-file scope, authorization or relevant canonical evidence changes.
+This handoff becomes invalid if repository, PR state, base, head, merge base, changed-file scope, authorization or relevant canonical evidence changes.
 
-Any new commit invalidates a previously audited snapshot and any Ready authorization tied to that snapshot until re-audit.
+Conversation changes do not replace GitHub truth. A new conversation should resolve live `main` first and then read this handoff.
