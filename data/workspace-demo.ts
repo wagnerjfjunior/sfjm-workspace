@@ -130,7 +130,7 @@ export const workspaceDemo = {
     commercialization: "BLOCKED",
     weightingBasis: "Peso = duração planejada da janela; progresso só avança quando o gate do milestone é aceito.",
     evidenceBoundary: "STATIC != LIVE != RUNTIME · VERSIONED != APPLIED · RUNTIME_BOUNDED != SECURITY_GO",
-    invalidatesOn: "Mudança material em FECH.AI main, Issues #141/#150, lifecycle de workstreams, evidência de Security Go ou decisão de comercialização."
+    invalidatesOn: "Mudança material em FECH.AI main, Issues #141/#150, lifecycle de workstreams, evidência de Security Go ou decisão de comercialização.",
     milestones: [
       {
         id: "M0",
