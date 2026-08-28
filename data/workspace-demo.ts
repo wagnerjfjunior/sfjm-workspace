@@ -17,7 +17,7 @@ export type ExternalProject = {
 };
 
 export const workspaceDemo = {
-  notice: "Dados demonstrativos baseados em snapshots canônicos verificados em 24 Jul 2026 — sem sincronização automática.",
+  notice: "Dados demonstrativos baseados em snapshots canônicos verificados manualmente — sem sincronização automática.",
   nav: [
     { icon: "▶", label: "Continue", helper: "Próxima ação segura", href: "#continue", active: true },
     { icon: "⌁", label: "Jornada", helper: "Visão da jornada", href: "#journey" },
@@ -55,6 +55,22 @@ export const workspaceDemo = {
       repository: "wagnerjfjunior/fecha.ai",
       observedSha: "8a2eb00a9dcd46d7ee346741ca27c6081af52124",
       observedAt: "24 Jul 2026",
+      verification: "Snapshot manual verificado · sem sincronização automática"
+    },
+    {
+      name: "MoreNumTegra",
+      kind: "Projeto externo",
+      continuityState: "Green V1 funcionalmente homologada",
+      nextSafeAction: "Manter a produção estável e validar o HTTPS de www.moretegra.com.br quando a Green concluir o certificado.",
+      blockers: [
+        "www.moretegra.com.br com certificado ainda pendente no snapshot",
+        "Analytics/pixels/tags dependem de gate específico",
+        "Mudanças materiais devem seguir GitHub → Vercel → Green",
+        "Dados comerciais mutáveis exigem nova evidência antes de atualização"
+      ],
+      repository: "wagnerjfjunior/MoreNumTegra",
+      observedSha: "3eca0d4fc212ef5bb499c92534dedd5ac86094e6",
+      observedAt: "28 Aug 2026",
       verification: "Snapshot manual verificado · sem sincronização automática"
     }
   ] satisfies ExternalProject[],
