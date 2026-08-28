@@ -44,7 +44,7 @@ The active bounded candidate implements the selected FECH.AI program-tracking in
 3. render an integrated **Macro Roadmap / Executive View**;
 4. render an **Operational Runbook View** for the active M1 milestone;
 5. preserve manual/demo provenance and FECH.AI authority;
-6. validate lint/build and exact changed-file scope before Ready/merge.
+6. validate lint/build and exact changed-file scope before Ready and pre-merge verification.
 
 Resolve the current candidate branch/PR/head live; this document intentionally does not freeze its volatile PR number or head.
 
@@ -112,7 +112,7 @@ Before lifecycle advancement of the dashboard candidate:
 - correct every material review finding;
 - revalidate any new head.
 
-Product Authority has authorized this bounded delivery sequence through merge, subject to those gates.
+Product Authority has authorized the current bounded correction sequence through Ready and pre-merge verification. Merge is a separate step and is not included in the current authorization.
 
 ## Not authorized
 
