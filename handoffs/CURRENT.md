@@ -15,29 +15,22 @@ Canonical `main` contains:
 - the approved Next.js Home migration;
 - reconciliation guardrails and continuity updates;
 - Chat 2 migration state reflected in the demonstrative Workspace experience through PR #12;
-- FECH.AI registered as a documentation-only external project context through PR #13.
+- FECH.AI registered as a documentation-only external project context through PR #13;
+- FECH.AI added to the `Continue` experience through PR #15.
 
-PR #13 merge commit:
+PR #13 merge commit / FECH.AI documentation-context custody anchor:
 
 `721fe879c7dfd72d976c7968224794e3f6762bab`
 
-## Current reconciliation branch
+PR #15 / current `main` commit:
 
-Branch:
+`5b0463d13e97af1b836f0576e2192960aa75f3ed`
 
-`agent/reconcile-post-pr13-state`
+## Continuity reconciliation
 
-Purpose:
+The prior handoff still described FECH.AI visual exposure as a future action. That action has already been consumed by merged PR #15.
 
-Reconcile the canonical continuity documents after PR #13 and select the FECH.AI visual project context as the next bounded product action.
-
-Authorized files in this branch:
-
-- `docs/PROJECT_STATUS.md`;
-- `docs/NEXT_SAFE_ACTION.md`;
-- `handoffs/CURRENT.md`.
-
-No application source file is authorized in this reconciliation.
+This reconciliation changes continuity documents only. No application source file is authorized in this reconciliation.
 
 ## Confirmed product state
 
@@ -51,25 +44,25 @@ No application source file is authorized in this reconciliation.
 - Fontes Canônicas and Linha do Tempo remain in the secondary column.
 - Primary navigation begins with `Continue`.
 - The interface remains demonstrative and does not prove real continuity, synchronization or confidence.
-- FECH.AI now has a bounded canonical context record at `docs/projects/fechai/PROJECT_CONTEXT.md`.
+- FECH.AI has a bounded canonical context record at `docs/projects/fechai/PROJECT_CONTEXT.md`.
+- FECH.AI is represented in `Continue` as a manually verified/demonstrative external project context through PR #15.
+- FECH.AI remains authoritative for FECH.AI state.
 
-## Next bounded product action
+## Immediate next safe action
 
-After this reconciliation is independently audited and merged, create a separate implementation branch to add FECH.AI to the `Continue` experience as a manually verified demonstrative external project context.
+The immediate next safe action for the current Draft reconciliation is:
 
-Expected implementation scope:
+> Obtain an independent read-only audit of the exact live head.
 
-- `components/WorkspaceHome.tsx`;
-- `data/workspace-demo.ts`;
-- `app/globals.css` only if a minimal layout adjustment is required.
+If a valid blocking finding exists, correct it and re-audit the new exact head. Non-blocking findings do not automatically become delivery gates.
 
-Required behavior:
+## Post-reconciliation candidate
 
-- preserve the approved Home hierarchy and visual direction;
-- show repository, observed SHA and observation date;
-- show bounded state and next safe action;
-- label the data as manually verified or demonstrative;
-- do not implement synchronization, backend, monitoring or write-back.
+Only after audit passes, Ready is separately authorized for the exact audited head, fresh live state is revalidated, and merge is separately authorized and completed, the later product candidate is:
+
+> Obtain an explicit user decision before selecting the next bounded SFJM Workspace product initiative.
+
+No new implementation is inferred or pre-authorized by completion of PR #15.
 
 ## Blocked actions
 
@@ -87,17 +80,19 @@ Required behavior:
 
 ## Independent remaining gates
 
-This reconciliation requires:
+This reconciliation requires, in order:
 
-1. independent audit of the exact live head;
-2. explicit authorization for Ready for review;
-3. fresh live state verification;
-4. explicit authorization for merge.
+1. independent read-only audit of the exact live head;
+2. correction and re-audit of any valid **blocking** finding;
+3. separate user authorization for Ready for review over the exact audited head;
+4. Ready transition only for that authorized audited head;
+5. fresh live-state verification unconditionally before merge authorization;
+6. separate explicit authorization for merge over the approved head.
 
-Ready status does not authorize merge.
+Merge authorization remains separate from audit/readiness.
 
 ## Handoff expiration
 
-This handoff becomes invalid if repository, PR state, base, head, merge base, exact three-file scope, authorization or relevant canonical evidence changes.
+This handoff becomes invalid if repository, PR state, base, head, merge base, ahead/behind relationship, exact three-file scope, authorization or relevant canonical evidence changes.
 
-Any new commit invalidates a previously audited snapshot.
+Any new commit invalidates a previously audited snapshot and any Ready authorization tied to that snapshot until re-audit.
