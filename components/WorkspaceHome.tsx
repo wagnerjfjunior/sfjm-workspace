@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import {
+  calculateAcceptedProgramProgress,
   workspaceDemo,
   type ExternalProject,
   type ProgramMilestone,
@@ -46,6 +47,8 @@ function Sidebar({ open }: { open: boolean }) {
 }
 
 function ContinuityState() {
+  const progress = calculateAcceptedProgramProgress(workspaceDemo.fechaiProgram.milestones);
+
   return (
     <article className="panel statePanel" id="continue">
       <div>
@@ -68,9 +71,12 @@ function ContinuityState() {
         </div>
       </div>
       <div className="confidence">
-        <div className="ring programRing" style={{ background: `conic-gradient(var(--green) 0 ${workspaceDemo.fechaiProgram.overallProgress * 3.6}deg,#172238 ${workspaceDemo.fechaiProgram.overallProgress * 3.6}deg)` }}>
+        <div
+          className="ring programRing"
+          style={{ background: `conic-gradient(var(--green) 0 ${progress * 3.6}deg,#172238 ${progress * 3.6}deg)` }}
+        >
           <div className="ringContent">
-            <strong>{workspaceDemo.fechaiProgram.overallProgress.toFixed(2)}%</strong>
+            <strong>{progress.toFixed(2)}%</strong>
             <span>gates aceitos</span>
             <span>snapshot manual</span>
           </div>
@@ -184,6 +190,8 @@ function MilestoneCard({ milestone }: { milestone: ProgramMilestone }) {
 
 function FechaiProgramTracking() {
   const program = workspaceDemo.fechaiProgram;
+  const progress = calculateAcceptedProgramProgress(program.milestones);
+
   return (
     <article className="panel panelInner programPanel" id="fechai-program">
       <div className="sectionTitle programTitle">
@@ -197,7 +205,7 @@ function FechaiProgramTracking() {
       <div className="programSummary">
         <div>
           <span>Progresso ponderado</span>
-          <strong>{program.overallProgress.toFixed(2)}%</strong>
+          <strong>{progress.toFixed(2)}%</strong>
           <small>{program.weightingBasis}</small>
         </div>
         <div>
@@ -217,8 +225,8 @@ function FechaiProgramTracking() {
         </div>
       </div>
 
-      <div className="overallTrack" aria-label={`Progresso global ${program.overallProgress}%`}>
-        <div className="overallFill" style={{ width: `${program.overallProgress}%` }} />
+      <div className="overallTrack" aria-label={`Progresso global ${progress}%`}>
+        <div className="overallFill" style={{ width: `${progress}%` }} />
       </div>
       <div className="evidenceBoundary">{program.evidenceBoundary}</div>
 
@@ -231,16 +239,16 @@ function FechaiProgramTracking() {
 
 function RunbookRow({ item }: { item: RunbookItem }) {
   return (
-    <div className="runbookRow">
-      <div className="runbookId">{item.id}</div>
-      <div className="runbookTask">
+    <tr>
+      <th scope="row" data-label="ID">{item.id}</th>
+      <td data-label="Tarefa / evidência">
         <strong>{item.task}</strong>
         <small>{item.evidence}</small>
-      </div>
-      <div className="runbookOwner">{item.owner}</div>
-      <div><span className={`runbookState ${item.state.toLowerCase()}`}>{item.state}</span></div>
-      <div className="runbookNext">{item.nextAction}</div>
-    </div>
+      </td>
+      <td data-label="Owner">{item.owner}</td>
+      <td data-label="Estado"><span className={`runbookState ${item.state.toLowerCase()}`}>{item.state}</span></td>
+      <td data-label="Próxima ação">{item.nextAction}</td>
+    </tr>
   );
 }
 
@@ -254,11 +262,22 @@ function FechaiRunbook() {
         </div>
         <span className="manualBadge">READ_ONLY FIRST</span>
       </div>
-      <div className="runbookHeader">
-        <span>ID</span><span>Tarefa / evidência</span><span>Owner</span><span>Estado</span><span>Próxima ação</span>
-      </div>
-      <div className="runbookList">
-        {workspaceDemo.fechaiProgram.runbook.map((item) => <RunbookRow item={item} key={item.id} />)}
+      <div className="runbookScroll">
+        <table className="runbookTable">
+          <caption className="srOnly">Runbook operacional do M1 Security Truth Baseline</caption>
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Tarefa / evidência</th>
+              <th scope="col">Owner</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Próxima ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            {workspaceDemo.fechaiProgram.runbook.map((item) => <RunbookRow item={item} key={item.id} />)}
+          </tbody>
+        </table>
       </div>
     </article>
   );
@@ -344,7 +363,7 @@ export function WorkspaceHome() {
           <header className="topbar">
             <div>
               <h1>Bom dia, Wagner.</h1>
-              <p>Continue do estado verificado, sem reabrir gates encerrados.</p>
+              <p>De onde você precisa continuar hoje?</p>
             </div>
             <div className="tools">
               <button aria-label="Abrir menu" className="tool mobile" onClick={() => setMenuOpen((value) => !value)}>☰</button>
@@ -357,11 +376,11 @@ export function WorkspaceHome() {
             <section className="stack">
               <ContinuityState />
               <NextSafeAction onContinue={() => setModalOpen(true)} />
+              <PreservedContexts />
+              <JourneyOverview />
               <FechaiProgramTracking />
               <FechaiRunbook />
               <ExternalProjects />
-              <PreservedContexts />
-              <JourneyOverview />
               <article className="panel footer">
                 <span>SFJM preserva continuidade; FECH.AI permanece autoridade sobre o programa.</span>
                 <a href="#fechai-program">Abrir Roadmap →</a>
