@@ -27,9 +27,9 @@ Required gate:
 7. verify the UI does not claim automatic freshness, synchronization, Security Go or runtime proof;
 8. inspect reviews/threads/checks;
 9. correct and revalidate every material blocker;
-10. advance through Ready and merge only on a validated clean head.
+10. advance through Ready and complete pre-merge verification on a validated clean head; stop before merge.
 
-Product Authority has already authorized this bounded sequence through merge. That authority does not remove any technical/evidence gate.
+Product Authority has authorized this bounded correction sequence through Ready and pre-merge verification. Merge remains a separate lifecycle step and is not included in the current authorization.
 
 ## Candidate acceptance criteria
 
