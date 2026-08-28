@@ -45,13 +45,19 @@ export type ProgramSnapshot = {
   currentMilestone: string;
   securityGo: string;
   commercialization: string;
-  overallProgress: number;
   weightingBasis: string;
   evidenceBoundary: string;
   invalidatesOn: string;
   milestones: ProgramMilestone[];
   runbook: RunbookItem[];
 };
+
+export function calculateAcceptedProgramProgress(milestones: ProgramMilestone[]) {
+  return milestones.reduce(
+    (total, milestone) => total + milestone.weight * (milestone.acceptedPercent / 100),
+    0
+  );
+}
 
 export const workspaceDemo = {
   notice: "Snapshot manual verificado em fontes canônicas — sem sincronização automática, polling ou write-back.",
@@ -122,10 +128,9 @@ export const workspaceDemo = {
     currentMilestone: "M1 — Security Truth Baseline",
     securityGo: "NOT GRANTED",
     commercialization: "BLOCKED",
-    overallProgress: 6.25,
     weightingBasis: "Peso = duração planejada da janela; progresso só avança quando o gate do milestone é aceito.",
     evidenceBoundary: "STATIC != LIVE != RUNTIME · VERSIONED != APPLIED · RUNTIME_BOUNDED != SECURITY_GO",
-    invalidatesOn: "Mudança material em FECH.AI main, Issues #141/#150, lifecycle de workstreams ou evidência de Security Go.",
+    invalidatesOn: "Mudança material em FECH.AI main, Issues #141/#150, lifecycle de workstreams, evidência de Security Go ou decisão de comercialização."
     milestones: [
       {
         id: "M0",
