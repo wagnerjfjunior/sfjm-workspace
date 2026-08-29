@@ -4,122 +4,100 @@
 
 Repository: `wagnerjfjunior/sfjm-workspace`
 
-Live `main` is canonical for Workspace product state. FECH.AI remains canonical for FECH.AI product/security/program state.
+Live `main` is canonical for Workspace product state. External projects remain canonical for their own product, security, runtime and program state.
 
-## Current conversation continuity
+## Current Workspace state
 
-Current operating conversation label:
+The FECH.AI Security-to-Scale dashboard delivery cycle is complete.
 
-`SFJM Workspace — Chart 3`
-
-This label is an auxiliary continuity cue only. It does not authorize product/security actions and it never overrides GitHub `main`, FECH.AI canonical state or the current lifecycle state of the dashboard candidate.
-
-## Current Workspace initiative
-
-Selected tracking issue:
-
-`#18 — Track FECH.AI Security-to-Scale milestones in Continue`
-
-Bounded implementation candidate:
-
-- manual FECH.AI snapshot refresh;
-- Security-to-Scale M0–M6 program data;
-- Macro Roadmap / Executive View;
-- M1 Operational Runbook View;
-- source/ref/date/evidence boundary;
-- no automatic synchronization or write-back.
-
-Resolve its current PR/branch/head/lifecycle live rather than trusting a frozen identifier here.
-
-## FECH.AI snapshot carried by this candidate
-
-Observed on 2026-08-28:
+Canonical delivery anchors:
 
 ```text
-wagnerjfjunior/fecha.ai
-main: 3eeb6fd230309f206be7920607739f8e4545556f
-#141: OPEN / Security-to-Scale 2026
-#142: CLOSED / M0 completed
-#150: OPEN / M1 READ_ONLY FIRST
+PR #21: MERGED
+reviewed implementation head: 6d3b80bf65777754802559ba4767a0f2298a2878
+merge commit / main after PR #21:
+  0c8f03428ecd8f6b028f18bfaaefc98e20684f97
+Roadmap + Runbook: IMPLEMENTED IN MAIN
+Vercel status on merge commit: SUCCESS
+```
+
+The Workspace now contains:
+
+- FECH.AI M0–M6 Macro Roadmap / Executive View;
+- M1 Operational Runbook View;
+- manual source/ref/date provenance;
+- explicit evidence-boundary and invalidation language;
+- no automatic synchronization or write-back.
+
+Do not reopen the PR #21 delivery gate unless a material Workspace regression or new product authorization requires a new bounded change.
+
+## FECH.AI snapshot boundary
+
+The dashboard carries a manual FECH.AI snapshot observed on 2026-08-28.
+
+That snapshot is visualization evidence only. FECH.AI remains canonical.
+
+Before using FECH.AI state as current truth, resolve live in:
+
+`wagnerjfjunior/fecha.ai`
+
+At the carried snapshot:
+
+```text
+#141 Security-to-Scale 2026: OPEN
+#142 M0: CLOSED / completed
+#150 M1 Security Truth Baseline: OPEN / READ_ONLY FIRST
 Security Go: NOT GRANTED
 broad paid commercialization: BLOCKED
 ```
 
-Current durable FECH.AI workstream meaning:
+Any material FECH.AI change invalidates the dashboard snapshot until manually refreshed.
 
-- #139 ACTIVE;
-- #140 ACTIVE;
-- #131/#124 STALE_CONTINUITY;
-- #120 SUPERSEDED.
+## Program progress boundary
 
-Volatile heads/reviews/threads/checks must be resolved live in FECH.AI if material.
-
-## Progress rule
-
-The dashboard derives program progress from the milestone array itself:
+The dashboard derives represented progress from its versioned milestone array:
 
 ```text
 sum(milestone weight × accepted completion)
 ```
 
-At this snapshot M0 is the only accepted exit gate, contributing 6.25%. M1–M6 contribute zero until their canonical exit gates are accepted.
+At the carried snapshot M0 is the only accepted exit gate represented as complete. This percentage is a planning/accepted-gate visualization only; it is not a security-confidence, runtime-readiness or Security Go score.
 
-Do not interpret that percentage as security confidence, runtime readiness or Security Go.
+## Single continuation pointer
 
-## Lifecycle-aware next safe action
+The Workspace has no new implementation action after PR #21.
 
-Resolve the dashboard candidate lifecycle live, then apply exactly one branch:
+Its next continuity duty is to point the operator back to FECH.AI canonical state.
 
-### If the dashboard candidate is OPEN
-
-```text
-exact refs / drift
--> changed-file scope
--> lint
--> build
--> final-file read
--> delta revalidation of recorded findings
--> Ready only on a validated head
--> pre-merge verification
-```
-
-Product Authority authorized this bounded correction sequence through **pre-merge**. Merge is not part of the current authorization.
-
-### If the dashboard candidate is already MERGED
-
-Do not reopen its delivery gate.
-
-Return immediately to FECH.AI canonical continuity and execute the live-resolved M1 next action. At the current snapshot that means:
+Resolve the FECH.AI next safe action live before acting. At the carried snapshot, the semantic continuation was:
 
 ```text
-FECH.AI M1-A READ_ONLY:
-LIVE DB × GitHub main × applied migration ledger cross-check,
+M1-A — READ_ONLY
+LIVE DB × current GitHub main × applied migration ledger cross-check,
 including current privileged-surface evidence.
 ```
 
-The Workspace then returns to visualization/continuity duty only.
+The Workspace must not independently advance FECH.AI milestones, mutate FECH.AI, grant Security Go or infer current FECH.AI state from this snapshot.
 
-## Boundaries
+## Explicit boundaries
 
-Still prohibited from this Workspace delivery:
+From Workspace continuity alone, do not:
 
-- merge under the current authorization;
-- deployment;
-- backend/auth/database/Supabase;
-- automatic API/GitHub sync;
-- webhook/cron/polling;
-- external project mutation/write-back;
-- automatic Security Go/progress decisions;
-- modifying FECH.AI/MoreNumTegra/StopJuniorMode from Workspace work.
+- mutate `wagnerjfjunior/fecha.ai`;
+- mutate `wagnerjfjunior/MoreNumTegra`;
+- mutate `wagnerjfjunior/StopJuniorMode`;
+- add backend/auth/database/Supabase integration;
+- add automatic API/GitHub sync;
+- add webhook/cron/polling/background monitoring;
+- write back to external projects;
+- present manual snapshot data as automatically current.
 
 ## Invalidation
 
-This handoff becomes stale if:
+This handoff must be reconciled when:
 
-- Workspace main/candidate head/scope materially changes;
-- FECH.AI main or Issues #141/#150 materially change;
-- a milestone exit is accepted/revoked;
-- Security Go or commercialization decision changes;
-- a material dashboard delta introduces a direct regression.
-
-A new conversation must resolve live refs and continue from the applicable lifecycle-aware branch above. It must not restart completed gates.
+- Workspace `main` materially changes;
+- a new Workspace delivery initiative is selected;
+- FECH.AI changes materially and the dashboard snapshot is refreshed;
+- a material dashboard regression is established;
+- Product Authority changes the Workspace boundary or lifecycle model.
