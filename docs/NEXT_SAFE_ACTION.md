@@ -6,57 +6,70 @@ Repository:
 
 `wagnerjfjunior/sfjm-workspace`
 
-Current FECH.AI tracking authority:
+Current Workspace product state:
 
-- Workspace issue #18;
-- external canonical program `wagnerjfjunior/fecha.ai#141`;
-- active FECH.AI milestone `#150 M1 Security Truth Baseline`.
+```text
+PR #21 FECH.AI Roadmap + Runbook: MERGED
+merge commit / main:
+  0c8f03428ecd8f6b028f18bfaaefc98e20684f97
+Workspace delivery gate: CLOSED
+```
 
 ## Single immediate next safe action
 
-**Validate the active FECH.AI Roadmap + Runbook implementation candidate.**
+**Do not reopen the completed Workspace dashboard delivery. Resolve the canonical next action in the external project being continued.**
 
-Required gate:
+For FECH.AI:
 
-1. resolve Workspace `main` and candidate head live;
-2. confirm the candidate remains based on the intended current main or reconcile drift;
-3. confirm changed-file scope is bounded to dashboard data/UI/styles, the FECH.AI manual context and directly related continuity;
-4. run `npm run lint`;
-5. run `npm run build`;
-6. read all final material files through EOF;
-7. verify the UI does not claim automatic freshness, synchronization, Security Go or runtime proof;
-8. inspect reviews/threads/checks;
-9. correct and revalidate every material blocker;
-10. advance through Ready and complete pre-merge verification on a validated clean head; stop before merge.
+1. resolve `wagnerjfjunior/fecha.ai` live;
+2. read its current SFJM continuity authorities;
+3. resolve Issues #141 and #150 live;
+4. identify the current single next safe action from FECH.AI canonical evidence;
+5. execute only within FECH.AI's own authorization and evidence boundaries.
 
-Product Authority has authorized this bounded correction sequence through Ready and pre-merge verification. Merge remains a separate lifecycle step and is not included in the current authorization.
+At the Workspace snapshot observed on 2026-08-28, the semantic continuation was:
 
-## Candidate acceptance criteria
+```text
+M1-A — Security Truth Baseline / READ_ONLY
 
-- FECH.AI card no longer displays the obsolete July/F1-01 snapshot;
-- source repository, observed SHA and observation date are visible;
-- M0–M6 Roadmap is visible;
-- current milestone M1 is distinguishable;
-- Operational Runbook lists the M1-A–M1-F evidence sequence;
-- weighted progress is based only on accepted gates;
-- Security Go remains `NOT GRANTED`;
-- broad commercialization remains `BLOCKED`;
-- manual/demo boundary remains explicit;
-- desktop/mobile layout builds without material regression.
+LIVE DB × current GitHub main × applied migration ledger cross-check,
+including current privileged-surface evidence.
+```
 
-## Explicitly blocked
+This snapshot must not substitute for live FECH.AI resolution.
 
-- deploy;
-- Vercel configuration mutation;
-- backend/API;
-- auth/database/Supabase;
+## Workspace acceptance state
+
+The following are complete for the current delivery:
+
+- FECH.AI Roadmap M0–M6 represented;
+- M1 Operational Runbook represented;
+- source repository/ref/date visible;
+- manual snapshot boundary explicit;
+- Security Go remains clearly distinct from program progress;
+- broad commercialization boundary remains explicit;
+- dashboard implementation merged in `main`;
+- Vercel reported SUCCESS on the merge commit.
+
+## Explicitly blocked from Workspace continuity alone
+
+- reopening PR #21 without material invalidation;
+- changing FECH.AI canonical state;
+- deploy or Vercel configuration mutation;
+- backend/API/auth/database/Supabase implementation;
 - automatic sync, webhooks, cron or polling;
 - external-project write-back;
-- changing FECH.AI canonical state;
 - presenting snapshot data as automatically current.
 
-## Post-merge semantic continuation
+## Refresh rule
 
-After a clean merge, the Workspace returns to visualization duty. The FECH.AI canonical next action remains the live-resolved M1 action from `wagnerjfjunior/fecha.ai`; the Workspace must not independently advance FECH.AI milestones.
+A material external-project transition may require a new bounded manual snapshot refresh in the Workspace.
 
-Any material FECH.AI change invalidates the manual dashboard snapshot and requires a bounded refresh.
+That refresh must:
+
+1. resolve external canonical evidence live;
+2. update only the affected Workspace representation;
+3. preserve source/ref/date/evidence boundaries;
+4. follow a new bounded Workspace lifecycle.
+
+Do not convert snapshot maintenance into automatic synchronization without separate authorization.
