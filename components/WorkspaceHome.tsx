@@ -1,7 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { workspaceDemo, type ExternalProject, type SourceRow } from "@/data/workspace-demo";
+import {
+  calculateAcceptedProgramProgress,
+  workspaceDemo,
+  type ExternalProject,
+  type ProgramMilestone,
+  type RunbookItem,
+  type SourceRow
+} from "@/data/workspace-demo";
 
 function Sidebar({ open }: { open: boolean }) {
   return (
@@ -31,24 +38,26 @@ function Sidebar({ open }: { open: boolean }) {
         <span className="muted">Administrador</span>
       </div>
       <div className="sync">
-        ● Estado verificado
+        ● Snapshot manual
         <br />
-        <span className="muted">GitHub main · 24 Jul 2026</span>
+        <span className="muted">FECH.AI · {workspaceDemo.fechaiProgram.observedAt}</span>
       </div>
     </aside>
   );
 }
 
 function ContinuityState() {
+  const progress = calculateAcceptedProgramProgress(workspaceDemo.fechaiProgram.milestones);
+
   return (
     <article className="panel statePanel" id="continue">
       <div>
         <div className="eyebrow">Estado de continuidade</div>
         <div className="stateTitle">
           <div className="shield">✓</div>
-          <h2>MIGRAÇÃO ASSUMIDA</h2>
+          <h2>M1 ASSUMIDO</h2>
         </div>
-        <p>O Chat 2 assumiu o estado canônico e o Chat 1 foi aposentado após validação.</p>
+        <p>M0 foi encerrado no FECH.AI e o Security Truth Baseline é o milestone ativo. O Workspace representa um snapshot manual, não sincronização live.</p>
         <div className="checks">
           {workspaceDemo.checks.map((item) => (
             <div className="check" key={item.label}>
@@ -62,11 +71,14 @@ function ContinuityState() {
         </div>
       </div>
       <div className="confidence">
-        <div className="ring">
+        <div
+          className="ring programRing"
+          style={{ background: `conic-gradient(var(--green) 0 ${progress * 3.6}deg,#172238 ${progress * 3.6}deg)` }}
+        >
           <div className="ringContent">
-            <strong>MAIN</strong>
-            <span>Fonte canônica</span>
-            <span>Verificada</span>
+            <strong>{progress.toFixed(2)}%</strong>
+            <span>gates aceitos</span>
+            <span>snapshot manual</span>
           </div>
         </div>
       </div>
@@ -82,25 +94,25 @@ function NextSafeAction({ onContinue }: { onContinue: () => void }) {
       </div>
       <div className="actionContent">
         <div className="eyebrow">Próxima ação segura</div>
-        <h3>Ajustar a densidade desktop da Home</h3>
+        <h3>Executar M1-A em modo READ_ONLY</h3>
         <p className="muted">
-          Refinar espaçamentos e proporções para uso confortável em 100% de zoom, sem alterar a hierarquia aprovada.
+          Cruzar LIVE DB × GitHub main × migration ledger e estabelecer a superfície privilegiada realmente aplicada antes de qualquer simplificação.
         </p>
         <div className="metaRow">
           <div className="meta">
             Escopo
-            <strong>CSS da Home</strong>
+            <strong>Security Truth Baseline</strong>
           </div>
           <div className="meta">
             Estado
-            <strong>Aguardando autorização</strong>
+            <strong>M1 ativo</strong>
           </div>
           <div className="meta">
-            Integrações
-            <strong>Não autorizadas</strong>
+            Mutação
+            <strong>Bloqueada</strong>
           </div>
         </div>
-        <button className="primary" onClick={onContinue}>▶ REVISAR ESCOPO</button>
+        <button className="primary" onClick={onContinue}>▶ VER BOUNDARY</button>
       </div>
     </article>
   );
@@ -152,6 +164,125 @@ function ExternalProjects() {
   );
 }
 
+function MilestoneCard({ milestone }: { milestone: ProgramMilestone }) {
+  const contribution = milestone.weight * (milestone.acceptedPercent / 100);
+  return (
+    <div className={`milestoneCard ${milestone.status.toLowerCase()}`}>
+      <div className="milestoneTop">
+        <span className="milestoneId">{milestone.id}</span>
+        <span className="milestoneStatus">{milestone.status}</span>
+      </div>
+      <strong>{milestone.label}</strong>
+      <small>{milestone.window}</small>
+      <div className="progressTrack" aria-label={`${milestone.id} ${milestone.acceptedPercent}% aceito`}>
+        <div className="progressFill" style={{ width: `${milestone.acceptedPercent}%` }} />
+      </div>
+      <div className="milestoneMeta">
+        <span>Peso <b>{milestone.weight}%</b></span>
+        <span>Aceito <b>{milestone.acceptedPercent}%</b></span>
+        <span>Contribui <b>{contribution.toFixed(2)}%</b></span>
+      </div>
+      <p>{milestone.exit}</p>
+      <small>{milestone.owner}</small>
+    </div>
+  );
+}
+
+function FechaiProgramTracking() {
+  const program = workspaceDemo.fechaiProgram;
+  const progress = calculateAcceptedProgramProgress(program.milestones);
+
+  return (
+    <article className="panel panelInner programPanel" id="fechai-program">
+      <div className="sectionTitle programTitle">
+        <div>
+          <div className="eyebrow">Macro Roadmap / Executive View</div>
+          <h3>{program.name}</h3>
+        </div>
+        <span className="manualBadge">MANUAL · {program.observedAt}</span>
+      </div>
+
+      <div className="programSummary">
+        <div>
+          <span>Progresso ponderado</span>
+          <strong>{progress.toFixed(2)}%</strong>
+          <small>{program.weightingBasis}</small>
+        </div>
+        <div>
+          <span>Milestone atual</span>
+          <strong>{program.currentMilestone}</strong>
+          <small>{program.programIssue} · {program.repository}</small>
+        </div>
+        <div>
+          <span>Security Go</span>
+          <strong className="dangerText">{program.securityGo}</strong>
+          <small>Comercialização ampla: {program.commercialization}</small>
+        </div>
+        <div>
+          <span>Fonte observada</span>
+          <code>{program.observedSha}</code>
+          <small>{program.invalidatesOn}</small>
+        </div>
+      </div>
+
+      <div className="overallTrack" aria-label={`Progresso global ${progress}%`}>
+        <div className="overallFill" style={{ width: `${progress}%` }} />
+      </div>
+      <div className="evidenceBoundary">{program.evidenceBoundary}</div>
+
+      <div className="milestoneGrid">
+        {program.milestones.map((milestone) => <MilestoneCard milestone={milestone} key={milestone.id} />)}
+      </div>
+    </article>
+  );
+}
+
+function RunbookRow({ item }: { item: RunbookItem }) {
+  return (
+    <tr>
+      <th scope="row" data-label="ID">{item.id}</th>
+      <td data-label="Tarefa / evidência">
+        <strong>{item.task}</strong>
+        <small>{item.evidence}</small>
+      </td>
+      <td data-label="Owner">{item.owner}</td>
+      <td data-label="Estado"><span className={`runbookState ${item.state.toLowerCase()}`}>{item.state}</span></td>
+      <td data-label="Próxima ação">{item.nextAction}</td>
+    </tr>
+  );
+}
+
+function FechaiRunbook() {
+  return (
+    <article className="panel panelInner runbookPanel" id="fechai-runbook">
+      <div className="sectionTitle">
+        <div>
+          <div className="eyebrow">Operational Runbook View</div>
+          <h3>M1 — Security Truth Baseline</h3>
+        </div>
+        <span className="manualBadge">READ_ONLY FIRST</span>
+      </div>
+      <div className="runbookScroll">
+        <table className="runbookTable">
+          <caption className="srOnly">Runbook operacional do M1 Security Truth Baseline</caption>
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Tarefa / evidência</th>
+              <th scope="col">Owner</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Próxima ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            {workspaceDemo.fechaiProgram.runbook.map((item) => <RunbookRow item={item} key={item.id} />)}
+          </tbody>
+        </table>
+      </div>
+    </article>
+  );
+}
+
 function PreservedContexts() {
   return (
     <article className="panel panelInner">
@@ -174,7 +305,7 @@ function JourneyOverview() {
     <article className="panel panelInner" id="journey">
       <div className="sectionTitle">
         <h3>Visão da jornada</h3>
-        <a href="#journey">Ver jornada completa →</a>
+        <a href="#fechai-program">Ver programa →</a>
       </div>
       <div className="journey">
         {workspaceDemo.journey.map((item) => (
@@ -245,12 +376,14 @@ export function WorkspaceHome() {
             <section className="stack">
               <ContinuityState />
               <NextSafeAction onContinue={() => setModalOpen(true)} />
-              <ExternalProjects />
               <PreservedContexts />
               <JourneyOverview />
+              <FechaiProgramTracking />
+              <FechaiRunbook />
+              <ExternalProjects />
               <article className="panel footer">
-                <span>SFJM protege a continuidade cognitiva e operacional entre conversas de IA.</span>
-                <a href="#continue">Saiba mais sobre o SFJM →</a>
+                <span>SFJM preserva continuidade; FECH.AI permanece autoridade sobre o programa.</span>
+                <a href="#fechai-program">Abrir Roadmap →</a>
               </article>
             </section>
             <aside className="stack right">
@@ -263,8 +396,10 @@ export function WorkspaceHome() {
       </div>
       <div className={`modal ${modalOpen ? "open" : ""}`} role="dialog" aria-modal="true" aria-hidden={!modalOpen}>
         <div className="modalCard">
-          <h2>Escopo delimitado</h2>
-          <p className="muted">O ajuste de densidade permanece bloqueado até autorização separada. Esta interação é demonstrativa.</p>
+          <h2>Boundary M1</h2>
+          <p className="muted">
+            M1-A é read-only. DDL/DML, migration apply, Supabase mutation, deploy, Auth/business-data mutation e Security Go permanecem bloqueados.
+          </p>
           <div className="modalActions">
             <button className="secondary" onClick={() => setModalOpen(false)}>Fechar</button>
           </div>

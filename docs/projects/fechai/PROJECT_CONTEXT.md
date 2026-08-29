@@ -4,123 +4,176 @@
 
 `DOCUMENTATION_ONLY / MANUAL_SNAPSHOT / NO_AUTOMATIC_SYNC`
 
-Observed on: 2026-07-24
+Observed on: 2026-08-28
 
 ## Project identity
 
 - Project: FECH.AI
 - Canonical repository: `wagnerjfjunior/fecha.ai`
 - Canonical branch: `main`
-- Live `main` observed for this snapshot: `8a2eb00a9dcd46d7ee346741ca27c6081af52124`
-- Main tip message: `docs(sfjm): reconcile F1-01 state after PR 94 merge (#98)`
-- Open pull requests observed: `NONE`
+- Live `main` observed for this snapshot: `3eeb6fd230309f206be7920607739f8e4545556f`
+- Program authority: Issue #141 — `Security-to-Scale 2026`
+- Current milestone work item: Issue #150 — `M1: Security Truth Baseline`
 - Workspace repository: `wagnerjfjunior/sfjm-workspace`
 
-The FECH.AI repository remains the only canonical source for FECH.AI product, governance, runtime and security state. This Workspace record is a bounded external-project context snapshot and must not override FECH.AI versioned evidence.
+FECH.AI remains the only canonical authority for FECH.AI product, security, architecture, runtime, lifecycle, milestone and authorization state. This Workspace record is a bounded manual snapshot only.
 
-## SFJM application state inside FECH.AI
+## Security-to-Scale transition
 
-The SFJM documentation and continuity layer inside FECH.AI is complete and reconciled through the merged continuity cycle represented by PRs #95, #96, #97 and the later product-state reconciliation in PR #98.
+Current verified program transition at this snapshot:
 
-This completion means:
+```text
+#141 Security-to-Scale 2026: OPEN
+#142 M0 Truth Reconciliation: CLOSED / completed
+PR #149 M0 SFJM publication: MERGED
+PR #151 M0 -> M1 SFJM transition: MERGED
+#150 M1 Security Truth Baseline: OPEN / READ_ONLY FIRST
+Security Go: NOT GRANTED
+Broad paid commercialization: BLOCKED
+```
 
-- the FECH.AI repository contains its versioned SFJM continuity layer;
-- canonical entry, current-state, authorization, freshness, handoff and next-safe-action records exist in FECH.AI;
-- the post-merge continuity cycle was reconciled and closed;
-- future conversations must resolve live GitHub state rather than rely on this snapshot.
+M0 is complete only for its analytical/documentation purpose. It did not establish a broad current live-database security PASS, runtime Security Go or commercial readiness.
 
-It does not mean:
+## Durable workstream classification
 
-- FECH.AI product work is complete;
-- MVP Família is accepted or ready;
-- Security Go was granted;
-- runtime or Supabase was validated;
-- tenant isolation was proven;
-- WDP was awarded;
-- F1-01 checkpoint acceptance was granted.
+At M1 entry:
 
-## F1-01 product-governance state
+- #139: `ACTIVE` — user-creation membership-boundary implementation; resolve current lifecycle/findings live before acting;
+- #140: `ACTIVE` — read-only Supabase Action/config evidence workstream; static versioned config does not itself prove current runtime Action/Builder application;
+- #131: `STALE_CONTINUITY`;
+- #124: `STALE_CONTINUITY`;
+- #120: `SUPERSEDED`.
 
-FECH.AI PR #94, `docs(m1): add F1-01 acceptance evidence map`, is closed and squash-merged.
+Volatile heads, review-thread state, checks and mergeability must always be resolved live in FECH.AI rather than trusted from this snapshot.
 
-Final verified state:
+## M1 objective and runbook
 
-- final head: `a7e64c6ed817c03c4dbce7e1b9642e20360b3010`;
-- squash commit: `1caf90c60681771af6609b96ee840b190668fa0f`;
-- reaudit result: `PASS WITH RESIDUAL RISK`;
-- review threads: 6 resolved, 0 open;
-- post-merge reconciliation: PR #98 merged into `main`.
+M1 is `READ_ONLY FIRST`.
 
-The F1-01 evidence map is merged, but checkpoint acceptance remains `NOT GRANTED`. The merge does not grant Security Go, validate runtime or Supabase, prove tenant isolation, confirm MVP Família readiness or award WDP.
+Required workstreams:
+
+1. **M1-A** — LIVE DB × GitHub main × applied migration ledger cross-check;
+2. **M1-B** — current privileged-surface inventory;
+3. **M1-C** — tenant-isolation proof plan and isolated runtime/staging requirements;
+4. **M1-D** — dependency / known-vulnerability inventory;
+5. **M1-E** — secrets / infrastructure attack-surface inventory;
+6. **M1-F** — documentation/evidence reconciliation and one M1 verdict / next safe action.
+
+M1 evidence acquisition does not authorize DDL/DML, migration application, Supabase mutation, Auth/business-data mutation, deploy, production offensive testing, database simplification implementation or Security Go.
+
+## Program roadmap representation
+
+The Workspace dashboard represents M0–M6 as a **manual planning snapshot**.
+
+Weighting rule:
+
+```text
+milestone weight = planned target-window duration / total Security-to-Scale window
+program progress = sum(weight × accepted milestone completion)
+```
+
+No partial milestone progress is inferred from activity, PR count or subjective health. A milestone contributes only to the extent its exit gate has been accepted by canonical FECH.AI evidence.
+
+Current accepted values in this snapshot:
+
+| Milestone | Planned window | Weight | Accepted completion | Program contribution |
+|---|---|---:|---:|---:|
+| M0 | 28 Aug–4 Sep | 6.25% | 100% | 6.25% |
+| M1 | 4–18 Sep | 12.50% | 0% | 0% |
+| M2 | 18 Sep–9 Oct | 18.75% | 0% | 0% |
+| M3 | 9–30 Oct | 18.75% | 0% | 0% |
+| M4 | 30 Oct–27 Nov | 25.00% | 0% | 0% |
+| M5 | 27 Nov–11 Dec | 12.50% | 0% | 0% |
+| M6 | 11–18 Dec | 6.25% | 0% | 0% |
+
+Current weighted program progress represented in the Workspace: **6.25%**.
+
+This percentage is a planning/accepted-gate visualization, not a Security Go score, delivery confidence score or runtime-security score.
+
+## Evidence boundary
+
+Preserve:
+
+```text
+STATIC_IMPLEMENTATION_REVIEW != LIVE_DATABASE_VALIDATED
+LIVE_DATABASE_VALIDATED != CONTROLLED_RUNTIME_PASS
+CONTROLLED_RUNTIME_PASS != SECURITY_GO
+PR_HEAD_ONLY != CURRENT_LIVE_DATABASE_TRUTH
+VERSIONED != MERGED != APPLIED != DEPLOYED != RUNTIME_TESTED
+```
+
+Historical catalog counts or runtime results remain evidence-at-capture until revalidated when material.
+
+## Current next safe action
+
+Canonical FECH.AI semantic next action at this snapshot:
+
+> Execute M1-A READ_ONLY: establish current LIVE DB × GitHub main × applied migration ledger truth, including the current privileged-surface evidence needed before simplification or implementation decisions.
+
+Primary specialist sequence:
+
+```text
+backend_data -> backend-data-platform-specialist
+application_security -> application-security-assurance-specialist
+documentation_audit -> documentation-auditor
+```
+
+Manual specialist transport may be used when the SES runtime route is unavailable; no Gateway receipt may be invented.
+
+## Current blockers preserved
+
+- Security Go: `NOT GRANTED`;
+- broad paid commercialization: `BLOCKED`;
+- F1-02 final acceptance: blocked;
+- WDP increase: requires governance acceptance;
+- current M1 live-database truth: not yet established;
+- current M1 privileged-surface truth: not yet established;
+- current dependency/vulnerability truth: not yet established;
+- current infrastructure/secrets attack-surface truth: not yet established;
+- #139 and #140 remain separate workstreams and are not advanced by this Workspace snapshot.
 
 ## Workspace representation boundary
 
-SFJM Workspace may represent FECH.AI as an external project context using versioned, manually refreshed evidence.
+The Workspace does not implement:
 
-This record authorizes no automatic behavior. It does not implement:
-
-- GitHub API ingestion;
-- automatic synchronization;
+- automatic GitHub ingestion;
+- API/webhook/cron/polling synchronization;
 - background monitoring;
 - write-back to FECH.AI;
-- backend or database integration;
-- Supabase integration;
-- runtime or deployment monitoring;
+- backend/database/Supabase integration;
+- runtime/deployment monitoring;
 - automatic state scoring;
-- automatic approval, merge, Security Go, checkpoint acceptance or WDP decisions.
+- automatic approval, Ready, merge, Security Go or commercialization decisions.
 
-Any Workspace interface derived from this record must label the data as demonstrative or manually verified and must include the source repository, observed SHA and observation date.
+The UI must label this data as manual and must show source repository, observed SHA and observation date.
 
-## Current bounded state
+## Refresh / invalidation rule
 
-- SFJM continuity layer in FECH.AI: `COMPLETE`
-- FECH.AI product lifecycle: `ACTIVE`
-- Active phase: `MVP 1 — Família`
-- Open pull requests: `NONE`
-- F1-01 evidence map: `MERGED`
-- F1-01 checkpoint acceptance: `NOT GRANTED`
-- Security Go: `NOT GRANTED`
-- MVP Família readiness: `NOT CONFIRMED`
-- Runtime validation: `NOT CONFIRMED`
-- Supabase live security state: `NOT CONFIRMED`
-- Tenant isolation: `NOT PROVEN`
-- WDP: `0 / NOT AWARDED`
-- Next workstream: `F1-02 PLANNED / READ-ONLY / NOT AUTHORIZED FOR EXECUTION`
-- Workspace synchronization: `NOT IMPLEMENTED`
+This snapshot becomes stale when any material FECH.AI state changes, including:
+
+- FECH.AI `main`;
+- Issue #141 or #150 state/scope;
+- milestone exit acceptance;
+- active workstream classification;
+- evidence class or major security finding;
+- Security Go or commercialization decision;
+- Workspace representation contract.
+
+A stale snapshot must be manually revalidated against FECH.AI canonical evidence before it supports a current conclusion.
 
 ## Canonical sources to consult
 
-In `wagnerjfjunior/fecha.ai`, resolve live and read at minimum:
+Resolve live in `wagnerjfjunior/fecha.ai`:
 
 - `docs/bootstrap/INDEX.md`;
+- `docs/skills/SES_SPECIALIST_ROUTING.md`;
 - `docs/sfjm/INDEX.md`;
 - `docs/sfjm/CURRENT_STATE.md`;
 - `docs/sfjm/NEXT_SAFE_ACTION.md`;
 - `docs/sfjm/BLOCKED_ACTIONS.md`;
 - `docs/sfjm/AUTHORIZATIONS.md`;
 - `docs/sfjm/EVIDENCE_FRESHNESS.md`;
-- `docs/sfjm/handoffs/CURRENT.md`.
-
-For F1-01 or F1-02 work, also resolve the applicable B0, M1 and product-scope records and the live pull-request state.
-
-## Refresh rule
-
-This snapshot becomes stale when any of the following changes:
-
-- FECH.AI `main` tip;
-- open pull-request set;
-- FECH.AI authorization state;
-- active product phase or selected workstream;
-- Security Go, F1-01, runtime, Supabase, tenant isolation or WDP decision;
-- the Workspace representation contract.
-
-A stale snapshot must be revalidated against live GitHub before it supports any current conclusion.
-
-## Next safe action
-
-After independent review of this documentation-only record, select one bounded Workspace action:
-
-1. expose FECH.AI as a manually verified demonstrative project card using this contract; or
-2. refresh this external-project snapshot if FECH.AI canonical state changes.
-
-Neither option authorizes automatic integration, F1-02 execution or changes in `wagnerjfjunior/fecha.ai`.
+- `docs/sfjm/handoffs/CURRENT.md`;
+- Issue #141;
+- Issue #150;
+- current material PRs when relevant.
