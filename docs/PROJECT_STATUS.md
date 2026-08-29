@@ -2,7 +2,7 @@
 
 ## Status date
 
-2026-08-28
+2026-08-29
 
 ## Canonical product repository
 
@@ -16,45 +16,52 @@ Product-state precedence:
 4. `docs/NEXT_SAFE_ACTION.md`;
 5. other versioned Workspace documents.
 
-External projects remain authoritative for their own product/security/runtime state.
+External projects remain authoritative for their own product/security/runtime/program state.
 
 ## Canonical delivery state
 
-Current `main` at the dashboard implementation start:
+Current canonical delivery anchor after the FECH.AI dashboard cycle:
 
-`ae7e9984edd917885a9509732355f7a8d5652fe7`
+```text
+PR #21: MERGED
+implementation head:
+  6d3b80bf65777754802559ba4767a0f2298a2878
+merge commit / main:
+  0c8f03428ecd8f6b028f18bfaaefc98e20684f97
+Vercel status on merge commit: SUCCESS
+```
 
 Relevant completed cycles include:
 
 - FECH.AI external context and Continue representation;
 - MoreNumTegra external manual context;
 - PR #20 canonical Workspace bootstrap;
-- PR #19 continuity reconciliation selecting FECH.AI Security-to-Scale tracking.
+- PR #19 continuity reconciliation selecting FECH.AI Security-to-Scale tracking;
+- PR #21 FECH.AI Security-to-Scale Roadmap + Runbook implementation.
 
-Tracking issue:
+## Implemented product state
 
-`sfjm-workspace#18 — Track FECH.AI Security-to-Scale milestones in Continue`
+The Workspace now includes:
 
-## Current implementation candidate
+1. approved Continue/Home continuity hierarchy;
+2. Estado de Continuidade;
+3. Próxima Ação Segura;
+4. Contextos Preservados;
+5. Visão da Jornada;
+6. FECH.AI Macro Roadmap / Executive View;
+7. FECH.AI M1 Operational Runbook View;
+8. manual source/ref/date and invalidation provenance;
+9. explicit Security Go and commercialization boundary labels.
 
-The active bounded candidate implements the selected FECH.AI program-tracking initiative:
+The dashboard remains a manually refreshed visualization. It is not an automatic monitoring or synchronization system.
 
-1. refresh the manual FECH.AI external-project snapshot;
-2. add a manual Security-to-Scale data model;
-3. render an integrated **Macro Roadmap / Executive View**;
-4. render an **Operational Runbook View** for the active M1 milestone;
-5. preserve manual/demo provenance and FECH.AI authority;
-6. validate lint/build and exact changed-file scope before Ready and pre-merge verification.
+## FECH.AI snapshot represented
 
-Resolve the current candidate branch/PR/head live; this document intentionally does not freeze its volatile PR number or head.
-
-## FECH.AI canonical snapshot represented
-
-Observed manually on 2026-08-28:
+The current versioned dashboard carries a manual snapshot observed on 2026-08-28:
 
 ```text
 repository: wagnerjfjunior/fecha.ai
-main: 3eeb6fd230309f206be7920607739f8e4545556f
+observed main: 3eeb6fd230309f206be7920607739f8e4545556f
 #141 Security-to-Scale 2026: OPEN
 #142 M0: CLOSED / completed
 #150 M1 Security Truth Baseline: OPEN / READ_ONLY FIRST
@@ -62,7 +69,7 @@ Security Go: NOT GRANTED
 broad paid commercialization: BLOCKED
 ```
 
-The Workspace does not become authority over those facts. A material FECH.AI change invalidates this manual snapshot.
+This is evidence-at-capture only. Resolve FECH.AI live before using those facts as current operational truth.
 
 ## Program progress representation
 
@@ -71,23 +78,14 @@ Progress is not inferred from PR count, activity, subjective health or elapsed t
 Dashboard rule:
 
 ```text
-milestone weight = planned target-window duration / total program window
-program progress = sum(weight × accepted milestone completion)
+program progress = sum(milestone weight × accepted milestone completion)
 ```
 
-Only accepted milestone exit evidence contributes.
+Only accepted milestone-exit evidence represented by the versioned snapshot contributes.
 
-Current manual snapshot:
-
-- M0: accepted complete → contributes 6.25%;
-- M1–M6: no exit gate accepted → contribute 0%;
-- represented total: **6.25%**.
-
-This is a planning/accepted-gate indicator, not a Security Go, runtime-security or confidence score.
+The displayed percentage is a planning/accepted-gate visualization, not a Security Go, runtime-security or confidence score.
 
 ## Demonstrative/manual boundary
-
-The dashboard remains a manually refreshed visualization.
 
 Not implemented or implied:
 
@@ -96,28 +94,28 @@ Not implemented or implied:
 - webhook/cron/polling/background monitoring;
 - automatic synchronization;
 - write-back to FECH.AI or MoreNumTegra;
-- automatic approval/Ready/merge;
+- automatic milestone advancement;
 - Security Go automation;
 - deployment/runtime monitoring.
 
-## Current validation gate
+## Current lifecycle state
 
-Before lifecycle advancement of the dashboard candidate:
+The PR #21 delivery gate is closed and must not be reopened without material invalidation.
 
-- run `npm run lint`;
-- run `npm run build`;
-- inspect exact diff and changed-file set;
-- read final material files through EOF;
-- confirm FECH.AI source/ref/date and manual labeling;
-- correct every material review finding;
-- revalidate any new head.
+Current Workspace duty:
 
-Product Authority has authorized the current bounded correction sequence through Ready and pre-merge verification. Merge is a separate step and is not included in the current authorization.
+```text
+VISUALIZATION / CONTINUITY
+```
 
-## Not authorized
+The next operational action belongs to the canonical external project whose work is being continued.
+
+For FECH.AI, resolve its live canonical next action before execution. The carried snapshot points to M1-A READ_ONLY, but the Workspace does not independently establish that as current after any later FECH.AI change.
+
+## Not authorized by this Workspace state alone
 
 - deployment or Vercel configuration changes;
-- backend/auth/database/Supabase;
+- backend/auth/database/Supabase implementation;
 - automatic synchronization;
 - external-project mutation/write-back;
 - changes to `wagnerjfjunior/fecha.ai`;
@@ -126,4 +124,4 @@ Product Authority has authorized the current bounded correction sequence through
 
 ## Rollback
 
-If later merged, rollback is a single revert of the bounded dashboard implementation PR.
+If the Roadmap + Runbook implementation must be reverted, the bounded implementation unit is PR #21 / merge commit `0c8f03428ecd8f6b028f18bfaaefc98e20684f97`.
