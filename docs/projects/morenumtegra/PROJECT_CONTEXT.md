@@ -2,111 +2,143 @@
 
 ## Record status
 
-`DOCUMENTATION_ONLY / MANUAL_SNAPSHOT / NO_AUTOMATIC_SYNC`
+`DOCUMENTATION_ONLY / MANUAL_SNAPSHOT / UNIFIED_DASHBOARD_INPUT / NO_AUTOMATIC_SYNC`
 
-Observed on: 2026-08-28
+Observed on: 2026-08-30
 
 ## Project identity
 
 - Project: MoreNumTegra
 - Canonical repository: `wagnerjfjunior/MoreNumTegra`
 - Canonical branch: `main`
-- Live `main` observed for this snapshot: `3eca0d4fc212ef5bb499c92534dedd5ac86094e6`
-- Production commercial URL observed: `https://moretegra.com.br`
+- Live `main` observed: `5befb0efee8e4bd6ca96bb594c010afded24056e`
+- Published release recorded by consumer: `18cfab98e01be29c86d78d08f2f5035a8da70444`
+- Production commercial URL: `https://moretegra.com.br/`
 - Public homologation URL: `https://morenumtegra.vercel.app/`
 - Workspace repository: `wagnerjfjunior/sfjm-workspace`
 
-The MoreNumTegra repository remains the only canonical source for product truth, lifecycle, implementation, Green/Vercel state, commercial data, authorization and next-safe-action state. This Workspace record is a bounded external-project snapshot and must not override MoreNumTegra versioned evidence.
+MoreNumTegra remains the only authority for its product truth, lifecycle, implementation, Green/Vercel state, commercial data and authorization.
+
+SFJM Workspace consolidates a bounded snapshot only.
 
 ## Current bounded state observed
 
-The MoreNumTegra project documentation records the V1 Green commercial production as functionally homologated.
+Consumer sources on 2026-08-30 record:
 
-Observed state includes:
+- V1 production live in Green Sales;
+- Search + Conversion release completed;
+- 21 unique developments / 23 opportunities/cards;
+- Prêmio Master Imobiliário 2026 treatment in production;
+- Nova Vivere 105 m² cash offer;
+- CAPIITOLO cash offer;
+- Form 46, filters, WhatsApp and mobile flows confirmed functional by owner;
+- title/meta description and Search metadata package deployed;
+- Vercel remains homologation/noindex;
+- P0-B Search/indexability remains pending;
+- Measurement Foundation remains not configured for MoreNumTegra.
 
-- Green Sales as commercial V1 production;
-- `moretegra.com.br` operational over HTTPS;
-- HTTP -> HTTPS redirect on the root domain;
-- favicon active;
-- 21-project catalogue;
-- filters validated on desktop/mobile;
-- search by name/neighborhood validated on mobile;
-- ELO and ODE promotional states validated in production;
-- WhatsApp CTA validated;
-- Green native Form 46 submit and lead persistence validated;
-- floating CTAs corrected through project PR #27 and observed across Form 46, HTML 02 and footer;
-- canonical future flow preserved as GitHub -> Vercel -> Green.
+## Search / measurement capability observed
 
-The functional release reference recorded by MoreNumTegra is:
+The MoreNumTegra consumer records Green native capability for:
 
-`2d1f9d656761433102f95e4c80bfdebf47f3607e`
+- Meta/Facebook Pixel;
+- Google Tag Manager;
+- Google Analytics;
+- visualization/conversion/web-send/API-conversion controls.
 
-The later canonical `main` snapshot observed for this Workspace record is:
+This is capability evidence only.
 
-`3eca0d4fc212ef5bb499c92534dedd5ac86094e6`
+```text
+CAPABILITY_OBSERVED != TRACKING_CONFIGURED
+LGPD_MODAL_ACTIVE != CONSENT_ENFORCEMENT_PROVEN
+```
 
-That later SHA contains the project-state documentation closure and does not replace the functional release reference.
+No MoreNumTegra Meta/GTM/GA4 IDs are represented here as configured.
 
-## Non-blocking operational pending item
+## Search provider feed
 
-At the observation time:
+Provider:
 
-- `www.moretegra.com.br` CNAME was configured in Green Sales;
-- certificate validation for the `www` hostname remained pending;
-- the root domain `moretegra.com.br` was already operational and this `www` item was recorded as non-blocking.
+`wagnerjfjunior/Blogs-sites-portais-seo`
+
+Observed provider main:
+
+`d0f6e4c9879a48bdac00bea1cf40056e04bf736c`
+
+Provider PR #10 is merged.
+
+Provider outputs include:
+
+- Prêmio Master Imobiliário Search guidance;
+- conversion pricing strategy;
+- technical SEO metadata decision;
+- P0/P1/P2 Search prioritization.
+
+The provider explicitly preserves:
+
+```text
+PROVIDER_SPECIALIST_WORK != CONSUMER_PROJECT_MUTATION
+SEARCH_GUIDANCE != CONSUMER_IMPLEMENTATION_AUTHORITY
+```
+
+The provider does not maintain a parallel MoreNumTegra SFJM/dashboard. It supplies versioned inputs to the unified SFJM Workspace dashboard.
+
+## Current MoreNumTegra next safe action observed
+
+Consumer next action on 2026-08-30:
+
+1. provider lifecycle resolved;
+2. begin P0-B Search/indexability;
+3. later Measurement Foundation under a separate gate;
+4. Search Console/monitoring after capability/authorization;
+5. Google Ads conversion setup after measurement;
+6. SEM only after tracking PASS and spend authorization.
 
 ## Workspace representation boundary
 
-SFJM Workspace may represent MoreNumTegra as an external project context using manually refreshed evidence.
+This record does not authorize:
 
-This record implements no automatic behavior. It does not authorize or implement:
-
-- GitHub ingestion or continuous synchronization;
-- Vercel or Green API synchronization;
-- automatic production monitoring;
-- write-back to MoreNumTegra;
-- DNS changes;
-- Green Sales publication;
+- MoreNumTegra mutation;
+- provider mutation;
+- automatic GitHub ingestion;
+- Vercel/Green API synchronization;
+- production monitoring;
+- write-back;
+- DNS;
+- Search Console;
 - analytics/pixels/tags;
-- Search/SEO/SEM mutation;
-- commercial-data mutation;
-- backend, database or CMS integration.
+- campaign/spend.
 
-Any Workspace interface derived from this record must label the data as manual/demonstrative and display repository, observed SHA and observation date.
+Dashboard aggregation contract:
+
+`docs/UNIFIED_DASHBOARD_AGGREGATION_CONTRACT.md`
 
 ## Canonical sources to consult
 
-Resolve MoreNumTegra live and read at minimum:
+For current MoreNumTegra truth, resolve live and read at minimum:
 
 - `bootstrap/BOOTSTRAP_CANONICO.md`;
 - `handoffs/CURRENT.md`;
 - `docs/PROJECT_STATUS.md`;
 - `docs/NEXT_SAFE_ACTION.md`;
-- `docs/BLOCKED_ACTIONS.md`;
-- applicable baselines/ADR.
+- `docs/BLOCKED_ACTIONS.md`.
 
-For specialist routing, resolve the SES Project Adapter separately; the Workspace does not replace SES registration or adoption rules.
+For current Search provider truth:
 
-## Current next safe action observed
-
-The project next-safe-action record currently places MoreNumTegra in Green V1 operational maintenance.
-
-The immediate bounded action is:
-
-1. keep Green production stable;
-2. when Green finishes the `www` certificate, validate `https://www.moretegra.com.br`;
-3. route every future material change through GitHub branch/PR -> Vercel Preview -> merge main -> Vercel Production -> Green Sales -> production smoke.
+- resolve `wagnerjfjunior/Blogs-sites-portais-seo main`;
+- read its bootstrap/handoff/status/next-safe-action;
+- use versioned provider result/evidence paths.
 
 ## Refresh rule
 
 This snapshot becomes stale when any of the following changes:
 
-- MoreNumTegra `main` tip;
-- project continuity or next-safe-action state;
+- MoreNumTegra main/release/continuity;
 - Green/Vercel production state;
-- domain/certificate state;
-- catalogue/commercial facts materially relevant to the displayed state;
+- Search/indexability state;
+- measurement/tracking state;
+- provider main/result/lifecycle;
 - authorization boundaries;
-- Workspace representation contract.
+- Workspace aggregation contract.
 
-A stale snapshot must be refreshed from MoreNumTegra live before supporting a current conclusion.
+A stale snapshot must be refreshed from both consumer and provider live before supporting a current dashboard conclusion.
