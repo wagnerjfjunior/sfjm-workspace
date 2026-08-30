@@ -95,7 +95,7 @@ export const workspaceDemo = {
     { label: "Handoff", value: "Assumido" },
     { label: "Conversa atual", value: "Chart 3" },
     { label: "Milestone", value: "M1 ativo" },
-    { label: "Próxima ação", value: "M1-A read-only" },
+    { label: "Próxima ação", value: "Selecionar próximo workstream FECH.AI" },
     { label: "Security Go", value: "Não concedido" }
   ] satisfies StatusCheck[],
 
@@ -103,21 +103,20 @@ export const workspaceDemo = {
     {
       name: "FECH.AI",
       kind: "Projeto externo",
-      continuityState: "M0 fechado · M1 Security Truth Baseline ativo",
-      nextSafeAction: "Executar M1-A READ_ONLY: LIVE DB × GitHub main × migration ledger e inventário atual de superfícies privilegiadas.",
+      continuityState: "M1 ativo · APPSEC-M1-003 public.leads concluído no nível implementação/catálogo",
+      nextSafeAction: "Selecionar exatamente um próximo workstream material no FECH.AI; não reabrir public.leads sem evento material.",
       blockers: [
         "Security Go não concedido",
         "Comercialização ampla paga bloqueada",
-        "F1-02 final acceptance bloqueado",
-        "WDP increase depende de governança",
-        "M1 live database truth ainda não estabelecida",
-        "#139 permanece workstream ativo e exige revalidação live antes de lifecycle",
-        "#140 config estática não prova Action/Builder runtime"
+        "CONTROLLED_RUNTIME_NEGATIVE_PASS = NOT_ESTABLISHED para public.leads",
+        "MIGRATION_LEDGER_PROVENANCE = NON_BLOCKING_PROVENANCE_RESIDUAL",
+        "M1 #150 permanece OPEN",
+        "#139 e #140 permanecem workstreams separados até revalidação live"
       ],
       repository: "wagnerjfjunior/fecha.ai",
-      observedSha: "3eeb6fd230309f206be7920607739f8e4545556f",
-      observedAt: "28 Aug 2026",
-      verification: "Snapshot manual · FECH.AI continua sendo a autoridade"
+      observedSha: "a15dde5067c716b0ab3c9342855069c1fc00bcd0",
+      observedAt: "30 Aug 2026",
+      verification: "Snapshot manual · PR #152 merged/applied · PR #153 merged · Vercel success"
     },
     {
       name: "MoreNumTegra",
@@ -172,8 +171,8 @@ export const workspaceDemo = {
   fechaiProgram: {
     name: "FECH.AI Security-to-Scale 2026",
     repository: "wagnerjfjunior/fecha.ai",
-    observedSha: "3eeb6fd230309f206be7920607739f8e4545556f",
-    observedAt: "28 Aug 2026",
+    observedSha: "a15dde5067c716b0ab3c9342855069c1fc00bcd0",
+    observedAt: "30 Aug 2026",
     programIssue: "#141",
     currentMilestone: "M1 — Security Truth Baseline",
     securityGo: "NOT GRANTED",
@@ -259,8 +258,8 @@ export const workspaceDemo = {
         task: "LIVE DB × GitHub main × applied migration ledger",
         owner: "backend_data",
         state: "ACTIVE",
-        evidence: "Current live truth not yet established for M1.",
-        nextAction: "Run bounded read-only catalog/migration cross-check."
+        evidence: "M1 #150 permanece OPEN. No slice public.leads, LIVE_DATABASE_CONTROL_PRESENT = PROVEN, RLS preservation = PASS e data compatibility = PASS.",
+        nextAction: "Não inferir saída completa do M1-A pelo slice public.leads; resolver o próximo workstream FECH.AI pela fonte canônica."
       },
       {
         id: "M1-B",
@@ -275,8 +274,8 @@ export const workspaceDemo = {
         task: "Tenant-isolation proof plan",
         owner: "application_security",
         state: "PENDING",
-        evidence: "No broad current runtime proof claimed.",
-        nextAction: "Define static/live/runtime proof boundaries and isolated-test requirements."
+        evidence: "public.leads tem controle de catálogo provado; CONTROLLED_RUNTIME_NEGATIVE_PASS permanece NOT_ESTABLISHED.",
+        nextAction: "Preservar STATIC/LIVE/RUNTIME separados e não executar teste adversarial em produção."
       },
       {
         id: "M1-D",
@@ -326,13 +325,13 @@ export const workspaceDemo = {
   currentState: [
     { label: "Estado de continuidade", value: "M1 ativo" },
     { label: "Conversa ativa", value: "Workspace — Chart 3" },
-    { label: "FECH.AI", value: "M0 fechado · M1 ativo" },
+    { label: "FECH.AI", value: "M1 ativo · public.leads concluído" },
     { label: "Search / SEO", value: "Consolidado no Workspace" },
     { label: "Fonte canônica", value: "GitHub / main" }
   ] satisfies SourceRow[],
 
   sources: [
-    { label: "FECH.AI main", value: "3eeb6fd2…", badge: true },
+    { label: "FECH.AI main", value: "a15dde50…", badge: true },
     { label: "Program issue", value: "#141", badge: true },
     { label: "M1 issue", value: "#150", badge: true },
     { label: "MoreNumTegra", value: "5befb0ef…", badge: true },
@@ -341,6 +340,8 @@ export const workspaceDemo = {
   ] satisfies SourceRow[],
 
   timeline: [
+    { date: "30 Aug 2026", text: "FECH.AI PR #153 mergeada; continuidade public.leads reconciliada e Vercel pós-merge em SUCCESS" },
+    { date: "30 Aug 2026", text: "APPSEC-M1-003 public.leads: migration aplicada, controle live provado e residual runtime-negative preservado" },
     { date: "30 Aug 2026", text: "SFJM Workspace definido como dashboard único; Search provider passa a alimentar snapshot consolidado" },
     { date: "30 Aug 2026", text: "MoreNumTegra atualizado para release Search + Conversion e provider PR #10 integrada" },
     { date: "28 Aug 2026", text: "FECH.AI M1 Security Truth Baseline tornou-se o milestone ativo" },
