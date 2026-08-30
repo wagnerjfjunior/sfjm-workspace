@@ -149,6 +149,26 @@ Without explicit applicable authorization, do not introduce or mutate:
 
 The Workspace may represent external project snapshots, but representation is not ownership or runtime authority.
 
+## 8.1. Unified dashboard ownership
+
+Product Authority decision recorded on 2026-08-30:
+
+`wagnerjfjunior/sfjm-workspace` is the single dashboard/consolidation surface.
+
+External domain projects continue to own their own evidence and recommendations. In particular:
+
+- `wagnerjfjunior/Blogs-sites-portais-seo` remains the Search Center of Expertise/provider;
+- it supplies versioned Search/SEO/SEM status, recommendations and evidence;
+- it does not maintain a parallel MoreNumTegra executive dashboard;
+- Workspace consolidates provider inputs with consumer/project state in one dashboard;
+- the consumer and provider repositories remain authoritative for their respective truths.
+
+Aggregation contract:
+
+`docs/UNIFIED_DASHBOARD_AGGREGATION_CONTRACT.md`
+
+The current transport remains manual/versioned. This decision does not authorize automatic sync, polling, webhooks, write-back or external-project mutation.
+
 ## 9. Continuity entrypoint
 
 For durable current-state continuity read:
