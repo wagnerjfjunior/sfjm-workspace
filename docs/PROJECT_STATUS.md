@@ -69,7 +69,21 @@ Contract:
 
 ### FECH.AI
 
-The existing manual FECH.AI dashboard snapshot remains represented under its prior evidence boundary. FECH.AI must be resolved live before any current operational conclusion.
+The active candidate now refreshes the manual FECH.AI snapshot from canonical live evidence observed on 2026-08-30:
+
+- observed main: `a15dde5067c716b0ab3c9342855069c1fc00bcd0`;
+- Issue #150 M1: `OPEN / ACTIVE`;
+- APPSEC-M1-003 / public.leads: `IMPLEMENTATION_COMPLETE_WITH_EXPLICIT_RUNTIME_EVIDENCE_LIMITATION`;
+- PR #152: merged; production migration applied successfully;
+- live catalog control: proven;
+- RLS preservation and data compatibility: PASS;
+- PR #153 continuity reconciliation: merged;
+- Vercel on the #153 merge commit: SUCCESS;
+- `CONTROLLED_RUNTIME_NEGATIVE_PASS = NOT_ESTABLISHED`;
+- migration-ledger provenance mismatch: non-blocking residual;
+- Security Go: NOT GRANTED.
+
+M1 is not marked complete and the accepted-gate program percentage is not increased by this bounded slice.
 
 ## Demonstrative/manual boundary
 
