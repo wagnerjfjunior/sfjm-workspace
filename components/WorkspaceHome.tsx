@@ -38,9 +38,9 @@ function Sidebar({ open }: { open: boolean }) {
         <span className="muted">Administrador</span>
       </div>
       <div className="sync">
-        ● Snapshot manual
+        ● Dashboard unificado
         <br />
-        <span className="muted">FECH.AI · {workspaceDemo.fechaiProgram.observedAt}</span>
+        <span className="muted">Snapshots manuais · {workspaceDemo.searchPortfolio.observedAt}</span>
       </div>
     </aside>
   );
@@ -237,6 +237,69 @@ function FechaiProgramTracking() {
   );
 }
 
+function SearchPortfolio() {
+  const search = workspaceDemo.searchPortfolio;
+
+  return (
+    <article className="panel panelInner programPanel" id="search-portfolio">
+      <div className="sectionTitle programTitle">
+        <div>
+          <div className="eyebrow">Search / SEO consolidado</div>
+          <h3>MoreNumTegra + Search Provider</h3>
+        </div>
+        <span className="manualBadge">MANUAL · {search.observedAt}</span>
+      </div>
+
+      <div className="programSummary">
+        <div>
+          <span>Consumer</span>
+          <strong>{search.consumer}</strong>
+          <code>{search.consumerObservedSha}</code>
+        </div>
+        <div>
+          <span>Release publicada</span>
+          <code>{search.releaseSha}</code>
+          <small>{search.consumerRepository}</small>
+        </div>
+        <div>
+          <span>Provider Search</span>
+          <strong>{search.provider}</strong>
+          <code>{search.providerObservedSha}</code>
+        </div>
+        <div>
+          <span>Estado consolidado</span>
+          <strong>{search.status}</strong>
+          <small>{search.nextAction}</small>
+        </div>
+      </div>
+
+      <div className="evidenceBoundary">
+        {search.providerResult}
+      </div>
+
+      <div className="projectGrid">
+        <div>
+          <span>Search / indexabilidade</span>
+          <ul>
+            {search.searchState.map((item) => <li key={item}>{item}</li>)}
+          </ul>
+        </div>
+        <div>
+          <span>Measurement / aquisição</span>
+          <ul>
+            {search.measurementState.map((item) => <li key={item}>{item}</li>)}
+          </ul>
+        </div>
+      </div>
+
+      <div className="projectAction">
+        <span>Fronteira de consolidação</span>
+        <strong>{search.boundaries.join(" · ")}</strong>
+      </div>
+    </article>
+  );
+}
+
 function RunbookRow({ item }: { item: RunbookItem }) {
   return (
     <tr>
@@ -380,10 +443,11 @@ export function WorkspaceHome() {
               <JourneyOverview />
               <FechaiProgramTracking />
               <FechaiRunbook />
+              <SearchPortfolio />
               <ExternalProjects />
               <article className="panel footer">
-                <span>SFJM preserva continuidade; FECH.AI permanece autoridade sobre o programa.</span>
-                <a href="#fechai-program">Abrir Roadmap →</a>
+                <span>SFJM Workspace consolida a visão; projetos e providers permanecem autoridades sobre suas próprias fontes.</span>
+                <a href="#search-portfolio">Abrir Search consolidado →</a>
               </article>
             </section>
             <aside className="stack right">
