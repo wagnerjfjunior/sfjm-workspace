@@ -46,6 +46,25 @@ Aggregation contract:
 
 `docs/UNIFIED_DASHBOARD_AGGREGATION_CONTRACT.md`
 
+## FECH.AI snapshot refreshed for this initiative
+
+Observed live on 2026-08-30:
+
+- canonical repository: `wagnerjfjunior/fecha.ai`;
+- live main: `a15dde5067c716b0ab3c9342855069c1fc00bcd0`;
+- Issue #150 M1: OPEN / ACTIVE;
+- APPSEC-M1-003 / public.leads: implementation/catalog slice complete with explicit runtime-evidence limitation;
+- PR #152: merged and production migration applied;
+- live database catalog control: proven;
+- PR #153: merged; Vercel post-merge status SUCCESS;
+- `CONTROLLED_RUNTIME_NEGATIVE_PASS = NOT_ESTABLISHED`;
+- `MIGRATION_LEDGER_PROVENANCE = NON_BLOCKING_PROVENANCE_RESIDUAL`;
+- Security Go: NOT GRANTED;
+- broad paid commercialization: BLOCKED.
+
+This refresh does not mark M1 complete and does not select another APPSEC-M1-003
+slice. The Workspace remains visualization/continuity only.
+
 ## MoreNumTegra snapshot refreshed for this initiative
 
 Observed live on 2026-08-30:
@@ -105,6 +124,7 @@ This snapshot/initiative must be revalidated when:
 
 - Workspace PR #24 head/base/state changes materially;
 - MoreNumTegra main/release/next action changes;
+- FECH.AI main/Issue #150/public.leads evidence changes;
 - Search provider main/result/lifecycle changes;
 - Search/indexability or measurement state changes;
 - dashboard aggregation contract changes.
