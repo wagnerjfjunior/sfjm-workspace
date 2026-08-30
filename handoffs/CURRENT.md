@@ -4,100 +4,107 @@
 
 Repository: `wagnerjfjunior/sfjm-workspace`
 
-Live `main` is canonical for Workspace product state. External projects remain canonical for their own product, security, runtime and program state.
+Live `main` remains canonical for Workspace product state. External projects remain canonical for their own product, security, runtime, Search/SEM and authorization truth.
 
 ## Current Workspace state
 
-The FECH.AI Security-to-Scale dashboard delivery cycle is complete.
+The previous FECH.AI Roadmap + Runbook delivery remains complete.
 
-Canonical delivery anchors:
-
-```text
-PR #21: MERGED
-reviewed implementation head: 6d3b80bf65777754802559ba4767a0f2298a2878
-merge commit / main after PR #21:
-  0c8f03428ecd8f6b028f18bfaaefc98e20684f97
-Roadmap + Runbook: IMPLEMENTED IN MAIN
-Vercel status on merge commit: SUCCESS
-```
-
-The Workspace now contains:
-
-- FECH.AI M0–M6 Macro Roadmap / Executive View;
-- M1 Operational Runbook View;
-- manual source/ref/date provenance;
-- explicit evidence-boundary and invalidation language;
-- no automatic synchronization or write-back.
-
-Do not reopen the PR #21 delivery gate unless a material Workspace regression or new product authorization requires a new bounded change.
-
-## FECH.AI snapshot boundary
-
-The dashboard carries a manual FECH.AI snapshot observed on 2026-08-28.
-
-That snapshot is visualization evidence only. FECH.AI remains canonical.
-
-Before using FECH.AI state as current truth, resolve live in:
-
-`wagnerjfjunior/fecha.ai`
-
-At the carried snapshot:
+A new bounded Workspace initiative is now active by Product Authority decision:
 
 ```text
-#141 Security-to-Scale 2026: OPEN
-#142 M0: CLOSED / completed
-#150 M1 Security Truth Baseline: OPEN / READ_ONLY FIRST
-Security Go: NOT GRANTED
-broad paid commercialization: BLOCKED
+PR #24
+feat: consolidate Search into unified SFJM dashboard
+state: OPEN / DRAFT
+base: main@90ff0ef74944613e648c45f90320973a753c0afa
 ```
 
-Any material FECH.AI change invalidates the dashboard snapshot until manually refreshed.
+Purpose:
 
-## Program progress boundary
+- make SFJM Workspace the single consolidated dashboard;
+- keep FECH.AI continuity/program visibility;
+- refresh the stale MoreNumTegra representation;
+- ingest bounded Search/SEO/SEM evidence from `Blogs-sites-portais-seo`;
+- eliminate the need for a parallel SEO dashboard.
 
-The dashboard derives represented progress from its versioned milestone array:
+## Unified dashboard rule
+
+`wagnerjfjunior/Blogs-sites-portais-seo` remains the Search Center of Expertise/provider.
+
+It owns Search evidence, strategy, recommendations and provider-local lifecycle. It does not become the dashboard owner.
+
+The dashboard ownership/consolidation rule is:
 
 ```text
-sum(milestone weight × accepted completion)
+MoreNumTegra canonical truth
++ Search provider versioned feed
++ FECH.AI canonical snapshot
+-> SFJM Workspace unified dashboard
 ```
 
-At the carried snapshot M0 is the only accepted exit gate represented as complete. This percentage is a planning/accepted-gate visualization only; it is not a security-confidence, runtime-readiness or Security Go score.
+Aggregation contract:
 
-## Single continuation pointer
+`docs/UNIFIED_DASHBOARD_AGGREGATION_CONTRACT.md`
 
-The Workspace has no new implementation action after PR #21.
+## MoreNumTegra snapshot refreshed for this initiative
 
-Its next continuity duty is to point the operator back to FECH.AI canonical state.
+Observed live on 2026-08-30:
 
-Resolve the FECH.AI next safe action live before acting. At the carried snapshot, the semantic continuation was:
+- canonical repository: `wagnerjfjunior/MoreNumTegra`;
+- live main: `5befb0efee8e4bd6ca96bb594c010afded24056e`;
+- current published release recorded by the consumer: `18cfab98e01be29c86d78d08f2f5035a8da70444`;
+- Green commercial production: `https://moretegra.com.br/`;
+- Vercel homologation: `https://morenumtegra.vercel.app/`;
+- Search + Conversion release: completed;
+- P0-B Search/indexability: pending next cycle;
+- Measurement Foundation: not configured;
+- Green capability observed for Meta Pixel, GTM and Google Analytics;
+- no MoreNumTegra tracking IDs are configured/authorized by this snapshot.
 
-```text
-M1-A — READ_ONLY
-LIVE DB × current GitHub main × applied migration ledger cross-check,
-including current privileged-surface evidence.
-```
+## Search provider snapshot refreshed for this initiative
 
-The Workspace must not independently advance FECH.AI milestones, mutate FECH.AI, grant Security Go or infer current FECH.AI state from this snapshot.
+Observed live on 2026-08-30:
+
+- provider: `wagnerjfjunior/Blogs-sites-portais-seo`;
+- live main: `d0f6e4c9879a48bdac00bea1cf40056e04bf736c`;
+- PR #10: MERGED;
+- provider result for MoreNumTegra award/conversion/metadata integrated;
+- provider itself states it does not maintain a parallel SFJM/dashboard for MoreNumTegra;
+- Search recommendations remain evidence/input; MoreNumTegra keeps implementation/deploy/budget/publication authority.
+
+## Current lifecycle
+
+PR #24 must remain Draft until:
+
+1. changed-file scope is final;
+2. dashboard/data/docs are validated;
+3. Vercel/CI checks for the exact head are inspected;
+4. independent exact-head documentation audit passes;
+5. Ready receives separate Product Authority authorization.
+
+Merge remains a later separate authorization gate.
 
 ## Explicit boundaries
 
-From Workspace continuity alone, do not:
+This initiative does not authorize:
 
-- mutate `wagnerjfjunior/fecha.ai`;
-- mutate `wagnerjfjunior/MoreNumTegra`;
-- mutate `wagnerjfjunior/StopJuniorMode`;
-- add backend/auth/database/Supabase integration;
-- add automatic API/GitHub sync;
-- add webhook/cron/polling/background monitoring;
-- write back to external projects;
-- present manual snapshot data as automatically current.
+- automatic provider-to-Workspace sync;
+- GitHub ingestion backend;
+- polling/webhooks/cron;
+- external-project write-back;
+- MoreNumTegra mutation;
+- SEO provider mutation;
+- Meta/GTM/GA4 activation;
+- Search Console mutation;
+- Google Ads campaign/spend;
+- StopJuniorMode protocol changes.
 
 ## Invalidation
 
-This handoff must be reconciled when:
+This snapshot/initiative must be revalidated when:
 
-- Workspace `main` materially changes;
-- a new Workspace delivery initiative is selected;
-- FECH.AI changes materially and the dashboard snapshot is refreshed;
-- a material dashboard regression is established;
-- Product Authority changes the Workspace boundary or lifecycle model.
+- Workspace PR #24 head/base/state changes materially;
+- MoreNumTegra main/release/next action changes;
+- Search provider main/result/lifecycle changes;
+- Search/indexability or measurement state changes;
+- dashboard aggregation contract changes.
