@@ -52,6 +52,23 @@ export type ProgramSnapshot = {
   runbook: RunbookItem[];
 };
 
+export type SearchPortfolioSnapshot = {
+  consumer: string;
+  consumerRepository: string;
+  consumerObservedSha: string;
+  releaseSha: string;
+  provider: string;
+  providerRepository: string;
+  providerObservedSha: string;
+  observedAt: string;
+  status: string;
+  nextAction: string;
+  providerResult: string;
+  searchState: string[];
+  measurementState: string[];
+  boundaries: string[];
+};
+
 export function calculateAcceptedProgramProgress(milestones: ProgramMilestone[]) {
   return milestones.reduce(
     (total, milestone) => total + milestone.weight * (milestone.acceptedPercent / 100),
@@ -65,6 +82,7 @@ export const workspaceDemo = {
     { icon: "▶", label: "Continue", helper: "Próxima ação segura", href: "#continue", active: true },
     { icon: "◎", label: "Roadmap", helper: "Security-to-Scale", href: "#fechai-program" },
     { icon: "☷", label: "Runbook", helper: "Execução M1", href: "#fechai-runbook" },
+    { icon: "⌕", label: "Search / SEO", helper: "Visão consolidada", href: "#search-portfolio" },
     { icon: "□", label: "Projetos", helper: "Seus projetos", href: "#projects" },
     { icon: "⌁", label: "Jornada", helper: "Visão da jornada", href: "#journey" },
     { icon: "⇄", label: "Handoffs", helper: "Transições de estado", href: "#" },
@@ -104,20 +122,52 @@ export const workspaceDemo = {
     {
       name: "MoreNumTegra",
       kind: "Projeto externo",
-      continuityState: "Green V1 funcionalmente homologada",
-      nextSafeAction: "Manter a produção estável e validar o HTTPS de www.moretegra.com.br quando a Green concluir o certificado.",
+      continuityState: "Search + Conversion publicada · P0-B pendente",
+      nextSafeAction: "Iniciar P0-B Search/indexabilidade; Measurement Foundation permanece em gate separado.",
       blockers: [
-        "www.moretegra.com.br com certificado ainda pendente no snapshot",
-        "Analytics/pixels/tags dependem de gate específico",
-        "Mudanças materiais devem seguir GitHub → Vercel → Green",
-        "Dados comerciais mutáveis exigem nova evidência antes de atualização"
+        "Robots/sitemap/Search Console ainda não comprovados/configurados",
+        "Measurement MoreNumTegra ainda não configurado",
+        "Consent enforcement técnico ainda não provado",
+        "Tracking, Search Console, Google Ads e spend exigem gates separados"
       ],
       repository: "wagnerjfjunior/MoreNumTegra",
-      observedSha: "3eca0d4fc212ef5bb499c92534dedd5ac86094e6",
-      observedAt: "28 Aug 2026",
-      verification: "Snapshot manual verificado · sem sincronização automática"
+      observedSha: "5befb0efee8e4bd6ca96bb594c010afded24056e",
+      observedAt: "30 Aug 2026",
+      verification: "Snapshot manual · release publicada 18cfab98e01be29c86d78d08f2f5035a8da70444"
     }
   ] satisfies ExternalProject[],
+
+  searchPortfolio: {
+    consumer: "MoreNumTegra",
+    consumerRepository: "wagnerjfjunior/MoreNumTegra",
+    consumerObservedSha: "5befb0efee8e4bd6ca96bb594c010afded24056e",
+    releaseSha: "18cfab98e01be29c86d78d08f2f5035a8da70444",
+    provider: "Ecossistema de Blogs, Sites, Portais e SEO",
+    providerRepository: "wagnerjfjunior/Blogs-sites-portais-seo",
+    providerObservedSha: "d0f6e4c9879a48bdac00bea1cf40056e04bf736c",
+    observedAt: "30 Aug 2026",
+    status: "Provider PR #10 integrada · dashboard único no SFJM Workspace",
+    nextAction: "P0-B Search/indexabilidade no consumer; Measurement Foundation depois de gate próprio.",
+    providerResult: "Award + conversion pricing + technical metadata guidance integrated",
+    searchState: [
+      "Search + Conversion release publicada",
+      "Title/meta/canonical JS/JSON-LD básicos no consumer",
+      "P0-B: validar indexabilidade, robots, sitemap e Search Console",
+      "Vercel permanece homologação noindex"
+    ],
+    measurementState: [
+      "Green capability observada: Meta Pixel, GTM e Google Analytics",
+      "MoreNumTegra tracking: NOT_CONFIGURED",
+      "LGPD modal ativo; consent enforcement não comprovado",
+      "Google Ads somente após Measurement QA"
+    ],
+    boundaries: [
+      "Provider alimenta evidência/recomendação; não mantém dashboard paralelo",
+      "MoreNumTegra mantém Product Authority e publicação",
+      "Workspace consolida visualização; não substitui fontes canônicas",
+      "Sem sync automático, write-back, tracking ou spend por esta decisão"
+    ]
+  } satisfies SearchPortfolioSnapshot,
 
   fechaiProgram: {
     name: "FECH.AI Security-to-Scale 2026",
@@ -277,6 +327,7 @@ export const workspaceDemo = {
     { label: "Estado de continuidade", value: "M1 ativo" },
     { label: "Conversa ativa", value: "Workspace — Chart 3" },
     { label: "FECH.AI", value: "M0 fechado · M1 ativo" },
+    { label: "Search / SEO", value: "Consolidado no Workspace" },
     { label: "Fonte canônica", value: "GitHub / main" }
   ] satisfies SourceRow[],
 
@@ -284,10 +335,14 @@ export const workspaceDemo = {
     { label: "FECH.AI main", value: "3eeb6fd2…", badge: true },
     { label: "Program issue", value: "#141", badge: true },
     { label: "M1 issue", value: "#150", badge: true },
+    { label: "MoreNumTegra", value: "5befb0ef…", badge: true },
+    { label: "Search provider", value: "d0f6e4c9…", badge: true },
     { label: "Snapshot", value: "Manual", badge: true }
   ] satisfies SourceRow[],
 
   timeline: [
+    { date: "30 Aug 2026", text: "SFJM Workspace definido como dashboard único; Search provider passa a alimentar snapshot consolidado" },
+    { date: "30 Aug 2026", text: "MoreNumTegra atualizado para release Search + Conversion e provider PR #10 integrada" },
     { date: "28 Aug 2026", text: "FECH.AI M1 Security Truth Baseline tornou-se o milestone ativo" },
     { date: "28 Aug 2026", text: "M0 #142 foi encerrado após reconciliação e merge do SFJM" },
     { date: "28 Aug 2026", text: "Security-to-Scale #141 selecionado para Roadmap + Runbook" },
