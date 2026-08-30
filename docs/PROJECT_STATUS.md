@@ -2,7 +2,7 @@
 
 ## Status date
 
-2026-08-29
+2026-08-30
 
 ## Canonical product repository
 
@@ -16,112 +16,100 @@ Product-state precedence:
 4. `docs/NEXT_SAFE_ACTION.md`;
 5. other versioned Workspace documents.
 
-External projects remain authoritative for their own product/security/runtime/program state.
+External projects remain authoritative for their own product/security/runtime/program/Search state.
 
-## Canonical delivery state
+## Current delivery state
 
-Current canonical delivery anchor after the FECH.AI dashboard cycle:
+Completed:
 
-```text
-PR #21: MERGED
-implementation head:
-  6d3b80bf65777754802559ba4767a0f2298a2878
-merge commit / main:
-  0c8f03428ecd8f6b028f18bfaaefc98e20684f97
-Vercel status on merge commit: SUCCESS
-```
+- FECH.AI Roadmap + Runbook cycle via PR #21;
+- manual external project representation;
+- canonical Workspace bootstrap and reconciliation guardrails.
 
-Relevant completed cycles include:
-
-- FECH.AI external context and Continue representation;
-- MoreNumTegra external manual context;
-- PR #20 canonical Workspace bootstrap;
-- PR #19 continuity reconciliation selecting FECH.AI Security-to-Scale tracking;
-- PR #21 FECH.AI Security-to-Scale Roadmap + Runbook implementation.
-
-## Implemented product state
-
-The Workspace now includes:
-
-1. approved Continue/Home continuity hierarchy;
-2. Estado de Continuidade;
-3. Próxima Ação Segura;
-4. Contextos Preservados;
-5. Visão da Jornada;
-6. FECH.AI Macro Roadmap / Executive View;
-7. FECH.AI M1 Operational Runbook View;
-8. manual source/ref/date and invalidation provenance;
-9. explicit Security Go and commercialization boundary labels.
-
-The dashboard remains a manually refreshed visualization. It is not an automatic monitoring or synchronization system.
-
-## FECH.AI snapshot represented
-
-The current versioned dashboard carries a manual snapshot observed on 2026-08-28:
+Active bounded initiative:
 
 ```text
-repository: wagnerjfjunior/fecha.ai
-observed main: 3eeb6fd230309f206be7920607739f8e4545556f
-#141 Security-to-Scale 2026: OPEN
-#142 M0: CLOSED / completed
-#150 M1 Security Truth Baseline: OPEN / READ_ONLY FIRST
-Security Go: NOT GRANTED
-broad paid commercialization: BLOCKED
+PR #24
+UNIFIED_DASHBOARD_SEARCH_FEED_V1
+OPEN / DRAFT
 ```
 
-This is evidence-at-capture only. Resolve FECH.AI live before using those facts as current operational truth.
+Objective: consolidate FECH.AI, MoreNumTegra and provider Search/SEO/SEM visibility in one SFJM Workspace dashboard.
 
-## Program progress representation
+## Dashboard ownership
 
-Progress is not inferred from PR count, activity, subjective health or elapsed time.
+SFJM Workspace is the single dashboard surface.
 
-Dashboard rule:
+`Blogs-sites-portais-seo` remains provider/evidence source and does not maintain a competing MoreNumTegra dashboard.
 
-```text
-program progress = sum(milestone weight × accepted milestone completion)
-```
+Contract:
 
-Only accepted milestone-exit evidence represented by the versioned snapshot contributes.
+`docs/UNIFIED_DASHBOARD_AGGREGATION_CONTRACT.md`
 
-The displayed percentage is a planning/accepted-gate visualization, not a Security Go, runtime-security or confidence score.
+## External snapshots represented by the active candidate
+
+### MoreNumTegra
+
+- observed main: `5befb0efee8e4bd6ca96bb594c010afded24056e`;
+- published release: `18cfab98e01be29c86d78d08f2f5035a8da70444`;
+- phase: Search + Conversion released;
+- production Green confirmed by consumer;
+- P0-B Search/indexability pending;
+- Measurement Foundation not configured;
+- Meta/GTM/GA capability observed in Green but activation remains gated.
+
+### Search provider
+
+- repository: `wagnerjfjunior/Blogs-sites-portais-seo`;
+- observed main: `d0f6e4c9879a48bdac00bea1cf40056e04bf736c`;
+- PR #10 merged;
+- award/conversion/metadata guidance integrated;
+- provider returns versioned guidance/evidence to the consumer/Workspace;
+- provider does not own MoreNumTegra implementation or dashboard.
+
+### FECH.AI
+
+The existing manual FECH.AI dashboard snapshot remains represented under its prior evidence boundary. FECH.AI must be resolved live before any current operational conclusion.
 
 ## Demonstrative/manual boundary
 
+Current unified dashboard input remains manually refreshed/versioned.
+
 Not implemented or implied:
 
-- backend/API integration;
-- GitHub ingestion;
-- webhook/cron/polling/background monitoring;
-- automatic synchronization;
-- write-back to FECH.AI or MoreNumTegra;
-- automatic milestone advancement;
-- Security Go automation;
+- backend/API ingestion;
+- automatic GitHub sync;
+- webhook/cron/polling;
+- automatic provider feed;
+- external-project write-back;
+- automatic lifecycle advancement;
 - deployment/runtime monitoring.
 
-## Current lifecycle state
+## Lifecycle state
 
-The PR #21 delivery gate is closed and must not be reopened without material invalidation.
+PR #24 is the only active reconciliation/implementation candidate for this transition.
 
-Current Workspace duty:
+Required sequence:
 
 ```text
-VISUALIZATION / CONTINUITY
+Draft exact head
+-> CI/Vercel validation
+-> independent audit
+-> separate Ready authorization
+-> Ready
+-> fresh pre-merge verification
+-> separate merge authorization
+-> merge
+-> post-merge verification
 ```
 
-The next operational action belongs to the canonical external project whose work is being continued.
+## Not authorized by this state alone
 
-For FECH.AI, resolve its live canonical next action before execution. The carried snapshot points to M1-A READ_ONLY, but the Workspace does not independently establish that as current after any later FECH.AI change.
-
-## Not authorized by this Workspace state alone
-
-- deployment or Vercel configuration changes;
-- backend/auth/database/Supabase implementation;
+- deploy/config mutation;
+- backend/auth/database/Supabase;
 - automatic synchronization;
-- external-project mutation/write-back;
-- changes to `wagnerjfjunior/fecha.ai`;
-- changes to `wagnerjfjunior/MoreNumTegra`;
-- changes to `wagnerjfjunior/StopJuniorMode`.
-
-## Rollback
-
-If the Roadmap + Runbook implementation must be reverted, the bounded implementation unit is PR #21 / merge commit `0c8f03428ecd8f6b028f18bfaaefc98e20684f97`.
+- external-project mutation;
+- tracking activation;
+- Search Console;
+- campaign/spend;
+- StopJuniorMode protocol mutation.
