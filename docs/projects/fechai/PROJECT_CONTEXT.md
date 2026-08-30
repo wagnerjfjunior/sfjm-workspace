@@ -4,91 +4,173 @@
 
 `DOCUMENTATION_ONLY / MANUAL_SNAPSHOT / NO_AUTOMATIC_SYNC`
 
-Observed on: 2026-08-28
+Observed on: 2026-08-30
 
 ## Project identity
 
 - Project: FECH.AI
 - Canonical repository: `wagnerjfjunior/fecha.ai`
 - Canonical branch: `main`
-- Live `main` observed for this snapshot: `3eeb6fd230309f206be7920607739f8e4545556f`
+- Live `main` observed for this snapshot: `a15dde5067c716b0ab3c9342855069c1fc00bcd0`
 - Program authority: Issue #141 — `Security-to-Scale 2026`
 - Current milestone work item: Issue #150 — `M1: Security Truth Baseline`
 - Workspace repository: `wagnerjfjunior/sfjm-workspace`
 
-FECH.AI remains the only canonical authority for FECH.AI product, security, architecture, runtime, lifecycle, milestone and authorization state. This Workspace record is a bounded manual snapshot only.
+FECH.AI remains the only canonical authority for FECH.AI product, security,
+architecture, runtime, lifecycle, milestone and authorization state. This
+Workspace record is a bounded manual snapshot only.
 
-## Security-to-Scale transition
-
-Current verified program transition at this snapshot:
+## Current program state
 
 ```text
 #141 Security-to-Scale 2026: OPEN
-#142 M0 Truth Reconciliation: CLOSED / completed
-PR #149 M0 SFJM publication: MERGED
-PR #151 M0 -> M1 SFJM transition: MERGED
-#150 M1 Security Truth Baseline: OPEN / READ_ONLY FIRST
+#142 M0: CLOSED / completed
+#150 M1 Security Truth Baseline: OPEN
+M1 status: ACTIVE
 Security Go: NOT GRANTED
 Broad paid commercialization: BLOCKED
 ```
 
-M0 is complete only for its analytical/documentation purpose. It did not establish a broad current live-database security PASS, runtime Security Go or commercial readiness.
+M1 is not marked complete by this snapshot. The Workspace preserves the
+accepted-gate rule: activity, PR count and elapsed time do not advance the
+program percentage without a canonical milestone-exit acceptance.
 
-## Durable workstream classification
+## Material transition — APPSEC-M1-003 / public.leads
 
-At M1 entry:
-
-- #139: `ACTIVE` — user-creation membership-boundary implementation; resolve current lifecycle/findings live before acting;
-- #140: `ACTIVE` — read-only Supabase Action/config evidence workstream; static versioned config does not itself prove current runtime Action/Builder application;
-- #131: `STALE_CONTINUITY`;
-- #124: `STALE_CONTINUITY`;
-- #120: `SUPERSEDED`.
-
-Volatile heads, review-thread state, checks and mergeability must always be resolved live in FECH.AI rather than trusted from this snapshot.
-
-## M1 objective and runbook
-
-M1 is `READ_ONLY FIRST`.
-
-Required workstreams:
-
-1. **M1-A** — LIVE DB × GitHub main × applied migration ledger cross-check;
-2. **M1-B** — current privileged-surface inventory;
-3. **M1-C** — tenant-isolation proof plan and isolated runtime/staging requirements;
-4. **M1-D** — dependency / known-vulnerability inventory;
-5. **M1-E** — secrets / infrastructure attack-surface inventory;
-6. **M1-F** — documentation/evidence reconciliation and one M1 verdict / next safe action.
-
-M1 evidence acquisition does not authorize DDL/DML, migration application, Supabase mutation, Auth/business-data mutation, deploy, production offensive testing, database simplification implementation or Security Go.
-
-## Program roadmap representation
-
-The Workspace dashboard represents M0–M6 as a **manual planning snapshot**.
-
-Weighting rule:
+Canonical FECH.AI evidence observed on 2026-08-30:
 
 ```text
-milestone weight = planned target-window duration / total Security-to-Scale window
-program progress = sum(weight × accepted milestone completion)
+PR #152: CLOSED / MERGED
+reviewed exact head:
+  6964ad993b0deddd85fcf4ff7711929b4d956285
+merge commit at implementation closure:
+  30f4d40acbe0a1f026df9c29451607d6fa361d11
+
+production migration:
+  APPLIED / SUCCESS_CONFIRMED
+
+LIVE_DATABASE_CONTROL_PRESENT:
+  PROVEN
+
+4 parent UNIQUE (id, empresa_id):
+  PRESENT / VALIDATED
+
+4 public.leads composite tenant-aware FKs:
+  PRESENT / VALIDATED
+
+RLS / FORCE RLS:
+  PRESERVED / PASS
+
+public.leads rows:
+  5691
+
+cross-tenant relationship mismatches:
+  corretor = 0
+  time = 0
+  lista = 0
+  lote = 0
 ```
 
-No partial milestone progress is inferred from activity, PR count or subjective health. A milestone contributes only to the extent its exit gate has been accepted by canonical FECH.AI evidence.
+Independent AppSec result:
 
-Current accepted values in this snapshot:
+```text
+PUBLIC_LEADS_SLICE_STATUS =
+  IMPLEMENTATION_COMPLETE_WITH_EXPLICIT_RUNTIME_EVIDENCE_LIMITATION
 
-| Milestone | Planned window | Weight | Accepted completion | Program contribution |
-|---|---|---:|---:|---:|
-| M0 | 28 Aug–4 Sep | 6.25% | 100% | 6.25% |
-| M1 | 4–18 Sep | 12.50% | 0% | 0% |
-| M2 | 18 Sep–9 Oct | 18.75% | 0% | 0% |
-| M3 | 9–30 Oct | 18.75% | 0% | 0% |
-| M4 | 30 Oct–27 Nov | 25.00% | 0% | 0% |
-| M5 | 27 Nov–11 Dec | 12.50% | 0% | 0% |
-| M6 | 11–18 Dec | 6.25% | 0% | 0% |
+FINAL_POST_APPLICATION_VERDICT =
+  APPSEC_M1_003_PUBLIC_LEADS_POST_APPLICATION_PASS_WITH_RESIDUAL_RUNTIME_EVIDENCE_LIMITATION
 
-Current weighted program progress represented in the Workspace: **6.25%**.
+BLOCKERS = NONE
+```
 
-This percentage is a planning/accepted-gate visualization, not a Security Go score, delivery confidence score or runtime-security score.
+Documentation reconciliation:
+
+```text
+PR #153: CLOSED / MERGED
+merge commit / current FECH.AI main:
+  a15dde5067c716b0ab3c9342855069c1fc00bcd0
+
+Vercel status on merge commit:
+  SUCCESS
+```
+
+## Residual risks preserved
+
+```text
+CONTROLLED_RUNTIME_NEGATIVE_PASS = NOT_ESTABLISHED
+
+MIGRATION_LEDGER_PROVENANCE =
+  NON_BLOCKING_PROVENANCE_RESIDUAL
+
+repository migration version:
+  20260830030000
+
+applied ledger version:
+  20260830184834
+
+Security Go:
+  NOT GRANTED
+```
+
+No production adversarial write was executed. Migration-ledger history was not
+rewritten. The public.leads closure does not imply a broad M1 PASS or Security Go.
+
+## Dashboard interpretation
+
+The current FECH.AI card may state:
+
+```text
+M1 ACTIVE
+public.leads implementation/catalog slice COMPLETE
+runtime-negative PASS NOT ESTABLISHED
+Security Go NOT GRANTED
+```
+
+The dashboard must not show the prior statement that FECH.AI live database
+truth is wholly unestablished. It may show the proven public.leads LIVE evidence
+only within its bounded scope.
+
+## Program progress representation
+
+The Workspace continues to use:
+
+```text
+program progress = sum(milestone weight × accepted milestone completion)
+```
+
+M0 remains the only milestone with an accepted exit represented as complete.
+M1 remains OPEN, therefore no additional weighted milestone contribution is
+recorded by this refresh.
+
+Current represented program progress remains: **6.25%**.
+
+This is a planning/accepted-gate visualization, not a security-confidence,
+runtime-readiness or Security Go score.
+
+## Current continuation boundary
+
+The previously versioned FECH.AI `docs/sfjm/NEXT_SAFE_ACTION.md` still contains
+older M1-A wording. Later canonical evidence closes the bounded public.leads
+implementation/catalog slice, but does not itself select another APPSEC-M1-003
+surface.
+
+Therefore this Workspace snapshot does not invent a new FECH.AI technical task.
+
+Dashboard-safe continuation:
+
+> Resolve FECH.AI live and select exactly one next material workstream under
+> Product Authority; do not reopen public.leads without a material invalidation
+> event.
+
+## Current blockers / limitations preserved
+
+- Security Go: `NOT GRANTED`;
+- broad paid commercialization: `BLOCKED`;
+- Issue #150 M1 remains `OPEN`;
+- `CONTROLLED_RUNTIME_NEGATIVE_PASS = NOT_ESTABLISHED` for public.leads;
+- migration-ledger provenance mismatch remains a non-blocking operational residual;
+- #139 and #140 remain separate workstreams until resolved live;
+- Workspace does not select or authorize the next FECH.AI implementation slice.
 
 ## Evidence boundary
 
@@ -98,82 +180,49 @@ Preserve:
 STATIC_IMPLEMENTATION_REVIEW != LIVE_DATABASE_VALIDATED
 LIVE_DATABASE_VALIDATED != CONTROLLED_RUNTIME_PASS
 CONTROLLED_RUNTIME_PASS != SECURITY_GO
-PR_HEAD_ONLY != CURRENT_LIVE_DATABASE_TRUTH
 VERSIONED != MERGED != APPLIED != DEPLOYED != RUNTIME_TESTED
 ```
 
-Historical catalog counts or runtime results remain evidence-at-capture until revalidated when material.
-
-## Current next safe action
-
-Canonical FECH.AI semantic next action at this snapshot:
-
-> Execute M1-A READ_ONLY: establish current LIVE DB × GitHub main × applied migration ledger truth, including the current privileged-surface evidence needed before simplification or implementation decisions.
-
-Primary specialist sequence:
-
-```text
-backend_data -> backend-data-platform-specialist
-application_security -> application-security-assurance-specialist
-documentation_audit -> documentation-auditor
-```
-
-Manual specialist transport may be used when the SES runtime route is unavailable; no Gateway receipt may be invented.
-
-## Current blockers preserved
-
-- Security Go: `NOT GRANTED`;
-- broad paid commercialization: `BLOCKED`;
-- F1-02 final acceptance: blocked;
-- WDP increase: requires governance acceptance;
-- current M1 live-database truth: not yet established;
-- current M1 privileged-surface truth: not yet established;
-- current dependency/vulnerability truth: not yet established;
-- current infrastructure/secrets attack-surface truth: not yet established;
-- #139 and #140 remain separate workstreams and are not advanced by this Workspace snapshot.
-
 ## Workspace representation boundary
 
-The Workspace does not implement:
+The Workspace does not implement or authorize:
 
 - automatic GitHub ingestion;
 - API/webhook/cron/polling synchronization;
 - background monitoring;
 - write-back to FECH.AI;
-- backend/database/Supabase integration;
-- runtime/deployment monitoring;
+- Supabase/database mutation;
+- production adversarial testing;
+- migration-ledger mutation;
 - automatic state scoring;
-- automatic approval, Ready, merge, Security Go or commercialization decisions.
+- automatic approval, Ready, merge or Security Go.
 
-The UI must label this data as manual and must show source repository, observed SHA and observation date.
+The UI must label this data as manual and show repository, observed SHA and
+observation date.
 
 ## Refresh / invalidation rule
 
 This snapshot becomes stale when any material FECH.AI state changes, including:
 
 - FECH.AI `main`;
-- Issue #141 or #150 state/scope;
-- milestone exit acceptance;
+- Issues #141/#150;
+- public.leads invalidation evidence;
 - active workstream classification;
-- evidence class or major security finding;
-- Security Go or commercialization decision;
-- Workspace representation contract.
+- milestone exit acceptance;
+- Security Go or commercialization decision.
 
-A stale snapshot must be manually revalidated against FECH.AI canonical evidence before it supports a current conclusion.
+A stale snapshot must be manually revalidated against FECH.AI canonical
+evidence before it supports a current conclusion.
 
-## Canonical sources to consult
+## Canonical sources used for this refresh
 
-Resolve live in `wagnerjfjunior/fecha.ai`:
+Resolved from `wagnerjfjunior/fecha.ai@a15dde5067c716b0ab3c9342855069c1fc00bcd0`:
 
-- `docs/bootstrap/INDEX.md`;
-- `docs/skills/SES_SPECIALIST_ROUTING.md`;
-- `docs/sfjm/INDEX.md`;
 - `docs/sfjm/CURRENT_STATE.md`;
-- `docs/sfjm/NEXT_SAFE_ACTION.md`;
-- `docs/sfjm/BLOCKED_ACTIONS.md`;
-- `docs/sfjm/AUTHORIZATIONS.md`;
 - `docs/sfjm/EVIDENCE_FRESHNESS.md`;
 - `docs/sfjm/handoffs/CURRENT.md`;
+- `docs/sfjm/NEXT_SAFE_ACTION.md`;
 - Issue #141;
 - Issue #150;
-- current material PRs when relevant.
+- live PR #152/#153 lifecycle evidence;
+- Vercel commit status for the PR #153 merge commit.
