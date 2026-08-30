@@ -22,7 +22,7 @@ base: main@90ff0ef74944613e648c45f90320973a753c0afa
 Required sequence:
 
 1. finalize only the authorized unified-dashboard files;
-2. verify MoreNumTegra and Search-provider provenance in the candidate;
+2. verify FECH.AI, MoreNumTegra and Search-provider provenance in the candidate;
 3. run/inspect applicable build and Vercel checks for the exact head;
 4. inspect exact diff and changed-file scope;
 5. read final material files through EOF;
@@ -40,7 +40,7 @@ Do not mark Ready in this authorization.
 - Search provider current integrated result is represented with provider SHA;
 - dashboard UI exposes a consolidated Search/SEO section;
 - manual/versioned refresh boundary remains explicit;
-- FECH.AI visibility remains preserved;
+- FECH.AI snapshot is refreshed to `a15dde5067c716b0ab3c9342855069c1fc00bcd0`, with public.leads closure and both residuals preserved;
 - no authority is transferred from external canonical repositories.
 
 ## Explicitly blocked during this gate
