@@ -257,7 +257,7 @@ function FechaiProgramTracking() {
 
 function ExecutionCard({ item }: { item: ExecutionItem }) {
   return (
-    <div className={`executionCard ${item.state.toLowerCase()}`}>
+    <li className={`executionCard ${item.state.toLowerCase()}`}>
       <div className="executionTop">
         <span className="executionId">{item.id}</span>
         <span className={`runbookState ${item.state.toLowerCase()}`}>{item.state}</span>
@@ -267,7 +267,7 @@ function ExecutionCard({ item }: { item: ExecutionItem }) {
       <p>{item.evidence}</p>
       <small>{item.owner}</small>
       <div className="executionNext">{item.nextAction}</div>
-    </div>
+    </li>
   );
 }
 
@@ -282,24 +282,38 @@ function ExecutionLane({
   items: ExecutionItem[];
   laneClass: string;
 }) {
+  const headingId = `execution-${laneClass}-heading`;
+
   return (
-    <section className={`executionLane ${laneClass}`}>
+    <section className={`executionLane ${laneClass}`} aria-labelledby={headingId}>
       <div className="executionLaneHeader">
         <div>
-          <span>{title}</span>
+          <h4 id={headingId}>{title}</h4>
           <small>{helper}</small>
         </div>
         <b>{items.length}</b>
       </div>
-      <div className="executionItems">
+      <ul className="executionItems">
         {items.map((item) => <ExecutionCard item={item} key={item.id} />)}
-      </div>
+      </ul>
     </section>
   );
 }
 
 function FechaiExecutionBoard() {
   const program = workspaceDemo.fechaiProgram;
+  const futureProgram = program.milestones
+    .filter((milestone) => milestone.status === "PLANNED")
+    .map<ExecutionItem>((milestone) => ({
+      id: milestone.id,
+      label: milestone.label,
+      category: "PROGRAM",
+      state: "PLANNED",
+      owner: milestone.owner,
+      evidence: `Milestone futuro definido no programa ${program.programIssue} · ${milestone.window}.`,
+      nextAction: "Preservar como futuro até a transição canônica do programa."
+    }));
+  const futureItems = [...program.future, ...futureProgram];
 
   return (
     <article className="panel panelInner executionPanel" id="fechai-execution">
@@ -330,7 +344,7 @@ function FechaiExecutionBoard() {
         <ExecutionLane
           title="Futuro"
           helper="Findings pendentes + M2–M6 já conhecidos"
-          items={program.future}
+          items={futureItems}
           laneClass="futureLane"
         />
       </div>
@@ -365,9 +379,9 @@ function JourneyOverview() {
         <a href="#fechai-execution">Ver execução →</a>
       </div>
       <div className="journey">
-        {events.map((item, index) => (
-          <div className={`step ${index === events.length - 1 ? "current" : ""}`} key={`${item.date}-${item.text}`}>
-            <div className="stepDot">{index === events.length - 1 ? "●" : "✓"}</div>
+        {events.map((item) => (
+          <div className="step" key={`${item.date}-${item.text}`}>
+            <div className="stepDot">✓</div>
             <strong>{item.text}</strong>
             <small>{item.date}</small>
           </div>
