@@ -127,7 +127,7 @@ export const workspaceDemo = {
   fechaiProgram: {
     name: "FECH.AI Security-to-Scale 2026",
     repository: "wagnerjfjunior/fecha.ai",
-    observedSha: "bd645210d61b2a7e4af60112c2fe8cef71d761cc",
+    observedSha: "020594a2bb66fed5b6ab38f2d015878a7ef54d71",
     observedAt: "1 Sep 2026",
     programIssue: "#141",
     lastCompletedMilestone: "M1 — Security Truth Baseline",
