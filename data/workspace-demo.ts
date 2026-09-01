@@ -80,9 +80,9 @@ export const workspaceDemo = {
 
   checks: [
     { label: "Último milestone", value: "M1 completo" },
-    { label: "Workstream ativo", value: "F1-02/B4" },
+    { label: "Workstream ativo", value: "B4 pós-aplicação" },
     { label: "Próximo milestone", value: "M2 planejado" },
-    { label: "Próxima ação", value: "B4 · Target design" },
+    { label: "Próxima ação", value: "B4 · fechamento pós-aplicação" },
     { label: "Histórico", value: "Preservado" },
     { label: "Security Go", value: "Não concedido" }
   ] satisfies StatusCheck[],
@@ -91,18 +91,18 @@ export const workspaceDemo = {
     {
       name: "FECH.AI",
       kind: "Projeto externo",
-      continuityState: "M0/M1 concluídos · B4 ativo · M2–M6 preservados como futuro",
-      nextSafeAction: "F1-02/B4 — concluir TARGET DESIGN + AUTHORIZATION MATRIX com Architecture + AppSec + LeadOps antes de qualquer implementação.",
+      continuityState: "M0/M1 concluídos · B4 merged + applied + catalog proof PASS · fechamento pós-aplicação pendente · M2–M6 preservados",
+      nextSafeAction: "F1-02/B4 — concluir adjudicação pós-aplicação e reconciliação canônica; exact READ_ONLY catalog proof já passou.",
       blockers: [
         "Security Go não concedido",
         "Comercialização ampla paga bloqueada",
         "F1-02 final acceptance bloqueado",
         "RUNTIME_NEGATIVE_PASS não estabelecido",
-        "F1-02/B4 permanece ativo e sem implementação autorizada",
+        "F1-02/B4 foi mergeado e aplicado; fechamento pós-aplicação ainda não está canonicamente registrado",
         "Achados M1-B, M1-D e M1-E ainda possuem remediações pendentes"
       ],
       repository: "wagnerjfjunior/fecha.ai",
-      observedSha: "bd645210d61b2a7e4af60112c2fe8cef71d761cc",
+      observedSha: "020594a2bb66fed5b6ab38f2d015878a7ef54d71",
       observedAt: "1 Sep 2026",
       verification: "Snapshot manual · FECH.AI continua sendo a autoridade"
     },
@@ -132,8 +132,8 @@ export const workspaceDemo = {
     programIssue: "#141",
     lastCompletedMilestone: "M1 — Security Truth Baseline",
     nextProgramMilestone: "M2 — Database Simplification & Optimization Plan",
-    activeWorkstream: "F1-02/B4 — List ACL cross-tenant target risk",
-    nextSafeAction: "Target Design + Authorization Matrix first",
+    activeWorkstream: "F1-02/B4 — pós-aplicação de list ACL tenant integrity",
+    nextSafeAction: "Post-application adjudication + canonical reconciliation; runtime-negative remains NOT_ESTABLISHED",
     securityGo: "NOT GRANTED",
     commercialization: "BLOCKED",
     weightingBasis: "Peso = duração planejada; progresso só avança quando o gate do milestone é aceito.",
@@ -303,8 +303,8 @@ export const workspaceDemo = {
         category: "REMEDIATION",
         state: "ACTIVE",
         owner: "Architecture + AppSec + LeadOps",
-        evidence: "Risco live confirmado; 12 ACL rows observadas são same-tenant; nenhum data repair necessário no snapshot.",
-        nextAction: "TARGET DESIGN + AUTHORIZATION MATRIX FIRST; nenhuma implementação ainda."
+        evidence: "PR #162 mergeada em 020594a2...; migration 20260901222707 aplicada; exact READ_ONLY catalog proof PASS; 12 ACL rows e fingerprint preservados; direct authenticated I/U/D revogados; FK/trigger/integridade PASS.",
+        nextAction: "Fechar adjudicação pós-aplicação e reconciliar o estado canônico. RUNTIME_NEGATIVE_PASS permanece NOT_ESTABLISHED."
       }
     ] satisfies ExecutionItem[],
 
@@ -429,7 +429,9 @@ export const workspaceDemo = {
       { date: "31 Aug 2026", text: "M1-C-F01 aplicado e provado; integridade tenant do funil preservada", kind: "REMEDIATION" },
       { date: "1 Sep 2026", text: "F1-02/B3 fechado: merged + applied + READ_ONLY catalog proof PASS", kind: "REMEDIATION" },
       { date: "1 Sep 2026", text: "F1-02/B2 fechado: merged + applied + READ_ONLY catalog proof PASS", kind: "REMEDIATION" },
-      { date: "1 Sep 2026", text: "F1-02/B4 ativado como workstream atual; target design first", kind: "REMEDIATION" }
+      { date: "1 Sep 2026", text: "F1-02/B4 ativado como workstream atual; target design first", kind: "REMEDIATION" },
+      { date: "1 Sep 2026", text: "F1-02/B4 PR #162 mergeada no FECH.AI main 020594a2...", kind: "REMEDIATION" },
+      { date: "1 Sep 2026", text: "F1-02/B4 migration 20260901222707 aplicada; exact READ_ONLY post-application catalog proof PASS", kind: "EVIDENCE" }
     ] satisfies TimelineItem[]
   } satisfies ProgramSnapshot,
 
@@ -444,13 +446,13 @@ export const workspaceDemo = {
 
   currentState: [
     { label: "Último milestone concluído", value: "M1" },
-    { label: "Workstream ativo", value: "F1-02/B4" },
+    { label: "Workstream ativo", value: "B4 pós-aplicação" },
     { label: "Próximo milestone", value: "M2" },
     { label: "Modelo temporal", value: "Passado + Agora + Futuro" }
   ] satisfies SourceRow[],
 
   sources: [
-    { label: "FECH.AI main", value: "bd645210…", badge: true },
+    { label: "FECH.AI main", value: "020594a2…", badge: true },
     { label: "Program issue", value: "#141", badge: true },
     { label: "M1 issue", value: "#150 CLOSED", badge: true },
     { label: "Snapshot", value: "Manual", badge: true }
