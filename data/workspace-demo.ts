@@ -97,6 +97,7 @@ export const workspaceDemo = {
         "Security Go não concedido",
         "Comercialização ampla paga bloqueada",
         "F1-02 final acceptance bloqueado",
+        "WDP increase depende de governança",
         "RUNTIME_NEGATIVE_PASS não estabelecido",
         "F1-02/B4 foi mergeado e aplicado; fechamento pós-aplicação ainda não está canonicamente registrado",
         "Achados M1-B, M1-D e M1-E ainda possuem remediações pendentes"
@@ -372,54 +373,11 @@ export const workspaceDemo = {
         evidence: "Auth hardening gap confirmado.",
         nextAction: "Endurecimento de Auth em ciclo próprio."
       },
-      {
-        id: "M2",
-        label: "Database Simplification & Optimization Plan",
-        category: "PROGRAM",
-        state: "PLANNED",
-        owner: "Backend/Data + Architecture",
-        evidence: "Milestone futuro definido no programa #141.",
-        nextAction: "Iniciar somente quando a transição canônica do programa autorizar."
-      },
-      {
-        id: "M3",
-        label: "Backend Authority Contract Freeze",
-        category: "PROGRAM",
-        state: "PLANNED",
-        owner: "Backend/Data + AppSec + Architecture",
-        evidence: "Milestone futuro definido no programa #141.",
-        nextAction: "Preservar como futuro até a transição canônica."
-      },
-      {
-        id: "M4",
-        label: "Frontend Modularization / App.jsx Extraction",
-        category: "PROGRAM",
-        state: "PLANNED",
-        owner: "Architecture + UX/UI + Domains",
-        evidence: "Milestone futuro definido no programa #141.",
-        nextAction: "Preservar como futuro até a transição canônica."
-      },
-      {
-        id: "M5",
-        label: "Integrated Security / Reliability Validation",
-        category: "PROGRAM",
-        state: "PLANNED",
-        owner: "AppSec + Platform + SRE + Backend/Data",
-        evidence: "Milestone futuro definido no programa #141.",
-        nextAction: "Preservar como futuro até a transição canônica."
-      },
-      {
-        id: "M6",
-        label: "Security Go Candidate / Commercial Readiness",
-        category: "PROGRAM",
-        state: "PLANNED",
-        owner: "Product Authority + Security + Platform",
-        evidence: "Milestone futuro definido no programa #141.",
-        nextAction: "Preservar como futuro até a transição canônica."
-      }
     ] satisfies ExecutionItem[],
 
     eventLedger: [
+      { date: "23 Jul 2026", text: "Home Migrada", kind: "PROGRAM" },
+      { date: "23 Jul 2026", text: "Guardrails", kind: "PROGRAM" },
       { date: "24 Jul 2026", text: "FECH.AI registrado como contexto externo manual", kind: "PROGRAM" },
       { date: "28 Aug 2026", text: "Security-to-Scale #141 selecionado como programa canônico", kind: "PROGRAM" },
       { date: "28 Aug 2026", text: "M0 #142 encerrado após reconciliação", kind: "PROGRAM" },
