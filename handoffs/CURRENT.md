@@ -1,3 +1,51 @@
+# Current handoff override — FECH.AI B4 post-application refresh — 2026-09-01
+
+## Confirmed external state
+
+```text
+FECH.AI main:
+  020594a2bb66fed5b6ab38f2d015878a7ef54d71
+
+PR #162:
+  MERGED
+
+B4:
+  migration APPLIED
+  exact READ_ONLY post-application catalog proof PASS
+  post-application canonical closure NOT YET ESTABLISHED
+  RUNTIME_NEGATIVE_PASS NOT_ESTABLISHED
+
+Security Go:
+  DENIED
+```
+
+## Continuity projection
+
+```text
+HISTORY:
+  M1-A–F
+  M1-C-F01
+  F1-02/B2
+  F1-02/B3
+
+NOW:
+  F1-02/B4 — POST_APPLICATION_CLOSURE_PENDING
+
+FUTURE:
+  unresolved M1 remediation findings
+  M2
+  M3
+  M4
+  M5
+  M6
+```
+
+The B4 merge/application is appended to the journey; it does not rewrite earlier history or consume the future roadmap.
+
+PR #27 stays Draft. Ready and merge remain separate Product Authority gates.
+
+---
+
 # Current handoff override — persistent plan/history/future correction — 2026-09-01
 
 ## Confirmed state
