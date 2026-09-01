@@ -1,3 +1,35 @@
+# Current preview next action override — B4 post-application — 2026-09-01
+
+FECH.AI advanced materially after the earlier B4 target-design snapshot.
+
+```text
+PR #162: MERGED
+main: 020594a2bb66fed5b6ab38f2d015878a7ef54d71
+migration: APPLIED
+live ledger: 20260901222707 / f1_02_b4_list_acl_tenant_integrity
+exact READ_ONLY catalog proof: PASS
+runtime-negative PASS: NOT_ESTABLISHED
+Security Go: DENIED
+```
+
+For the Workspace Preview, the current external-project continuation is:
+
+```text
+F1-02/B4
+POST_APPLICATION_CLOSURE_PENDING
+
+next safe action:
+  obtain/record independent post-application adjudication
+  + reconcile canonical FECH.AI continuity
+
+do not mark B4 fully closed until that evidence exists
+do not advance M2 merely because B4 was applied
+```
+
+The Workspace PR #27 remains Draft. This refresh does not authorize Ready or merge.
+
+---
+
 # Current Workspace next safe action — continuity model v2 candidate
 
 Validate the bounded candidate that separates:
