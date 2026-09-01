@@ -1,3 +1,40 @@
+# Current Workspace next safe action — continuity model v2 candidate
+
+Validate the bounded candidate that separates:
+
+```text
+HISTORY
+NOW
+FUTURE
+```
+
+Acceptance requires:
+
+1. Roadmap continues to show M0–M6;
+2. M1 remains completed;
+3. F1-02/B4 is shown as ACTIVE_WORKSTREAM, not as a replacement milestone;
+4. M2 is explicitly visible as NEXT_PROGRAM_MILESTONE;
+5. M3–M6 remain visible as planned future;
+6. completed M1-A–F, M1-C-F01, B2 and B3 remain visible as history;
+7. unresolved confirmed M1-B/M1-D/M1-E findings remain visible in future remediation;
+8. event ledger preserves historical transitions;
+9. responsive layout remains usable at notebook 100% zoom;
+10. lint/build pass;
+11. exact diff remains bounded to Workspace representation/docs.
+
+Lifecycle boundary:
+
+```text
+implementation: authorized
+Draft PR: authorized by normal bounded implementation flow
+independent audit: required
+Ready: requires separate Product Authority authorization
+merge: requires separate Product Authority authorization
+```
+
+Do not mutate FECH.AI or reinterpret its protocol/program from this Workspace change.
+
+---
 # SFJM Workspace — Next Safe Action
 
 ## Current manual refresh override — 2026-09-01
