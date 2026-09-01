@@ -1,3 +1,42 @@
+# Current candidate override — persistent temporal continuity — 2026-09-01
+
+A bounded Workspace correction is implementing the continuity model required to keep past, present and future visible simultaneously.
+
+```text
+base main:
+  06a174648426713bb45589b8606700e63bbc284e
+
+problem:
+  mutable snapshot conflates current work with the whole program
+
+target:
+  PROGRAM_PLAN
+  + EVENT_LEDGER
+  + CURRENT_PROJECTION
+  + FUTURE_QUEUE
+
+required invariant:
+  remediation workstream != program milestone
+  refresh must not erase completed history
+  refresh must not hide canonical future work
+```
+
+FECH.AI canonical position carried by this candidate:
+
+```text
+main observed: bd645210d61b2a7e4af60112c2fe8cef71d761cc
+M1: COMPLETE
+F1-02/B4: ACTIVE
+next safe action: TARGET DESIGN + AUTHORIZATION MATRIX FIRST
+M2: PLANNED / next program milestone
+M3–M6: PLANNED / preserved future
+Security Go: DENIED
+broad paid commercialization: BLOCKED
+```
+
+No FECH.AI, Supabase, Vercel configuration or external-project mutation is part of this correction.
+
+---
 # SFJM Workspace — Project Status
 
 ## Current manual refresh override — 2026-09-01
