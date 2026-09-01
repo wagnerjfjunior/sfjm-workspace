@@ -1,3 +1,90 @@
+# FECH.AI — Persistent Continuity Model v2
+
+## Current representation contract — 2026-09-01
+
+This section supersedes older snapshot-shape guidance when it conflicts. Historical evidence below remains lineage and must not be deleted merely because current state advances.
+
+The dashboard must preserve four independent layers:
+
+```text
+PROGRAM_PLAN
++ EVENT_LEDGER
++ CURRENT_PROJECTION
++ FUTURE_QUEUE
+= CONTINUITY_VIEW
+```
+
+### Program plan
+
+The canonical Security-to-Scale plan remains M0–M6 from FECH.AI Issue #141.
+
+A remediation workstream MUST NOT replace, rename or consume the program milestone position.
+
+Current position at this snapshot:
+
+```text
+LAST_COMPLETED_MILESTONE:
+  M1 — Security Truth Baseline
+
+ACTIVE_WORKSTREAM:
+  F1-02/B4 — LIST ACL CROSS-TENANT TARGET RISK
+
+NEXT_SAFE_ACTION:
+  TARGET DESIGN + AUTHORIZATION MATRIX FIRST
+
+NEXT_PROGRAM_MILESTONE:
+  M2 — Database Simplification & Optimization Plan
+
+FUTURE_PROGRAM:
+  M2 -> M3 -> M4 -> M5 -> M6
+```
+
+### Event ledger
+
+Historical material events are append-only for ordinary refreshes.
+
+A refresh may append a new event or correct a proven factual error. It must not delete prior completed gates, remediations or transitions merely because a newer action exists.
+
+### Current projection
+
+Current projection answers only:
+
+```text
+What was last completed?
+What is active now?
+What is the next safe action?
+What is the next program milestone?
+What is blocked?
+```
+
+It does not own or replace history or future.
+
+### Future queue
+
+Known future work remains visible before execution.
+
+This includes:
+
+- M2–M6 from canonical program #141;
+- confirmed unresolved M1 findings that still require bounded remediation;
+- other canonically planned workstreams when their future status is evidenced.
+
+Unknown implementation details must not be invented. If sequencing or implementation design is not yet canonical, keep the item visible as PLANNED with that uncertainty explicit.
+
+### Refresh invariant
+
+Every manual refresh MUST satisfy:
+
+```text
+previous completed history ⊆ refreshed completed history
+canonical future plan not consumed by current workstream
+current workstream != current/next program milestone
+material supersession is recorded, not silently erased
+```
+
+If canonical FECH.AI changes the actual plan, record that change as a material plan revision with provenance. Do not rewrite history as if the prior plan never existed.
+
+---
 # FECH.AI — External Project Context
 
 ## Current manual refresh override — 2026-09-01
