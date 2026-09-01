@@ -1,9 +1,8 @@
 export type NavItem = { icon: string; label: string; helper: string; href: string; active?: boolean };
 export type StatusCheck = { label: string; value: string };
 export type ContextCard = { icon: string; label: string; value: string };
-export type JourneyStep = { label: string; date: string; current?: boolean };
 export type SourceRow = { label: string; value: string; badge?: boolean };
-export type TimelineItem = { date: string; text: string };
+export type TimelineItem = { date: string; text: string; kind: "PROGRAM" | "BASELINE" | "REMEDIATION" | "EVIDENCE" };
 export type ExternalProject = {
   name: string;
   kind: string;
@@ -27,11 +26,12 @@ export type ProgramMilestone = {
   exit: string;
 };
 
-export type RunbookItem = {
+export type ExecutionItem = {
   id: string;
-  task: string;
+  label: string;
+  category: "BASELINE" | "REMEDIATION" | "PROGRAM";
+  state: "COMPLETE" | "ACTIVE" | "PLANNED" | "BLOCKED";
   owner: string;
-  state: "ACTIVE" | "PENDING" | "BLOCKED" | "COMPLETE";
   evidence: string;
   nextAction: string;
 };
@@ -42,14 +42,20 @@ export type ProgramSnapshot = {
   observedSha: string;
   observedAt: string;
   programIssue: string;
-  currentMilestone: string;
+  lastCompletedMilestone: string;
+  nextProgramMilestone: string;
+  activeWorkstream: string;
+  nextSafeAction: string;
   securityGo: string;
   commercialization: string;
   weightingBasis: string;
   evidenceBoundary: string;
   invalidatesOn: string;
   milestones: ProgramMilestone[];
-  runbook: RunbookItem[];
+  history: ExecutionItem[];
+  active: ExecutionItem[];
+  future: ExecutionItem[];
+  eventLedger: TimelineItem[];
 };
 
 export function calculateAcceptedProgramProgress(milestones: ProgramMilestone[]) {
@@ -60,24 +66,24 @@ export function calculateAcceptedProgramProgress(milestones: ProgramMilestone[])
 }
 
 export const workspaceDemo = {
-  notice: "Snapshot manual verificado em fontes canônicas — sem sincronização automática, polling ou write-back.",
+  notice: "Snapshot manual · plano + histórico + estado atual + futuro preservados separadamente.",
   nav: [
     { icon: "▶", label: "Continue", helper: "Próxima ação segura", href: "#continue", active: true },
     { icon: "◎", label: "Roadmap", helper: "Security-to-Scale", href: "#fechai-program" },
-    { icon: "☷", label: "Runbook", helper: "Execução M1", href: "#fechai-runbook" },
+    { icon: "☷", label: "Execução", helper: "Histórico · Agora · Futuro", href: "#fechai-execution" },
     { icon: "□", label: "Projetos", helper: "Seus projetos", href: "#projects" },
-    { icon: "⌁", label: "Jornada", helper: "Visão da jornada", href: "#journey" },
+    { icon: "⌁", label: "Jornada", helper: "Ledger de eventos", href: "#journey" },
     { icon: "⇄", label: "Handoffs", helper: "Transições de estado", href: "#" },
     { icon: "≋", label: "Evidências", helper: "Registros e artefatos", href: "#" },
     { icon: "⬡", label: "Governança", helper: "Regras e protocolos", href: "#" }
   ] satisfies NavItem[],
 
   checks: [
-    { label: "Main canônico", value: "Verificado" },
-    { label: "Handoff", value: "Assumido" },
-    { label: "Conversa atual", value: "Chart 3" },
-    { label: "Milestone", value: "M1 completo" },
+    { label: "Último milestone", value: "M1 completo" },
+    { label: "Workstream ativo", value: "F1-02/B4" },
+    { label: "Próximo milestone", value: "M2 planejado" },
     { label: "Próxima ação", value: "B4 · Target design" },
+    { label: "Histórico", value: "Preservado" },
     { label: "Security Go", value: "Não concedido" }
   ] satisfies StatusCheck[],
 
@@ -85,16 +91,15 @@ export const workspaceDemo = {
     {
       name: "FECH.AI",
       kind: "Projeto externo",
-      continuityState: "M0 fechado · M1 Security Truth Baseline completo · remediação ativa",
+      continuityState: "M0/M1 concluídos · B4 ativo · M2–M6 preservados como futuro",
       nextSafeAction: "F1-02/B4 — concluir TARGET DESIGN + AUTHORIZATION MATRIX com Architecture + AppSec + LeadOps antes de qualquer implementação.",
       blockers: [
         "Security Go não concedido",
         "Comercialização ampla paga bloqueada",
         "F1-02 final acceptance bloqueado",
-        "WDP increase depende de governança",
-        "F1-02/B2 e F1-02/B3 estão fechados no boundary catalogal; runtime-negative PASS continua não estabelecido",
+        "RUNTIME_NEGATIVE_PASS não estabelecido",
         "F1-02/B4 permanece ativo e sem implementação autorizada",
-        "Riscos M1-B, M1-D e M1-E permanecem no programa de remediação"
+        "Achados M1-B, M1-D e M1-E ainda possuem remediações pendentes"
       ],
       repository: "wagnerjfjunior/fecha.ai",
       observedSha: "bd645210d61b2a7e4af60112c2fe8cef71d761cc",
@@ -125,12 +130,15 @@ export const workspaceDemo = {
     observedSha: "bd645210d61b2a7e4af60112c2fe8cef71d761cc",
     observedAt: "1 Sep 2026",
     programIssue: "#141",
-    currentMilestone: "Pós-M1 — Remediação F1-02/B4",
+    lastCompletedMilestone: "M1 — Security Truth Baseline",
+    nextProgramMilestone: "M2 — Database Simplification & Optimization Plan",
+    activeWorkstream: "F1-02/B4 — List ACL cross-tenant target risk",
+    nextSafeAction: "Target Design + Authorization Matrix first",
     securityGo: "NOT GRANTED",
     commercialization: "BLOCKED",
-    weightingBasis: "Peso = duração planejada da janela; progresso só avança quando o gate do milestone é aceito.",
+    weightingBasis: "Peso = duração planejada; progresso só avança quando o gate do milestone é aceito.",
     evidenceBoundary: "STATIC != LIVE != RUNTIME · VERSIONED != APPLIED · RUNTIME_BOUNDED != SECURITY_GO",
-    invalidatesOn: "Mudança material em FECH.AI main, Issues #141/#150, lifecycle de workstreams, evidência de Security Go ou decisão de comercialização.",
+    invalidatesOn: "Mudança material no plano #141, evidência, findings, Security Go, comercialização ou classificação de workstreams.",
     milestones: [
       {
         id: "M0",
@@ -140,7 +148,7 @@ export const workspaceDemo = {
         acceptedPercent: 100,
         status: "COMPLETE",
         owner: "Documentation",
-        exit: "M0 #142 fechado; SFJM reconciliado; transição M1 mergeada."
+        exit: "M0 #142 fechado; verdade reconciliada e transição para M1 publicada."
       },
       {
         id: "M1",
@@ -150,17 +158,17 @@ export const workspaceDemo = {
         acceptedPercent: 100,
         status: "COMPLETE",
         owner: "Backend/Data + AppSec + Documentation",
-        exit: "Baseline concluído; Issue #150 fechada; achados classificados e remediação ativa."
+        exit: "Baseline concluído; #150 fechado; findings classificados; remediação continua em trilha própria."
       },
       {
         id: "M2",
-        label: "Database Simplification & Optimization",
+        label: "Database Simplification & Optimization Plan",
         window: "18 Sep–9 Oct",
         weight: 18.75,
         acceptedPercent: 0,
         status: "PLANNED",
         owner: "Backend/Data + Architecture",
-        exit: "Canonicality matrix + Database Contract Map + evolution decision."
+        exit: "Canonicality matrix + routine/policy/trigger/grant map + Database Contract Map + evolution decision."
       },
       {
         id: "M3",
@@ -170,7 +178,7 @@ export const workspaceDemo = {
         acceptedPercent: 0,
         status: "PLANNED",
         owner: "Backend/Data + AppSec + Architecture",
-        exit: "Canonical authority model + privileged allowlist + staging/security plan."
+        exit: "Canonical authority model + commands/queries + privileged allowlist + staging/security plan."
       },
       {
         id: "M4",
@@ -180,7 +188,7 @@ export const workspaceDemo = {
         acceptedPercent: 0,
         status: "PLANNED",
         owner: "Architecture + UX/UI + Domains",
-        exit: "AppShell only composition; critical slices extracted with equivalence tests."
+        exit: "AppShell apenas composição; slices críticos extraídos; nenhuma autoridade movida ao frontend."
       },
       {
         id: "M5",
@@ -189,7 +197,7 @@ export const workspaceDemo = {
         weight: 12.5,
         acceptedPercent: 0,
         status: "PLANNED",
-        owner: "AppSec + SRE + Platform + Backend/Data",
+        owner: "AppSec + Platform + SRE + Backend/Data",
         exit: "Negative/regression gates + CVE/secrets/deploy/observability/rollback readiness."
       },
       {
@@ -200,117 +208,245 @@ export const workspaceDemo = {
         acceptedPercent: 0,
         status: "PLANNED",
         owner: "Product Authority + Security + Platform",
-        exit: "Security Go evidence packet + separate commercialization decision."
+        exit: "Security Go evidence packet + launch blockers resolved + commercialization decision separada."
       }
     ] satisfies ProgramMilestone[],
-    runbook: [
+
+    history: [
       {
         id: "M1-A",
-        task: "LIVE DB × GitHub main × applied migration ledger",
-        owner: "backend_data",
+        label: "LIVE DB × GitHub main × applied migration ledger",
+        category: "BASELINE",
         state: "COMPLETE",
-        evidence: "LIVE DB × GitHub × ledger reconciliados; provenance residual preservado.",
-        nextAction: "Encerrado no baseline M1."
+        owner: "backend_data",
+        evidence: "Baseline M1 reconciliado; provenance residual preservado.",
+        nextAction: "Histórico fechado; não reabrir sem invalidação material."
       },
       {
         id: "M1-B",
-        task: "Privileged-surface inventory",
-        owner: "backend_data",
+        label: "Privileged-surface inventory",
+        category: "BASELINE",
         state: "COMPLETE",
-        evidence: "Superfície privilegiada live recomputada e M1-B-F01 classificado.",
-        nextAction: "Remediar M1-B-F01 em ciclo próprio."
+        owner: "backend_data",
+        evidence: "Superfície privilegiada recomputada; M1-B-F01 classificado.",
+        nextAction: "Baseline fechado; finding segue na fila de remediação."
       },
       {
         id: "M1-C",
-        task: "Tenant-isolation proof plan",
-        owner: "application_security",
+        label: "Tenant-isolation proof plan",
+        category: "BASELINE",
         state: "COMPLETE",
-        evidence: "Plano de prova definido; M1-C-F01 aplicado e provado sem reabrir Security Go.",
-        nextAction: "Encerrado; remediação F1-02 segue em B4."
+        owner: "application_security",
+        evidence: "Plano de prova concluído; M1-C-F01 seguiu para remediação e foi aplicado/provado.",
+        nextAction: "Histórico fechado."
       },
       {
         id: "M1-D",
-        task: "Dependency / known-vulnerability inventory",
-        owner: "application_security",
+        label: "Dependency / known-vulnerability inventory",
+        category: "BASELINE",
         state: "COMPLETE",
+        owner: "application_security",
         evidence: "M1-D-F01 e M1-D-F02 identificados e classificados.",
-        nextAction: "Remediar dependências em ciclo próprio."
+        nextAction: "Baseline fechado; findings permanecem na fila futura."
       },
       {
         id: "M1-E",
-        task: "Secrets / infrastructure attack-surface inventory",
-        owner: "application_security",
+        label: "Secrets / infrastructure attack-surface inventory",
+        category: "BASELINE",
         state: "COMPLETE",
+        owner: "application_security",
         evidence: "M1-E-F01 a F04 identificados sem exposição de valores secretos.",
-        nextAction: "Remediar achados M1-E em ciclos próprios."
+        nextAction: "Baseline fechado; findings permanecem na fila futura."
       },
       {
         id: "M1-F",
-        task: "Evidence reconciliation / M1 verdict",
+        label: "Evidence reconciliation / M1 verdict",
+        category: "BASELINE",
+        state: "COMPLETE",
         owner: "documentation_audit",
-        state: "COMPLETE",
-        evidence: "Backend/Data, AppSec e Documentation concluíram o baseline; #150 fechada.",
-        nextAction: "Encerrado; não reabrir sem invalidação material."
+        evidence: "M1 concluído e Issue #150 fechada.",
+        nextAction: "Não reabrir sem invalidação material."
       },
       {
-        id: "R-M1C",
-        task: "M1-C-F01 — integridade tenant do funil",
+        id: "M1-C-F01",
+        label: "Integridade tenant do funil",
+        category: "REMEDIATION",
+        state: "COMPLETE",
         owner: "backend_data + application_security",
-        state: "COMPLETE",
-        evidence: "B1 e anomalias encerrados; migration aplicada; 4 FKs tenant-aware validadas; mismatches = 0.",
-        nextAction: "Nenhuma; manter evidência e rollback."
+        evidence: "Migration aplicada; 4 FKs tenant-aware validadas; mismatches = 0.",
+        nextAction: "Manter evidência e rollback."
       },
       {
-        id: "R-B2",
-        task: "F1-02/B2 — bloquear writes CRM diretos",
+        id: "F1-02/B2",
+        label: "Bloquear writes CRM diretos",
+        category: "REMEDIATION",
+        state: "COMPLETE",
         owner: "backend_data + application_security",
-        state: "COMPLETE",
-        evidence: "PR #159 merged; migration f1_02_b2_revoke_direct_crm_writes aplicada uma vez; READ_ONLY catalog proof PASS.",
-        nextAction: "Nenhuma; runtime-negative PASS permanece não estabelecido."
+        evidence: "PR #159 merged; migration aplicada; READ_ONLY catalog proof PASS.",
+        nextAction: "Runtime-negative PASS permanece residual separado."
       },
       {
-        id: "R-B3",
-        task: "F1-02/B3 — bloquear histórico forjável",
+        id: "F1-02/B3",
+        label: "Bloquear histórico forjável",
+        category: "REMEDIATION",
+        state: "COMPLETE",
         owner: "application_security",
-        state: "COMPLETE",
         evidence: "PR #157 merged; migration aplicada; READ_ONLY catalog proof PASS.",
-        nextAction: "Nenhuma; não reabrir sem evidência contraditória."
-      },
+        nextAction: "Não reabrir sem evidência contraditória."
+      }
+    ] satisfies ExecutionItem[],
+
+    active: [
       {
-        id: "R-B4",
-        task: "F1-02/B4 — impedir ACL de lista cross-tenant",
-        owner: "architecture + application_security + leadops",
+        id: "F1-02/B4",
+        label: "Impedir ACL de lista cross-tenant",
+        category: "REMEDIATION",
         state: "ACTIVE",
-        evidence: "Risco live confirmado; 12 ACL rows atuais são same-tenant, sem data repair necessário no snapshot.",
+        owner: "Architecture + AppSec + LeadOps",
+        evidence: "Risco live confirmado; 12 ACL rows observadas são same-tenant; nenhum data repair necessário no snapshot.",
         nextAction: "TARGET DESIGN + AUTHORIZATION MATRIX FIRST; nenhuma implementação ainda."
       }
-    ] satisfies RunbookItem[]
+    ] satisfies ExecutionItem[],
+
+    future: [
+      {
+        id: "M1-B-F01",
+        label: "Anon privileged RPC execution surface",
+        category: "REMEDIATION",
+        state: "PLANNED",
+        owner: "Backend/Data + AppSec",
+        evidence: "Finding confirmado no fechamento M1; ordem de remediação ainda não redefine o roadmap.",
+        nextAction: "Remediação futura em ciclo próprio, com autoridade e evidência próprias."
+      },
+      {
+        id: "M1-D-F01",
+        label: "Dependency reproducibility gap",
+        category: "REMEDIATION",
+        state: "PLANNED",
+        owner: "AppSec + Platform",
+        evidence: "Finding confirmado no baseline M1.",
+        nextAction: "Corrigir em ciclo próprio sem apagar o histórico do baseline."
+      },
+      {
+        id: "M1-D-F02",
+        label: "Vite 6.4.2 known affected version",
+        category: "REMEDIATION",
+        state: "PLANNED",
+        owner: "AppSec + Platform",
+        evidence: "GHSA-fx2h-pf6j-xcff registrado; exploitabilidade em produção não estabelecida.",
+        nextAction: "Upgrade e validação em ciclo próprio."
+      },
+      {
+        id: "M1-E-F01",
+        label: "Live Edge function not versioned",
+        category: "REMEDIATION",
+        state: "PLANNED",
+        owner: "Platform + AppSec",
+        evidence: "assistente-ai v10 live; source ausente do main no fechamento M1.",
+        nextAction: "Restaurar rastreabilidade/versionamento em ciclo próprio."
+      },
+      {
+        id: "M1-E-F02",
+        label: "Browser session refresh-token exposure surface",
+        category: "REMEDIATION",
+        state: "PLANNED",
+        owner: "AppSec",
+        evidence: "Finding material confirmado; localStorage por si só não equivale a exploit.",
+        nextAction: "Reduzir superfície em ciclo próprio."
+      },
+      {
+        id: "M1-E-F03",
+        label: "External worker proxy authority gap",
+        category: "REMEDIATION",
+        state: "PLANNED",
+        owner: "AppSec + Platform",
+        evidence: "Finding material estático; abuso/runtime crossover não provado.",
+        nextAction: "Fechar authority gap com prova própria."
+      },
+      {
+        id: "M1-E-F04",
+        label: "Leaked password protection disabled",
+        category: "REMEDIATION",
+        state: "PLANNED",
+        owner: "AppSec",
+        evidence: "Auth hardening gap confirmado.",
+        nextAction: "Endurecimento de Auth em ciclo próprio."
+      },
+      {
+        id: "M2",
+        label: "Database Simplification & Optimization Plan",
+        category: "PROGRAM",
+        state: "PLANNED",
+        owner: "Backend/Data + Architecture",
+        evidence: "Milestone futuro definido no programa #141.",
+        nextAction: "Iniciar somente quando a transição canônica do programa autorizar."
+      },
+      {
+        id: "M3",
+        label: "Backend Authority Contract Freeze",
+        category: "PROGRAM",
+        state: "PLANNED",
+        owner: "Backend/Data + AppSec + Architecture",
+        evidence: "Milestone futuro definido no programa #141.",
+        nextAction: "Preservar como futuro até a transição canônica."
+      },
+      {
+        id: "M4",
+        label: "Frontend Modularization / App.jsx Extraction",
+        category: "PROGRAM",
+        state: "PLANNED",
+        owner: "Architecture + UX/UI + Domains",
+        evidence: "Milestone futuro definido no programa #141.",
+        nextAction: "Preservar como futuro até a transição canônica."
+      },
+      {
+        id: "M5",
+        label: "Integrated Security / Reliability Validation",
+        category: "PROGRAM",
+        state: "PLANNED",
+        owner: "AppSec + Platform + SRE + Backend/Data",
+        evidence: "Milestone futuro definido no programa #141.",
+        nextAction: "Preservar como futuro até a transição canônica."
+      },
+      {
+        id: "M6",
+        label: "Security Go Candidate / Commercial Readiness",
+        category: "PROGRAM",
+        state: "PLANNED",
+        owner: "Product Authority + Security + Platform",
+        evidence: "Milestone futuro definido no programa #141.",
+        nextAction: "Preservar como futuro até a transição canônica."
+      }
+    ] satisfies ExecutionItem[],
+
+    eventLedger: [
+      { date: "24 Jul 2026", text: "FECH.AI registrado como contexto externo manual", kind: "PROGRAM" },
+      { date: "28 Aug 2026", text: "Security-to-Scale #141 selecionado como programa canônico", kind: "PROGRAM" },
+      { date: "28 Aug 2026", text: "M0 #142 encerrado após reconciliação", kind: "PROGRAM" },
+      { date: "28 Aug 2026", text: "M1 Security Truth Baseline iniciado", kind: "BASELINE" },
+      { date: "30 Aug 2026", text: "APPSEC-M1-003 / public.leads: implementação/catalog closure registrada com limitação runtime", kind: "EVIDENCE" },
+      { date: "31 Aug 2026", text: "M1 Security Truth Baseline concluído; Issue #150 fechada", kind: "BASELINE" },
+      { date: "31 Aug 2026", text: "M1-C-F01 aplicado e provado; integridade tenant do funil preservada", kind: "REMEDIATION" },
+      { date: "1 Sep 2026", text: "F1-02/B3 fechado: merged + applied + READ_ONLY catalog proof PASS", kind: "REMEDIATION" },
+      { date: "1 Sep 2026", text: "F1-02/B2 fechado: merged + applied + READ_ONLY catalog proof PASS", kind: "REMEDIATION" },
+      { date: "1 Sep 2026", text: "F1-02/B4 ativado como workstream atual; target design first", kind: "REMEDIATION" }
+    ] satisfies TimelineItem[]
   } satisfies ProgramSnapshot,
 
   contexts: [
     { icon: "🧠", label: "Contexto Preservado", value: "Confirmado" },
-    { icon: "☑", label: "Decisões Preservadas", value: "Confirmado" },
+    { icon: "☑", label: "Histórico Preservado", value: "Append-only" },
+    { icon: "🗺", label: "Plano Futuro", value: "M2–M6" },
     { icon: "📁", label: "Evidências Canônicas", value: "GitHub" },
-    { icon: "🤝", label: "Handoff Assumido", value: "Chart 3" },
     { icon: "🔒", label: "Governança Mantida", value: "Ativa" },
     { icon: "◉", label: "Fonte Verificada", value: "main" }
   ] satisfies ContextCard[],
 
-  journey: [
-    { label: "Home Migrada", date: "23 Jul 2026" },
-    { label: "Guardrails", date: "23 Jul 2026" },
-    { label: "FECH.AI Continue", date: "24 Jul 2026" },
-    { label: "Security-to-Scale", date: "28 Aug 2026" },
-    { label: "M0 fechado", date: "28 Aug 2026" },
-    { label: "M1 completo", date: "31 Aug 2026" },
-    { label: "Remediação B4", date: "1 Sep 2026", current: true }
-  ] satisfies JourneyStep[],
-
   currentState: [
-    { label: "Estado de continuidade", value: "M1 completo · remediação ativa" },
-    { label: "Conversa ativa", value: "Workspace — Chart 3" },
-    { label: "FECH.AI", value: "M0/M1 fechados · B2/B3 fechados · B4 ativo" },
-    { label: "Fonte canônica", value: "GitHub / main" }
+    { label: "Último milestone concluído", value: "M1" },
+    { label: "Workstream ativo", value: "F1-02/B4" },
+    { label: "Próximo milestone", value: "M2" },
+    { label: "Modelo temporal", value: "Passado + Agora + Futuro" }
   ] satisfies SourceRow[],
 
   sources: [
@@ -318,16 +454,5 @@ export const workspaceDemo = {
     { label: "Program issue", value: "#141", badge: true },
     { label: "M1 issue", value: "#150 CLOSED", badge: true },
     { label: "Snapshot", value: "Manual", badge: true }
-  ] satisfies SourceRow[],
-
-  timeline: [
-    { date: "1 Sep 2026", text: "B2 e B3 fechados no boundary catalogal; B4 passa a ser o próximo risco ativo" },
-    { date: "1 Sep 2026", text: "B2: PR #159 merged + migration aplicada + READ_ONLY catalog proof PASS" },
-    { date: "1 Sep 2026", text: "B3: PR #157 merged + migration aplicada + READ_ONLY catalog proof PASS" },
-    { date: "1 Sep 2026", text: "M1-C-F01 aplicado e provado; integridade tenant do funil preservada" },
-    { date: "31 Aug 2026", text: "M1 Security Truth Baseline concluído e Issue #150 fechada" },
-    { date: "28 Aug 2026", text: "M0 #142 foi encerrado após reconciliação e merge do SFJM" },
-    { date: "28 Aug 2026", text: "Security-to-Scale #141 selecionado para Roadmap + Runbook" },
-    { date: "24 Jul 2026", text: "FECH.AI registrado como contexto externo manual" }
-  ] satisfies TimelineItem[]
+  ] satisfies SourceRow[]
 };
