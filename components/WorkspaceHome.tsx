@@ -4,10 +4,11 @@ import { useState } from "react";
 import {
   calculateAcceptedProgramProgress,
   workspaceDemo,
+  type ExecutionItem,
   type ExternalProject,
   type ProgramMilestone,
-  type RunbookItem,
-  type SourceRow
+  type SourceRow,
+  type TimelineItem
 } from "@/data/workspace-demo";
 
 function Sidebar({ open }: { open: boolean }) {
@@ -47,7 +48,8 @@ function Sidebar({ open }: { open: boolean }) {
 }
 
 function ContinuityState() {
-  const progress = calculateAcceptedProgramProgress(workspaceDemo.fechaiProgram.milestones);
+  const program = workspaceDemo.fechaiProgram;
+  const progress = calculateAcceptedProgramProgress(program.milestones);
 
   return (
     <article className="panel statePanel" id="continue">
@@ -55,9 +57,12 @@ function ContinuityState() {
         <div className="eyebrow">Estado de continuidade</div>
         <div className="stateTitle">
           <div className="shield">✓</div>
-          <h2>M1 COMPLETO · REMEDIAÇÃO ATIVA</h2>
+          <h2>M1 CONCLUÍDO · B4 ATIVO · M2 PLANEJADO</h2>
         </div>
-        <p>M0 e M1 foram encerrados no FECH.AI. O baseline está completo, os achados seguem em remediação e o Workspace continua sendo um snapshot manual.</p>
+        <p>
+          O trabalho atual não substitui o programa. O Workspace preserva o que já foi concluído,
+          destaca o workstream ativo e mantém o futuro M2–M6 visível no mesmo estado.
+        </p>
         <div className="checks">
           {workspaceDemo.checks.map((item) => (
             <div className="check" key={item.label}>
@@ -78,7 +83,7 @@ function ContinuityState() {
           <div className="ringContent">
             <strong>{progress.toFixed(2)}%</strong>
             <span>gates aceitos</span>
-            <span>snapshot manual</span>
+            <span>macro programa</span>
           </div>
         </div>
       </div>
@@ -87,6 +92,8 @@ function ContinuityState() {
 }
 
 function NextSafeAction({ onContinue }: { onContinue: () => void }) {
+  const program = workspaceDemo.fechaiProgram;
+
   return (
     <article className="panel actionPanel">
       <div className="actionArt">
@@ -94,25 +101,30 @@ function NextSafeAction({ onContinue }: { onContinue: () => void }) {
       </div>
       <div className="actionContent">
         <div className="eyebrow">Próxima ação segura</div>
-        <h3>Fechar target design e matriz do B4</h3>
+        <h3>Fechar target design e matriz de autorização do B4</h3>
         <p className="muted">
-          Definir o boundary tenant-safe de visibilidade de listas e a matriz de autorização com Architecture, AppSec e LeadOps antes de qualquer implementação.
+          Definir o boundary tenant-safe de visibilidade de listas com Architecture, AppSec e LeadOps.
+          Esse workstream permanece separado do próximo milestone do programa.
         </p>
         <div className="metaRow">
           <div className="meta">
-            Escopo
-            <strong>Security Truth Baseline</strong>
+            Último milestone
+            <strong>{program.lastCompletedMilestone}</strong>
           </div>
           <div className="meta">
-            Estado
-            <strong>Remediação ativa</strong>
+            Workstream atual
+            <strong>F1-02/B4</strong>
+          </div>
+          <div className="meta">
+            Próximo milestone
+            <strong>M2</strong>
           </div>
           <div className="meta">
             Mutação
-            <strong>Somente leitura</strong>
+            <strong>Nenhuma autorizada</strong>
           </div>
         </div>
-        <button className="primary" onClick={onContinue}>▶ VER BOUNDARY</button>
+        <button className="primary" onClick={onContinue}>▶ VER CONTINUIDADE</button>
       </div>
     </article>
   );
@@ -166,6 +178,7 @@ function ExternalProjects() {
 
 function MilestoneCard({ milestone }: { milestone: ProgramMilestone }) {
   const contribution = milestone.weight * (milestone.acceptedPercent / 100);
+
   return (
     <div className={`milestoneCard ${milestone.status.toLowerCase()}`}>
       <div className="milestoneTop">
@@ -196,32 +209,37 @@ function FechaiProgramTracking() {
     <article className="panel panelInner programPanel" id="fechai-program">
       <div className="sectionTitle programTitle">
         <div>
-          <div className="eyebrow">Macro Roadmap / Executive View</div>
+          <div className="eyebrow">Macro Roadmap / plano preservado</div>
           <h3>{program.name}</h3>
         </div>
         <span className="manualBadge">MANUAL · {program.observedAt}</span>
       </div>
 
-      <div className="programSummary">
+      <div className="programSummary continuitySummary">
         <div>
           <span>Progresso ponderado</span>
           <strong>{progress.toFixed(2)}%</strong>
           <small>{program.weightingBasis}</small>
         </div>
         <div>
-          <span>Milestone atual</span>
-          <strong>{program.currentMilestone}</strong>
-          <small>{program.programIssue} · {program.repository}</small>
+          <span>Último milestone concluído</span>
+          <strong>{program.lastCompletedMilestone}</strong>
+          <small>Histórico preservado; não é substituído pelo workstream atual.</small>
+        </div>
+        <div>
+          <span>Workstream ativo</span>
+          <strong>{program.activeWorkstream}</strong>
+          <small>{program.nextSafeAction}</small>
+        </div>
+        <div>
+          <span>Próximo milestone do programa</span>
+          <strong>{program.nextProgramMilestone}</strong>
+          <small>O futuro permanece visível antes de começar.</small>
         </div>
         <div>
           <span>Security Go</span>
           <strong className="dangerText">{program.securityGo}</strong>
           <small>Comercialização ampla: {program.commercialization}</small>
-        </div>
-        <div>
-          <span>Fonte observada</span>
-          <code>{program.observedSha}</code>
-          <small>{program.invalidatesOn}</small>
         </div>
       </div>
 
@@ -237,47 +255,84 @@ function FechaiProgramTracking() {
   );
 }
 
-function RunbookRow({ item }: { item: RunbookItem }) {
+function ExecutionCard({ item }: { item: ExecutionItem }) {
   return (
-    <tr>
-      <th scope="row" data-label="ID">{item.id}</th>
-      <td data-label="Tarefa / evidência">
-        <strong>{item.task}</strong>
-        <small>{item.evidence}</small>
-      </td>
-      <td data-label="Owner">{item.owner}</td>
-      <td data-label="Estado"><span className={`runbookState ${item.state.toLowerCase()}`}>{item.state}</span></td>
-      <td data-label="Próxima ação">{item.nextAction}</td>
-    </tr>
+    <div className={`executionCard ${item.state.toLowerCase()}`}>
+      <div className="executionTop">
+        <span className="executionId">{item.id}</span>
+        <span className={`runbookState ${item.state.toLowerCase()}`}>{item.state}</span>
+      </div>
+      <strong>{item.label}</strong>
+      <span className="executionCategory">{item.category}</span>
+      <p>{item.evidence}</p>
+      <small>{item.owner}</small>
+      <div className="executionNext">{item.nextAction}</div>
+    </div>
   );
 }
 
-function FechaiRunbook() {
+function ExecutionLane({
+  title,
+  helper,
+  items,
+  laneClass
+}: {
+  title: string;
+  helper: string;
+  items: ExecutionItem[];
+  laneClass: string;
+}) {
   return (
-    <article className="panel panelInner runbookPanel" id="fechai-runbook">
-      <div className="sectionTitle">
+    <section className={`executionLane ${laneClass}`}>
+      <div className="executionLaneHeader">
         <div>
-          <div className="eyebrow">Operational Runbook View</div>
-          <h3>M1 — Security Truth Baseline</h3>
+          <span>{title}</span>
+          <small>{helper}</small>
         </div>
-        <span className="manualBadge">READ_ONLY FIRST</span>
+        <b>{items.length}</b>
       </div>
-      <div className="runbookScroll">
-        <table className="runbookTable">
-          <caption className="srOnly">Runbook operacional do M1 Security Truth Baseline</caption>
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Tarefa / evidência</th>
-              <th scope="col">Owner</th>
-              <th scope="col">Estado</th>
-              <th scope="col">Próxima ação</th>
-            </tr>
-          </thead>
-          <tbody>
-            {workspaceDemo.fechaiProgram.runbook.map((item) => <RunbookRow item={item} key={item.id} />)}
-          </tbody>
-        </table>
+      <div className="executionItems">
+        {items.map((item) => <ExecutionCard item={item} key={item.id} />)}
+      </div>
+    </section>
+  );
+}
+
+function FechaiExecutionBoard() {
+  const program = workspaceDemo.fechaiProgram;
+
+  return (
+    <article className="panel panelInner executionPanel" id="fechai-execution">
+      <div className="sectionTitle programTitle">
+        <div>
+          <div className="eyebrow">Mapa operacional persistente</div>
+          <h3>Histórico · Agora · Futuro</h3>
+        </div>
+        <span className="manualBadge">NÃO SOBRESCREVER O PASSADO</span>
+      </div>
+      <p className="executionIntro">
+        Refresh altera a projeção atual, não apaga eventos concluídos nem tarefas planejadas.
+        Remediações e milestones permanecem em trilhas separadas.
+      </p>
+      <div className="executionBoard">
+        <ExecutionLane
+          title="Histórico"
+          helper="Gates e remediações já concluídos"
+          items={program.history}
+          laneClass="historyLane"
+        />
+        <ExecutionLane
+          title="Agora"
+          helper="Único workstream operacional em foco"
+          items={program.active}
+          laneClass="nowLane"
+        />
+        <ExecutionLane
+          title="Futuro"
+          helper="Findings pendentes + M2–M6 já conhecidos"
+          items={program.future}
+          laneClass="futureLane"
+        />
       </div>
     </article>
   );
@@ -301,17 +356,19 @@ function PreservedContexts() {
 }
 
 function JourneyOverview() {
+  const events = workspaceDemo.fechaiProgram.eventLedger;
+
   return (
     <article className="panel panelInner" id="journey">
       <div className="sectionTitle">
-        <h3>Visão da jornada</h3>
-        <a href="#fechai-program">Ver programa →</a>
+        <h3>Visão da jornada · event ledger</h3>
+        <a href="#fechai-execution">Ver execução →</a>
       </div>
       <div className="journey">
-        {workspaceDemo.journey.map((item) => (
-          <div className={`step ${item.current ? "current" : ""}`} key={item.label}>
-            <div className="stepDot">{item.current ? "●" : "✓"}</div>
-            <strong>{item.label}</strong>
+        {events.map((item, index) => (
+          <div className={`step ${index === events.length - 1 ? "current" : ""}`} key={`${item.date}-${item.text}`}>
+            <div className="stepDot">{index === events.length - 1 ? "●" : "✓"}</div>
+            <strong>{item.text}</strong>
             <small>{item.date}</small>
           </div>
         ))}
@@ -334,14 +391,14 @@ function SideCard({ title, rows }: { title: string; rows: SourceRow[] }) {
   );
 }
 
-function Timeline() {
+function Timeline({ items }: { items: TimelineItem[] }) {
   return (
     <article className="panel sideCard">
-      <h3>Linha do tempo</h3>
+      <h3>Linha do tempo preservada</h3>
       <div className="timeline">
-        {workspaceDemo.timeline.map((item) => (
-          <div className="timelineItem" key={`${item.date}-${item.text}`}>
-            <small>{item.date}</small>
+        {[...items].reverse().map((item) => (
+          <div className={`timelineItem timeline-${item.kind.toLowerCase()}`} key={`${item.date}-${item.text}`}>
+            <small>{item.date} · {item.kind}</small>
             {item.text}
           </div>
         ))}
@@ -353,6 +410,7 @@ function Timeline() {
 export function WorkspaceHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const program = workspaceDemo.fechaiProgram;
 
   return (
     <>
@@ -372,6 +430,7 @@ export function WorkspaceHome() {
               <button aria-label="Painel" className="tool">▤</button>
             </div>
           </header>
+
           <div className="layout">
             <section className="stack">
               <ContinuityState />
@@ -379,26 +438,29 @@ export function WorkspaceHome() {
               <PreservedContexts />
               <JourneyOverview />
               <FechaiProgramTracking />
-              <FechaiRunbook />
+              <FechaiExecutionBoard />
               <ExternalProjects />
               <article className="panel footer">
-                <span>SFJM preserva continuidade; FECH.AI permanece autoridade sobre o programa.</span>
+                <span>SFJM preserva plano, jornada e continuidade; FECH.AI permanece autoridade sobre a verdade.</span>
                 <a href="#fechai-program">Abrir Roadmap →</a>
               </article>
             </section>
+
             <aside className="stack right">
-              <SideCard title="Estado atual" rows={workspaceDemo.currentState} />
+              <SideCard title="Posição no programa" rows={workspaceDemo.currentState} />
               <SideCard title="Fontes canônicas" rows={workspaceDemo.sources} />
-              <Timeline />
+              <Timeline items={program.eventLedger} />
             </aside>
           </div>
         </main>
       </div>
+
       <div className={`modal ${modalOpen ? "open" : ""}`} role="dialog" aria-modal="true" aria-hidden={!modalOpen}>
         <div className="modalCard">
-          <h2>Boundary M1</h2>
+          <h2>Continuidade FECH.AI</h2>
           <p className="muted">
-            M1-A é read-only. DDL/DML, migration apply, Supabase mutation, deploy, Auth/business-data mutation e Security Go permanecem bloqueados.
+            Último milestone: {program.lastCompletedMilestone}. Workstream atual: {program.activeWorkstream}.
+            Próximo milestone: {program.nextProgramMilestone}. A ação atual não apaga nem substitui nenhuma dessas posições.
           </p>
           <div className="modalActions">
             <button className="secondary" onClick={() => setModalOpen(false)}>Fechar</button>
