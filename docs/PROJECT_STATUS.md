@@ -1,3 +1,25 @@
+# Current preview refresh override — FECH.AI B4 applied — 2026-09-01
+
+```text
+FECH.AI main: 020594a2bb66fed5b6ab38f2d015878a7ef54d71
+PR #162: MERGED
+B4 migration live ledger: 20260901222707 / f1_02_b4_list_acl_tenant_integrity
+B4 application: APPLIED
+exact READ_ONLY post-application catalog proof: PASS
+B4 final post-application canonical closure: NOT YET ESTABLISHED
+RUNTIME_NEGATIVE_PASS: NOT_ESTABLISHED
+Security Go: DENIED
+
+last completed program milestone: M1
+active workstream: B4 post-application closure
+next program milestone: M2
+future program preserved: M2–M6
+```
+
+The persistent continuity model remains in force: this advancement appends B4 merge/application/proof events and updates only the current projection. It does not delete B2/B3/M1 history or hide M2–M6.
+
+---
+
 # Current candidate override — persistent temporal continuity — 2026-09-01
 
 A bounded Workspace correction is implementing the continuity model required to keep past, present and future visible simultaneously.
