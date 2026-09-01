@@ -5,18 +5,22 @@
 This section supersedes the older FECH.AI snapshot below for current continuity only; historical delivery custody remains preserved.
 
 ```text
-FECH.AI main observed: baaa22ec9018909bea8cc302b92471019340ab9c
+FECH.AI main observed: bd645210d61b2a7e4af60112c2fe8cef71d761cc
 #141: OPEN
 #150: CLOSED / M1 Security Truth Baseline COMPLETE
 accepted program progress: 18.75%
 remediation program: ACTIVE
 M1-C-F01: APPLIED / PROVEN
-PR #157: OPEN / DRAFT
-PR #157 head: 6f22afeb723414d87e5481d80196a2c99789e4b1
-Backend/Data exact-head: PASS
-next safe action: independent AppSec exact-head review
-Ready / merge / Supabase application: NOT AUTHORIZED
+F1-02/B3: REMEDIATED — MERGED + APPLIED + READ_ONLY_CATALOG_PROVEN
+F1-02/B2: REMEDIATED — MERGED + APPLIED + READ_ONLY_CATALOG_PROVEN
+B2 migration: f1_02_b2_revoke_direct_crm_writes
+B2 post-application READ_ONLY catalog proof: PASS
+F1-02/B4: ACTIVE / LIST ACL CROSS-TENANT TARGET RISK / PR-06
+next safe action: TARGET DESIGN + AUTHORIZATION MATRIX FIRST
+required specialists: Architecture + AppSec + LeadOps
+RUNTIME_NEGATIVE_PASS: NOT ESTABLISHED
 Security Go: DENIED
+broad paid commercialization: BLOCKED
 ```
 
 ## Status date

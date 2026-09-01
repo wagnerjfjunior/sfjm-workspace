@@ -77,7 +77,7 @@ export const workspaceDemo = {
     { label: "Handoff", value: "Assumido" },
     { label: "Conversa atual", value: "Chart 3" },
     { label: "Milestone", value: "M1 completo" },
-    { label: "Próxima ação", value: "PR #157 · AppSec" },
+    { label: "Próxima ação", value: "B4 · Target design" },
     { label: "Security Go", value: "Não concedido" }
   ] satisfies StatusCheck[],
 
@@ -86,18 +86,18 @@ export const workspaceDemo = {
       name: "FECH.AI",
       kind: "Projeto externo",
       continuityState: "M0 fechado · M1 Security Truth Baseline completo · remediação ativa",
-      nextSafeAction: "Concluir a revisão AppSec independente da PR #157 no exact head 6f22afeb723414d87e5481d80196a2c99789e4b1.",
+      nextSafeAction: "F1-02/B4 — concluir TARGET DESIGN + AUTHORIZATION MATRIX com Architecture + AppSec + LeadOps antes de qualquer implementação.",
       blockers: [
         "Security Go não concedido",
         "Comercialização ampla paga bloqueada",
         "F1-02 final acceptance bloqueado",
         "WDP increase depende de governança",
-        "PR #157 permanece OPEN / DRAFT; Ready, merge e aplicação não autorizados",
-        "F1-02/B3 ainda não foi aplicado nem provado pós-aplicação",
+        "F1-02/B2 e F1-02/B3 estão fechados no boundary catalogal; runtime-negative PASS continua não estabelecido",
+        "F1-02/B4 permanece ativo e sem implementação autorizada",
         "Riscos M1-B, M1-D e M1-E permanecem no programa de remediação"
       ],
       repository: "wagnerjfjunior/fecha.ai",
-      observedSha: "baaa22ec9018909bea8cc302b92471019340ab9c",
+      observedSha: "bd645210d61b2a7e4af60112c2fe8cef71d761cc",
       observedAt: "1 Sep 2026",
       verification: "Snapshot manual · FECH.AI continua sendo a autoridade"
     },
@@ -122,10 +122,10 @@ export const workspaceDemo = {
   fechaiProgram: {
     name: "FECH.AI Security-to-Scale 2026",
     repository: "wagnerjfjunior/fecha.ai",
-    observedSha: "baaa22ec9018909bea8cc302b92471019340ab9c",
+    observedSha: "bd645210d61b2a7e4af60112c2fe8cef71d761cc",
     observedAt: "1 Sep 2026",
     programIssue: "#141",
-    currentMilestone: "Pós-M1 — Remediação F1-02/B3",
+    currentMilestone: "Pós-M1 — Remediação F1-02/B4",
     securityGo: "NOT GRANTED",
     commercialization: "BLOCKED",
     weightingBasis: "Peso = duração planejada da janela; progresso só avança quando o gate do milestone é aceito.",
@@ -226,7 +226,7 @@ export const workspaceDemo = {
         owner: "application_security",
         state: "COMPLETE",
         evidence: "Plano de prova definido; M1-C-F01 aplicado e provado sem reabrir Security Go.",
-        nextAction: "Prosseguir com F1-02/B3."
+        nextAction: "Encerrado; remediação F1-02 segue em B4."
       },
       {
         id: "M1-D",
@@ -261,12 +261,28 @@ export const workspaceDemo = {
         nextAction: "Nenhuma; manter evidência e rollback."
       },
       {
+        id: "R-B2",
+        task: "F1-02/B2 — bloquear writes CRM diretos",
+        owner: "backend_data + application_security",
+        state: "COMPLETE",
+        evidence: "PR #159 merged; migration f1_02_b2_revoke_direct_crm_writes aplicada uma vez; READ_ONLY catalog proof PASS.",
+        nextAction: "Nenhuma; runtime-negative PASS permanece não estabelecido."
+      },
+      {
         id: "R-B3",
         task: "F1-02/B3 — bloquear histórico forjável",
         owner: "application_security",
+        state: "COMPLETE",
+        evidence: "PR #157 merged; migration aplicada; READ_ONLY catalog proof PASS.",
+        nextAction: "Nenhuma; não reabrir sem evidência contraditória."
+      },
+      {
+        id: "R-B4",
+        task: "F1-02/B4 — impedir ACL de lista cross-tenant",
+        owner: "architecture + application_security + leadops",
         state: "ACTIVE",
-        evidence: "PR #157 OPEN/DRAFT; Backend/Data exact-head PASS; nenhum caller versionado depende de INSERT direto.",
-        nextAction: "Revisão AppSec independente no head 6f22afeb723414d87e5481d80196a2c99789e4b1."
+        evidence: "Risco live confirmado; 12 ACL rows atuais são same-tenant, sem data repair necessário no snapshot.",
+        nextAction: "TARGET DESIGN + AUTHORIZATION MATRIX FIRST; nenhuma implementação ainda."
       }
     ] satisfies RunbookItem[]
   } satisfies ProgramSnapshot,
@@ -287,25 +303,27 @@ export const workspaceDemo = {
     { label: "Security-to-Scale", date: "28 Aug 2026" },
     { label: "M0 fechado", date: "28 Aug 2026" },
     { label: "M1 completo", date: "31 Aug 2026" },
-    { label: "Remediação B3", date: "1 Sep 2026", current: true }
+    { label: "Remediação B4", date: "1 Sep 2026", current: true }
   ] satisfies JourneyStep[],
 
   currentState: [
     { label: "Estado de continuidade", value: "M1 completo · remediação ativa" },
     { label: "Conversa ativa", value: "Workspace — Chart 3" },
-    { label: "FECH.AI", value: "M0/M1 fechados · PR #157 Draft" },
+    { label: "FECH.AI", value: "M0/M1 fechados · B2/B3 fechados · B4 ativo" },
     { label: "Fonte canônica", value: "GitHub / main" }
   ] satisfies SourceRow[],
 
   sources: [
-    { label: "FECH.AI main", value: "baaa22ec…", badge: true },
+    { label: "FECH.AI main", value: "bd645210…", badge: true },
     { label: "Program issue", value: "#141", badge: true },
     { label: "M1 issue", value: "#150 CLOSED", badge: true },
     { label: "Snapshot", value: "Manual", badge: true }
   ] satisfies SourceRow[],
 
   timeline: [
-    { date: "1 Sep 2026", text: "PR #157 passou Backend/Data; revisão AppSec é o próximo gate" },
+    { date: "1 Sep 2026", text: "B2 e B3 fechados no boundary catalogal; B4 passa a ser o próximo risco ativo" },
+    { date: "1 Sep 2026", text: "B2: PR #159 merged + migration aplicada + READ_ONLY catalog proof PASS" },
+    { date: "1 Sep 2026", text: "B3: PR #157 merged + migration aplicada + READ_ONLY catalog proof PASS" },
     { date: "1 Sep 2026", text: "M1-C-F01 aplicado e provado; integridade tenant do funil preservada" },
     { date: "31 Aug 2026", text: "M1 Security Truth Baseline concluído e Issue #150 fechada" },
     { date: "28 Aug 2026", text: "M0 #142 foi encerrado após reconciliação e merge do SFJM" },

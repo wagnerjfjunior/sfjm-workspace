@@ -2,17 +2,26 @@
 
 ## Current manual refresh override — 2026-09-01
 
-The FECH.AI M1-A continuation below is historical and superseded for current continuity.
+The previous PR #157/B3 continuation is historical and superseded for current continuity.
 
 Current external-project next safe action:
 
 ```text
-PR #157 / F1-02 B3
-exact head: 6f22afeb723414d87e5481d80196a2c99789e4b1
-Backend/Data: PASS
-next gate: independent AppSec exact-head review
-writes authorized: NONE
-Ready / merge / application: NOT AUTHORIZED
+FECH.AI main: bd645210d61b2a7e4af60112c2fe8cef71d761cc
+F1-02/B2: REMEDIATED — MERGED + APPLIED + READ_ONLY_CATALOG_PROVEN
+F1-02/B3: REMEDIATED — MERGED + APPLIED + READ_ONLY_CATALOG_PROVEN
+F1-02/B4: ACTIVE / PR-06 target
+
+next gate:
+  TARGET DESIGN + AUTHORIZATION MATRIX FIRST
+
+required specialists before implementation:
+  Architecture + AppSec + LeadOps
+
+RUNTIME_NEGATIVE_PASS: NOT ESTABLISHED
+Security Go: DENIED
+broad paid commercialization: BLOCKED
+implementation writes authorized: NONE
 ```
 
 ## Canonical context

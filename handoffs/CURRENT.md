@@ -4,16 +4,27 @@
 
 ```text
 Workspace duty: VISUALIZATION / CONTINUITY
-FECH.AI main observed: baaa22ec9018909bea8cc302b92471019340ab9c
+FECH.AI main observed: bd645210d61b2a7e4af60112c2fe8cef71d761cc
 M1 baseline: COMPLETE
 Issue #150: CLOSED
-program accepted progress: 18.75%
-M1-C-F01: APPLIED / PROVEN
-PR #157: OPEN / DRAFT
-exact head: 6f22afeb723414d87e5481d80196a2c99789e4b1
-Backend/Data: PASS
-next safe action: independent AppSec exact-head review
+accepted macro program progress: 18.75%
+
+F1-02/B2:
+  REMEDIATED — MERGED + APPLIED + READ_ONLY_CATALOG_PROVEN
+  migration: f1_02_b2_revoke_direct_crm_writes
+  post-application READ_ONLY catalog proof: PASS
+
+F1-02/B3:
+  REMEDIATED — MERGED + APPLIED + READ_ONLY_CATALOG_PROVEN
+
+F1-02/B4:
+  ACTIVE / LIST ACL CROSS-TENANT TARGET RISK / PR-06
+  next safe action: TARGET DESIGN + AUTHORIZATION MATRIX FIRST
+  specialists: Architecture + AppSec + LeadOps
+
+RUNTIME_NEGATIVE_PASS: NOT ESTABLISHED
 Security Go: DENIED
+broad paid commercialization: BLOCKED
 ```
 
 No Ready, merge, deployment, Supabase application or external-project mutation is authorized by this refresh.
