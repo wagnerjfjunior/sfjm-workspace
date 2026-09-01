@@ -2,7 +2,7 @@
 
 ## Current manual refresh override — 2026-09-01
 
-M1 Security Truth Baseline is complete and Issue #150 is closed. M1-C-F01 has been applied and proven. The current bounded remediation is F1-02/B3 through Draft PR #157 at exact head `6f22afeb723414d87e5481d80196a2c99789e4b1`; Backend/Data passed and independent AppSec review is the next gate. Security Go remains denied, and Ready, merge and Supabase application remain unauthorized.
+FECH.AI main is `bd645210d61b2a7e4af60112c2fe8cef71d761cc`. M1 Security Truth Baseline is complete and Issue #150 is closed. F1-02/B3 and F1-02/B2 are both `REMEDIATED — MERGED + APPLIED + READ_ONLY_CATALOG_PROVEN`. B2 used migration `f1_02_b2_revoke_direct_crm_writes` and its post-application READ_ONLY catalog proof passed. The next bounded risk is F1-02/B4 — list ACL cross-tenant target risk / PR-06. The next action is `TARGET DESIGN + AUTHORIZATION MATRIX FIRST` with Architecture, AppSec and LeadOps before implementation. `RUNTIME_NEGATIVE_PASS = NOT ESTABLISHED`; Security Go remains denied and broad paid commercialization remains blocked. Accepted macro program progress remains 18.75%; M2 is not advanced by this snapshot.
 
 ## Record status
 

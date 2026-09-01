@@ -94,9 +94,9 @@ function NextSafeAction({ onContinue }: { onContinue: () => void }) {
       </div>
       <div className="actionContent">
         <div className="eyebrow">Próxima ação segura</div>
-        <h3>Concluir revisão AppSec da PR #157</h3>
+        <h3>Fechar target design e matriz do B4</h3>
         <p className="muted">
-          Validar independentemente o bloqueio do INSERT direto em funil_movimentacoes no exact head já aprovado por Backend/Data.
+          Definir o boundary tenant-safe de visibilidade de listas e a matriz de autorização com Architecture, AppSec e LeadOps antes de qualquer implementação.
         </p>
         <div className="metaRow">
           <div className="meta">
