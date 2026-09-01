@@ -1,3 +1,56 @@
+# Current handoff override — persistent plan/history/future correction — 2026-09-01
+
+## Confirmed state
+
+Workspace canonical main at candidate start:
+
+```text
+06a174648426713bb45589b8606700e63bbc284e
+```
+
+FECH.AI canonical state used for the representation:
+
+```text
+main: bd645210d61b2a7e4af60112c2fe8cef71d761cc
+Issue #141: OPEN
+Issue #150: CLOSED / M1 COMPLETE
+F1-02/B4: ACTIVE
+next safe action: TARGET DESIGN + AUTHORIZATION MATRIX FIRST
+next program milestone: M2
+future program: M2–M6
+Security Go: DENIED
+```
+
+## Material problem
+
+The previous dashboard model used one mutable snapshot for roadmap/runbook/current state. Refreshes could therefore make the active task appear to be the entire program, while historical work and future planned work were progressively de-emphasized or lost.
+
+## Candidate correction
+
+The Workspace now models separately:
+
+```text
+PROGRAM_PLAN
+EVENT_LEDGER
+CURRENT_PROJECTION
+FUTURE_QUEUE
+```
+
+UI renders three execution lanes simultaneously:
+
+```text
+HISTÓRICO | AGORA | FUTURO
+```
+
+A remediation such as F1-02/B4 is an active workstream and must not replace M2 as the next program milestone.
+
+## Lifecycle
+
+The correction is authorized for implementation. Validate exact diff, lint/build and independent audit in Draft.
+
+Ready and merge remain separate authorization gates.
+
+---
 # SFJM Workspace — Current Handoff
 
 ## Current manual refresh override — 2026-09-01
