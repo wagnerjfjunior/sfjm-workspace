@@ -57,11 +57,11 @@ function ContinuityState() {
         <div className="eyebrow">Estado de continuidade</div>
         <div className="stateTitle">
           <div className="shield">✓</div>
-          <h2>M1 CONCLUÍDO · B4 ATIVO · M2 PLANEJADO</h2>
+          <h2>M1 CONCLUÍDO · B4 APLICADO · M2 PLANEJADO</h2>
         </div>
         <p>
-          O trabalho atual não substitui o programa. O Workspace preserva o que já foi concluído,
-          destaca o workstream ativo e mantém o futuro M2–M6 visível no mesmo estado.
+          O trabalho atual não substitui o programa. B4 já foi mergeado e aplicado com exact READ_ONLY catalog proof PASS;
+          o fechamento pós-aplicação ainda está pendente, enquanto o futuro M2–M6 continua visível.
         </p>
         <div className="checks">
           {workspaceDemo.checks.map((item) => (
@@ -101,10 +101,10 @@ function NextSafeAction({ onContinue }: { onContinue: () => void }) {
       </div>
       <div className="actionContent">
         <div className="eyebrow">Próxima ação segura</div>
-        <h3>Fechar target design e matriz de autorização do B4</h3>
+        <h3>Fechar a etapa pós-aplicação do B4</h3>
         <p className="muted">
-          Definir o boundary tenant-safe de visibilidade de listas com Architecture, AppSec e LeadOps.
-          Esse workstream permanece separado do próximo milestone do programa.
+          A implementação tenant-safe de visibilidade de listas já foi mergeada e aplicada.
+          Agora falta a adjudicação pós-aplicação e a reconciliação canônica, sem confundir isso com M2.
         </p>
         <div className="metaRow">
           <div className="meta">
@@ -113,7 +113,7 @@ function NextSafeAction({ onContinue }: { onContinue: () => void }) {
           </div>
           <div className="meta">
             Workstream atual
-            <strong>F1-02/B4</strong>
+            <strong>B4 pós-aplicação</strong>
           </div>
           <div className="meta">
             Próximo milestone
@@ -459,7 +459,7 @@ export function WorkspaceHome() {
         <div className="modalCard">
           <h2>Continuidade FECH.AI</h2>
           <p className="muted">
-            Último milestone: {program.lastCompletedMilestone}. Workstream atual: {program.activeWorkstream}.
+            Último milestone: {program.lastCompletedMilestone}. Workstream atual: {program.activeWorkstream}. Próxima ação: {program.nextSafeAction}.
             Próximo milestone: {program.nextProgramMilestone}. A ação atual não apaga nem substitui nenhuma dessas posições.
           </p>
           <div className="modalActions">
