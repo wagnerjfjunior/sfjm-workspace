@@ -1,3 +1,70 @@
+# FECH.AI — Current refresh override — B4 post-application — 2026-09-01
+
+This override is current for the Workspace preview. Older sections remain historical lineage.
+
+```text
+FECH.AI main observed:
+  020594a2bb66fed5b6ab38f2d015878a7ef54d71
+
+PR #162:
+  CLOSED / MERGED
+  reviewed head: 89c049cec92d1a74fd3011088581c3bf1b4e5a8a
+  merge commit: 020594a2bb66fed5b6ab38f2d015878a7ef54d71
+
+B4 migration:
+  repository artifact: supabase/migrations/20260901175000_f1_02_b4_list_acl_tenant_integrity.sql
+  live ledger: 20260901222707 / f1_02_b4_list_acl_tenant_integrity
+  application: APPLIED
+
+exact read-only proof:
+  supabase/tests/f1-02-b4/list_acl_tenant_integrity.sql
+  blob: 13c21a7a747406b3e17baefdbd26105e7a90e527
+  result: PASS
+
+post-application catalog state:
+  authenticated SELECT=true
+  authenticated INSERT=false
+  authenticated UPDATE=false
+  authenticated DELETE=false
+  RLS=true
+  FORCE RLS=true
+  ACL rows=12
+  ACL fingerprint preserved=true
+  empresa targets=0
+  unsupported targets=0
+  list/company mismatches=0
+  invalid broker targets=0
+  invalid team targets=0
+  composite list/company FK=present
+  target-integrity trigger=present
+  controlled caller definitions preserved=true
+
+RUNTIME_NEGATIVE_PASS:
+  NOT_ESTABLISHED
+
+Security Go:
+  DENIED
+```
+
+B4 is therefore **merged + applied + exact READ_ONLY catalog-proven**, but is not represented as fully closed because no later canonical post-application AppSec/Documentation closure was found in FECH.AI at this refresh.
+
+Current continuation represented by the Workspace:
+
+```text
+ACTIVE_WORKSTREAM:
+  F1-02/B4 — POST_APPLICATION_CLOSURE_PENDING
+
+NEXT_SAFE_ACTION:
+  independent post-application adjudication + canonical reconciliation
+
+NEXT_PROGRAM_MILESTONE:
+  M2 — Database Simplification & Optimization Plan
+```
+
+The B4 advancement does not consume or replace M2–M6.
+
+---
+
 # FECH.AI — Persistent Continuity Model v2
 
 ## Current representation contract — 2026-09-01
