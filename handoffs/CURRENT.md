@@ -1,5 +1,23 @@
 # SFJM Workspace — Current Handoff
 
+## Current manual refresh override — 2026-09-01
+
+```text
+Workspace duty: VISUALIZATION / CONTINUITY
+FECH.AI main observed: baaa22ec9018909bea8cc302b92471019340ab9c
+M1 baseline: COMPLETE
+Issue #150: CLOSED
+program accepted progress: 18.75%
+M1-C-F01: APPLIED / PROVEN
+PR #157: OPEN / DRAFT
+exact head: 6f22afeb723414d87e5481d80196a2c99789e4b1
+Backend/Data: PASS
+next safe action: independent AppSec exact-head review
+Security Go: DENIED
+```
+
+No Ready, merge, deployment, Supabase application or external-project mutation is authorized by this refresh.
+
 ## Canonical source
 
 Repository: `wagnerjfjunior/sfjm-workspace`

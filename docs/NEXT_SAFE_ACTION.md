@@ -1,5 +1,20 @@
 # SFJM Workspace — Next Safe Action
 
+## Current manual refresh override — 2026-09-01
+
+The FECH.AI M1-A continuation below is historical and superseded for current continuity.
+
+Current external-project next safe action:
+
+```text
+PR #157 / F1-02 B3
+exact head: 6f22afeb723414d87e5481d80196a2c99789e4b1
+Backend/Data: PASS
+next gate: independent AppSec exact-head review
+writes authorized: NONE
+Ready / merge / application: NOT AUTHORIZED
+```
+
 ## Canonical context
 
 Repository:

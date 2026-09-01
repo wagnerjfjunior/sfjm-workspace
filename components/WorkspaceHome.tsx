@@ -55,9 +55,9 @@ function ContinuityState() {
         <div className="eyebrow">Estado de continuidade</div>
         <div className="stateTitle">
           <div className="shield">✓</div>
-          <h2>M1 ASSUMIDO</h2>
+          <h2>M1 COMPLETO · REMEDIAÇÃO ATIVA</h2>
         </div>
-        <p>M0 foi encerrado no FECH.AI e o Security Truth Baseline é o milestone ativo. O Workspace representa um snapshot manual, não sincronização live.</p>
+        <p>M0 e M1 foram encerrados no FECH.AI. O baseline está completo, os achados seguem em remediação e o Workspace continua sendo um snapshot manual.</p>
         <div className="checks">
           {workspaceDemo.checks.map((item) => (
             <div className="check" key={item.label}>
@@ -94,9 +94,9 @@ function NextSafeAction({ onContinue }: { onContinue: () => void }) {
       </div>
       <div className="actionContent">
         <div className="eyebrow">Próxima ação segura</div>
-        <h3>Executar M1-A em modo READ_ONLY</h3>
+        <h3>Concluir revisão AppSec da PR #157</h3>
         <p className="muted">
-          Cruzar LIVE DB × GitHub main × migration ledger e estabelecer a superfície privilegiada realmente aplicada antes de qualquer simplificação.
+          Validar independentemente o bloqueio do INSERT direto em funil_movimentacoes no exact head já aprovado por Backend/Data.
         </p>
         <div className="metaRow">
           <div className="meta">
@@ -105,11 +105,11 @@ function NextSafeAction({ onContinue }: { onContinue: () => void }) {
           </div>
           <div className="meta">
             Estado
-            <strong>M1 ativo</strong>
+            <strong>Remediação ativa</strong>
           </div>
           <div className="meta">
             Mutação
-            <strong>Bloqueada</strong>
+            <strong>Somente leitura</strong>
           </div>
         </div>
         <button className="primary" onClick={onContinue}>▶ VER BOUNDARY</button>

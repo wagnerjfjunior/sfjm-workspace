@@ -1,5 +1,24 @@
 # SFJM Workspace — Project Status
 
+## Current manual refresh override — 2026-09-01
+
+This section supersedes the older FECH.AI snapshot below for current continuity only; historical delivery custody remains preserved.
+
+```text
+FECH.AI main observed: baaa22ec9018909bea8cc302b92471019340ab9c
+#141: OPEN
+#150: CLOSED / M1 Security Truth Baseline COMPLETE
+accepted program progress: 18.75%
+remediation program: ACTIVE
+M1-C-F01: APPLIED / PROVEN
+PR #157: OPEN / DRAFT
+PR #157 head: 6f22afeb723414d87e5481d80196a2c99789e4b1
+Backend/Data exact-head: PASS
+next safe action: independent AppSec exact-head review
+Ready / merge / Supabase application: NOT AUTHORIZED
+Security Go: DENIED
+```
+
 ## Status date
 
 2026-08-29

@@ -1,5 +1,9 @@
 # FECH.AI — External Project Context
 
+## Current manual refresh override — 2026-09-01
+
+M1 Security Truth Baseline is complete and Issue #150 is closed. M1-C-F01 has been applied and proven. The current bounded remediation is F1-02/B3 through Draft PR #157 at exact head `6f22afeb723414d87e5481d80196a2c99789e4b1`; Backend/Data passed and independent AppSec review is the next gate. Security Go remains denied, and Ready, merge and Supabase application remain unauthorized.
+
 ## Record status
 
 `DOCUMENTATION_ONLY / MANUAL_SNAPSHOT / NO_AUTOMATIC_SYNC`

@@ -76,8 +76,8 @@ export const workspaceDemo = {
     { label: "Main canônico", value: "Verificado" },
     { label: "Handoff", value: "Assumido" },
     { label: "Conversa atual", value: "Chart 3" },
-    { label: "Milestone", value: "M1 ativo" },
-    { label: "Próxima ação", value: "M1-A read-only" },
+    { label: "Milestone", value: "M1 completo" },
+    { label: "Próxima ação", value: "PR #157 · AppSec" },
     { label: "Security Go", value: "Não concedido" }
   ] satisfies StatusCheck[],
 
@@ -85,20 +85,20 @@ export const workspaceDemo = {
     {
       name: "FECH.AI",
       kind: "Projeto externo",
-      continuityState: "M0 fechado · M1 Security Truth Baseline ativo",
-      nextSafeAction: "Executar M1-A READ_ONLY: LIVE DB × GitHub main × migration ledger e inventário atual de superfícies privilegiadas.",
+      continuityState: "M0 fechado · M1 Security Truth Baseline completo · remediação ativa",
+      nextSafeAction: "Concluir a revisão AppSec independente da PR #157 no exact head 6f22afeb723414d87e5481d80196a2c99789e4b1.",
       blockers: [
         "Security Go não concedido",
         "Comercialização ampla paga bloqueada",
         "F1-02 final acceptance bloqueado",
         "WDP increase depende de governança",
-        "M1 live database truth ainda não estabelecida",
-        "#139 permanece workstream ativo e exige revalidação live antes de lifecycle",
-        "#140 config estática não prova Action/Builder runtime"
+        "PR #157 permanece OPEN / DRAFT; Ready, merge e aplicação não autorizados",
+        "F1-02/B3 ainda não foi aplicado nem provado pós-aplicação",
+        "Riscos M1-B, M1-D e M1-E permanecem no programa de remediação"
       ],
       repository: "wagnerjfjunior/fecha.ai",
-      observedSha: "3eeb6fd230309f206be7920607739f8e4545556f",
-      observedAt: "28 Aug 2026",
+      observedSha: "baaa22ec9018909bea8cc302b92471019340ab9c",
+      observedAt: "1 Sep 2026",
       verification: "Snapshot manual · FECH.AI continua sendo a autoridade"
     },
     {
@@ -122,10 +122,10 @@ export const workspaceDemo = {
   fechaiProgram: {
     name: "FECH.AI Security-to-Scale 2026",
     repository: "wagnerjfjunior/fecha.ai",
-    observedSha: "3eeb6fd230309f206be7920607739f8e4545556f",
-    observedAt: "28 Aug 2026",
+    observedSha: "baaa22ec9018909bea8cc302b92471019340ab9c",
+    observedAt: "1 Sep 2026",
     programIssue: "#141",
-    currentMilestone: "M1 — Security Truth Baseline",
+    currentMilestone: "Pós-M1 — Remediação F1-02/B3",
     securityGo: "NOT GRANTED",
     commercialization: "BLOCKED",
     weightingBasis: "Peso = duração planejada da janela; progresso só avança quando o gate do milestone é aceito.",
@@ -147,10 +147,10 @@ export const workspaceDemo = {
         label: "Security Truth Baseline",
         window: "4–18 Sep",
         weight: 12.5,
-        acceptedPercent: 0,
-        status: "ACTIVE",
+        acceptedPercent: 100,
+        status: "COMPLETE",
         owner: "Backend/Data + AppSec + Documentation",
-        exit: "Live DB × GitHub × migrations; privileged surface; tenant proof plan; dependency/secrets inventory."
+        exit: "Baseline concluído; Issue #150 fechada; achados classificados e remediação ativa."
       },
       {
         id: "M2",
@@ -208,49 +208,65 @@ export const workspaceDemo = {
         id: "M1-A",
         task: "LIVE DB × GitHub main × applied migration ledger",
         owner: "backend_data",
-        state: "ACTIVE",
-        evidence: "Current live truth not yet established for M1.",
-        nextAction: "Run bounded read-only catalog/migration cross-check."
+        state: "COMPLETE",
+        evidence: "LIVE DB × GitHub × ledger reconciliados; provenance residual preservado.",
+        nextAction: "Encerrado no baseline M1."
       },
       {
         id: "M1-B",
         task: "Privileged-surface inventory",
         owner: "backend_data",
-        state: "PENDING",
-        evidence: "Historical counts are capture-only and must be recomputed.",
-        nextAction: "Inventory owner, DEFINER/INVOKER, search_path and ACL/executability."
+        state: "COMPLETE",
+        evidence: "Superfície privilegiada live recomputada e M1-B-F01 classificado.",
+        nextAction: "Remediar M1-B-F01 em ciclo próprio."
       },
       {
         id: "M1-C",
         task: "Tenant-isolation proof plan",
         owner: "application_security",
-        state: "PENDING",
-        evidence: "No broad current runtime proof claimed.",
-        nextAction: "Define static/live/runtime proof boundaries and isolated-test requirements."
+        state: "COMPLETE",
+        evidence: "Plano de prova definido; M1-C-F01 aplicado e provado sem reabrir Security Go.",
+        nextAction: "Prosseguir com F1-02/B3."
       },
       {
         id: "M1-D",
         task: "Dependency / known-vulnerability inventory",
         owner: "application_security",
-        state: "PENDING",
-        evidence: "Current dependency exposure not yet reconciled in M1.",
-        nextAction: "Inspect manifests/lockfiles and classify known-vulnerability evidence."
+        state: "COMPLETE",
+        evidence: "M1-D-F01 e M1-D-F02 identificados e classificados.",
+        nextAction: "Remediar dependências em ciclo próprio."
       },
       {
         id: "M1-E",
         task: "Secrets / infrastructure attack-surface inventory",
         owner: "application_security",
-        state: "PENDING",
-        evidence: "Do not expose secret values; inventory references/config surfaces only.",
-        nextAction: "Map GitHub Actions, Vercel, Edge and Supabase config evidence read-only."
+        state: "COMPLETE",
+        evidence: "M1-E-F01 a F04 identificados sem exposição de valores secretos.",
+        nextAction: "Remediar achados M1-E em ciclos próprios."
       },
       {
         id: "M1-F",
         task: "Evidence reconciliation / M1 verdict",
         owner: "documentation_audit",
-        state: "PENDING",
-        evidence: "Depends on M1-A–E evidence.",
-        nextAction: "Classify findings, residual risk and define one next safe action."
+        state: "COMPLETE",
+        evidence: "Backend/Data, AppSec e Documentation concluíram o baseline; #150 fechada.",
+        nextAction: "Encerrado; não reabrir sem invalidação material."
+      },
+      {
+        id: "R-M1C",
+        task: "M1-C-F01 — integridade tenant do funil",
+        owner: "backend_data + application_security",
+        state: "COMPLETE",
+        evidence: "B1 e anomalias encerrados; migration aplicada; 4 FKs tenant-aware validadas; mismatches = 0.",
+        nextAction: "Nenhuma; manter evidência e rollback."
+      },
+      {
+        id: "R-B3",
+        task: "F1-02/B3 — bloquear histórico forjável",
+        owner: "application_security",
+        state: "ACTIVE",
+        evidence: "PR #157 OPEN/DRAFT; Backend/Data exact-head PASS; nenhum caller versionado depende de INSERT direto.",
+        nextAction: "Revisão AppSec independente no head 6f22afeb723414d87e5481d80196a2c99789e4b1."
       }
     ] satisfies RunbookItem[]
   } satisfies ProgramSnapshot,
@@ -270,25 +286,28 @@ export const workspaceDemo = {
     { label: "FECH.AI Continue", date: "24 Jul 2026" },
     { label: "Security-to-Scale", date: "28 Aug 2026" },
     { label: "M0 fechado", date: "28 Aug 2026" },
-    { label: "M1 ativo", date: "28 Aug 2026", current: true }
+    { label: "M1 completo", date: "31 Aug 2026" },
+    { label: "Remediação B3", date: "1 Sep 2026", current: true }
   ] satisfies JourneyStep[],
 
   currentState: [
-    { label: "Estado de continuidade", value: "M1 ativo" },
+    { label: "Estado de continuidade", value: "M1 completo · remediação ativa" },
     { label: "Conversa ativa", value: "Workspace — Chart 3" },
-    { label: "FECH.AI", value: "M0 fechado · M1 ativo" },
+    { label: "FECH.AI", value: "M0/M1 fechados · PR #157 Draft" },
     { label: "Fonte canônica", value: "GitHub / main" }
   ] satisfies SourceRow[],
 
   sources: [
-    { label: "FECH.AI main", value: "3eeb6fd2…", badge: true },
+    { label: "FECH.AI main", value: "baaa22ec…", badge: true },
     { label: "Program issue", value: "#141", badge: true },
-    { label: "M1 issue", value: "#150", badge: true },
+    { label: "M1 issue", value: "#150 CLOSED", badge: true },
     { label: "Snapshot", value: "Manual", badge: true }
   ] satisfies SourceRow[],
 
   timeline: [
-    { date: "28 Aug 2026", text: "FECH.AI M1 Security Truth Baseline tornou-se o milestone ativo" },
+    { date: "1 Sep 2026", text: "PR #157 passou Backend/Data; revisão AppSec é o próximo gate" },
+    { date: "1 Sep 2026", text: "M1-C-F01 aplicado e provado; integridade tenant do funil preservada" },
+    { date: "31 Aug 2026", text: "M1 Security Truth Baseline concluído e Issue #150 fechada" },
     { date: "28 Aug 2026", text: "M0 #142 foi encerrado após reconciliação e merge do SFJM" },
     { date: "28 Aug 2026", text: "Security-to-Scale #141 selecionado para Roadmap + Runbook" },
     { date: "24 Jul 2026", text: "FECH.AI registrado como contexto externo manual" }
