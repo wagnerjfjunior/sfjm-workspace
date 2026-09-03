@@ -64,7 +64,7 @@ function ContinuityState() {
         </div>
         <p>
           O trabalho atual não substitui o programa. B4 e PR-07 já foram concluídos; J4 / PR-08 está agora em Draft com 98 casos versionados;
-          o exact-head implementation review é a próxima ação e o futuro M2–M6 continua visível.
+          o review do exact HEAD 0f3f266c... abriu 9 findings; a correção/revisão continua sendo o AGORA, e M2–M6 permanece visível.
         </p>
         <div className="checks">
           {workspaceDemo.checks.map((item) => (
@@ -104,10 +104,10 @@ function NextSafeAction({ onContinue }: { onContinue: () => void }) {
       </div>
       <div className="actionContent">
         <div className="eyebrow">Próxima ação segura</div>
-        <h3>Revisar o exact HEAD da PR-08 / J4</h3>
+        <h3>Corrigir os 9 findings do exact HEAD da PR-08</h3>
         <p className="muted">
-          A PR #166 contém a matriz/harness executável de 98 casos e permanece Draft.
-          A próxima ação é implementation review no exact HEAD; nenhum runner deve ser executado neste gate.
+          A PR #166 está OPEN no head 0f3f266c... com matriz/harness de 98 casos; a revisão independente abriu 9 findings.
+          A próxima ação é corrigir esses findings e repetir review independente; nenhum runner deve ser executado neste gate.
         </p>
         <div className="metaRow">
           <div className="meta">
