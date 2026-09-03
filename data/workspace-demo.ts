@@ -114,8 +114,8 @@ export const workspaceDemo = {
     {
       name: "FECH.AI",
       kind: "Projeto externo",
-      continuityState: "M0/M1 concluídos · B2/B3/B4 fechados · PR-07/J3 encerrado com residual bounded · J4/PR-08 ativo · M2–M6 preservados"
-      nextSafeAction: "J4 / PR-08 — resolver o exact HEAD da PR #166 e executar implementation review; não executar runners."
+      continuityState: "M0/M1 concluídos · B2/B3/B4 fechados · PR-07/J3 encerrado com residual bounded · PR-08 OPEN com 9 findings no exact head · M2–M6 preservados"
+      nextSafeAction: "J4 / PR-08 — corrigir os 9 findings abertos no exact HEAD 0f3f266c... e repetir review independente; não executar runners."
       blockers: [
         "Security Go não concedido",
         "Comercialização ampla paga bloqueada",
@@ -125,6 +125,7 @@ export const workspaceDemo = {
         "IMP-003 concurrent business-RPC runtime permanece NOT_DETERMINED",
         "Migration rollback/reapply permanece NOT_DETERMINED",
         "PR-08 runners permanecem NOT_EXECUTED",
+        "PR #166 possui 9 review findings abertos no exact head 0f3f266c...",
         "Achados M1-B, M1-D e M1-E ainda possuem remediações pendentes"
       ],
       repository: "wagnerjfjunior/fecha.ai",
@@ -158,8 +159,8 @@ export const workspaceDemo = {
     programIssue: "#141",
     lastCompletedMilestone: "M1 — Security Truth Baseline",
     nextProgramMilestone: "M2 — Database Simplification & Optimization Plan",
-    activeWorkstream: "J4 / PR-08 — Repeatable Executable Security Matrix",
-    nextSafeAction: "Resolve PR #166 exact head and perform exact-head implementation review; do not execute any PR-08 runner",
+    activeWorkstream: "J4 / PR-08 — exact-head findings remediation",
+    nextSafeAction: "Address 9 unresolved exact-head review findings on 0f3f266c... and repeat independent review; do not execute any PR-08 runner",
     securityGo: "NOT GRANTED",
     commercialization: "BLOCKED",
     weightingBasis: "Peso = duração planejada; progresso só avança quando o gate do milestone é aceito.",
@@ -347,8 +348,8 @@ export const workspaceDemo = {
         category: "REMEDIATION",
         state: "ACTIVE",
         owner: "Backend/Data + AppSec",
-        evidence: "PR #166 OPEN / DRAFT no head f69f0b56...; 98 casos versionados; Vercel SUCCESS; todos os execution result fields permanecem NOT_EXECUTED.",
-        nextAction: "Resolver o exact HEAD e realizar implementation review. Não executar runtime/Auth/rollback/reapply/production smoke."
+        evidence: "PR #166 OPEN / draft=false no head 0f3f266c...; 98 casos versionados; Vercel SUCCESS; review independente abriu 9 findings ainda não resolvidos; runners permanecem NOT_EXECUTED.",
+        nextAction: "Corrigir os 9 findings do exact HEAD e repetir review independente. Não executar runtime/Auth/rollback/reapply/production smoke."
       }
     ] satisfies ExecutionItem[],
 
@@ -436,7 +437,8 @@ export const workspaceDemo = {
       { date: "2 Sep 2026", text: "PR #163 / PR-07 mergeada; tenant-safe funnel reads + CRM payload integrity", kind: "REMEDIATION" },
       { date: "2 Sep 2026", text: "PR-07 migration 20260902225240 aplicada em produção", kind: "EVIDENCE" },
       { date: "3 Sep 2026", text: "J3 fechado por bounded-residual Product Authority exception; IMP-003 e rollback/reapply seguem NOT_DETERMINED", kind: "PROGRAM" },
-      { date: "3 Sep 2026", text: "PR #166 Draft criada para J4 / PR-08 com matriz executável de 98 casos; runners NOT_EXECUTED", kind: "PROGRAM" }
+      { date: "3 Sep 2026", text: "PR #166 Draft criada para J4 / PR-08 com matriz executável de 98 casos; runners NOT_EXECUTED", kind: "PROGRAM" },
+      { date: "3 Sep 2026", text: "PR #166 avançou ao head 0f3f266c...; review independente abriu 9 findings; runners continuam NOT_EXECUTED", kind: "EVIDENCE" }
     ] satisfies TimelineItem[]
 
   } satisfies ProgramSnapshot,
@@ -450,7 +452,7 @@ export const workspaceDemo = {
     preSecurityGoBacklogHours: 116,
     plannedBacklogHours: 104,
     currentPackage: "M1 / F1-02 — PR-08 / J4",
-    currentTask: "PR-08 proof matrix / negative tests — exact-head implementation review",
+    currentTask: "PR-08 proof matrix / negative tests — 9 exact-head review findings em correção",
     note: "WBS agrupa o envelope operacional M1/F1-02. Isso não reabre o milestone canônico M1, que permanece concluído no Roadmap.",
     milestones: [
       {
@@ -476,7 +478,7 @@ export const workspaceDemo = {
           { id: "B3", label: "Funnel history boundary", hours: 24, state: "COMPLETE" },
           { id: "B4", label: "List ACL tenant integrity", hours: 34, state: "COMPLETE" },
           { id: "PR-07", label: "Tenant-safe reads + payload validation", hours: 36, state: "COMPLETE", note: "PR #163 merged; migration applied; J3 closed with bounded residual evidence." },
-          { id: "PR-08", label: "Proof matrix / negative tests", hours: 22, state: "ACTIVE", note: "PR #166 Draft; 98 cases versioned; exact-head implementation review next; runners NOT_EXECUTED." },
+          { id: "PR-08", label: "Proof matrix / negative tests", hours: 22, state: "ACTIVE", note: "PR #166 OPEN no head 0f3f266c...; 98 casos versionados; review independente abriu 9 findings; runners NOT_EXECUTED." },
           { id: "PR-09", label: "Close-out & adjudicação final", hours: 6, state: "PLANNED" }
         ]
       },
@@ -599,7 +601,7 @@ export const workspaceDemo = {
     { label: "FECH.AI main", value: "9d05c642…", badge: true },
     { label: "Program issue", value: "#141", badge: true },
     { label: "M1 issue", value: "#150 CLOSED", badge: true },
-    { label: "PR-08 candidate", value: "#166 DRAFT", badge: true },
+    { label: "PR-08 candidate", value: "#166 OPEN · 9 findings", badge: true },
     { label: "Snapshot", value: "Manual · 3 Sep", badge: true }
   ] satisfies SourceRow[]
 };
