@@ -114,8 +114,8 @@ export const workspaceDemo = {
     {
       name: "FECH.AI",
       kind: "Projeto externo",
-      continuityState: "M0/M1 concluídos · B2/B3/B4 fechados · PR-07/J3 encerrado com residual bounded · PR-08 OPEN com 9 findings no exact head · M2–M6 preservados"
-      nextSafeAction: "J4 / PR-08 — corrigir os 9 findings abertos no exact HEAD 0f3f266c... e repetir review independente; não executar runners."
+      continuityState: "M0/M1 concluídos · B2/B3/B4 fechados · PR-07/J3 encerrado com residual bounded · PR-08 OPEN com 9 findings no exact head · M2–M6 preservados",
+      nextSafeAction: "J4 / PR-08 — corrigir os 9 findings abertos no exact HEAD 0f3f266c... e repetir review independente; não executar runners.",
       blockers: [
         "Security Go não concedido",
         "Comercialização ampla paga bloqueada",
