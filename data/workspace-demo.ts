@@ -58,6 +58,28 @@ export type ProgramSnapshot = {
   eventLedger: TimelineItem[];
 };
 
+export type WbsTaskState = "COMPLETE" | "ACTIVE" | "PLANNED" | "PARKED";
+export type WbsTask = {
+  id: string;
+  label: string;
+  hours: number;
+  state: WbsTaskState;
+  note?: string;
+};
+export type WbsMilestone = {
+  id: string;
+  label: string;
+  hours: number;
+  state: "COMPLETE" | "ACTIVE" | "PLANNED";
+  tasks: WbsTask[];
+};
+export type WbsBacklog = {
+  id: string;
+  label: string;
+  hours: number;
+  tasks: WbsTask[];
+};
+
 export function calculateAcceptedProgramProgress(milestones: ProgramMilestone[]) {
   return milestones.reduce(
     (total, milestone) => total + milestone.weight * (milestone.acceptedPercent / 100),
@@ -70,6 +92,7 @@ export const workspaceDemo = {
   nav: [
     { icon: "▶", label: "Continue", helper: "Próxima ação segura", href: "#continue", active: true },
     { icon: "◎", label: "Roadmap", helper: "Security-to-Scale", href: "#fechai-program" },
+    { icon: "◫", label: "WBS / Effort", helper: "Horas · tarefas · distância", href: "#fechai-wbs" },
     { icon: "☷", label: "Execução", helper: "Histórico · Agora · Futuro", href: "#fechai-execution" },
     { icon: "□", label: "Projetos", helper: "Seus projetos", href: "#projects" },
     { icon: "⌁", label: "Jornada", helper: "Ledger de eventos", href: "#journey" },
@@ -80,9 +103,9 @@ export const workspaceDemo = {
 
   checks: [
     { label: "Último milestone", value: "M1 completo" },
-    { label: "Workstream ativo", value: "B4 pós-aplicação" },
+    { label: "Workstream ativo", value: "J4 / PR-08" },
     { label: "Próximo milestone", value: "M2 planejado" },
-    { label: "Próxima ação", value: "B4 · fechamento pós-aplicação" },
+    { label: "Próxima ação", value: "PR-08 · exact-head review" },
     { label: "Histórico", value: "Preservado" },
     { label: "Security Go", value: "Não concedido" }
   ] satisfies StatusCheck[],
@@ -91,20 +114,22 @@ export const workspaceDemo = {
     {
       name: "FECH.AI",
       kind: "Projeto externo",
-      continuityState: "M0/M1 concluídos · B4 merged + applied + catalog proof PASS · fechamento pós-aplicação pendente · M2–M6 preservados",
-      nextSafeAction: "F1-02/B4 — concluir adjudicação pós-aplicação e reconciliação canônica; exact READ_ONLY catalog proof já passou.",
+      continuityState: "M0/M1 concluídos · B2/B3/B4 fechados · PR-07/J3 encerrado com residual bounded · J4/PR-08 ativo · M2–M6 preservados"
+      nextSafeAction: "J4 / PR-08 — resolver o exact HEAD da PR #166 e executar implementation review; não executar runners."
       blockers: [
         "Security Go não concedido",
         "Comercialização ampla paga bloqueada",
         "F1-02 final acceptance bloqueado",
         "WDP increase depende de governança",
         "RUNTIME_NEGATIVE_PASS não estabelecido",
-        "F1-02/B4 foi mergeado e aplicado; fechamento pós-aplicação ainda não está canonicamente registrado",
+        "IMP-003 concurrent business-RPC runtime permanece NOT_DETERMINED",
+        "Migration rollback/reapply permanece NOT_DETERMINED",
+        "PR-08 runners permanecem NOT_EXECUTED",
         "Achados M1-B, M1-D e M1-E ainda possuem remediações pendentes"
       ],
       repository: "wagnerjfjunior/fecha.ai",
-      observedSha: "020594a2bb66fed5b6ab38f2d015878a7ef54d71",
-      observedAt: "1 Sep 2026",
+      observedSha: "9d05c64281c2aeeae9d67b139eab674720184fb1",
+      observedAt: "3 Sep 2026",
       verification: "Snapshot manual · FECH.AI continua sendo a autoridade"
     },
     {
@@ -133,8 +158,8 @@ export const workspaceDemo = {
     programIssue: "#141",
     lastCompletedMilestone: "M1 — Security Truth Baseline",
     nextProgramMilestone: "M2 — Database Simplification & Optimization Plan",
-    activeWorkstream: "F1-02/B4 — pós-aplicação de list ACL tenant integrity",
-    nextSafeAction: "Post-application adjudication + canonical reconciliation; runtime-negative remains NOT_ESTABLISHED",
+    activeWorkstream: "J4 / PR-08 — Repeatable Executable Security Matrix",
+    nextSafeAction: "Resolve PR #166 exact head and perform exact-head implementation review; do not execute any PR-08 runner",
     securityGo: "NOT GRANTED",
     commercialization: "BLOCKED",
     weightingBasis: "Peso = duração planejada; progresso só avança quando o gate do milestone é aceito.",
@@ -294,18 +319,36 @@ export const workspaceDemo = {
         owner: "application_security",
         evidence: "PR #157 merged; migration aplicada; READ_ONLY catalog proof PASS.",
         nextAction: "Não reabrir sem evidência contraditória."
+      },
+      {
+        id: "F1-02/B4",
+        label: "Impedir ACL de lista cross-tenant",
+        category: "REMEDIATION",
+        state: "COMPLETE",
+        owner: "Architecture + AppSec + LeadOps",
+        evidence: "PR #162 merged; migration 20260901222707 aplicada; exact READ_ONLY catalog proof PASS.",
+        nextAction: "Histórico fechado; residual runtime permanece separado."
+      },
+      {
+        id: "PR-07 / J3",
+        label: "Tenant-safe reads + CRM payload integrity",
+        category: "REMEDIATION",
+        state: "COMPLETE",
+        owner: "Backend/Data + AppSec + LeadOps",
+        evidence: "PR #163 merged; migration 20260902225240 aplicada; J3 encerrado por Product Authority bounded-residual exception.",
+        nextAction: "IMP-003 e rollback/reapply permanecem NOT_DETERMINED; não converter em PASS."
       }
     ] satisfies ExecutionItem[],
 
     active: [
       {
-        id: "F1-02/B4",
-        label: "Impedir ACL de lista cross-tenant",
+        id: "PR-08 / J4",
+        label: "Repeatable Executable Security Matrix",
         category: "REMEDIATION",
         state: "ACTIVE",
-        owner: "Architecture + AppSec + LeadOps",
-        evidence: "PR #162 mergeada em 020594a2...; migration 20260901222707 aplicada; exact READ_ONLY catalog proof PASS; 12 ACL rows e fingerprint preservados; direct authenticated I/U/D revogados; FK/trigger/integridade PASS.",
-        nextAction: "Fechar adjudicação pós-aplicação e reconciliar o estado canônico. RUNTIME_NEGATIVE_PASS permanece NOT_ESTABLISHED."
+        owner: "Backend/Data + AppSec",
+        evidence: "PR #166 OPEN / DRAFT no head f69f0b56...; 98 casos versionados; Vercel SUCCESS; todos os execution result fields permanecem NOT_EXECUTED.",
+        nextAction: "Resolver o exact HEAD e realizar implementation review. Não executar runtime/Auth/rollback/reapply/production smoke."
       }
     ] satisfies ExecutionItem[],
 
@@ -389,9 +432,152 @@ export const workspaceDemo = {
       { date: "1 Sep 2026", text: "F1-02/B2 fechado: merged + applied + READ_ONLY catalog proof PASS", kind: "REMEDIATION" },
       { date: "1 Sep 2026", text: "F1-02/B4 ativado como workstream atual; target design first", kind: "REMEDIATION" },
       { date: "1 Sep 2026", text: "F1-02/B4 PR #162 mergeada no FECH.AI main 020594a2...", kind: "REMEDIATION" },
-      { date: "1 Sep 2026", text: "F1-02/B4 migration 20260901222707 aplicada; exact READ_ONLY post-application catalog proof PASS", kind: "EVIDENCE" }
+      { date: "1 Sep 2026", text: "F1-02/B4 migration 20260901222707 aplicada; exact READ_ONLY post-application catalog proof PASS", kind: "EVIDENCE" },
+      { date: "2 Sep 2026", text: "PR #163 / PR-07 mergeada; tenant-safe funnel reads + CRM payload integrity", kind: "REMEDIATION" },
+      { date: "2 Sep 2026", text: "PR-07 migration 20260902225240 aplicada em produção", kind: "EVIDENCE" },
+      { date: "3 Sep 2026", text: "J3 fechado por bounded-residual Product Authority exception; IMP-003 e rollback/reapply seguem NOT_DETERMINED", kind: "PROGRAM" },
+      { date: "3 Sep 2026", text: "PR #166 Draft criada para J4 / PR-08 com matriz executável de 98 casos; runners NOT_EXECUTED", kind: "PROGRAM" }
     ] satisfies TimelineItem[]
+
   } satisfies ProgramSnapshot,
+
+  fechaiWbs: {
+    source: "FECH.AI WBS planning baseline + user-approved roadmap view",
+    basis: "Planning estimates for visibility, not clocked timesheets.",
+    totalCriticalHours: 832,
+    completedHours: 176,
+    remainingCriticalHours: 656,
+    preSecurityGoBacklogHours: 116,
+    plannedBacklogHours: 104,
+    currentPackage: "M1 / F1-02 — PR-08 / J4",
+    currentTask: "PR-08 proof matrix / negative tests — exact-head implementation review",
+    note: "WBS agrupa o envelope operacional M1/F1-02. Isso não reabre o milestone canônico M1, que permanece concluído no Roadmap.",
+    milestones: [
+      {
+        id: "M0",
+        label: "Program Control / Truth Reconciliation",
+        hours: 36,
+        state: "COMPLETE",
+        tasks: [
+          { id: "M0-01", label: "Inventário de PRs e continuidade", hours: 8, state: "COMPLETE" },
+          { id: "M0-02", label: "Pacotes de especialistas e dependências", hours: 8, state: "COMPLETE" },
+          { id: "M0-03", label: "SFJM / Workspace baseline", hours: 10, state: "COMPLETE" },
+          { id: "M0-04", label: "Roadmap / governança única", hours: 10, state: "COMPLETE" }
+        ]
+      },
+      {
+        id: "M1",
+        label: "Security Truth Baseline / F1-02",
+        hours: 168,
+        state: "ACTIVE",
+        tasks: [
+          { id: "B1", label: "Baseline de evidências", hours: 18, state: "COMPLETE" },
+          { id: "B2", label: "Direct CRM writes", hours: 28, state: "COMPLETE" },
+          { id: "B3", label: "Funnel history boundary", hours: 24, state: "COMPLETE" },
+          { id: "B4", label: "List ACL tenant integrity", hours: 34, state: "COMPLETE" },
+          { id: "PR-07", label: "Tenant-safe reads + payload validation", hours: 36, state: "COMPLETE", note: "PR #163 merged; migration applied; J3 closed with bounded residual evidence." },
+          { id: "PR-08", label: "Proof matrix / negative tests", hours: 22, state: "ACTIVE", note: "PR #166 Draft; 98 cases versioned; exact-head implementation review next; runners NOT_EXECUTED." },
+          { id: "PR-09", label: "Close-out & adjudicação final", hours: 6, state: "PLANNED" }
+        ]
+      },
+      {
+        id: "M2",
+        label: "Database Simplification & Optimization Plan",
+        hours: 116,
+        state: "PLANNED",
+        tasks: [
+          { id: "M2-01", label: "Matriz de 43 tabelas", hours: 20, state: "PLANNED" },
+          { id: "M2-02", label: "Mapa routines / policies / triggers / grants", hours: 24, state: "PLANNED" },
+          { id: "M2-03", label: "Índices / ACL contraditórias", hours: 16, state: "PLANNED" },
+          { id: "M2-04", label: "Política target de DEFINER / RLS / DML", hours: 20, state: "PLANNED" },
+          { id: "M2-05", label: "Database Contract Map", hours: 20, state: "PLANNED" },
+          { id: "M2-06", label: "Decisão arquitetural do banco", hours: 16, state: "PLANNED" }
+        ]
+      },
+      {
+        id: "M3",
+        label: "Backend Authority Contract Freeze",
+        hours: 152,
+        state: "PLANNED",
+        tasks: [
+          { id: "M3-01", label: "Identity / membership / team / role model", hours: 24, state: "PLANNED" },
+          { id: "M3-02", label: "Authority contract por contexto", hours: 28, state: "PLANNED" },
+          { id: "M3-03", label: "Allowlist de RPCs privilegiadas", hours: 24, state: "PLANNED" },
+          { id: "M3-04", label: "Redução de DML sensível direto", hours: 24, state: "PLANNED" },
+          { id: "M3-05", label: "Fechamento Auth / Admin flows", hours: 24, state: "PLANNED" },
+          { id: "M3-06", label: "Staging / test plan de segurança", hours: 28, state: "PLANNED" }
+        ]
+      },
+      {
+        id: "M4",
+        label: "Frontend Modularization / App.jsx Extraction",
+        hours: 172,
+        state: "PLANNED",
+        tasks: [
+          { id: "M4-01", label: "AppShell boundary", hours: 20, state: "PLANNED" },
+          { id: "M4-02", label: "Slice Leads / Funil", hours: 40, state: "PLANNED" },
+          { id: "M4-03", label: "Slice Listas / Distribuição", hours: 32, state: "PLANNED" },
+          { id: "M4-04", label: "Slice MesaCliente", hours: 32, state: "PLANNED" },
+          { id: "M4-05", label: "Gateways / API por feature", hours: 24, state: "PLANNED" },
+          { id: "M4-06", label: "Equivalence / regressão", hours: 24, state: "PLANNED" }
+        ]
+      },
+      {
+        id: "M5",
+        label: "Integrated Security / Reliability Validation",
+        hours: 128,
+        state: "PLANNED",
+        tasks: [
+          { id: "M5-01", label: "Hostile-client suite isolada", hours: 28, state: "PLANNED" },
+          { id: "M5-02", label: "Regressão tenant / role / auth / storage", hours: 28, state: "PLANNED" },
+          { id: "M5-03", label: "Dependency / CVE gate", hours: 12, state: "PLANNED" },
+          { id: "M5-04", label: "Secrets / config / deploy gate", hours: 16, state: "PLANNED" },
+          { id: "M5-05", label: "Observabilidade / rollback / incidente", hours: 24, state: "PLANNED" },
+          { id: "M5-06", label: "Adjudicação de residual risk", hours: 20, state: "PLANNED" }
+        ]
+      },
+      {
+        id: "M6",
+        label: "Security Go Candidate / Commercial Readiness",
+        hours: 60,
+        state: "PLANNED",
+        tasks: [
+          { id: "M6-01", label: "Evidence packet", hours: 14, state: "PLANNED" },
+          { id: "M6-02", label: "Blocker closeout", hours: 8, state: "PLANNED" },
+          { id: "M6-03", label: "Onboarding / support / runbooks", hours: 18, state: "PLANNED" },
+          { id: "M6-04", label: "Decisão comercial controlada", hours: 8, state: "PLANNED" },
+          { id: "M6-05", label: "Launch readiness review", hours: 12, state: "PLANNED" }
+        ]
+      }
+    ] satisfies WbsMilestone[],
+    backlogs: [
+      {
+        id: "PRE_SECURITY_GO",
+        label: "Backlog pré-Security-Go",
+        hours: 116,
+        tasks: [
+          { id: "BG-01", label: "OC-01 leaked-password control", hours: 14, state: "PARKED" },
+          { id: "BG-02", label: "Harden three Root RPC grants", hours: 10, state: "PARKED" },
+          { id: "BG-03", label: "Version baseline of critical helpers", hours: 18, state: "PARKED" },
+          { id: "BG-04", label: "Root/Admin Global contract rollout / Issue #133", hours: 32, state: "PARKED" },
+          { id: "BG-05", label: "Team Lifecycle Authority / Issue #135", hours: 24, state: "PARKED" },
+          { id: "BG-06", label: "Explicit audited Root support mode by tenant", hours: 18, state: "PARKED" }
+        ]
+      },
+      {
+        id: "PLANNED_FUTURE",
+        label: "Backlog planejado / futuro",
+        hours: 104,
+        tasks: [
+          { id: "PL-01", label: "Global funnel-stage capability, se o produto exigir", hours: 20, state: "PARKED" },
+          { id: "PL-02", label: "Import / UX enhancements além do security scope", hours: 16, state: "PARKED" },
+          { id: "PL-03", label: "App.jsx cleanup além dos vertical slices aprovados", hours: 24, state: "PARKED" },
+          { id: "PL-04", label: "Observability / dashboard polish", hours: 16, state: "PARKED" },
+          { id: "PL-05", label: "CRM productivity / UX improvements", hours: 28, state: "PARKED" }
+        ]
+      }
+    ] satisfies WbsBacklog[]
+  },
 
   contexts: [
     { icon: "🧠", label: "Contexto Preservado", value: "Confirmado" },
@@ -404,15 +590,16 @@ export const workspaceDemo = {
 
   currentState: [
     { label: "Último milestone concluído", value: "M1" },
-    { label: "Workstream ativo", value: "B4 pós-aplicação" },
+    { label: "Workstream ativo", value: "J4 / PR-08" },
     { label: "Próximo milestone", value: "M2" },
     { label: "Modelo temporal", value: "Passado + Agora + Futuro" }
   ] satisfies SourceRow[],
 
   sources: [
-    { label: "FECH.AI main", value: "020594a2…", badge: true },
+    { label: "FECH.AI main", value: "9d05c642…", badge: true },
     { label: "Program issue", value: "#141", badge: true },
     { label: "M1 issue", value: "#150 CLOSED", badge: true },
-    { label: "Snapshot", value: "Manual", badge: true }
+    { label: "PR-08 candidate", value: "#166 DRAFT", badge: true },
+    { label: "Snapshot", value: "Manual · 3 Sep", badge: true }
   ] satisfies SourceRow[]
 };
