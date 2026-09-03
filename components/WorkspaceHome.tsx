@@ -8,7 +8,10 @@ import {
   type ExternalProject,
   type ProgramMilestone,
   type SourceRow,
-  type TimelineItem
+  type TimelineItem,
+  type WbsBacklog,
+  type WbsMilestone,
+  type WbsTask
 } from "@/data/workspace-demo";
 
 function Sidebar({ open }: { open: boolean }) {
@@ -57,11 +60,11 @@ function ContinuityState() {
         <div className="eyebrow">Estado de continuidade</div>
         <div className="stateTitle">
           <div className="shield">✓</div>
-          <h2>M1 CONCLUÍDO · B4 APLICADO · M2 PLANEJADO</h2>
+          <h2>M1 CONCLUÍDO · J4 / PR-08 ATIVO · M2 PLANEJADO</h2>
         </div>
         <p>
-          O trabalho atual não substitui o programa. B4 já foi mergeado e aplicado com exact READ_ONLY catalog proof PASS;
-          o fechamento pós-aplicação ainda está pendente, enquanto o futuro M2–M6 continua visível.
+          O trabalho atual não substitui o programa. B4 e PR-07 já foram concluídos; J4 / PR-08 está agora em Draft com 98 casos versionados;
+          o exact-head implementation review é a próxima ação e o futuro M2–M6 continua visível.
         </p>
         <div className="checks">
           {workspaceDemo.checks.map((item) => (
@@ -101,10 +104,10 @@ function NextSafeAction({ onContinue }: { onContinue: () => void }) {
       </div>
       <div className="actionContent">
         <div className="eyebrow">Próxima ação segura</div>
-        <h3>Fechar a etapa pós-aplicação do B4</h3>
+        <h3>Revisar o exact HEAD da PR-08 / J4</h3>
         <p className="muted">
-          A implementação tenant-safe de visibilidade de listas já foi mergeada e aplicada.
-          Agora falta a adjudicação pós-aplicação e a reconciliação canônica, sem confundir isso com M2.
+          A PR #166 contém a matriz/harness executável de 98 casos e permanece Draft.
+          A próxima ação é implementation review no exact HEAD; nenhum runner deve ser executado neste gate.
         </p>
         <div className="metaRow">
           <div className="meta">
@@ -113,7 +116,7 @@ function NextSafeAction({ onContinue }: { onContinue: () => void }) {
           </div>
           <div className="meta">
             Workstream atual
-            <strong>B4 pós-aplicação</strong>
+            <strong>J4 / PR-08</strong>
           </div>
           <div className="meta">
             Próximo milestone
@@ -250,6 +253,160 @@ function FechaiProgramTracking() {
 
       <div className="milestoneGrid">
         {program.milestones.map((milestone) => <MilestoneCard milestone={milestone} key={milestone.id} />)}
+      </div>
+    </article>
+  );
+}
+
+
+function WbsTaskRow({ task }: { task: WbsTask }) {
+  const stateLabel =
+    task.state === "COMPLETE" ? "Concluída" :
+    task.state === "ACTIVE" ? "Agora" :
+    task.state === "PARKED" ? "Backlog" : "Planejada";
+
+  return (
+    <li className={`wbsTask ${task.state.toLowerCase()}`}>
+      <div className="wbsTaskState" aria-label={stateLabel}>
+        {task.state === "COMPLETE" ? "✓" : task.state === "ACTIVE" ? "●" : "○"}
+      </div>
+      <div className="wbsTaskBody">
+        <div className="wbsTaskTitle">
+          <span>{task.id}</span>
+          <strong>{task.label}</strong>
+        </div>
+        {task.note ? <small>{task.note}</small> : null}
+      </div>
+      <b>{task.hours}h</b>
+    </li>
+  );
+}
+
+function WbsMilestoneCard({
+  milestone,
+  totalHours
+}: {
+  milestone: WbsMilestone;
+  totalHours: number;
+}) {
+  const effortShare = (milestone.hours / totalHours) * 100;
+  const completedTaskHours = milestone.tasks
+    .filter((task) => task.state === "COMPLETE")
+    .reduce((total, task) => total + task.hours, 0);
+
+  return (
+    <section className={`wbsMilestone ${milestone.state.toLowerCase()}`} aria-labelledby={`wbs-${milestone.id}`}>
+      <header className="wbsMilestoneHeader">
+        <div>
+          <div className="wbsMilestoneId">{milestone.id}</div>
+          <h4 id={`wbs-${milestone.id}`}>{milestone.label}</h4>
+        </div>
+        <span className={`wbsMilestoneState ${milestone.state.toLowerCase()}`}>{milestone.state}</span>
+      </header>
+      <div className="wbsMilestoneNumbers">
+        <div>
+          <span>Esforço</span>
+          <strong>{milestone.hours}h</strong>
+        </div>
+        <div>
+          <span>% do objetivo final</span>
+          <strong>{effortShare.toFixed(2)}%</strong>
+        </div>
+        <div>
+          <span>Horas de tarefas concluídas</span>
+          <strong>{completedTaskHours}h</strong>
+        </div>
+      </div>
+      <ul className="wbsTasks">
+        {milestone.tasks.map((task) => <WbsTaskRow task={task} key={task.id} />)}
+      </ul>
+    </section>
+  );
+}
+
+function WbsBacklogCard({ backlog }: { backlog: WbsBacklog }) {
+  return (
+    <section className="wbsBacklogCard" aria-labelledby={`wbs-backlog-${backlog.id}`}>
+      <header>
+        <div>
+          <span>Backlog separado do caminho crítico</span>
+          <h4 id={`wbs-backlog-${backlog.id}`}>{backlog.label}</h4>
+        </div>
+        <strong>{backlog.hours}h</strong>
+      </header>
+      <ul className="wbsTasks">
+        {backlog.tasks.map((task) => <WbsTaskRow task={task} key={task.id} />)}
+      </ul>
+    </section>
+  );
+}
+
+function FechaiWbsView() {
+  const wbs = workspaceDemo.fechaiWbs;
+  const computedCriticalHours = wbs.milestones.reduce((total, milestone) => total + milestone.hours, 0);
+  const computedCompletedHours = wbs.milestones.reduce(
+    (total, milestone) =>
+      total + milestone.tasks
+        .filter((task) => task.state === "COMPLETE")
+        .reduce((taskTotal, task) => taskTotal + task.hours, 0),
+    0
+  );
+  const computedRemaining = computedCriticalHours - computedCompletedHours;
+
+  return (
+    <article className="panel panelInner wbsPanel" id="fechai-wbs">
+      <div className="sectionTitle programTitle">
+        <div>
+          <div className="eyebrow">WBS / Effort View · visão complementar</div>
+          <h3>FECH.AI — caminho crítico até o final</h3>
+        </div>
+        <span className="manualBadge">PLANNING BASELINE · NÃO É TIMESHEET</span>
+      </div>
+
+      <p className="wbsIntro">
+        Esta view não substitui Roadmap, Continuidade ou Evidências. Ela mostra todas as tarefas descritas,
+        suas horas estimadas e a participação de cada milestone no esforço total de {computedCriticalHours}h.
+        Percentuais são exibidos somente em M0–M6.
+      </p>
+
+      <div className="wbsSummary">
+        <div>
+          <span>Status atual</span>
+          <strong>{wbs.currentPackage}</strong>
+          <small>{wbs.currentTask}</small>
+        </div>
+        <div>
+          <span>Horas concluídas</span>
+          <strong>{computedCompletedHours}h</strong>
+          <small>Somente tarefas marcadas COMPLETE</small>
+        </div>
+        <div>
+          <span>Restante no caminho crítico</span>
+          <strong>{computedRemaining}h</strong>
+          <small>Total crítico = {computedCriticalHours}h</small>
+        </div>
+        <div>
+          <span>Backlog pré-Security-Go</span>
+          <strong>{wbs.preSecurityGoBacklogHours}h</strong>
+          <small>Fora do caminho crítico até classificação material</small>
+        </div>
+        <div>
+          <span>Backlog planejado</span>
+          <strong>{wbs.plannedBacklogHours}h</strong>
+          <small>Futuro / não bloqueante</small>
+        </div>
+      </div>
+
+      <div className="wbsBoundary">{wbs.note}</div>
+
+      <div className="wbsMilestoneGrid">
+        {wbs.milestones.map((milestone) => (
+          <WbsMilestoneCard milestone={milestone} totalHours={computedCriticalHours} key={milestone.id} />
+        ))}
+      </div>
+
+      <div className="wbsBacklogGrid">
+        {wbs.backlogs.map((backlog) => <WbsBacklogCard backlog={backlog} key={backlog.id} />)}
       </div>
     </article>
   );
@@ -452,6 +609,7 @@ export function WorkspaceHome() {
               <PreservedContexts />
               <JourneyOverview />
               <FechaiProgramTracking />
+              <FechaiWbsView />
               <FechaiExecutionBoard />
               <ExternalProjects />
               <article className="panel footer">
