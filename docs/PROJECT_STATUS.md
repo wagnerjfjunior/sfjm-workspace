@@ -1,3 +1,38 @@
+# Current candidate override — granular WBS / Effort view — 2026-09-03
+
+The PR #27 candidate now preserves the existing continuity/roadmap views and adds a separate WBS / Effort comparison view.
+
+```text
+critical-path planning baseline: 832h
+completed task-hours represented: 176h
+remaining critical-path task-hours: 656h
+pre-Security-Go backlog: 116h
+planned/future backlog: 104h
+
+current FECH.AI main observed:
+  9d05c64281c2aeeae9d67b139eab674720184fb1
+
+current candidate work:
+  PR #166 / J4 / PR-08
+  exact head: 0f3f266cb2ed103e6acda7bb03b9934cd30f1b41
+  state: OPEN
+  independent exact-head review: 9 unresolved findings
+  runners: NOT_EXECUTED
+```
+
+WBS rules:
+
+- render every described task with its own estimated hours and status;
+- render effort percentage only for M0–M6;
+- derive milestone effort percentage as `milestone hours / 832h`;
+- task rows do not receive a percentage;
+- WBS planning estimates are not timesheet evidence and not Security Go/progress confidence;
+- M1/F1-02 is an operational WBS envelope; canonical M1 baseline remains completed;
+- WBS does not replace Continuity, Roadmap, Evidence or Event Ledger;
+- completed tasks and future tasks remain visible when the current task advances.
+
+---
+
 # Current preview refresh override — FECH.AI B4 applied — 2026-09-01
 
 ```text
