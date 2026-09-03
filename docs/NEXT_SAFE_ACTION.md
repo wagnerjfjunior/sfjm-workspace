@@ -1,3 +1,25 @@
+# Current Workspace candidate gate — granular WBS comparison view — 2026-09-03
+
+Validate PR #27 exact-head candidate for:
+
+1. current Continuity view preserved;
+2. current Roadmap view preserved;
+3. new WBS / Effort view added as a separate comparison surface;
+4. every described M0–M6 task visible with hours and status;
+5. all BG-01..BG-06 and PL-01..PL-05 backlog tasks visible separately;
+6. percentage shown only at milestone level, derived from 832h;
+7. M1 operational WBS grouping does not reopen canonical M1 baseline;
+8. PR-07 is completed and PR-08 is current;
+9. PR #166 exact-head state is represented as OPEN with 9 unresolved review findings;
+10. M2–M6 remain visible future;
+11. responsive notebook layout remains usable;
+12. Vercel build succeeds;
+13. independent exact-head review is repeated after final candidate changes.
+
+No Ready or merge is authorized by this candidate refresh.
+
+---
+
 # Current preview next action override — B4 post-application — 2026-09-01
 
 FECH.AI advanced materially after the earlier B4 target-design snapshot.
