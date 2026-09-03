@@ -1,3 +1,64 @@
+# Current handoff override — WBS / Effort comparison candidate — 2026-09-03
+
+## Workspace candidate
+
+```text
+PR #27:
+  OPEN / DRAFT
+
+base:
+  06a174648426713bb45589b8606700e63bbc284e
+
+scope:
+  same 7 Workspace files
+```
+
+The candidate now has two complementary program representations:
+
+```text
+CONTINUITY / ROADMAP
+  canonical gate and safe-action semantics
+
+WBS / EFFORT
+  all described tasks
+  hours per task
+  effort share per M0–M6 only
+  current / completed / planned visibility
+  separated backlogs
+```
+
+Current WBS planning baseline:
+
+```text
+M0 36h
+M1 168h
+M2 116h
+M3 152h
+M4 172h
+M5 128h
+M6 60h
+TOTAL 832h
+
+completed represented task-hours: 176h
+remaining represented critical path: 656h
+pre-Security-Go backlog: 116h
+planned backlog: 104h
+```
+
+Current FECH.AI operational pointer:
+
+```text
+main: 9d05c64281c2aeeae9d67b139eab674720184fb1
+PR #166: OPEN
+head: 0f3f266cb2ed103e6acda7bb03b9934cd30f1b41
+review: 9 unresolved exact-head findings
+PR-08 runners: NOT_EXECUTED
+```
+
+Do not interpret WBS hours as Security Go, accepted milestone completion, confidence, or runtime proof.
+
+---
+
 # Current handoff override — FECH.AI B4 post-application refresh — 2026-09-01
 
 ## Confirmed external state
