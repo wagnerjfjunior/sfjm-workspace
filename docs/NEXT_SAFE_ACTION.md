@@ -1,5 +1,46 @@
 # SFJM Workspace — Next Safe Action
 
+## Current continuity override — 2026-09-03
+
+Single external-project next safe action:
+
+```text
+FECH.AI live main:
+  f4ff8e42f601a1e033ae6ceaf4c5ecd17b23f3a8
+
+J4 / F1-02:
+  READ_ONLY GATE RECONSTRUCTION
+
+reconcile:
+  merged PR-08 artifact
+  canonical J4 contract
+  closed obligations
+  NOT_DETERMINED obligations
+  PR08-RR-64M-CANONICAL-HASH reopen triggers
+  runtime PR-08 boundary
+  rollback/reapply boundary
+  OC-01 boundary
+  PR-09 boundary
+  Security Go boundary
+
+must preserve:
+  IMP-003 = NOT_DETERMINED
+  ROLLBACK_REAPPLY = NOT_DETERMINED
+  PR-08 runtime = NOT_EXECUTED
+  SECURITY_GO = NOT_GRANTED
+
+writes authorized by this Workspace handoff:
+  NONE
+```
+
+Do not resume from an older B4 target-design pointer. Do not focus only on PR #167.
+Bootstrap FECH.AI live, consume the current SFJM top overrides, reconstruct the full
+M0/M1 → B2/B3/B4 → J3/PR-07 → J4/PR-08 trajectory, and then identify the next
+bounded J4 gate.
+
+No runtime, Supabase/Auth, OC-01, PR-09, Security Go, Ready, merge or deploy is implied
+by this continuation pointer.
+
 ## Current manual refresh override — 2026-09-01
 
 The previous PR #157/B3 continuation is historical and superseded for current continuity.

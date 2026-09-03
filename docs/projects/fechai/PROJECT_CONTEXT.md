@@ -1,5 +1,48 @@
 # FECH.AI — External Project Context
 
+## Current manual refresh override — 2026-09-03 — J4 continuity migration
+
+This is a manual continuity snapshot only. FECH.AI remains canonical.
+
+```text
+FECH.AI repository: wagnerjfjunior/fecha.ai
+live main observed: f4ff8e42f601a1e033ae6ceaf4c5ecd17b23f3a8
+#141 Security-to-Scale 2026: OPEN
+#150 M1 Security Truth Baseline: CLOSED / COMPLETE
+accepted macro program progress: 18.75%
+M2 advancement: NOT ESTABLISHED
+
+F1-02/B2: CLOSED / REMEDIATED
+F1-02/B3: CLOSED / REMEDIATED
+F1-02/B4 / PR-06: CLOSED / PR #162 MERGED
+J3 / PR-07: CLOSED WITH BOUNDED RESIDUAL EVIDENCE / PR #163 MERGED
+J4 / PR-08: VERSIONED + MERGED / PR #166 MERGED
+PR #167 SFJM post-merge reconciliation: MERGED
+Vercel status on current FECH.AI main: SUCCESS
+
+PR08-RR-64M-CANONICAL-HASH: ACCEPTABLE WITH RESIDUAL RISK
+IMP-003: NOT_DETERMINED
+ROLLBACK_REAPPLY: NOT_DETERMINED
+PR-08 runtime: NOT_EXECUTED
+SECURITY_GO: NOT_GRANTED
+broad paid commercialization: BLOCKED
+```
+
+The current FECH.AI semantic next action is **READ_ONLY reconstruction of the next
+J4/F1-02 gate from live main**. That reconstruction must reconcile the merged PR-08
+artifact against the canonical J4 contract and explicitly separate versioned harness
+readiness, runtime evidence, rollback/reapply evidence, OC-01, PR-09 and Security Go.
+
+PR #167 was observed live as merged by `wagnerjfjunior` at merge commit
+`f4ff8e42f601a1e033ae6ceaf4c5ecd17b23f3a8`. The conversation-local authority
+immediately before this handoff covered Ready + pre-merge only; therefore the merge is
+recorded here as an observed lifecycle event, not as reusable authority and not as evidence
+of broader authorization.
+
+Do not reopen completed B2/B3/B4/J3/PR-08 static work without a material invalidation
+event. Do not infer runtime PASS, rollback PASS, OC-01 authority, PR-09 authority or
+Security Go from merge/deploy state.
+
 ## Current manual refresh override — 2026-09-01
 
 FECH.AI main is `bd645210d61b2a7e4af60112c2fe8cef71d761cc`. M1 Security Truth Baseline is complete and Issue #150 is closed. F1-02/B3 and F1-02/B2 are both `REMEDIATED — MERGED + APPLIED + READ_ONLY_CATALOG_PROVEN`. B2 used migration `f1_02_b2_revoke_direct_crm_writes` and its post-application READ_ONLY catalog proof passed. The next bounded risk is F1-02/B4 — list ACL cross-tenant target risk / PR-06. The next action is `TARGET DESIGN + AUTHORIZATION MATRIX FIRST` with Architecture, AppSec and LeadOps before implementation. `RUNTIME_NEGATIVE_PASS = NOT ESTABLISHED`; Security Go remains denied and broad paid commercialization remains blocked. Accepted macro program progress remains 18.75%; M2 is not advanced by this snapshot.

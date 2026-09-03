@@ -1,5 +1,42 @@
 # SFJM Workspace — Project Status
 
+## Current continuity override — 2026-09-03 — FECH.AI J4 handoff
+
+```text
+Workspace duty: VISUALIZATION / CONTINUITY
+Workspace main at migration base: 06a174648426713bb45589b8606700e63bbc284e
+
+FECH.AI main observed: f4ff8e42f601a1e033ae6ceaf4c5ecd17b23f3a8
+#141: OPEN
+#150: CLOSED / M1 COMPLETE
+accepted program progress: 18.75%
+
+M0: COMPLETE
+M1: COMPLETE
+M2–M6: NOT ADVANCED by this snapshot
+
+F1-02/B2: CLOSED
+F1-02/B3: CLOSED
+F1-02/B4 / PR-06 / PR #162: CLOSED / MERGED
+J3 / PR-07 / PR #163: CLOSED WITH BOUNDED RESIDUAL EVIDENCE
+J4 / PR-08 / PR #166: MERGED / VERSIONED HARNESS
+PR #167 SFJM reconciliation: MERGED
+Vercel current FECH.AI main: SUCCESS
+
+PR08-RR-64M-CANONICAL-HASH: ACCEPTABLE WITH RESIDUAL RISK
+IMP-003: NOT_DETERMINED
+ROLLBACK_REAPPLY: NOT_DETERMINED
+PR-08 runtime: NOT_EXECUTED
+SECURITY_GO: NOT_GRANTED
+broad paid commercialization: BLOCKED
+```
+
+Current FECH.AI action is not another PR lifecycle action. It is a bounded
+**READ_ONLY J4/F1-02 gate reconstruction** against current live canonical evidence.
+
+This Workspace snapshot intentionally preserves the full program trajectory instead of
+collapsing continuity to the most recent PR.
+
 ## Current manual refresh override — 2026-09-01
 
 This section supersedes the older FECH.AI snapshot below for current continuity only; historical delivery custody remains preserved.

@@ -75,9 +75,9 @@ export const workspaceDemo = {
   checks: [
     { label: "Main canônico", value: "Verificado" },
     { label: "Handoff", value: "Assumido" },
-    { label: "Conversa atual", value: "Chart 3" },
+    { label: "Conversa atual", value: "Handoff FECH.AI" },
     { label: "Milestone", value: "M1 completo" },
-    { label: "Próxima ação", value: "B4 · Target design" },
+    { label: "Próxima ação", value: "J4 · reconstrução READ_ONLY" },
     { label: "Security Go", value: "Não concedido" }
   ] satisfies StatusCheck[],
 
@@ -85,21 +85,21 @@ export const workspaceDemo = {
     {
       name: "FECH.AI",
       kind: "Projeto externo",
-      continuityState: "M0 fechado · M1 Security Truth Baseline completo · remediação ativa",
-      nextSafeAction: "F1-02/B4 — concluir TARGET DESIGN + AUTHORIZATION MATRIX com Architecture + AppSec + LeadOps antes de qualquer implementação.",
+      continuityState: "M0/M1 fechados · B2/B3/B4 fechados · J3 fechado com residual · J4 ativo",
+      nextSafeAction: "J4/F1-02 — reconstrução READ_ONLY do gate contra a main canônica; separar harness versionado, runtime PR-08, rollback/reapply, OC-01, PR-09 e Security Go.",
       blockers: [
         "Security Go não concedido",
         "Comercialização ampla paga bloqueada",
-        "F1-02 final acceptance bloqueado",
-        "WDP increase depende de governança",
-        "F1-02/B2 e F1-02/B3 estão fechados no boundary catalogal; runtime-negative PASS continua não estabelecido",
-        "F1-02/B4 permanece ativo e sem implementação autorizada",
-        "Riscos M1-B, M1-D e M1-E permanecem no programa de remediação"
+        "PR-08 runtime = NOT_EXECUTED",
+        "IMP-003 = NOT_DETERMINED",
+        "ROLLBACK_REAPPLY = NOT_DETERMINED",
+        "PR08-RR-64M-CANONICAL-HASH = ACCEPTABLE WITH RESIDUAL RISK",
+        "OC-01 e PR-09 não estão autorizados por este snapshot"
       ],
       repository: "wagnerjfjunior/fecha.ai",
-      observedSha: "bd645210d61b2a7e4af60112c2fe8cef71d761cc",
-      observedAt: "1 Sep 2026",
-      verification: "Snapshot manual · FECH.AI continua sendo a autoridade"
+      observedSha: "f4ff8e42f601a1e033ae6ceaf4c5ecd17b23f3a8",
+      observedAt: "3 Sep 2026",
+      verification: "Snapshot manual verificado · FECH.AI continua sendo a autoridade"
     },
     {
       name: "MoreNumTegra",
@@ -122,10 +122,10 @@ export const workspaceDemo = {
   fechaiProgram: {
     name: "FECH.AI Security-to-Scale 2026",
     repository: "wagnerjfjunior/fecha.ai",
-    observedSha: "bd645210d61b2a7e4af60112c2fe8cef71d761cc",
-    observedAt: "1 Sep 2026",
+    observedSha: "f4ff8e42f601a1e033ae6ceaf4c5ecd17b23f3a8",
+    observedAt: "3 Sep 2026",
     programIssue: "#141",
-    currentMilestone: "Pós-M1 — Remediação F1-02/B4",
+    currentMilestone: "Pós-M1 — F1-02/J4 evidence-gate reconstruction",
     securityGo: "NOT GRANTED",
     commercialization: "BLOCKED",
     weightingBasis: "Peso = duração planejada da janela; progresso só avança quando o gate do milestone é aceito.",
@@ -278,11 +278,27 @@ export const workspaceDemo = {
       },
       {
         id: "R-B4",
-        task: "F1-02/B4 — impedir ACL de lista cross-tenant",
+        task: "F1-02/B4 / PR-06 — tenant-safe list visibility",
         owner: "architecture + application_security + leadops",
+        state: "COMPLETE",
+        evidence: "PR #162 merged como 020594a2bb66fed5b6ab38f2d015878a7ef54d71; J3 avançou além do PR-06.",
+        nextAction: "Encerrado no fluxo J3; não reabrir sem invalidação material."
+      },
+      {
+        id: "R-J3-PR07",
+        task: "J3 / PR-07 — tenant-safe reads + payload integrity",
+        owner: "backend_data + application_security + leadops",
+        state: "COMPLETE",
+        evidence: "PR #163 merged; migration aplicada; J3 fechado por Product Authority com bounded residual evidence.",
+        nextAction: "Preservar IMP-003 e rollback/reapply como NOT_DETERMINED; não promover a PASS."
+      },
+      {
+        id: "R-J4-PR08",
+        task: "J4 / PR-08 — repeatable executable security matrix",
+        owner: "application_security + github_cicd + documentation",
         state: "ACTIVE",
-        evidence: "Risco live confirmado; 12 ACL rows atuais são same-tenant, sem data repair necessário no snapshot.",
-        nextAction: "TARGET DESIGN + AUTHORIZATION MATRIX FIRST; nenhuma implementação ainda."
+        evidence: "PR #166 merged; harness/matrix versionados; Vercel Production SUCCESS; PR #167 SFJM reconciliation merged. Runtime PR-08 permanece NOT_EXECUTED.",
+        nextAction: "READ_ONLY reconstruction do próximo gate J4/F1-02 contra a main f4ff8e42; separar runtime, rollback/reapply, OC-01, PR-09 e Security Go."
       }
     ] satisfies RunbookItem[]
   } satisfies ProgramSnapshot,
@@ -291,7 +307,7 @@ export const workspaceDemo = {
     { icon: "🧠", label: "Contexto Preservado", value: "Confirmado" },
     { icon: "☑", label: "Decisões Preservadas", value: "Confirmado" },
     { icon: "📁", label: "Evidências Canônicas", value: "GitHub" },
-    { icon: "🤝", label: "Handoff Assumido", value: "Chart 3" },
+    { icon: "🤝", label: "Handoff Assumido", value: "J4 continuity" },
     { icon: "🔒", label: "Governança Mantida", value: "Ativa" },
     { icon: "◉", label: "Fonte Verificada", value: "main" }
   ] satisfies ContextCard[],
@@ -303,24 +319,31 @@ export const workspaceDemo = {
     { label: "Security-to-Scale", date: "28 Aug 2026" },
     { label: "M0 fechado", date: "28 Aug 2026" },
     { label: "M1 completo", date: "31 Aug 2026" },
-    { label: "Remediação B4", date: "1 Sep 2026", current: true }
+    { label: "B4 / PR-06 fechado", date: "1 Sep 2026" },
+    { label: "J3 / PR-07 fechado c/ residual", date: "2 Sep 2026" },
+    { label: "J4 / PR-08 mergeado", date: "3 Sep 2026" },
+    { label: "Reconstrução J4", date: "3 Sep 2026", current: true }
   ] satisfies JourneyStep[],
 
   currentState: [
     { label: "Estado de continuidade", value: "M1 completo · remediação ativa" },
     { label: "Conversa ativa", value: "Workspace — Chart 3" },
-    { label: "FECH.AI", value: "M0/M1 fechados · B2/B3 fechados · B4 ativo" },
+    { label: "FECH.AI", value: "M0/M1 fechados · B2/B3/B4 fechados · J3 fechado c/ residual · J4 ativo" },
     { label: "Fonte canônica", value: "GitHub / main" }
   ] satisfies SourceRow[],
 
   sources: [
-    { label: "FECH.AI main", value: "bd645210…", badge: true },
+    { label: "FECH.AI main", value: "f4ff8e42…", badge: true },
     { label: "Program issue", value: "#141", badge: true },
     { label: "M1 issue", value: "#150 CLOSED", badge: true },
     { label: "Snapshot", value: "Manual", badge: true }
   ] satisfies SourceRow[],
 
   timeline: [
+    { date: "3 Sep 2026", text: "PR #167 SFJM pós-merge/pós-deploy mergeada; main FECH.AI avançou para f4ff8e42" },
+    { date: "3 Sep 2026", text: "PR #166 / PR-08 mergeada; Vercel Production SUCCESS; runtime PR-08 permanece NOT_EXECUTED" },
+    { date: "2 Sep 2026", text: "J3 / PR-07 fechado com bounded residual evidence; IMP-003 e rollback/reapply seguem NOT_DETERMINED" },
+    { date: "1 Sep 2026", text: "B4 / PR-06 concluído em PR #162; fluxo avançou para PR-07/J3" },
     { date: "1 Sep 2026", text: "B2 e B3 fechados no boundary catalogal; B4 passa a ser o próximo risco ativo" },
     { date: "1 Sep 2026", text: "B2: PR #159 merged + migration aplicada + READ_ONLY catalog proof PASS" },
     { date: "1 Sep 2026", text: "B3: PR #157 merged + migration aplicada + READ_ONLY catalog proof PASS" },
