@@ -309,7 +309,7 @@ export const workspaceDemo = {
         category: "REMEDIATION",
         state: "COMPLETE",
         owner: "backend_data + application_security",
-        evidence: "PR #159 merged; migration aplicada; READ_ONLY catalog proof PASS.",
+        evidence: "PR #159 merged; migration f1_02_b2_revoke_direct_crm_writes aplicada exatamente uma vez; READ_ONLY catalog proof PASS.",
         nextAction: "Runtime-negative PASS permanece residual separado."
       },
       {
