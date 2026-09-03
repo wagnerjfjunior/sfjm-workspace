@@ -59,7 +59,9 @@ Do not interpret WBS hours as Security Go, accepted milestone completion, confid
 
 ---
 
-# Current handoff override — FECH.AI B4 post-application refresh — 2026-09-01
+> HISTORICAL LINEAGE BELOW — DO NOT USE AS CURRENT AUTHORITY. Current authority is the 2026-09-03 override above.
+
+# Historical handoff — FECH.AI B4 post-application refresh — superseded by 2026-09-03 state
 
 ## Confirmed external state
 
@@ -107,7 +109,7 @@ PR #27 stays Draft. Ready and merge remain separate Product Authority gates.
 
 ---
 
-# Current handoff override — persistent plan/history/future correction — 2026-09-01
+# Historical handoff — persistent plan/history/future correction — superseded
 
 ## Confirmed state
 
@@ -162,7 +164,7 @@ Ready and merge remain separate authorization gates.
 ---
 # SFJM Workspace — Current Handoff
 
-## Current manual refresh override — 2026-09-01
+## Historical manual refresh — superseded by later continuity overrides
 
 ```text
 Workspace duty: VISUALIZATION / CONTINUITY
