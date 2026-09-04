@@ -1,3 +1,64 @@
+# SFJM Workspace — Current Handoff
+
+CURRENT SNAPSHOT AUTHORITY — 2026-09-04
+
+This top section is the current Workspace representation. Any older "current" wording below is historical lineage when it conflicts.
+
+```text
+FECH.AI canonical live main:
+  2bad8e9c3d6d6e091a6416c556e793eb1b24e0ec
+
+M1:
+  COMPLETE WITH DEFERRED SECURITY ASSURANCE
+
+F1-02 operational remediation:
+  CLOSED FOR CURRENT M1 ROADMAP
+
+J4 environment-dependent evidence:
+  DEFERRED / frozen / not waived / not PASS
+
+IMP-003:
+  NOT_DETERMINED
+
+ROLLBACK_REAPPLY:
+  NOT_DETERMINED
+
+Security Go:
+  DENIED / NOT_GRANTED
+
+OC-01:
+  REQUIRED BEFORE EXTERNAL USERS
+  NOT BLOCKING FOR M1 ROADMAP CLOSE
+
+M2:
+  NEXT ELIGIBLE MILESTONE
+  NOT STARTED
+
+single next safe action:
+  M2 bootstrap
+  -> resolve live main
+  -> reconstruct M2/M2-01 bounded scope
+  -> no implementation until separately authorized
+
+decision anchor:
+  PR #168 merge commit 4ede55dfe63b5da342e53b125e85068980090c82
+
+handoff reconciliation:
+  PR #169 merge commit 2bad8e9c3d6d6e091a6416c556e793eb1b24e0ec
+```
+
+Deferred J4 evidence may be reopened only when all three are true:
+
+```text
+Supabase Pro
+AND isolated non-production environment available
+AND explicit Product Authority execution authorization
+```
+
+This Workspace snapshot does not authorize FECH.AI runtime, Supabase/Auth, production, deploy, OC-01 execution, Security Go, M2 implementation or external write-back.
+
+---
+
 # Current handoff override — WBS / Effort comparison candidate — 2026-09-03
 
 ## Workspace candidate

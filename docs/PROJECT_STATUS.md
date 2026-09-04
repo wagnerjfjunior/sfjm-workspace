@@ -1,4 +1,68 @@
-# Current candidate override — granular WBS / Effort view — 2026-09-03
+# SFJM Workspace — Current Project Status
+
+CURRENT SNAPSHOT AUTHORITY — 2026-09-04
+
+This top section is the current Workspace representation. Any older "current" wording below is historical lineage when it conflicts.
+
+```text
+FECH.AI canonical live main:
+  2bad8e9c3d6d6e091a6416c556e793eb1b24e0ec
+
+M1:
+  COMPLETE WITH DEFERRED SECURITY ASSURANCE
+
+F1-02 operational remediation:
+  CLOSED FOR CURRENT M1 ROADMAP
+
+J4 environment-dependent evidence:
+  DEFERRED / frozen / not waived / not PASS
+
+IMP-003:
+  NOT_DETERMINED
+
+ROLLBACK_REAPPLY:
+  NOT_DETERMINED
+
+Security Go:
+  DENIED / NOT_GRANTED
+
+OC-01:
+  REQUIRED BEFORE EXTERNAL USERS
+  NOT BLOCKING FOR M1 ROADMAP CLOSE
+
+M2:
+  NEXT ELIGIBLE MILESTONE
+  NOT STARTED
+
+single next safe action:
+  M2 bootstrap
+  -> resolve live main
+  -> reconstruct M2/M2-01 bounded scope
+  -> no implementation until separately authorized
+
+decision anchor:
+  PR #168 merge commit 4ede55dfe63b5da342e53b125e85068980090c82
+
+handoff reconciliation:
+  PR #169 merge commit 2bad8e9c3d6d6e091a6416c556e793eb1b24e0ec
+```
+
+Deferred J4 evidence may be reopened only when all three are true:
+
+```text
+Supabase Pro
+AND isolated non-production environment available
+AND explicit Product Authority execution authorization
+```
+
+This Workspace snapshot does not authorize FECH.AI runtime, Supabase/Auth, production, deploy, OC-01 execution, Security Go, M2 implementation or external write-back.
+
+---
+
+> Everything below this marker is historical lineage and is superseded whenever it conflicts with the 2026-09-04 authority above.
+
+
+# Historical candidate — granular WBS / Effort view — 2026-09-03
 
 The PR #27 candidate now preserves the existing continuity/roadmap views and adds a separate WBS / Effort comparison view.
 
@@ -33,7 +97,7 @@ WBS rules:
 
 ---
 
-# Current preview refresh override — FECH.AI B4 applied — 2026-09-01
+# Historical preview refresh — FECH.AI B4 applied — 2026-09-01
 
 ```text
 FECH.AI main: 020594a2bb66fed5b6ab38f2d015878a7ef54d71
@@ -55,7 +119,7 @@ The persistent continuity model remains in force: this advancement appends B4 me
 
 ---
 
-# Current candidate override — persistent temporal continuity — 2026-09-01
+# Historical candidate — persistent temporal continuity — 2026-09-01
 
 A bounded Workspace correction is implementing the continuity model required to keep past, present and future visible simultaneously.
 
@@ -96,7 +160,7 @@ No FECH.AI, Supabase, Vercel configuration or external-project mutation is part 
 ---
 # SFJM Workspace — Project Status
 
-## Current manual refresh override — 2026-09-01
+## Historical manual refresh — 2026-09-01
 
 This section supersedes the older FECH.AI snapshot below for current continuity only; historical delivery custody remains preserved.
 

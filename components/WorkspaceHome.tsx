@@ -53,6 +53,14 @@ function Sidebar({ open }: { open: boolean }) {
 function ContinuityState() {
   const program = workspaceDemo.fechaiProgram;
   const progress = calculateAcceptedProgramProgress(program.milestones);
+  const checks: SourceRow[] = [
+    { label: "Último milestone", value: program.lastCompletedMilestone },
+    { label: "Workstream atual", value: program.activeWorkstream },
+    { label: "Próximo milestone", value: program.nextProgramMilestone },
+    { label: "Próxima ação", value: program.nextSafeAction },
+    { label: "Histórico", value: "Preservado" },
+    { label: "Security Go", value: program.securityGo }
+  ];
 
   return (
     <article className="panel statePanel" id="continue">
@@ -67,7 +75,7 @@ function ContinuityState() {
           O próximo milestone permanece {program.nextProgramMilestone}; histórico e futuro continuam preservados.
         </p>
         <div className="checks">
-          {workspaceDemo.checks.map((item) => (
+          {checks.map((item) => (
             <div className="check" key={item.label}>
               <strong>
                 {item.label}
@@ -267,9 +275,10 @@ function WbsTaskRow({ task }: { task: WbsTask }) {
 
   return (
     <li className={`wbsTask ${task.state.toLowerCase()}`}>
-      <div className="wbsTaskState" aria-label={stateLabel}>
-        {task.state === "COMPLETE" ? "✓" : task.state === "ACTIVE" ? "●" : "○"}
-      </div>
+      <span className="wbsTaskState" role="status">
+        <span aria-hidden="true">{task.state === "COMPLETE" ? "✓" : task.state === "ACTIVE" ? "●" : "○"}</span>
+        <span className="srOnly">{stateLabel}</span>
+      </span>
       <div className="wbsTaskBody">
         <div className="wbsTaskTitle">
           <span>{task.id}</span>
@@ -325,6 +334,8 @@ function WbsMilestoneCard({
 }
 
 function WbsBacklogCard({ backlog }: { backlog: WbsBacklog }) {
+  const taskHours = backlog.tasks.reduce((total, task) => total + task.hours, 0);
+
   return (
     <section className="wbsBacklogCard" aria-labelledby={`wbs-backlog-${backlog.id}`}>
       <header>
@@ -332,7 +343,7 @@ function WbsBacklogCard({ backlog }: { backlog: WbsBacklog }) {
           <span>Backlog separado do caminho crítico</span>
           <h4 id={`wbs-backlog-${backlog.id}`}>{backlog.label}</h4>
         </div>
-        <strong>{backlog.hours}h</strong>
+        <strong>{taskHours}h</strong>
       </header>
       <ul className="wbsTasks">
         {backlog.tasks.map((task) => <WbsTaskRow task={task} key={task.id} />)}
@@ -352,6 +363,16 @@ function FechaiWbsView() {
     0
   );
   const computedRemaining = computedCriticalHours - computedCompletedHours;
+  const preSecurityGoBacklogHours =
+    wbs.backlogs.find((backlog) => backlog.id === "PRE_SECURITY_GO")?.tasks.reduce(
+      (total, task) => total + task.hours,
+      0
+    ) ?? 0;
+  const plannedBacklogHours =
+    wbs.backlogs.find((backlog) => backlog.id === "PLANNED_FUTURE")?.tasks.reduce(
+      (total, task) => total + task.hours,
+      0
+    ) ?? 0;
 
   return (
     <article className="panel panelInner wbsPanel" id="fechai-wbs">
@@ -387,19 +408,19 @@ function FechaiWbsView() {
         </div>
         <div>
           <span>Backlog pré-Security-Go</span>
-          <strong>{wbs.preSecurityGoBacklogHours}h</strong>
+          <strong>{preSecurityGoBacklogHours}h</strong>
           <small>Fora do caminho crítico até classificação material</small>
         </div>
         <div>
           <span>Backlog planejado</span>
-          <strong>{wbs.plannedBacklogHours}h</strong>
+          <strong>{plannedBacklogHours}h</strong>
           <small>Futuro / não bloqueante</small>
         </div>
       </div>
 
       <div className="wbsBoundary">{wbs.note}</div>
 
-      <div className="wbsMilestoneGrid">
+      <div className="wbsMilestoneGrid" tabIndex={0} role="region" aria-label="Milestones M0 a M6 do caminho crítico">
         {wbs.milestones.map((milestone) => (
           <WbsMilestoneCard milestone={milestone} totalHours={computedCriticalHours} key={milestone.id} />
         ))}
@@ -582,6 +603,12 @@ export function WorkspaceHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const program = workspaceDemo.fechaiProgram;
+  const currentState: SourceRow[] = [
+    { label: "Último milestone concluído", value: program.lastCompletedMilestone },
+    { label: "Próxima continuidade", value: program.activeWorkstream },
+    { label: "Próximo milestone", value: program.nextProgramMilestone },
+    { label: "Modelo temporal", value: "Passado + Agora + Futuro" }
+  ];
 
   return (
     <>
@@ -619,7 +646,7 @@ export function WorkspaceHome() {
             </section>
 
             <aside className="stack right">
-              <SideCard title="Posição no programa" rows={workspaceDemo.currentState} />
+              <SideCard title="Posição no programa" rows={currentState} />
               <SideCard title="Fontes canônicas" rows={workspaceDemo.sources} />
               <Timeline items={program.eventLedger} />
             </aside>

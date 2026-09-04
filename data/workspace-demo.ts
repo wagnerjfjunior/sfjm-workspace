@@ -102,10 +102,10 @@ export const workspaceDemo = {
   ] satisfies NavItem[],
 
   checks: [
-    { label: "Último milestone", value: "M1 completo" },
-    { label: "Workstream ativo", value: "J4 / PR-08" },
-    { label: "Próximo milestone", value: "M2 planejado" },
-    { label: "Próxima ação", value: "PR-08 · exact-head review" },
+    { label: "Último milestone", value: "M1 fechado · deferred assurance" },
+    { label: "Workstream atual", value: "M2 bootstrap · não iniciado" },
+    { label: "Próximo milestone", value: "M2 elegível" },
+    { label: "Próxima ação", value: "M2-01 · reconstruir escopo" },
     { label: "Histórico", value: "Preservado" },
     { label: "Security Go", value: "Não concedido" }
   ] satisfies StatusCheck[],
@@ -114,23 +114,20 @@ export const workspaceDemo = {
     {
       name: "FECH.AI",
       kind: "Projeto externo",
-      continuityState: "M0/M1 concluídos · B2/B3/B4 fechados · PR-07/J3 encerrado com residual bounded · PR-08 OPEN com 9 findings no exact head · M2–M6 preservados",
-      nextSafeAction: "J4 / PR-08 — corrigir os 9 findings abertos no exact HEAD 0f3f266c... e repetir review independente; não executar runners.",
+      continuityState: "M1 COMPLETE WITH DEFERRED SECURITY ASSURANCE · F1-02 fechado no roadmap M1 · M2 elegível / não iniciado",
+      nextSafeAction: "M2 bootstrap → resolver live main → reconstruir M2/M2-01 em modo bounded antes de qualquer implementação.",
       blockers: [
-        "Security Go não concedido",
-        "Comercialização ampla paga bloqueada",
-        "F1-02 final acceptance bloqueado",
-        "WDP increase depende de governança",
-        "RUNTIME_NEGATIVE_PASS não estabelecido",
-        "IMP-003 concurrent business-RPC runtime permanece NOT_DETERMINED",
-        "Migration rollback/reapply permanece NOT_DETERMINED",
-        "PR-08 runners permanecem NOT_EXECUTED",
-        "PR #166 possui 9 review findings abertos no exact head 0f3f266c...",
-        "Achados M1-B, M1-D e M1-E ainda possuem remediações pendentes"
+        "Security Go continua DENIED / NOT_GRANTED",
+        "Broad paid commercialization continua BLOCKED",
+        "J4 environment-dependent evidence está DEFERRED, não PASS",
+        "IMP-003 permanece NOT_DETERMINED",
+        "ROLLBACK_REAPPLY permanece NOT_DETERMINED",
+        "OC-01 é REQUIRED BEFORE EXTERNAL USERS",
+        "M2 ainda NÃO FOI INICIADO e não herda autorização de implementação"
       ],
       repository: "wagnerjfjunior/fecha.ai",
-      observedSha: "9d05c64281c2aeeae9d67b139eab674720184fb1",
-      observedAt: "3 Sep 2026",
+      observedSha: "2bad8e9c3d6d6e091a6416c556e793eb1b24e0ec",
+      observedAt: "4 Sep 2026",
       verification: "Snapshot manual · FECH.AI continua sendo a autoridade"
     },
     {
@@ -154,13 +151,13 @@ export const workspaceDemo = {
   fechaiProgram: {
     name: "FECH.AI Security-to-Scale 2026",
     repository: "wagnerjfjunior/fecha.ai",
-    observedSha: "020594a2bb66fed5b6ab38f2d015878a7ef54d71",
-    observedAt: "1 Sep 2026",
+    observedSha: "2bad8e9c3d6d6e091a6416c556e793eb1b24e0ec",
+    observedAt: "4 Sep 2026",
     programIssue: "#141",
-    lastCompletedMilestone: "M1 — Security Truth Baseline",
-    nextProgramMilestone: "M2 — Database Simplification & Optimization Plan",
-    activeWorkstream: "J4 / PR-08 — exact-head findings remediation",
-    nextSafeAction: "Address 9 unresolved exact-head review findings on 0f3f266c... and repeat independent review; do not execute any PR-08 runner",
+    lastCompletedMilestone: "M1 — COMPLETE WITH DEFERRED SECURITY ASSURANCE",
+    nextProgramMilestone: "M2 — Database Simplification & Optimization Plan · ELIGIBLE / NOT STARTED",
+    activeWorkstream: "M2 bootstrap / M2-01 scope reconstruction · NOT STARTED",
+    nextSafeAction: "Resolve live main 2bad8e9c… and reconstruct bounded M2/M2-01 scope before implementation",
     securityGo: "NOT GRANTED",
     commercialization: "BLOCKED",
     weightingBasis: "Peso = duração planejada; progresso só avança quando o gate do milestone é aceito.",
@@ -338,18 +335,36 @@ export const workspaceDemo = {
         owner: "Backend/Data + AppSec + LeadOps",
         evidence: "PR #163 merged; migration 20260902225240 aplicada; J3 encerrado por Product Authority bounded-residual exception.",
         nextAction: "IMP-003 e rollback/reapply permanecem NOT_DETERMINED; não converter em PASS."
+      },
+      {
+        id: "PR-08 / J4",
+        label: "Repeatable Executable Security Matrix",
+        category: "REMEDIATION",
+        state: "COMPLETE",
+        owner: "Backend/Data + AppSec",
+        evidence: "PR #166 merged; static phases 1–4 closed; PR08-RR-64M-CANONICAL-HASH accepted with residual risk; runtime remained NOT_EXECUTED.",
+        nextAction: "Deferred J4 evidence stays frozen; reopen only on the three-part environment/authority trigger."
+      },
+      {
+        id: "PR-09 / M1 CLOSE-OUT",
+        label: "Final close-out & adjudicação",
+        category: "PROGRAM",
+        state: "COMPLETE",
+        owner: "Product Authority + Documentation",
+        evidence: "PR #168 merged at 4ede55df…; PR #169 reconciled handoff; M1 closed with deferred security assurance.",
+        nextAction: "M2 is next eligible milestone; M2_STARTED = NO."
       }
     ] satisfies ExecutionItem[],
 
     active: [
       {
-        id: "PR-08 / J4",
-        label: "Repeatable Executable Security Matrix",
-        category: "REMEDIATION",
-        state: "ACTIVE",
-        owner: "Backend/Data + AppSec",
-        evidence: "PR #166 OPEN / draft=false no head 0f3f266c...; 98 casos versionados; Vercel SUCCESS; review independente abriu 9 findings ainda não resolvidos; runners permanecem NOT_EXECUTED.",
-        nextAction: "Corrigir os 9 findings do exact HEAD e repetir review independente. Não executar runtime/Auth/rollback/reapply/production smoke."
+        id: "M2 BOOTSTRAP",
+        label: "M2 / M2-01 bounded scope reconstruction",
+        category: "PROGRAM",
+        state: "PLANNED",
+        owner: "Backend/Data + Architecture",
+        evidence: "M1 está fechado com deferred security assurance; PR #169 reconciliou o handoff; M2 é elegível, mas M2_STARTED = NO.",
+        nextAction: "Resolver o live main 2bad8e9c… e reconstruir M2/M2-01 antes de solicitar qualquer implementação."
       }
     ] satisfies ExecutionItem[],
 
@@ -438,7 +453,10 @@ export const workspaceDemo = {
       { date: "2 Sep 2026", text: "PR-07 migration 20260902225240 aplicada em produção", kind: "EVIDENCE" },
       { date: "3 Sep 2026", text: "J3 fechado por bounded-residual Product Authority exception; IMP-003 e rollback/reapply seguem NOT_DETERMINED", kind: "PROGRAM" },
       { date: "3 Sep 2026", text: "PR #166 Draft criada para J4 / PR-08 com matriz executável de 98 casos; runners NOT_EXECUTED", kind: "PROGRAM" },
-      { date: "3 Sep 2026", text: "PR #166 avançou ao head 0f3f266c...; review independente abriu 9 findings; runners continuam NOT_EXECUTED", kind: "EVIDENCE" }
+      { date: "3 Sep 2026", text: "PR #166 avançou ao head 0f3f266c...; review independente abriu 9 findings; runners continuam NOT_EXECUTED", kind: "EVIDENCE" },
+      { date: "3 Sep 2026", text: "PR #166 mergeada; PR-08 static phases 1–4 fechadas; runtime permanece NOT_EXECUTED", kind: "REMEDIATION" },
+      { date: "4 Sep 2026", text: "PR #168 mergeada: M1 COMPLETE WITH DEFERRED SECURITY ASSURANCE; F1-02 fechado para o roadmap M1", kind: "PROGRAM" },
+      { date: "4 Sep 2026", text: "PR #169 mergeada: handoff pós-M1 reconciliado; M2 torna-se NEXT ELIGIBLE / NOT STARTED", kind: "PROGRAM" }
     ] satisfies TimelineItem[]
 
   } satisfies ProgramSnapshot,
@@ -447,13 +465,13 @@ export const workspaceDemo = {
     source: "FECH.AI WBS planning baseline + user-approved roadmap view",
     basis: "Planning estimates for visibility, not clocked timesheets.",
     totalCriticalHours: 832,
-    completedHours: 176,
-    remainingCriticalHours: 656,
+    completedHours: 204,
+    remainingCriticalHours: 628,
     preSecurityGoBacklogHours: 116,
     plannedBacklogHours: 104,
-    currentPackage: "M1 / F1-02 — PR-08 / J4",
-    currentTask: "PR-08 proof matrix / negative tests — 9 exact-head review findings em correção",
-    note: "WBS agrupa o envelope operacional M1/F1-02. Isso não reabre o milestone canônico M1, que permanece concluído no Roadmap.",
+    currentPackage: "M2 — NEXT ELIGIBLE / NOT STARTED",
+    currentTask: "M2 bootstrap → M2-01 bounded scope reconstruction",
+    note: "M1/F1-02 foi concluído com deferred security assurance. M2 aparece como próximo pacote elegível, mas ainda não iniciado; horas continuam sendo estimativas de planejamento, não timesheet.",
     milestones: [
       {
         id: "M0",
@@ -471,15 +489,15 @@ export const workspaceDemo = {
         id: "M1",
         label: "Security Truth Baseline / F1-02",
         hours: 168,
-        state: "ACTIVE",
+        state: "COMPLETE",
         tasks: [
           { id: "B1", label: "Baseline de evidências", hours: 18, state: "COMPLETE" },
           { id: "B2", label: "Direct CRM writes", hours: 28, state: "COMPLETE" },
           { id: "B3", label: "Funnel history boundary", hours: 24, state: "COMPLETE" },
           { id: "B4", label: "List ACL tenant integrity", hours: 34, state: "COMPLETE" },
           { id: "PR-07", label: "Tenant-safe reads + payload validation", hours: 36, state: "COMPLETE", note: "PR #163 merged; migration applied; J3 closed with bounded residual evidence." },
-          { id: "PR-08", label: "Proof matrix / negative tests", hours: 22, state: "ACTIVE", note: "PR #166 OPEN no head 0f3f266c...; 98 casos versionados; review independente abriu 9 findings; runners NOT_EXECUTED." },
-          { id: "PR-09", label: "Close-out & adjudicação final", hours: 6, state: "PLANNED" }
+          { id: "PR-08", label: "Proof matrix / negative tests", hours: 22, state: "COMPLETE", note: "PR #166 merged; static phases 1–4 closed; runtime remained NOT_EXECUTED and deferred evidence was not promoted to PASS." },
+          { id: "PR-09", label: "Close-out & adjudicação final", hours: 6, state: "COMPLETE", note: "PR #168 merged; M1 closed with deferred security assurance; PR #169 reconciled the handoff." }
         ]
       },
       {
@@ -591,17 +609,17 @@ export const workspaceDemo = {
   ] satisfies ContextCard[],
 
   currentState: [
-    { label: "Último milestone concluído", value: "M1" },
-    { label: "Workstream ativo", value: "J4 / PR-08" },
-    { label: "Próximo milestone", value: "M2" },
+    { label: "Último milestone concluído", value: "M1 · deferred assurance" },
+    { label: "Próxima continuidade", value: "M2 bootstrap · not started" },
+    { label: "Próximo milestone", value: "M2 eligible" },
     { label: "Modelo temporal", value: "Passado + Agora + Futuro" }
   ] satisfies SourceRow[],
 
   sources: [
-    { label: "FECH.AI main", value: "9d05c642…", badge: true },
-    { label: "Program issue", value: "#141", badge: true },
+    { label: "FECH.AI main", value: "2bad8e9c…", badge: true },
+    { label: "Program issue", value: "#141 OPEN", badge: true },
     { label: "M1 issue", value: "#150 CLOSED", badge: true },
-    { label: "PR-08 candidate", value: "#166 OPEN · 9 findings", badge: true },
-    { label: "Snapshot", value: "Manual · 3 Sep", badge: true }
+    { label: "M1 close-out", value: "#168 + #169 MERGED", badge: true },
+    { label: "Snapshot", value: "Manual · 4 Sep", badge: true }
   ] satisfies SourceRow[]
 };
