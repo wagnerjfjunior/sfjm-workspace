@@ -387,7 +387,7 @@ function FechaiWbsView() {
       <p className="wbsIntro">
         Esta view não substitui Roadmap, Continuidade ou Evidências. Ela mostra todas as tarefas descritas,
         suas horas estimadas e a participação de cada milestone no esforço total de {computedCriticalHours}h.
-        Percentuais são exibidos somente em M0–M6.
+        Percentuais são exibidos somente em STS-M0–STS-M6.
       </p>
 
       <div className="wbsSummary">
@@ -420,7 +420,7 @@ function FechaiWbsView() {
 
       <div className="wbsBoundary">{wbs.note}</div>
 
-      <div className="wbsMilestoneGrid" tabIndex={0} role="region" aria-label="Milestones M0 a M6 do caminho crítico">
+      <div className="wbsMilestoneGrid" tabIndex={0} role="region" aria-label="Milestones STS-M0 a STS-M6 do caminho crítico">
         {wbs.milestones.map((milestone) => (
           <WbsMilestoneCard milestone={milestone} totalHours={computedCriticalHours} key={milestone.id} />
         ))}
@@ -521,7 +521,7 @@ function FechaiExecutionBoard() {
         />
         <ExecutionLane
           title="Futuro"
-          helper="Findings pendentes + M2–M6 já conhecidos"
+          helper="Findings pendentes + STS-M2–STS-M6 já conhecidos"
           items={futureItems}
           laneClass="futureLane"
         />

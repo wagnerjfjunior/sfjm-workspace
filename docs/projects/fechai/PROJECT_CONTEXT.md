@@ -1,5 +1,41 @@
 # FECH.AI — Current Project Context
 
+## CURRENT FECH.AI DERIVED SNAPSHOT — PR #170 MERGED — 2026-09-04
+
+```text
+Workspace duty = DERIVED VISUALIZATION / CONTINUITY
+FECH.AI canonical main observed = 252fb981bba4fb410136fd34cb29b9f2d0e057f8
+PR #170 = CLOSED / MERGED
+current execution program = Issue #141 — Security-to-Scale 2026
+program hierarchy = docs/governance/2026-09-04-fechai-bcr-security-to-scale-program-hierarchy-core-dod.md
+current granular execution baseline = docs/roadmap/fechai-security-to-scale-2026-wbs.md
+
+STS-M1 = COMPLETE WITH DEFERRED SECURITY ASSURANCE
+J4 environment-dependent evidence = DEFERRED / NOT PASS
+IMP-003 = NOT_DETERMINED
+ROLLBACK_REAPPLY = NOT_DETERMINED
+SECURITY_GO = NOT_GRANTED
+OC-01 = REQUIRED BEFORE EXTERNAL USERS
+
+STS-M2 = ELIGIBLE / NOT STARTED
+STS-M2-01 = Matriz de 43 tabelas / 20h
+STS-M2-01 current authority = READ_ONLY SCOPE/EVIDENCE RECONSTRUCTION ONLY
+STS-M2-01 implementation = NOT_AUTHORIZED
+
+CRITICAL_PATH_TOTAL = 832h
+CURRENT_ACCEPTED_COMPLETE = 204h
+REMAINING_CRITICAL_PATH = 628h
+```
+
+### Current authority boundary
+
+The canonical FECH.AI program hierarchy now distinguishes:
+- `PRODUCT_MODULE_M1..M6` — product capability taxonomy;
+- `B0-M1..M6` — immutable historical 300 WDP comparison baseline;
+- `STS-M0..STS-M6` — current Security-to-Scale execution milestones.
+
+The SFJM Workspace is a derived visualization only. It must not redefine FECH.AI program authority, silently start STS-M2, convert deferred evidence to PASS, or infer Security Go.
+
 CURRENT SNAPSHOT AUTHORITY — 2026-09-04
 
 This top section is the current Workspace representation. Any older "current" wording below is historical lineage when it conflicts.

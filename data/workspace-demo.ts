@@ -102,10 +102,10 @@ export const workspaceDemo = {
   ] satisfies NavItem[],
 
   checks: [
-    { label: "Último milestone", value: "M1 fechado · deferred assurance" },
-    { label: "Workstream atual", value: "M2 bootstrap · não iniciado" },
-    { label: "Próximo milestone", value: "M2 elegível" },
-    { label: "Próxima ação", value: "M2-01 · reconstruir escopo" },
+    { label: "Último milestone", value: "STS-M1 fechado · deferred assurance" },
+    { label: "Workstream atual", value: "STS-M2 bootstrap · não iniciado" },
+    { label: "Próximo milestone", value: "STS-M2 elegível" },
+    { label: "Próxima ação", value: "STS-M2-01 · reconstruir escopo" },
     { label: "Histórico", value: "Preservado" },
     { label: "Security Go", value: "Não concedido" }
   ] satisfies StatusCheck[],
@@ -114,8 +114,8 @@ export const workspaceDemo = {
     {
       name: "FECH.AI",
       kind: "Projeto externo",
-      continuityState: "M1 COMPLETE WITH DEFERRED SECURITY ASSURANCE · F1-02 fechado no roadmap M1 · M2 elegível / não iniciado",
-      nextSafeAction: "M2 bootstrap → resolver live main → reconstruir M2/M2-01 em modo bounded antes de qualquer implementação.",
+      continuityState: "STS-M1 COMPLETE WITH DEFERRED SECURITY ASSURANCE · F1-02 fechado no roadmap STS-M1 · STS-M2 elegível / não iniciado",
+      nextSafeAction: "STS-M2-01 → reconstrução READ_ONLY do escopo/evidência da matriz canônica de 43 tabelas (20h), antes de qualquer implementação.",
       blockers: [
         "Security Go continua DENIED / NOT_GRANTED",
         "Broad paid commercialization continua BLOCKED",
@@ -123,10 +123,10 @@ export const workspaceDemo = {
         "IMP-003 permanece NOT_DETERMINED",
         "ROLLBACK_REAPPLY permanece NOT_DETERMINED",
         "OC-01 é REQUIRED BEFORE EXTERNAL USERS",
-        "M2 ainda NÃO FOI INICIADO e não herda autorização de implementação"
+        "STS-M2 ainda NÃO FOI INICIADO e não herda autorização de implementação"
       ],
       repository: "wagnerjfjunior/fecha.ai",
-      observedSha: "2bad8e9c3d6d6e091a6416c556e793eb1b24e0ec",
+      observedSha: "252fb981bba4fb410136fd34cb29b9f2d0e057f8",
       observedAt: "4 Sep 2026",
       verification: "Snapshot manual · FECH.AI continua sendo a autoridade"
     },
@@ -151,13 +151,13 @@ export const workspaceDemo = {
   fechaiProgram: {
     name: "FECH.AI Security-to-Scale 2026",
     repository: "wagnerjfjunior/fecha.ai",
-    observedSha: "2bad8e9c3d6d6e091a6416c556e793eb1b24e0ec",
+    observedSha: "252fb981bba4fb410136fd34cb29b9f2d0e057f8",
     observedAt: "4 Sep 2026",
     programIssue: "#141",
-    lastCompletedMilestone: "M1 — COMPLETE WITH DEFERRED SECURITY ASSURANCE",
-    nextProgramMilestone: "M2 — Database Simplification & Optimization Plan · ELIGIBLE / NOT STARTED",
-    activeWorkstream: "M2 bootstrap / M2-01 scope reconstruction · NOT STARTED",
-    nextSafeAction: "Resolve live main 2bad8e9c… and reconstruct bounded M2/M2-01 scope before implementation",
+    lastCompletedMilestone: "STS-M1 — COMPLETE WITH DEFERRED SECURITY ASSURANCE",
+    nextProgramMilestone: "STS-M2 — Database Simplification & Optimization Plan · ELIGIBLE / NOT STARTED",
+    activeWorkstream: "STS-M2-01 · 43-table scope/evidence reconstruction · READ_ONLY / NOT STARTED",
+    nextSafeAction: "Resolve live main 252fb981… → STS-M2-01 READ_ONLY scope/evidence reconstruction for the 43-table canonicality matrix",
     securityGo: "NOT GRANTED",
     commercialization: "BLOCKED",
     weightingBasis: "Peso = duração planejada; progresso só avança quando o gate do milestone é aceito.",
@@ -165,7 +165,7 @@ export const workspaceDemo = {
     invalidatesOn: "Mudança material no plano #141, evidência, findings, Security Go, comercialização ou classificação de workstreams.",
     milestones: [
       {
-        id: "M0",
+        id: "STS-M0",
         label: "Program Control / Truth Reconciliation",
         window: "28 Aug–4 Sep",
         weight: 6.25,
@@ -175,7 +175,7 @@ export const workspaceDemo = {
         exit: "M0 #142 fechado; verdade reconciliada e transição para M1 publicada."
       },
       {
-        id: "M1",
+        id: "STS-M1",
         label: "Security Truth Baseline",
         window: "4–18 Sep",
         weight: 12.5,
@@ -185,7 +185,7 @@ export const workspaceDemo = {
         exit: "Baseline concluído; #150 fechado; findings classificados; remediação continua em trilha própria."
       },
       {
-        id: "M2",
+        id: "STS-M2",
         label: "Database Simplification & Optimization Plan",
         window: "18 Sep–9 Oct",
         weight: 18.75,
@@ -195,7 +195,7 @@ export const workspaceDemo = {
         exit: "Canonicality matrix + routine/policy/trigger/grant map + Database Contract Map + evolution decision."
       },
       {
-        id: "M3",
+        id: "STS-M3",
         label: "Backend Authority Contract Freeze",
         window: "9–30 Oct",
         weight: 18.75,
@@ -205,7 +205,7 @@ export const workspaceDemo = {
         exit: "Canonical authority model + commands/queries + privileged allowlist + staging/security plan."
       },
       {
-        id: "M4",
+        id: "STS-M4",
         label: "Frontend Modularization / App.jsx Extraction",
         window: "30 Oct–27 Nov",
         weight: 25,
@@ -215,7 +215,7 @@ export const workspaceDemo = {
         exit: "AppShell apenas composição; slices críticos extraídos; nenhuma autoridade movida ao frontend."
       },
       {
-        id: "M5",
+        id: "STS-M5",
         label: "Integrated Security / Reliability Validation",
         window: "27 Nov–11 Dec",
         weight: 12.5,
@@ -225,7 +225,7 @@ export const workspaceDemo = {
         exit: "Negative/regression gates + CVE/secrets/deploy/observability/rollback readiness."
       },
       {
-        id: "M6",
+        id: "STS-M6",
         label: "Security Go Candidate / Commercial Readiness",
         window: "11–18 Dec",
         weight: 6.25,
@@ -238,7 +238,7 @@ export const workspaceDemo = {
 
     history: [
       {
-        id: "M1-A",
+        id: "STS-M1-A",
         label: "LIVE DB × GitHub main × applied migration ledger",
         category: "BASELINE",
         state: "COMPLETE",
@@ -247,7 +247,7 @@ export const workspaceDemo = {
         nextAction: "Histórico fechado; não reabrir sem invalidação material."
       },
       {
-        id: "M1-B",
+        id: "STS-M1-B",
         label: "Privileged-surface inventory",
         category: "BASELINE",
         state: "COMPLETE",
@@ -256,7 +256,7 @@ export const workspaceDemo = {
         nextAction: "Baseline fechado; finding segue na fila de remediação."
       },
       {
-        id: "M1-C",
+        id: "STS-M1-C",
         label: "Tenant-isolation proof plan",
         category: "BASELINE",
         state: "COMPLETE",
@@ -265,7 +265,7 @@ export const workspaceDemo = {
         nextAction: "Histórico fechado."
       },
       {
-        id: "M1-D",
+        id: "STS-M1-D",
         label: "Dependency / known-vulnerability inventory",
         category: "BASELINE",
         state: "COMPLETE",
@@ -274,7 +274,7 @@ export const workspaceDemo = {
         nextAction: "Baseline fechado; findings permanecem na fila futura."
       },
       {
-        id: "M1-E",
+        id: "STS-M1-E",
         label: "Secrets / infrastructure attack-surface inventory",
         category: "BASELINE",
         state: "COMPLETE",
@@ -283,7 +283,7 @@ export const workspaceDemo = {
         nextAction: "Baseline fechado; findings permanecem na fila futura."
       },
       {
-        id: "M1-F",
+        id: "STS-M1-F",
         label: "Evidence reconciliation / M1 verdict",
         category: "BASELINE",
         state: "COMPLETE",
@@ -292,7 +292,7 @@ export const workspaceDemo = {
         nextAction: "Não reabrir sem invalidação material."
       },
       {
-        id: "M1-C-F01",
+        id: "STS-M1-C-F01",
         label: "Integridade tenant do funil",
         category: "REMEDIATION",
         state: "COMPLETE",
@@ -346,31 +346,31 @@ export const workspaceDemo = {
         nextAction: "Deferred J4 evidence stays frozen; reopen only on the three-part environment/authority trigger."
       },
       {
-        id: "PR-09 / M1 CLOSE-OUT",
+        id: "PR-09 / STS-M1 CLOSE-OUT",
         label: "Final close-out & adjudicação",
         category: "PROGRAM",
         state: "COMPLETE",
         owner: "Product Authority + Documentation",
-        evidence: "PR #168 merged at 4ede55df…; PR #169 reconciled handoff; M1 closed with deferred security assurance.",
-        nextAction: "M2 is next eligible milestone; M2_STARTED = NO."
+        evidence: "PR #168 merged at 4ede55df…; PR #169 reconciled handoff; PR #170 canonicalized the STS program hierarchy/WBS; STS-M1 remains closed with deferred security assurance.",
+        nextAction: "STS-M2 is next eligible milestone; STS-M2_STARTED = NO."
       }
     ] satisfies ExecutionItem[],
 
     active: [
       {
-        id: "M2 BOOTSTRAP",
-        label: "M2 / M2-01 bounded scope reconstruction",
+        id: "STS-M2-01 SCOPE",
+        label: "43-table canonicality matrix · bounded scope/evidence reconstruction",
         category: "PROGRAM",
         state: "PLANNED",
         owner: "Backend/Data + Architecture",
-        evidence: "M1 está fechado com deferred security assurance; PR #169 reconciliou o handoff; M2 é elegível, mas M2_STARTED = NO.",
-        nextAction: "Resolver o live main 2bad8e9c… e reconstruir M2/M2-01 antes de solicitar qualquer implementação."
+        evidence: "STS-M1 está fechado com deferred security assurance; PR #170 tornou o WBS FECH.AI canônico; STS-M2 é elegível, mas STS-M2_STARTED = NO.",
+        nextAction: "Resolver o live main 252fb981… e executar somente a reconstrução READ_ONLY de escopo/evidência de STS-M2-01 antes de solicitar qualquer implementação."
       }
     ] satisfies ExecutionItem[],
 
     future: [
       {
-        id: "M1-B-F01",
+        id: "STS-M1-B-F01",
         label: "Anon privileged RPC execution surface",
         category: "REMEDIATION",
         state: "PLANNED",
@@ -379,7 +379,7 @@ export const workspaceDemo = {
         nextAction: "Remediação futura em ciclo próprio, com autoridade e evidência próprias."
       },
       {
-        id: "M1-D-F01",
+        id: "STS-M1-D-F01",
         label: "Dependency reproducibility gap",
         category: "REMEDIATION",
         state: "PLANNED",
@@ -388,7 +388,7 @@ export const workspaceDemo = {
         nextAction: "Corrigir em ciclo próprio sem apagar o histórico do baseline."
       },
       {
-        id: "M1-D-F02",
+        id: "STS-M1-D-F02",
         label: "Vite 6.4.2 known affected version",
         category: "REMEDIATION",
         state: "PLANNED",
@@ -397,7 +397,7 @@ export const workspaceDemo = {
         nextAction: "Upgrade e validação em ciclo próprio."
       },
       {
-        id: "M1-E-F01",
+        id: "STS-M1-E-F01",
         label: "Live Edge function not versioned",
         category: "REMEDIATION",
         state: "PLANNED",
@@ -406,7 +406,7 @@ export const workspaceDemo = {
         nextAction: "Restaurar rastreabilidade/versionamento em ciclo próprio."
       },
       {
-        id: "M1-E-F02",
+        id: "STS-M1-E-F02",
         label: "Browser session refresh-token exposure surface",
         category: "REMEDIATION",
         state: "PLANNED",
@@ -415,7 +415,7 @@ export const workspaceDemo = {
         nextAction: "Reduzir superfície em ciclo próprio."
       },
       {
-        id: "M1-E-F03",
+        id: "STS-M1-E-F03",
         label: "External worker proxy authority gap",
         category: "REMEDIATION",
         state: "PLANNED",
@@ -424,7 +424,7 @@ export const workspaceDemo = {
         nextAction: "Fechar authority gap com prova própria."
       },
       {
-        id: "M1-E-F04",
+        id: "STS-M1-E-F04",
         label: "Leaked password protection disabled",
         category: "REMEDIATION",
         state: "PLANNED",
@@ -456,37 +456,38 @@ export const workspaceDemo = {
       { date: "3 Sep 2026", text: "PR #166 avançou ao head 0f3f266c...; review independente abriu 9 findings; runners continuam NOT_EXECUTED", kind: "EVIDENCE" },
       { date: "3 Sep 2026", text: "PR #166 mergeada; PR-08 static phases 1–4 fechadas; runtime permanece NOT_EXECUTED", kind: "REMEDIATION" },
       { date: "4 Sep 2026", text: "PR #168 mergeada: M1 COMPLETE WITH DEFERRED SECURITY ASSURANCE; F1-02 fechado para o roadmap M1", kind: "PROGRAM" },
-      { date: "4 Sep 2026", text: "PR #169 mergeada: handoff pós-M1 reconciliado; M2 torna-se NEXT ELIGIBLE / NOT STARTED", kind: "PROGRAM" }
+      { date: "4 Sep 2026", text: "PR #169 mergeada: handoff pós-STS-M1 reconciliado; STS-M2 torna-se NEXT ELIGIBLE / NOT STARTED", kind: "PROGRAM" },
+      { date: "4 Sep 2026", text: "PR #170 mergeada no FECH.AI main 252fb981…: hierarquia STS e WBS granular de 832h tornam-se baseline canônica; STS-M2 permanece ELIGIBLE / NOT STARTED", kind: "PROGRAM" }
     ] satisfies TimelineItem[]
 
   } satisfies ProgramSnapshot,
 
   fechaiWbs: {
-    source: "FECH.AI WBS planning baseline + user-approved roadmap view",
+    source: "FECH.AI canonical WBS · docs/roadmap/fechai-security-to-scale-2026-wbs.md @ 252fb981…",
     basis: "Planning estimates for visibility, not clocked timesheets.",
     totalCriticalHours: 832,
     completedHours: 204,
     remainingCriticalHours: 628,
     preSecurityGoBacklogHours: 116,
     plannedBacklogHours: 104,
-    currentPackage: "M2 — NEXT ELIGIBLE / NOT STARTED",
-    currentTask: "M2 bootstrap → M2-01 bounded scope reconstruction",
-    note: "M1/F1-02 foi concluído com deferred security assurance. M2 aparece como próximo pacote elegível, mas ainda não iniciado; horas continuam sendo estimativas de planejamento, não timesheet.",
+    currentPackage: "STS-M2 — ELIGIBLE / NOT STARTED",
+    currentTask: "STS-M2-01 · Matriz de 43 tabelas · READ_ONLY scope reconstruction · 20h",
+    note: "STS-M1/F1-02 foi concluído com deferred security assurance. STS-M2 é elegível, mas ainda não iniciado. STS-M2-01 permite apenas reconstrução READ_ONLY de escopo/evidência; as horas são estimativas de planejamento, não timesheet.",
     milestones: [
       {
-        id: "M0",
+        id: "STS-M0",
         label: "Program Control / Truth Reconciliation",
         hours: 36,
         state: "COMPLETE",
         tasks: [
-          { id: "M0-01", label: "Inventário de PRs e continuidade", hours: 8, state: "COMPLETE" },
-          { id: "M0-02", label: "Pacotes de especialistas e dependências", hours: 8, state: "COMPLETE" },
-          { id: "M0-03", label: "SFJM / Workspace baseline", hours: 10, state: "COMPLETE" },
-          { id: "M0-04", label: "Roadmap / governança única", hours: 10, state: "COMPLETE" }
+          { id: "STS-M0-01", label: "Inventário de PRs e continuidade", hours: 8, state: "COMPLETE" },
+          { id: "STS-M0-02", label: "Pacotes de especialistas e dependências", hours: 8, state: "COMPLETE" },
+          { id: "STS-M0-03", label: "SFJM / Workspace baseline", hours: 10, state: "COMPLETE" },
+          { id: "STS-M0-04", label: "Roadmap / governança única", hours: 10, state: "COMPLETE" }
         ]
       },
       {
-        id: "M1",
+        id: "STS-M1",
         label: "Security Truth Baseline / F1-02",
         hours: 168,
         state: "COMPLETE",
@@ -497,76 +498,76 @@ export const workspaceDemo = {
           { id: "B4", label: "List ACL tenant integrity", hours: 34, state: "COMPLETE" },
           { id: "PR-07", label: "Tenant-safe reads + payload validation", hours: 36, state: "COMPLETE", note: "PR #163 merged; migration applied; J3 closed with bounded residual evidence." },
           { id: "PR-08", label: "Proof matrix / negative tests", hours: 22, state: "COMPLETE", note: "PR #166 merged; static phases 1–4 closed; runtime remained NOT_EXECUTED and deferred evidence was not promoted to PASS." },
-          { id: "PR-09", label: "Close-out & adjudicação final", hours: 6, state: "COMPLETE", note: "PR #168 merged; M1 closed with deferred security assurance; PR #169 reconciled the handoff." }
+          { id: "PR-09", label: "Close-out & adjudicação final", hours: 6, state: "COMPLETE", note: "PR #168 merged; STS-M1 closed with deferred security assurance; PR #169 reconciled the handoff; PR #170 canonicalized the STS execution WBS." }
         ]
       },
       {
-        id: "M2",
+        id: "STS-M2",
         label: "Database Simplification & Optimization Plan",
         hours: 116,
         state: "PLANNED",
         tasks: [
-          { id: "M2-01", label: "Matriz de 43 tabelas", hours: 20, state: "PLANNED" },
-          { id: "M2-02", label: "Mapa routines / policies / triggers / grants", hours: 24, state: "PLANNED" },
-          { id: "M2-03", label: "Índices / ACL contraditórias", hours: 16, state: "PLANNED" },
-          { id: "M2-04", label: "Política target de DEFINER / RLS / DML", hours: 20, state: "PLANNED" },
-          { id: "M2-05", label: "Database Contract Map", hours: 20, state: "PLANNED" },
-          { id: "M2-06", label: "Decisão arquitetural do banco", hours: 16, state: "PLANNED" }
+          { id: "STS-M2-01", label: "Matriz de 43 tabelas", hours: 20, state: "PLANNED" },
+          { id: "STS-M2-02", label: "Mapa routines / policies / triggers / grants", hours: 24, state: "PLANNED" },
+          { id: "STS-M2-03", label: "Índices / ACL contraditórias", hours: 16, state: "PLANNED" },
+          { id: "STS-M2-04", label: "Política target de DEFINER / RLS / DML", hours: 20, state: "PLANNED" },
+          { id: "STS-M2-05", label: "Database Contract Map", hours: 20, state: "PLANNED" },
+          { id: "STS-M2-06", label: "Decisão arquitetural do banco", hours: 16, state: "PLANNED" }
         ]
       },
       {
-        id: "M3",
+        id: "STS-M3",
         label: "Backend Authority Contract Freeze",
         hours: 152,
         state: "PLANNED",
         tasks: [
-          { id: "M3-01", label: "Identity / membership / team / role model", hours: 24, state: "PLANNED" },
-          { id: "M3-02", label: "Authority contract por contexto", hours: 28, state: "PLANNED" },
-          { id: "M3-03", label: "Allowlist de RPCs privilegiadas", hours: 24, state: "PLANNED" },
-          { id: "M3-04", label: "Redução de DML sensível direto", hours: 24, state: "PLANNED" },
-          { id: "M3-05", label: "Fechamento Auth / Admin flows", hours: 24, state: "PLANNED" },
-          { id: "M3-06", label: "Staging / test plan de segurança", hours: 28, state: "PLANNED" }
+          { id: "STS-M3-01", label: "Identity / membership / team / role model", hours: 24, state: "PLANNED" },
+          { id: "STS-M3-02", label: "Authority contract por contexto", hours: 28, state: "PLANNED" },
+          { id: "STS-M3-03", label: "Allowlist de RPCs privilegiadas", hours: 24, state: "PLANNED" },
+          { id: "STS-M3-04", label: "Redução de DML sensível direto", hours: 24, state: "PLANNED" },
+          { id: "STS-M3-05", label: "Fechamento Auth / Admin flows", hours: 24, state: "PLANNED" },
+          { id: "STS-M3-06", label: "Staging / test plan de segurança", hours: 28, state: "PLANNED" }
         ]
       },
       {
-        id: "M4",
+        id: "STS-M4",
         label: "Frontend Modularization / App.jsx Extraction",
         hours: 172,
         state: "PLANNED",
         tasks: [
-          { id: "M4-01", label: "AppShell boundary", hours: 20, state: "PLANNED" },
-          { id: "M4-02", label: "Slice Leads / Funil", hours: 40, state: "PLANNED" },
-          { id: "M4-03", label: "Slice Listas / Distribuição", hours: 32, state: "PLANNED" },
-          { id: "M4-04", label: "Slice MesaCliente", hours: 32, state: "PLANNED" },
-          { id: "M4-05", label: "Gateways / API por feature", hours: 24, state: "PLANNED" },
-          { id: "M4-06", label: "Equivalence / regressão", hours: 24, state: "PLANNED" }
+          { id: "STS-M4-01", label: "AppShell / Shared Frontend Boundary", hours: 20, state: "PLANNED" },
+          { id: "STS-M4-02", label: "CRM + Funil Core Slice", hours: 40, state: "PLANNED" },
+          { id: "STS-M4-03", label: "LeadOps Execution Slice — Leads / Listas / Distribuição / Discador / Power Message Engine", hours: 32, state: "PLANNED" },
+          { id: "STS-M4-04", label: "MesaCliente Core Slice", hours: 32, state: "PLANNED" },
+          { id: "STS-M4-05", label: "Feature Gateways / API Boundaries", hours: 24, state: "PLANNED" },
+          { id: "STS-M4-06", label: "Core Functional Equivalence & Regression", hours: 24, state: "PLANNED" }
         ]
       },
       {
-        id: "M5",
+        id: "STS-M5",
         label: "Integrated Security / Reliability Validation",
         hours: 128,
         state: "PLANNED",
         tasks: [
-          { id: "M5-01", label: "Hostile-client suite isolada", hours: 28, state: "PLANNED" },
-          { id: "M5-02", label: "Regressão tenant / role / auth / storage", hours: 28, state: "PLANNED" },
-          { id: "M5-03", label: "Dependency / CVE gate", hours: 12, state: "PLANNED" },
-          { id: "M5-04", label: "Secrets / config / deploy gate", hours: 16, state: "PLANNED" },
-          { id: "M5-05", label: "Observabilidade / rollback / incidente", hours: 24, state: "PLANNED" },
-          { id: "M5-06", label: "Adjudicação de residual risk", hours: 20, state: "PLANNED" }
+          { id: "STS-M5-01", label: "Hostile-client suite isolada", hours: 28, state: "PLANNED" },
+          { id: "STS-M5-02", label: "Regressão tenant / role / auth / storage", hours: 28, state: "PLANNED" },
+          { id: "STS-M5-03", label: "Dependency / CVE gate", hours: 12, state: "PLANNED" },
+          { id: "STS-M5-04", label: "Secrets / config / deploy gate", hours: 16, state: "PLANNED" },
+          { id: "STS-M5-05", label: "Observabilidade / rollback / incidente", hours: 24, state: "PLANNED" },
+          { id: "STS-M5-06", label: "Adjudicação de residual risk", hours: 20, state: "PLANNED" }
         ]
       },
       {
-        id: "M6",
+        id: "STS-M6",
         label: "Security Go Candidate / Commercial Readiness",
         hours: 60,
         state: "PLANNED",
         tasks: [
-          { id: "M6-01", label: "Evidence packet", hours: 14, state: "PLANNED" },
-          { id: "M6-02", label: "Blocker closeout", hours: 8, state: "PLANNED" },
-          { id: "M6-03", label: "Onboarding / support / runbooks", hours: 18, state: "PLANNED" },
-          { id: "M6-04", label: "Decisão comercial controlada", hours: 8, state: "PLANNED" },
-          { id: "M6-05", label: "Launch readiness review", hours: 12, state: "PLANNED" }
+          { id: "STS-M6-01", label: "Security Evidence + Final AS-BUILT Package", hours: 14, state: "PLANNED" },
+          { id: "STS-M6-02", label: "Blocker closeout", hours: 8, state: "PLANNED" },
+          { id: "STS-M6-03", label: "Onboarding / support / operational runbooks", hours: 18, state: "PLANNED" },
+          { id: "STS-M6-04", label: "Decisão comercial controlada", hours: 8, state: "PLANNED" },
+          { id: "STS-M6-05", label: "Launch readiness + AS-BUILT acceptance review", hours: 12, state: "PLANNED" }
         ]
       }
     ] satisfies WbsMilestone[],
@@ -602,24 +603,24 @@ export const workspaceDemo = {
   contexts: [
     { icon: "🧠", label: "Contexto Preservado", value: "Confirmado" },
     { icon: "☑", label: "Histórico Preservado", value: "Append-only" },
-    { icon: "🗺", label: "Plano Futuro", value: "M2–M6" },
+    { icon: "🗺", label: "Plano Futuro", value: "STS-M2–STS-M6" },
     { icon: "📁", label: "Evidências Canônicas", value: "GitHub" },
     { icon: "🔒", label: "Governança Mantida", value: "Ativa" },
     { icon: "◉", label: "Fonte Verificada", value: "main" }
   ] satisfies ContextCard[],
 
   currentState: [
-    { label: "Último milestone concluído", value: "M1 · deferred assurance" },
-    { label: "Próxima continuidade", value: "M2 bootstrap · not started" },
-    { label: "Próximo milestone", value: "M2 eligible" },
+    { label: "Último milestone concluído", value: "STS-M1 · deferred assurance" },
+    { label: "Próxima continuidade", value: "STS-M2-01 · READ_ONLY scope" },
+    { label: "Próximo milestone", value: "STS-M2 eligible" },
     { label: "Modelo temporal", value: "Passado + Agora + Futuro" }
   ] satisfies SourceRow[],
 
   sources: [
-    { label: "FECH.AI main", value: "2bad8e9c…", badge: true },
+    { label: "FECH.AI main", value: "252fb981…", badge: true },
     { label: "Program issue", value: "#141 OPEN", badge: true },
     { label: "M1 issue", value: "#150 CLOSED", badge: true },
-    { label: "M1 close-out", value: "#168 + #169 MERGED", badge: true },
+    { label: "Program hierarchy / WBS", value: "#170 MERGED", badge: true },
     { label: "Snapshot", value: "Manual · 4 Sep", badge: true }
   ] satisfies SourceRow[]
 };
