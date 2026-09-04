@@ -94,22 +94,22 @@ function NextSafeAction({ onContinue }: { onContinue: () => void }) {
       </div>
       <div className="actionContent">
         <div className="eyebrow">Próxima ação segura</div>
-        <h3>Fechar target design e matriz do B4</h3>
+        <h3>Reconstruir o próximo gate J4/F1-02</h3>
         <p className="muted">
-          Definir o boundary tenant-safe de visibilidade de listas e a matriz de autorização com Architecture, AppSec e LeadOps antes de qualquer implementação.
+          Reconciliar em READ_ONLY o PR-08 mergeado com o contrato J4, separando harness versionado, runtime, rollback/reapply, OC-01, PR-09 e Security Go.
         </p>
         <div className="metaRow">
           <div className="meta">
             Escopo
-            <strong>Security Truth Baseline</strong>
+            <strong>Pós-M1 / F1-02 / J4</strong>
           </div>
           <div className="meta">
             Estado
-            <strong>Remediação ativa</strong>
+            <strong>READ_ONLY reconstruction</strong>
           </div>
           <div className="meta">
             Mutação
-            <strong>Somente leitura</strong>
+            <strong>Nenhuma</strong>
           </div>
         </div>
         <button className="primary" onClick={onContinue}>▶ VER BOUNDARY</button>
@@ -252,34 +252,56 @@ function RunbookRow({ item }: { item: RunbookItem }) {
   );
 }
 
-function FechaiRunbook() {
+function RunbookTable({ items, caption }: { items: RunbookItem[]; caption: string }) {
   return (
-    <article className="panel panelInner runbookPanel" id="fechai-runbook">
-      <div className="sectionTitle">
-        <div>
-          <div className="eyebrow">Operational Runbook View</div>
-          <h3>M1 — Security Truth Baseline</h3>
+    <div className="runbookScroll">
+      <table className="runbookTable">
+        <caption className="srOnly">{caption}</caption>
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Tarefa / evidência</th>
+            <th scope="col">Owner</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Próxima ação</th>
+          </tr>
+        </thead>
+        <tbody>
+          {items.map((item) => <RunbookRow item={item} key={item.id} />)}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function FechaiRunbook() {
+  const baselineItems = workspaceDemo.fechaiProgram.runbook.filter((item) => /^M1-[A-F]$/.test(item.id));
+  const remediationItems = workspaceDemo.fechaiProgram.runbook.filter((item) => !/^M1-[A-F]$/.test(item.id));
+
+  return (
+    <>
+      <article className="panel panelInner runbookPanel" id="fechai-runbook">
+        <div className="sectionTitle">
+          <div>
+            <div className="eyebrow">Operational Runbook View</div>
+            <h3>M1 — Security Truth Baseline</h3>
+          </div>
+          <span className="manualBadge">COMPLETE · 100%</span>
         </div>
-        <span className="manualBadge">READ_ONLY FIRST</span>
-      </div>
-      <div className="runbookScroll">
-        <table className="runbookTable">
-          <caption className="srOnly">Runbook operacional do M1 Security Truth Baseline</caption>
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Tarefa / evidência</th>
-              <th scope="col">Owner</th>
-              <th scope="col">Estado</th>
-              <th scope="col">Próxima ação</th>
-            </tr>
-          </thead>
-          <tbody>
-            {workspaceDemo.fechaiProgram.runbook.map((item) => <RunbookRow item={item} key={item.id} />)}
-          </tbody>
-        </table>
-      </div>
-    </article>
+        <RunbookTable items={baselineItems} caption="Runbook concluído do M1 Security Truth Baseline" />
+      </article>
+
+      <article className="panel panelInner runbookPanel">
+        <div className="sectionTitle">
+          <div>
+            <div className="eyebrow">Post-M1 Remediation View</div>
+            <h3>Pós-M1 — F1-02 Remediation</h3>
+          </div>
+          <span className="manualBadge">J4 ACTIVE</span>
+        </div>
+        <RunbookTable items={remediationItems} caption="Runbook de remediação pós-M1 do F1-02" />
+      </article>
+    </>
   );
 }
 
@@ -396,9 +418,9 @@ export function WorkspaceHome() {
       </div>
       <div className={`modal ${modalOpen ? "open" : ""}`} role="dialog" aria-modal="true" aria-hidden={!modalOpen}>
         <div className="modalCard">
-          <h2>Boundary M1</h2>
+          <h2>Boundary J4 / F1-02</h2>
           <p className="muted">
-            M1-A é read-only. DDL/DML, migration apply, Supabase mutation, deploy, Auth/business-data mutation e Security Go permanecem bloqueados.
+            Reconstrução estritamente READ_ONLY. PR-08 runtime, rollback/reapply, Supabase/Auth, OC-01, PR-09, deploy e Security Go permanecem não autorizados.
           </p>
           <div className="modalActions">
             <button className="secondary" onClick={() => setModalOpen(false)}>Fechar</button>

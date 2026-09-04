@@ -33,11 +33,14 @@ J4/F1-02 gate from live main**. That reconstruction must reconcile the merged PR
 artifact against the canonical J4 contract and explicitly separate versioned harness
 readiness, runtime evidence, rollback/reapply evidence, OC-01, PR-09 and Security Go.
 
-PR #167 was observed live as merged by `wagnerjfjunior` at merge commit
-`f4ff8e42f601a1e033ae6ceaf4c5ecd17b23f3a8`. The conversation-local authority
-immediately before this handoff covered Ready + pre-merge only; therefore the merge is
-recorded here as an observed lifecycle event, not as reusable authority and not as evidence
-of broader authorization.
+PR #167 merge authority was explicitly granted by Product Authority in the source
+conversation for exact head `47f5664276ff7cec5f9a144d5ce5038b127d8b9e`, after
+exact-head revalidation of main/base/head/checks/threads/mergeability and with
+`expected_head_sha` protection. Execution is confirmed as merge commit
+`f4ff8e42f601a1e033ae6ceaf4c5ecd17b23f3a8`. The authority is
+`CONSUMED / NOT REUSABLE`. No follow-up SFJM-only PR is required solely to record this
+merge because `NO_RECURSIVE_LIFECYCLE_RECONCILIATION` applies. This provenance does
+not authorize any broader merge, deploy or mutation.
 
 Do not reopen completed B2/B3/B4/J3/PR-08 static work without a material invalidation
 event. Do not infer runtime PASS, rollback PASS, OC-01 authority, PR-09 authority or

@@ -66,11 +66,18 @@ Planned remediation remains server-side ordered digest or streaming hash.
 
 ### Lifecycle provenance note
 
-PR #167 is already merged live. Immediately before this handoff, the explicit authority in
-the current conversation covered Draft → Ready and exact-head pre-merge, not merge.
-Therefore record the PR #167 merge as **OBSERVED LIVE / AUTHORITY_PROVENANCE_NOT_RECORDED
-IN THIS HANDOFF**. Do not call it unauthorized without affirmative evidence, and do not
-reuse it as authority for another merge/deploy.
+PR #167 merge authority was **EXPLICITLY GRANTED BY PRODUCT AUTHORITY** in the source
+conversation for exact head `47f5664276ff7cec5f9a144d5ce5038b127d8b9e`, after
+revalidation of main/base/head/checks/threads/mergeability and with
+`expected_head_sha` protection. Execution is confirmed as merge commit
+`f4ff8e42f601a1e033ae6ceaf4c5ecd17b23f3a8`.
+
+Authority state: **CONSUMED / NOT REUSABLE**.
+
+No follow-up SFJM-only PR is required solely to record the merge because
+`NO_RECURSIVE_LIFECYCLE_RECONCILIATION` applies. Do not relitigate this merge without
+material contradictory evidence and do not reuse its consumed authority for another
+merge, deploy or mutation.
 
 ### Single next safe action
 

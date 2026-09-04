@@ -64,7 +64,7 @@ export const workspaceDemo = {
   nav: [
     { icon: "▶", label: "Continue", helper: "Próxima ação segura", href: "#continue", active: true },
     { icon: "◎", label: "Roadmap", helper: "Security-to-Scale", href: "#fechai-program" },
-    { icon: "☷", label: "Runbook", helper: "Execução M1", href: "#fechai-runbook" },
+    { icon: "☷", label: "Runbook", helper: "M1 + pós-M1", href: "#fechai-runbook" },
     { icon: "□", label: "Projetos", helper: "Seus projetos", href: "#projects" },
     { icon: "⌁", label: "Jornada", helper: "Visão da jornada", href: "#journey" },
     { icon: "⇄", label: "Handoffs", helper: "Transições de estado", href: "#" },
@@ -226,7 +226,7 @@ export const workspaceDemo = {
         owner: "application_security",
         state: "COMPLETE",
         evidence: "Plano de prova definido; M1-C-F01 aplicado e provado sem reabrir Security Go.",
-        nextAction: "Encerrado; remediação F1-02 segue em B4."
+        nextAction: "Encerrado; remediação pós-M1 segue em J4/F1-02."
       },
       {
         id: "M1-D",
@@ -299,6 +299,14 @@ export const workspaceDemo = {
         state: "ACTIVE",
         evidence: "PR #166 merged; harness/matrix versionados; Vercel Production SUCCESS; PR #167 SFJM reconciliation merged. Runtime PR-08 permanece NOT_EXECUTED.",
         nextAction: "READ_ONLY reconstruction do próximo gate J4/F1-02 contra a main f4ff8e42; separar runtime, rollback/reapply, OC-01, PR-09 e Security Go."
+      },
+      {
+        id: "R-J4-PR09",
+        task: "PR-09 — close-out & adjudicação final",
+        owner: "product_authority + application_security + documentation",
+        state: "PENDING",
+        evidence: "FUTURE / NOT AUTHORIZED; depende da adjudicação J4 e das proof obligations aplicáveis.",
+        nextAction: "Não iniciar; aguardar fechamento do gate J4 e autorização separada."
       }
     ] satisfies RunbookItem[]
   } satisfies ProgramSnapshot,
