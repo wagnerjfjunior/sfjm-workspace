@@ -416,8 +416,9 @@ function BacklogDetails({ backlog }: { backlog: WbsBacklog }) {
 function WbsCommandCenter() {
   const wbs = workspaceDemo.fechaiWbs;
   const activeMilestone = wbs.milestones.find((milestone) => milestone.state === "ACTIVE") ?? wbs.milestones[0];
-  const focusTask = activeMilestone.tasks.find((task) => task.note?.includes("NEXT GATE")) ??
-    activeMilestone.tasks.find((task) => task.state !== "COMPLETE");
+  const activeTasks: WbsTask[] = activeMilestone.tasks;
+  const focusTask = activeTasks.find((task) => task.note?.includes("NEXT GATE")) ??
+    activeTasks.find((task) => task.state !== "COMPLETE");
   const completedHours = wbs.milestones.reduce(
     (total, milestone) => total + milestone.tasks.filter((task) => task.state === "COMPLETE").reduce((sum, task) => sum + task.hours, 0),
     0
