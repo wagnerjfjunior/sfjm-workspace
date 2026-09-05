@@ -1237,3 +1237,326 @@ body {
   .projectIdentity h1 { font-size: 25px; }
   .progressMetric strong { font-size: 32px; }
 }
+
+
+/* Final readability pass: larger operational type + full-width action stage */
+.commandMain {
+  gap: 14px;
+}
+
+.nextActionCard {
+  min-height: 220px;
+  padding: 20px 22px;
+  border-color: rgba(139, 92, 246, .52);
+  background:
+    linear-gradient(135deg, rgba(34, 211, 238, .045), transparent 36%),
+    radial-gradient(circle at 92% 12%, rgba(139, 92, 246, .18), transparent 28%),
+    linear-gradient(180deg, #0a1326, #070e1b);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .025),
+    0 0 42px rgba(92, 70, 220, .07);
+}
+
+.nextActionCard::before {
+  width: 180px;
+  height: 180px;
+  right: 36px;
+  top: 28px;
+  border-color: rgba(34, 211, 238, .18);
+  box-shadow:
+    inset 0 0 0 28px rgba(34, 211, 238, .018),
+    inset 0 0 0 56px rgba(139, 92, 246, .018),
+    0 0 24px rgba(34, 211, 238, .04);
+}
+
+.nextActionCard::after {
+  content: "";
+  position: absolute;
+  right: 76px;
+  top: 68px;
+  width: 100px;
+  height: 100px;
+  opacity: .45;
+  background:
+    linear-gradient(90deg, transparent 49%, rgba(34, 211, 238, .2) 50%, transparent 51%),
+    linear-gradient(0deg, transparent 49%, rgba(139, 92, 246, .18) 50%, transparent 51%);
+  border: 1px solid rgba(34, 211, 238, .12);
+  border-radius: 18px;
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+.projectIdentity h1 {
+  font-size: 34px;
+}
+
+.eyebrow {
+  font-size: 12px;
+}
+
+.heroMetric > span {
+  font-size: 11px;
+}
+
+.heroMetric > strong {
+  font-size: 19px;
+}
+
+.heroMetric > small {
+  font-size: 12px;
+}
+
+.heroMetric code {
+  font-size: 11px;
+}
+
+.progressMetric strong {
+  font-size: 42px;
+}
+
+.cardHeading h2,
+.sectionHeader h2 {
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.cardHeading.compact h2 {
+  font-size: 24px;
+}
+
+.safeSequence {
+  max-width: 1050px;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.actionFacts {
+  grid-template-columns: .7fr .9fr 1fr 1.6fr;
+  gap: 10px;
+}
+
+.actionFacts > div {
+  padding: 11px 12px;
+}
+
+.actionFacts span {
+  font-size: 10px;
+}
+
+.actionFacts strong {
+  font-size: 13px;
+}
+
+.actionFooter {
+  font-size: 11px;
+}
+
+.statusPill,
+.countBadge,
+.manualChip {
+  font-size: 10px;
+}
+
+.integrityStrip {
+  padding: 10px;
+  gap: 8px;
+}
+
+.integrityItem {
+  padding: 9px 10px;
+}
+
+.integrityIcon {
+  font-size: 16px;
+}
+
+.integrityItem small {
+  font-size: 10px;
+}
+
+.integrityItem strong {
+  font-size: 12px;
+}
+
+.wbsTotals > span {
+  min-width: 84px;
+  padding: 8px 10px;
+}
+
+.wbsTotals small {
+  font-size: 10px;
+}
+
+.wbsTotals strong {
+  font-size: 16px;
+}
+
+.wbsMilestoneTab {
+  flex-basis: 195px;
+  padding: 12px;
+}
+
+.wbsMilestoneTab > div span {
+  font-size: 15px;
+}
+
+.wbsMilestoneTab > div b {
+  font-size: 11px;
+}
+
+.wbsMilestoneTab > strong {
+  min-height: 38px;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.milestoneMetaLine small {
+  font-size: 10px;
+}
+
+.milestoneOperationalState {
+  font-size: 9px;
+  padding: 4px 6px;
+}
+
+.currentBlock,
+.nextBlocks {
+  padding: 14px;
+}
+
+.currentBlockHeader span:first-child {
+  font-size: 11px;
+}
+
+.currentBlockHeader h3 {
+  font-size: 32px;
+}
+
+.currentBlockHeader strong {
+  font-size: 16px;
+}
+
+.selectedBlockStatus small {
+  font-size: 11px;
+}
+
+.selectedBlockProgressMeta {
+  font-size: 11px;
+}
+
+.selectedBlockProgressMeta strong {
+  font-size: 13px;
+}
+
+.currentBlockProgress {
+  height: 7px;
+}
+
+.focusTask {
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  gap: 10px;
+  padding: 10px 11px;
+}
+
+.taskStateIcon {
+  width: 26px;
+  height: 26px;
+  font-size: 11px;
+}
+
+.taskTitleLine span {
+  font-size: 11px;
+}
+
+.taskTitleLine strong {
+  font-size: 14px;
+}
+
+.focusTask small {
+  font-size: 11px;
+}
+
+.focusTask > b {
+  font-size: 12px;
+}
+
+.risksCard {
+  max-height: none;
+  padding: 18px 20px;
+}
+
+.riskList {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-height: none;
+  gap: 8px;
+}
+
+.riskList li {
+  min-height: 58px;
+  padding: 10px 11px;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.riskIndex {
+  font-size: 10px;
+}
+
+.evidenceGrid span {
+  font-size: 10px;
+}
+
+.evidenceGrid strong,
+.evidenceGrid code {
+  font-size: 12px;
+}
+
+.evidenceBoundaryCompact span {
+  font-size: 10px;
+}
+
+.evidenceBoundaryCompact strong {
+  font-size: 11px;
+}
+
+.commandFooter {
+  font-size: 10px;
+}
+
+@media (max-width: 1250px) {
+  .actionFacts {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .riskList {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .projectIdentity h1 {
+    font-size: 27px;
+  }
+
+  .nextActionCard {
+    min-height: 0;
+    padding: 16px;
+  }
+
+  .nextActionCard::before,
+  .nextActionCard::after {
+    opacity: .18;
+  }
+
+  .progressMetric strong {
+    font-size: 36px;
+  }
+
+  .wbsMilestoneTab {
+    flex-basis: 178px;
+  }
+
+  .taskTitleLine strong {
+    font-size: 13px;
+  }
+}
