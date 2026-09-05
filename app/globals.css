@@ -7,7 +7,7 @@
   --line-strong: #2c456d;
   --text: #f4f7ff;
   --muted: #8ea0bf;
-  --muted-2: #667996;
+  --muted-2: #788ba8;
   --purple: #8b5cf6;
   --blue: #3b82f6;
   --cyan: #22d3ee;
@@ -575,4 +575,185 @@ button { color: inherit; }
   .integrityStrip { grid-template-columns: 1fr 1fr; }
   .wbsTotals { display: grid; grid-template-columns: repeat(3, 1fr); }
   .wbsTotals > span { min-width: 0; }
+}
+
+
+/* Exact-head review closure: preserve semantics without returning to text-heavy dashboard */
+.brandRow { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.brandRow .brand { padding-right: 0; }
+.drawerClose {
+  display: none;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #2a3f60;
+  border-radius: 10px;
+  background: #0a1527;
+  color: #dbe6f7;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+.safeSequence {
+  position: relative;
+  max-width: 980px;
+  margin: 10px 0 0;
+  padding: 8px 10px;
+  border-left: 2px solid rgba(34, 211, 238, .48);
+  border-radius: 0 8px 8px 0;
+  background: rgba(34, 211, 238, .035);
+  color: #cdd9ec;
+  font-size: 9px;
+  line-height: 1.45;
+}
+.roadmapNode { flex-basis: 175px; }
+.roadmapStateLabel {
+  padding: 3px 5px;
+  border: 1px solid #314867;
+  border-radius: 999px;
+  color: #aebbd0;
+  font-size: 7px;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.roadmapStateLabel.complete { color: #80edb4; border-color: rgba(40,229,140,.3); }
+.roadmapStateLabel.active { color: #8be9f8; border-color: rgba(34,211,238,.42); }
+.roadmapStateLabel.planned { color: #c9b8ff; border-color: rgba(139,92,246,.3); }
+.roadmapMeta {
+  display: grid;
+  gap: 2px;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 7px;
+  line-height: 1.25;
+}
+.roadmapTasks {
+  display: block;
+  margin-top: 5px;
+  color: #9db0cc;
+  font-size: 7px;
+}
+.roadmapExit {
+  display: -webkit-box;
+  margin-top: 5px;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 7px;
+  line-height: 1.3;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.journeyHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #1c2d48;
+}
+.journeyHeader span {
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+.journeyHeader strong { font-size: 8px; color: #8bdcf2; }
+.journeyRail {
+  display: flex;
+  gap: 6px;
+  margin-top: 7px;
+  padding: 1px 1px 6px;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+}
+.journeyEvent {
+  flex: 0 0 164px;
+  min-width: 0;
+  padding: 7px 8px;
+  border: 1px solid #21344f;
+  border-radius: 9px;
+  background: #071221;
+}
+.journeyEvent.program { border-top-color: rgba(139,92,246,.55); }
+.journeyEvent.baseline { border-top-color: rgba(34,211,238,.55); }
+.journeyEvent.remediation { border-top-color: rgba(40,229,140,.48); }
+.journeyEvent.evidence { border-top-color: rgba(251,191,36,.48); }
+.journeyEventTop { display: flex; justify-content: space-between; gap: 6px; }
+.journeyEventTop span { color: var(--muted); font-size: 7px; }
+.journeyEventTop b { color: #9fb2cf; font-size: 6px; letter-spacing: .04em; }
+.journeyEvent > strong {
+  display: -webkit-box;
+  margin-top: 4px;
+  overflow: hidden;
+  color: #dbe5f5;
+  font-size: 8px;
+  font-weight: 650;
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+.fullWbsHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-end;
+  margin-top: 11px;
+  padding-top: 10px;
+  border-top: 1px solid #1d314d;
+}
+.fullWbsHeader span {
+  display: block;
+  color: var(--muted);
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.fullWbsHeader strong { display: block; margin-top: 2px; font-size: 10px; }
+.fullWbsHeader small { color: var(--muted); font-size: 8px; }
+.wbsDetailsGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(260px, .55fr);
+  gap: 8px;
+  margin-top: 8px;
+  align-items: start;
+}
+.wbsDetailsColumn { display: grid; gap: 5px; }
+.wbsDetail {
+  border: 1px solid #1d304c;
+  border-radius: 9px;
+  background: #07111f;
+  overflow: hidden;
+}
+.wbsDetail.complete { border-color: rgba(40,229,140,.16); }
+.wbsDetail.active { border-color: rgba(34,211,238,.36); }
+.wbsDetail.planned { border-color: rgba(139,92,246,.18); }
+.wbsDetail.backlogDetail { border-color: rgba(251,191,36,.2); }
+.wbsDetail summary {
+  display: grid;
+  grid-template-columns: 80px minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  padding: 7px 9px;
+  cursor: pointer;
+  list-style-position: inside;
+}
+.wbsDetail summary > span { color: #bcaaff; font-size: 8px; font-weight: 850; }
+.wbsDetail summary > strong { font-size: 9px; line-height: 1.25; }
+.wbsDetail summary > b { color: #dce6f5; font-size: 8px; }
+.detailTaskList {
+  padding: 0 7px 7px;
+  border-top: 1px solid #182b45;
+}
+.detailTaskList .focusTask { margin-top: 5px; }
+.backlogColumn .taskStateIcon { color: var(--yellow); }
+
+@media (max-width: 980px) {
+  .drawerClose { display: grid; place-items: center; }
+  .wbsDetailsGrid { grid-template-columns: 1fr; }
+}
+@media (max-width: 680px) {
+  .fullWbsHeader { align-items: flex-start; flex-direction: column; }
+  .wbsDetail summary { grid-template-columns: 70px minmax(0,1fr) auto; }
+  .roadmapNode { flex-basis: 160px; }
 }
