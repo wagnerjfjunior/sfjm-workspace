@@ -1,691 +1,567 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent, type RefObject } from "react";
 import {
   calculateAcceptedProgramProgress,
   workspaceDemo,
-  type ExecutionItem,
   type ExternalProject,
-  type ProgramMilestone,
-  type SourceRow,
-  type TimelineItem,
-  type WbsBacklog,
   type WbsMilestone,
   type WbsTask
 } from "@/data/workspace-demo";
 
-function Sidebar({ open }: { open: boolean }) {
-  return (
-    <aside className={`sidebar ${open ? "open" : ""}`}>
-      <div className="brand">
-        <div className="brandMark" />
-        <div>
-          <div className="brandTitle">SFJM</div>
-          <div className="brandSub">Workspace</div>
-        </div>
-      </div>
-      <nav className="nav">
-        {workspaceDemo.nav.map((item) => (
-          <a className={item.active ? "active" : ""} href={item.href} key={item.label}>
-            <span>{item.icon}</span>
-            <span>
-              <strong>{item.label}</strong>
-              <small>{item.helper}</small>
-            </span>
-          </a>
-        ))}
-      </nav>
-      <div className="spacer" />
-      <div className="profile">
-        <strong>Wagner Fernandes</strong>
-        <br />
-        <span className="muted">Administrador</span>
-      </div>
-      <div className="sync">
-        ● Snapshot manual
-        <br />
-        <span className="muted">FECH.AI · {workspaceDemo.fechaiProgram.observedAt}</span>
-      </div>
-    </aside>
-  );
+const FECHAI = "FECH.AI";
+
+function taskStateLabel(task: WbsTask, isFocus: boolean) {
+  if (task.state === "COMPLETE") return "Concluída";
+  if (isFocus) return "Próximo gate";
+  if (task.state === "PARKED") return "Backlog";
+  if (task.state === "ACTIVE") return "Em execução";
+  return "Planejada";
 }
 
-function ContinuityState() {
-  const program = workspaceDemo.fechaiProgram;
-  const progress = calculateAcceptedProgramProgress(program.milestones);
-  const checks: SourceRow[] = [
-    { label: "Último milestone", value: program.lastCompletedMilestone },
-    { label: "Workstream atual", value: program.activeWorkstream },
-    { label: "Próximo milestone", value: program.nextProgramMilestone },
-    { label: "Próxima ação", value: program.nextSafeAction },
-    { label: "Objetivo principal", value: program.objectiveIntegrity },
-    { label: "Histórico", value: "Preservado" },
-    { label: "Security Go", value: program.securityGo }
-  ];
+function trapDrawerFocus(event: KeyboardEvent<HTMLElement>) {
+  if (event.key !== "Tab") return;
+
+  const focusable = Array.from(
+    event.currentTarget.querySelectorAll<HTMLElement>('button:not([disabled]), a[href]')
+  ).filter((element) => element.offsetParent !== null);
+
+  if (!focusable.length) return;
+
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+}
+
+function Sidebar({
+  open,
+  selectedProject,
+  onSelectProject,
+  onClose
+}: {
+  open: boolean;
+  selectedProject: string;
+  onSelectProject: (name: string) => void;
+  onClose: () => void;
+}) {
+  const selectedIsFechai = selectedProject === FECHAI;
 
   return (
-    <article className="panel statePanel" id="continue">
-      <div>
-        <div className="eyebrow">Estado de continuidade</div>
-        <div className="stateTitle">
-          <div className="shield">✓</div>
-          <h2>{program.lastCompletedMilestone} · CONTINUIDADE ATIVA</h2>
-        </div>
-        <p>
-          O trabalho atual é {program.activeWorkstream}. A próxima ação segura é {program.nextSafeAction}.
-          Objetivo principal: {program.objectiveIntegrity}. O próximo milestone é {program.nextProgramMilestone}; histórico e futuro continuam preservados.
-        </p>
-        <div className="checks">
-          {checks.map((item) => (
-            <div className="check" key={item.label}>
-              <strong>
-                {item.label}
-                <span className="ok">●</span>
-              </strong>
-              {item.value}
+    <>
+      <aside
+        className={`commandSidebar ${open ? "open" : ""}`}
+        aria-label="Navegação de projetos"
+        onKeyDown={open ? trapDrawerFocus : undefined}
+      >
+        <div className="brandRow">
+          <div className="brand">
+            <div className="brandMark" aria-hidden="true" />
+            <div>
+              <div className="brandTitle">SFJM</div>
+              <div className="brandSub">Workspace</div>
             </div>
-          ))}
+          </div>
+          {open ? (
+            <button className="drawerClose" type="button" onClick={onClose} autoFocus aria-label="Fechar menu de projetos">
+              ×
+            </button>
+          ) : null}
         </div>
-      </div>
-      <div className="confidence">
-        <div
-          className="ring programRing"
-          style={{ background: `conic-gradient(var(--green) 0 ${progress * 3.6}deg,#172238 ${progress * 3.6}deg)` }}
-        >
-          <div className="ringContent">
-            <strong>{progress.toFixed(2)}%</strong>
-            <span>gates aceitos</span>
-            <span>macro programa</span>
+
+        <div className="sidebarSectionLabel">Continue</div>
+        <nav className="projectNav" aria-label="Projetos disponíveis">
+          {workspaceDemo.externalProjects.map((project) => {
+            const active = project.name === selectedProject;
+            return (
+              <div className={`projectNavGroup ${active ? "active" : ""}`} key={project.name}>
+                <button
+                  className="projectNavButton"
+                  type="button"
+                  onClick={() => {
+                    onSelectProject(project.name);
+                    onClose();
+                  }}
+                  aria-pressed={active}
+                >
+                  <span className="projectDot" aria-hidden="true" />
+                  <span>
+                    <strong>{project.name}</strong>
+                    <small>{active ? "Projeto selecionado" : "Abrir dashboard"}</small>
+                  </span>
+                  <span className="projectChevron" aria-hidden="true">›</span>
+                </button>
+
+                {active ? (
+                  <div className="projectSubnav">
+                    <a href="#overview">Estado & continuidade</a>
+                    <a href="#next-action">Próxima ação</a>
+                    {selectedIsFechai ? <a href="#wbs">WBS</a> : <span>WBS · indisponível</span>}
+                    <a href="#risks">Problemas</a>
+                    <a href="#evidence">Evidências</a>
+                  </div>
+                ) : null}
+              </div>
+            );
+          })}
+        </nav>
+
+        <div className="sidebarSpacer" />
+        <div className="sidebarFoot">
+          <span className="liveDot" aria-hidden="true" />
+          <div>
+            <strong>Snapshot manual</strong>
+            <small>Uma URL · múltiplos projetos</small>
           </div>
         </div>
-      </div>
-    </article>
+      </aside>
+      {open ? <button className="sidebarBackdrop" type="button" tabIndex={-1} aria-label="Fechar menu" onClick={onClose} /> : null}
+    </>
   );
 }
 
-function NextSafeAction({ onContinue }: { onContinue: () => void }) {
-  const program = workspaceDemo.fechaiProgram;
+function ProjectHeader({
+  project,
+  onMenu,
+  menuButtonRef
+}: {
+  project: ExternalProject;
+  onMenu: () => void;
+  menuButtonRef: RefObject<HTMLButtonElement | null>;
+}) {
+  const isFechai = project.name === FECHAI;
+  const programProgress = calculateAcceptedProgramProgress(workspaceDemo.fechaiProgram.milestones);
+  const wbs = workspaceDemo.fechaiWbs;
+  const criticalHours = wbs.milestones.reduce((total, milestone) => total + milestone.hours, 0);
+  const completedHours = wbs.milestones.reduce(
+    (total, milestone) =>
+      total + milestone.tasks.filter((task) => task.state === "COMPLETE").reduce((sum, task) => sum + task.hours, 0),
+    0
+  );
+  const wbsPercent = criticalHours ? (completedHours / criticalHours) * 100 : 0;
 
   return (
-    <article className="panel actionPanel">
-      <div className="actionArt">
-        <div className="target" />
-      </div>
-      <div className="actionContent">
-        <div className="eyebrow">Próxima ação segura</div>
-        <h3>{program.nextSafeAction}</h3>
-        <p className="muted">
-          Workstream atual: {program.activeWorkstream}. Fonte observada: {program.repository} @ {program.observedSha}.
-          O Workspace apenas representa essa continuidade; a autoridade continua no FECH.AI.
-        </p>
-        <div className="metaRow">
-          <div className="meta">
-            Último milestone
-            <strong>{program.lastCompletedMilestone}</strong>
-          </div>
-          <div className="meta">
-            Workstream atual
-            <strong>{program.activeWorkstream}</strong>
-          </div>
-          <div className="meta">
-            Próximo milestone
-            <strong>{program.nextProgramMilestone}</strong>
-          </div>
-          <div className="meta">
-            Mutação
-            <strong>Nenhuma autorizada</strong>
+    <section className="projectHero" id="overview">
+      <div className="projectHeroTop">
+        <div className="projectIdentity">
+          <button ref={menuButtonRef} className="mobileMenu" type="button" onClick={onMenu} aria-label="Abrir menu de projetos">☰</button>
+          <div>
+            <div className="eyebrow projectNameLabel">{project.name}</div>
+            <h1>De onde você precisa continuar hoje?</h1>
           </div>
         </div>
-        <div className="metaRow">
-          {program.specialistRouting.map((route) => (
-            <div className="meta" key={route.archetypeId}>
-              {route.requirement === "REQUIRED" ? `Encaminhamento ${route.sequence}` : "Consulta condicional"}
-              <strong>{route.targetName}</strong>
-              <span>{route.purpose}</span>
+        <div className="sourceStamp">
+          <span className="liveDot" aria-hidden="true" />
+          <div>
+            <strong>Fonte observada</strong>
+            <small>{project.observedAt}</small>
+          </div>
+        </div>
+      </div>
+
+      <div className="heroMetrics">
+        <div className="heroMetric continuityMetric">
+          <span>Estado & continuidade</span>
+          <strong>{isFechai ? wbs.currentPackage : project.continuityState}</strong>
+          <small>{isFechai ? wbs.currentTask : "Snapshot manual do projeto"}</small>
+        </div>
+        <div className="heroMetric progressMetric">
+          <span>Conclusão total</span>
+          <strong>{isFechai ? `${wbsPercent.toFixed(1)}%` : "—"}</strong>
+          {isFechai ? (
+            <div className="totalProgressTrack" aria-label={`${wbsPercent.toFixed(1)}% do WBS crítico concluído`}>
+              <span style={{ width: `${wbsPercent}%` }} />
             </div>
-          ))}
-          <div className="meta">
-            Transporte
-            <strong>{program.specialistTransport}</strong>
-            <span>Sem roteamento ou envio automático pelo Workspace.</span>
-          </div>
+          ) : null}
+          <small>{isFechai ? `${completedHours}h de ${criticalHours}h do WBS crítico` : "Sem WBS canônica suficiente no snapshot"}</small>
         </div>
-        <button className="primary" onClick={onContinue}>▶ VER CONTINUIDADE</button>
-      </div>
-    </article>
-  );
-}
-
-function ProjectCard({ project }: { project: ExternalProject }) {
-  return (
-    <article className="projectCard">
-      <div className="projectHeader">
-        <div>
-          <span className="projectKind">{project.kind}</span>
-          <h4>{project.name}</h4>
+        <div className="heroMetric">
+          <span>Bloco atual</span>
+          <strong>{isFechai ? wbs.currentPackage : "Não modelado"}</strong>
+          <small>{isFechai ? `${programProgress.toFixed(2)}% de gates aceitos no macro programa` : "Sem inferência automática"}</small>
         </div>
-        <span className="projectState">{project.continuityState}</span>
-      </div>
-      <div className="projectAction">
-        <span>Próxima ação segura observada</span>
-        <strong>{project.nextSafeAction}</strong>
-      </div>
-      <div className="projectGrid">
-        <div>
-          <span>Bloqueios preservados</span>
-          <ul>
-            {project.blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}
-          </ul>
-        </div>
-        <div className="projectSource">
-          <span>Fonte canônica externa</span>
+        <div className="heroMetric sourceMetric">
+          <span>Canônico externo</span>
           <strong>{project.repository}</strong>
-          <code>{project.observedSha}</code>
-          <small>{project.verification} · {project.observedAt}</small>
+          <code>{project.observedSha.slice(0, 12)}…</code>
         </div>
       </div>
-    </article>
+    </section>
   );
 }
 
-function ExternalProjects() {
-  return (
-    <article className="panel panelInner" id="projects">
-      <div className="sectionTitle">
-        <h3>Projetos para continuar</h3>
-        <span className="manualBadge">Snapshots manuais</span>
-      </div>
-      <div className="projectList">
-        {workspaceDemo.externalProjects.map((project) => <ProjectCard project={project} key={project.name} />)}
-      </div>
-    </article>
-  );
-}
-
-function MilestoneCard({ milestone }: { milestone: ProgramMilestone }) {
-  const contribution = milestone.weight * (milestone.acceptedPercent / 100);
-
-  return (
-    <div className={`milestoneCard ${milestone.status.toLowerCase()}`}>
-      <div className="milestoneTop">
-        <span className="milestoneId">{milestone.id}</span>
-        <span className="milestoneStatus">{milestone.status}</span>
-      </div>
-      <strong>{milestone.label}</strong>
-      <small>{milestone.window}</small>
-      <div className="progressTrack" aria-label={`${milestone.id} ${milestone.acceptedPercent}% aceito`}>
-        <div className="progressFill" style={{ width: `${milestone.acceptedPercent}%` }} />
-      </div>
-      <div className="milestoneMeta">
-        <span>Peso <b>{milestone.weight}%</b></span>
-        <span>Aceito <b>{milestone.acceptedPercent}%</b></span>
-        <span>Contribui <b>{contribution.toFixed(2)}%</b></span>
-      </div>
-      <p>{milestone.exit}</p>
-      <small>{milestone.owner}</small>
-    </div>
-  );
-}
-
-function FechaiProgramTracking() {
+function NextActionCard({ project }: { project: ExternalProject }) {
+  const isFechai = project.name === FECHAI;
   const program = workspaceDemo.fechaiProgram;
-  const progress = calculateAcceptedProgramProgress(program.milestones);
+  const activeMilestone = workspaceDemo.fechaiWbs.milestones.find((milestone) => milestone.state === "ACTIVE");
+  const activeTasks: WbsTask[] = activeMilestone?.tasks ?? [];
+  const focusTask = activeTasks.find((task) => task.note?.includes("NEXT GATE")) ??
+    activeTasks.find((task) => task.state !== "COMPLETE");
+  const requiredRoutes = program.specialistRouting.filter((route) => route.requirement === "REQUIRED");
+  const conditionalRoute = program.specialistRouting.find((route) => route.requirement === "CONDITIONAL");
 
   return (
-    <article className="panel panelInner programPanel" id="fechai-program">
-      <div className="sectionTitle programTitle">
+    <article className="commandCard nextActionCard" id="next-action">
+      <div className="cardHeading">
         <div>
-          <div className="eyebrow">Macro Roadmap / plano preservado</div>
-          <h3>{program.name}</h3>
+          <div className="eyebrow">Próxima ação segura</div>
+          <h2>{isFechai && focusTask ? focusTask.label : project.nextSafeAction}</h2>
         </div>
-        <span className="manualBadge">MANUAL · {program.observedAt}</span>
+        <span className="statusPill next">NEXT</span>
       </div>
 
-      <div className="programSummary continuitySummary">
-        <div>
-          <span>Objetivo principal</span>
-          <strong>{program.objectiveIntegrity}</strong>
-          <small>{program.programObjective}</small>
+      {isFechai && focusTask && activeMilestone ? (
+        <>
+          <p className="safeSequence">{program.nextSafeAction}</p>
+          <div className="actionFacts">
+            <div><span>Bloco</span><strong>{activeMilestone.id}</strong></div>
+            <div><span>Tarefa</span><strong>{focusTask.id} · {focusTask.hours}h</strong></div>
+            <div><span>Situação</span><strong>{taskStateLabel(focusTask, true)}</strong></div>
+            <div>
+              <span>Sequência de especialistas</span>
+              <strong>{requiredRoutes.map((route) => route.targetName).join(" → ")}</strong>
+            </div>
+          </div>
+          <div className="actionFooter actionFooterStack">
+            <div>
+              <span className="manualChip">MANUAL COPY/PASTE</span>
+              <span>{program.specialistTransport}</span>
+            </div>
+            {conditionalRoute ? (
+              <div className="conditionalRoute">
+                <strong>Escalonamento condicional:</strong> {conditionalRoute.targetName} · {conditionalRoute.purpose}
+              </div>
+            ) : null}
+          </div>
+        </>
+      ) : (
+        <div className="actionFooter">
+          <span>{project.verification}</span>
         </div>
-        <div>
-          <span>Progresso ponderado</span>
-          <strong>{progress.toFixed(2)}%</strong>
-          <small>{program.weightingBasis}</small>
-        </div>
-        <div>
-          <span>Último milestone concluído</span>
-          <strong>{program.lastCompletedMilestone}</strong>
-          <small>Histórico preservado; não é substituído pelo workstream atual.</small>
-        </div>
-        <div>
-          <span>Workstream ativo</span>
-          <strong>{program.activeWorkstream}</strong>
-          <small>{program.nextSafeAction}</small>
-        </div>
-        <div>
-          <span>Próximo milestone do programa</span>
-          <strong>{program.nextProgramMilestone}</strong>
-          <small>O futuro permanece visível antes de começar.</small>
-        </div>
-        <div>
-          <span>Security Go</span>
-          <strong className="dangerText">{program.securityGo}</strong>
-          <small>Comercialização ampla: {program.commercialization}</small>
-        </div>
-      </div>
-
-      <div className="overallTrack" aria-label={`Progresso global ${progress}%`}>
-        <div className="overallFill" style={{ width: `${progress}%` }} />
-      </div>
-      <div className="evidenceBoundary">{program.evidenceBoundary}</div>
-
-      <div className="milestoneGrid">
-        {program.milestones.map((milestone) => <MilestoneCard milestone={milestone} key={milestone.id} />)}
-      </div>
+      )}
     </article>
   );
 }
 
-
-function WbsTaskRow({ task }: { task: WbsTask }) {
-  const stateLabel =
-    task.state === "COMPLETE" ? "Concluída" :
-    task.state === "ACTIVE" ? "Agora" :
-    task.state === "PARKED" ? "Backlog" : "Planejada";
-
+function RisksCard({ project }: { project: ExternalProject }) {
   return (
-    <li className={`wbsTask ${task.state.toLowerCase()}`}>
-      <span className="wbsTaskState" role="status">
-        <span aria-hidden="true">{task.state === "COMPLETE" ? "✓" : task.state === "ACTIVE" ? "●" : "○"}</span>
-        <span className="srOnly">{stateLabel}</span>
+    <article className="commandCard risksCard" id="risks">
+      <div className="cardHeading compact">
+        <div>
+          <div className="eyebrow">Problemas / restrições</div>
+          <h2>{project.blockers.length} abertos</h2>
+        </div>
+        <span className="countBadge">{project.blockers.length}</span>
+      </div>
+      <ul className="riskList">
+        {project.blockers.map((blocker, index) => (
+          <li key={blocker}>
+            <span className="riskIndex">{String(index + 1).padStart(2, "0")}</span>
+            <span>{blocker}</span>
+          </li>
+        ))}
+      </ul>
+    </article>
+  );
+}
+
+function IntegrityStrip() {
+  return (
+    <section className="integrityStrip" aria-label="Integridade de continuidade">
+      {workspaceDemo.contexts.map((item) => (
+        <div className="integrityItem" key={item.label}>
+          <span className="integrityIcon" aria-hidden="true">{item.icon}</span>
+          <span>
+            <small>{item.label}</small>
+            <strong>{item.value}</strong>
+          </span>
+        </div>
+      ))}
+    </section>
+  );
+}
+
+function WbsFocusTask({ task, focusId }: { task: WbsTask; focusId?: string }) {
+  const isFocus = task.id === focusId;
+  return (
+    <li className={`focusTask ${task.state.toLowerCase()} ${isFocus ? "focus" : ""}`}>
+      <span className="taskStateIcon" aria-hidden="true">
+        {task.state === "COMPLETE" ? "✓" : isFocus ? "▶" : "○"}
       </span>
-      <div className="wbsTaskBody">
-        <div className="wbsTaskTitle">
+      <div>
+        <div className="taskTitleLine">
           <span>{task.id}</span>
           <strong>{task.label}</strong>
         </div>
-        {task.note ? <small>{task.note}</small> : null}
+        <small>{taskStateLabel(task, isFocus)}{task.note ? ` · ${task.note}` : ""}</small>
       </div>
       <b>{task.hours}h</b>
     </li>
   );
 }
 
-function WbsMilestoneCard({
+function WbsMilestoneTab({
   milestone,
-  totalHours
+  active,
+  selected,
+  totalHours,
+  onSelect
 }: {
   milestone: WbsMilestone;
+  active: boolean;
+  selected: boolean;
   totalHours: number;
+  onSelect: () => void;
 }) {
-  const effortShare = (milestone.hours / totalHours) * 100;
-  const completedTaskHours = milestone.tasks
-    .filter((task) => task.state === "COMPLETE")
-    .reduce((total, task) => total + task.hours, 0);
+  const completed = milestone.tasks.filter((task) => task.state === "COMPLETE").length;
+  const effortShare = totalHours ? (milestone.hours / totalHours) * 100 : 0;
+  const operationalLabel =
+    milestone.state === "COMPLETE" ? "Concluído" :
+    milestone.state === "ACTIVE" ? "Atual" :
+    "Planejado";
 
   return (
-    <section className={`wbsMilestone ${milestone.state.toLowerCase()}`} aria-labelledby={`wbs-${milestone.id}`}>
-      <header className="wbsMilestoneHeader">
-        <div>
-          <div className="wbsMilestoneId">{milestone.id}</div>
-          <h4 id={`wbs-${milestone.id}`}>{milestone.label}</h4>
-        </div>
-        <span className={`wbsMilestoneState ${milestone.state.toLowerCase()}`}>{milestone.state}</span>
-      </header>
-      <div className="wbsMilestoneNumbers">
-        <div>
-          <span>Esforço</span>
-          <strong>{milestone.hours}h</strong>
-        </div>
-        <div>
-          <span>% do objetivo final</span>
-          <strong>{effortShare.toFixed(2)}%</strong>
-        </div>
-        <div>
-          <span>Horas de tarefas concluídas</span>
-          <strong>{completedTaskHours}h</strong>
-        </div>
+    <button
+      className={`wbsMilestoneTab ${milestone.state.toLowerCase()} ${selected ? "selected" : ""}`}
+      type="button"
+      onClick={onSelect}
+      aria-pressed={selected}
+      aria-label={`${milestone.id}: ${milestone.label}. ${operationalLabel}. ${completed} de ${milestone.tasks.length} tarefas concluídas.`}
+    >
+      <div>
+        <span>{milestone.id}</span>
+        <b>{milestone.hours}h · {effortShare.toFixed(2)}%</b>
       </div>
-      <ul className="wbsTasks">
-        {milestone.tasks.map((task) => <WbsTaskRow task={task} key={task.id} />)}
-      </ul>
-    </section>
+      <strong>{milestone.label}</strong>
+      <div className="milestoneMetaLine">
+        <small>{completed}/{milestone.tasks.length} tarefas concluídas</small>
+        <span className={`milestoneOperationalState ${milestone.state.toLowerCase()}`}>
+          {active ? "ATUAL" : operationalLabel.toUpperCase()}
+        </span>
+      </div>
+    </button>
   );
 }
 
-function WbsBacklogCard({ backlog }: { backlog: WbsBacklog }) {
-  const taskHours = backlog.tasks.reduce((total, task) => total + task.hours, 0);
-
-  return (
-    <section className="wbsBacklogCard" aria-labelledby={`wbs-backlog-${backlog.id}`}>
-      <header>
-        <div>
-          <span>Backlog separado do caminho crítico</span>
-          <h4 id={`wbs-backlog-${backlog.id}`}>{backlog.label}</h4>
-        </div>
-        <strong>{taskHours}h</strong>
-      </header>
-      <ul className="wbsTasks">
-        {backlog.tasks.map((task) => <WbsTaskRow task={task} key={task.id} />)}
-      </ul>
-    </section>
-  );
-}
-
-function FechaiWbsView() {
+function WbsCommandCenter() {
   const wbs = workspaceDemo.fechaiWbs;
-  const computedCriticalHours = wbs.milestones.reduce((total, milestone) => total + milestone.hours, 0);
-  const computedCompletedHours = wbs.milestones.reduce(
+  const activeMilestone =
+    wbs.milestones.find((milestone) => milestone.state === "ACTIVE") ??
+    wbs.milestones[0];
+
+  const [selectedMilestoneId, setSelectedMilestoneId] = useState(activeMilestone.id);
+
+  const selectedMilestone =
+    wbs.milestones.find((milestone) => milestone.id === selectedMilestoneId) ??
+    activeMilestone;
+
+  const activeTasks: WbsTask[] = activeMilestone.tasks;
+  const focusTask =
+    activeTasks.find((task) => task.note?.includes("NEXT GATE")) ??
+    activeTasks.find((task) => task.state !== "COMPLETE");
+
+  const completedHours = wbs.milestones.reduce(
     (total, milestone) =>
-      total + milestone.tasks
+      total +
+      milestone.tasks
         .filter((task) => task.state === "COMPLETE")
-        .reduce((taskTotal, task) => taskTotal + task.hours, 0),
+        .reduce((sum, task) => sum + task.hours, 0),
     0
   );
-  const computedRemaining = computedCriticalHours - computedCompletedHours;
-  const preSecurityGoBacklogHours =
-    wbs.backlogs.find((backlog) => backlog.id === "PRE_SECURITY_GO")?.tasks.reduce(
-      (total, task) => total + task.hours,
-      0
-    ) ?? 0;
-  const plannedBacklogHours =
-    wbs.backlogs.find((backlog) => backlog.id === "PLANNED_FUTURE")?.tasks.reduce(
-      (total, task) => total + task.hours,
-      0
-    ) ?? 0;
+  const remaining = wbs.totalCriticalHours - completedHours;
+
+  const selectedCompletedTasks = selectedMilestone.tasks.filter(
+    (task) => task.state === "COMPLETE"
+  ).length;
+  const selectedProgress = selectedMilestone.tasks.length
+    ? (selectedCompletedTasks / selectedMilestone.tasks.length) * 100
+    : 0;
+
+  const selectedIsActive = selectedMilestone.id === activeMilestone.id;
+  const selectedStateLabel =
+    selectedMilestone.state === "COMPLETE"
+      ? "CONCLUÍDO"
+      : selectedMilestone.state === "ACTIVE"
+        ? "ACTIVE"
+        : "PLANEJADO";
+
+  const selectedFocusId = selectedIsActive ? focusTask?.id : undefined;
 
   return (
-    <article className="panel panelInner wbsPanel" id="fechai-wbs">
-      <div className="sectionTitle programTitle">
+    <article className="commandCard wbsCommand" id="wbs">
+      <div className="sectionHeader">
         <div>
-          <div className="eyebrow">WBS / Effort View · visão complementar</div>
-          <h3>FECH.AI — caminho crítico até o final</h3>
+          <div className="eyebrow">WBS / effort</div>
+          <h2>Bloco, tarefa e caminho operacional</h2>
         </div>
-        <span className="manualBadge">PLANNING BASELINE · NÃO É TIMESHEET</span>
-      </div>
-
-      <p className="wbsIntro">
-        Esta view não substitui Roadmap, Continuidade ou Evidências. Ela mostra todas as tarefas descritas,
-        suas horas estimadas e a participação de cada milestone no esforço total de {computedCriticalHours}h.
-        Percentuais são exibidos somente em STS-M0–STS-M6.
-      </p>
-
-      <div className="wbsSummary">
-        <div>
-          <span>Status atual</span>
-          <strong>{wbs.currentPackage}</strong>
-          <small>{wbs.currentTask}</small>
-        </div>
-        <div>
-          <span>Horas concluídas</span>
-          <strong>{computedCompletedHours}h</strong>
-          <small>Somente tarefas marcadas COMPLETE</small>
-        </div>
-        <div>
-          <span>Restante no caminho crítico</span>
-          <strong>{computedRemaining}h</strong>
-          <small>Total crítico = {computedCriticalHours}h</small>
-        </div>
-        <div>
-          <span>Backlog pré-Security-Go</span>
-          <strong>{preSecurityGoBacklogHours}h</strong>
-          <small>Fora do caminho crítico até classificação material</small>
-        </div>
-        <div>
-          <span>Backlog planejado</span>
-          <strong>{plannedBacklogHours}h</strong>
-          <small>Futuro / não bloqueante</small>
+        <div className="wbsTotals">
+          <span><small>Concluído</small><strong>{completedHours}h</strong></span>
+          <span><small>Restante</small><strong>{remaining}h</strong></span>
+          <span><small>Total</small><strong>{wbs.totalCriticalHours}h</strong></span>
         </div>
       </div>
 
-      <div className="wbsBoundary">{wbs.note}</div>
-
-      <div className="wbsMilestoneGrid" tabIndex={0} role="region" aria-label="Milestones STS-M0 a STS-M6 do caminho crítico">
+      <div className="wbsTabs" role="region" aria-label="Selecione um bloco do WBS STS-M0 a STS-M6">
         {wbs.milestones.map((milestone) => (
-          <WbsMilestoneCard milestone={milestone} totalHours={computedCriticalHours} key={milestone.id} />
+          <WbsMilestoneTab
+            milestone={milestone}
+            active={milestone.id === activeMilestone.id}
+            selected={milestone.id === selectedMilestone.id}
+            totalHours={wbs.totalCriticalHours}
+            onSelect={() => setSelectedMilestoneId(milestone.id)}
+            key={milestone.id}
+          />
         ))}
       </div>
 
-      <div className="wbsBacklogGrid">
-        {wbs.backlogs.map((backlog) => <WbsBacklogCard backlog={backlog} key={backlog.id} />)}
+      <section className={`currentBlock selectedBlock ${selectedMilestone.state.toLowerCase()}`}>
+        <div className="currentBlockHeader">
+          <div>
+            <span>{selectedIsActive ? "Bloco atual" : "Bloco selecionado"}</span>
+            <h3>{selectedMilestone.id}</h3>
+            <strong>{selectedMilestone.label}</strong>
+          </div>
+          <div className="selectedBlockStatus">
+            <span className={`statusPill ${selectedMilestone.state.toLowerCase()}`}>
+              {selectedStateLabel}
+            </span>
+            {!selectedIsActive ? (
+              <small>Bloco operacional atual: {activeMilestone.id}</small>
+            ) : null}
+          </div>
+        </div>
+
+        <div className="selectedBlockProgressMeta">
+          <span>{selectedCompletedTasks}/{selectedMilestone.tasks.length} tarefas concluídas</span>
+          <strong>{selectedProgress.toFixed(0)}%</strong>
+        </div>
+        <div className="currentBlockProgress" aria-label={`${selectedProgress.toFixed(0)}% das tarefas do bloco selecionado concluídas`}>
+          <span style={{ width: `${selectedProgress}%` }} />
+        </div>
+
+        <ul className="focusTaskList selectedTaskList">
+          {selectedMilestone.tasks.map((task) => (
+            <WbsFocusTask task={task} focusId={selectedFocusId} key={task.id} />
+          ))}
+        </ul>
+      </section>
+
+      <div className="wbsFootnote">
+        Seleção é apenas navegação visual. O bloco operacional atual continua sendo {activeMilestone.id}. Horas não são timesheet, confiança ou Security Go.
       </div>
     </article>
   );
 }
 
-function ExecutionCard({ item }: { item: ExecutionItem }) {
+function EvidenceCard({ project }: { project: ExternalProject }) {
+  const isFechai = project.name === FECHAI;
   return (
-    <li className={`executionCard ${item.state.toLowerCase()}`}>
-      <div className="executionTop">
-        <span className="executionId">{item.id}</span>
-        <span className={`runbookState ${item.state.toLowerCase()}`}>{item.state}</span>
-      </div>
-      <strong>{item.label}</strong>
-      <span className="executionCategory">{item.category}</span>
-      <p>{item.evidence}</p>
-      <small>{item.owner}</small>
-      <div className="executionNext">{item.nextAction}</div>
-    </li>
-  );
-}
-
-function ExecutionLane({
-  title,
-  helper,
-  items,
-  laneClass
-}: {
-  title: string;
-  helper: string;
-  items: ExecutionItem[];
-  laneClass: string;
-}) {
-  const headingId = `execution-${laneClass}-heading`;
-
-  return (
-    <section className={`executionLane ${laneClass}`} aria-labelledby={headingId}>
-      <div className="executionLaneHeader">
+    <article className="commandCard evidenceCard" id="evidence">
+      <div className="sectionHeader">
         <div>
-          <h4 id={headingId}>{title}</h4>
-          <small>{helper}</small>
+          <div className="eyebrow">Evidência & proveniência</div>
+          <h2>Fonte que sustenta este painel</h2>
         </div>
-        <b>{items.length}</b>
+        <span className="statusPill verified">VERIFICADA</span>
       </div>
-      <ul className="executionItems">
-        {items.map((item) => <ExecutionCard item={item} key={item.id} />)}
-      </ul>
-    </section>
-  );
-}
-
-function FechaiExecutionBoard() {
-  const program = workspaceDemo.fechaiProgram;
-  const futureProgram = program.milestones
-    .filter((milestone) => milestone.status === "PLANNED")
-    .map<ExecutionItem>((milestone) => ({
-      id: milestone.id,
-      label: milestone.label,
-      category: "PROGRAM",
-      state: "PLANNED",
-      owner: milestone.owner,
-      evidence: `Milestone futuro definido no programa ${program.programIssue} · ${milestone.window}.`,
-      nextAction: "Preservar como futuro até a transição canônica do programa."
-    }));
-  const futureItems = [...program.future, ...futureProgram];
-
-  return (
-    <article className="panel panelInner executionPanel" id="fechai-execution">
-      <div className="sectionTitle programTitle">
-        <div>
-          <div className="eyebrow">Mapa operacional persistente</div>
-          <h3>Histórico · Agora · Futuro</h3>
+      <div className="evidenceGrid">
+        <div><span>Repositório</span><strong>{project.repository}</strong></div>
+        <div><span>SHA observado</span><code>{project.observedSha}</code></div>
+        <div><span>Verificação</span><strong>{project.verification}</strong></div>
+        <div><span>Observado em</span><strong>{project.observedAt}</strong></div>
+        <div><span>Handoff</span><strong>{isFechai ? workspaceDemo.fechaiProgram.specialistTransport : "Não definido neste snapshot"}</strong></div>
+      </div>
+      {isFechai ? (
+        <div className="evidenceBoundaryCompact">
+          <span>Boundary de evidência</span>
+          <strong>{workspaceDemo.fechaiProgram.evidenceBoundary}</strong>
         </div>
-        <span className="manualBadge">NÃO SOBRESCREVER O PASSADO</span>
-      </div>
-      <p className="executionIntro">
-        Refresh altera a projeção atual, não apaga eventos concluídos nem tarefas planejadas.
-        Remediações e milestones permanecem em trilhas separadas.
-      </p>
-      <div className="executionBoard">
-        <ExecutionLane
-          title="Histórico"
-          helper="Gates e remediações já concluídos"
-          items={program.history}
-          laneClass="historyLane"
-        />
-        <ExecutionLane
-          title="Agora"
-          helper="Único workstream operacional em foco"
-          items={program.active}
-          laneClass="nowLane"
-        />
-        <ExecutionLane
-          title="Futuro"
-          helper="Findings pendentes + STS-M2–STS-M6 já conhecidos"
-          items={futureItems}
-          laneClass="futureLane"
-        />
+      ) : null}
+    </article>
+  );
+}
+
+function GenericProjectStructure({ project }: { project: ExternalProject }) {
+  return (
+    <article className="commandCard unavailableWbs" id="wbs">
+      <div className="emptyStateIcon" aria-hidden="true">⌁</div>
+      <div>
+        <div className="eyebrow">WBS</div>
+        <h2>Estrutura granular não disponível neste snapshot</h2>
+        <p>O Workspace não inventa percentual, milestones ou tarefas quando a fonte atual do projeto não fornece essa estrutura.</p>
+        <strong>{project.repository}</strong>
       </div>
     </article>
   );
 }
 
-function PreservedContexts() {
+function ProjectDashboard({ project }: { project: ExternalProject }) {
+  const isFechai = project.name === FECHAI;
   return (
-    <article className="panel panelInner">
-      <div className="sectionTitle"><h3>Contextos preservados</h3></div>
-      <div className="contexts">
-        {workspaceDemo.contexts.map((item) => (
-          <div className="contextCard" key={item.label}>
-            <div className="contextIcon">{item.icon}</div>
-            <strong>{item.label}</strong>
-            <span>{item.value}</span>
-          </div>
-        ))}
-      </div>
-    </article>
-  );
-}
-
-function JourneyOverview() {
-  const events = workspaceDemo.fechaiProgram.eventLedger;
-
-  return (
-    <article className="panel panelInner" id="journey">
-      <div className="sectionTitle">
-        <h3>Visão da jornada · event ledger</h3>
-        <a href="#fechai-execution">Ver execução →</a>
-      </div>
-      <div className="journey" tabIndex={0} role="region" aria-label="Linha do tempo preservada do FECH.AI; use as setas ou rolagem horizontal para navegar">
-        {events.map((item) => (
-          <div className="step" key={`${item.date}-${item.text}`}>
-            <div className="stepDot">✓</div>
-            <strong>{item.text}</strong>
-            <small>{item.date}</small>
-          </div>
-        ))}
-      </div>
-    </article>
-  );
-}
-
-function SideCard({ title, rows }: { title: string; rows: SourceRow[] }) {
-  return (
-    <article className="panel sideCard">
-      <h3>{title}</h3>
-      {rows.map((row) => (
-        <div className="row" key={row.label}>
-          <span>{row.label}</span>
-          <span className={row.badge ? "badge" : ""}>{row.value}</span>
-        </div>
-      ))}
-    </article>
-  );
-}
-
-function Timeline({ items }: { items: TimelineItem[] }) {
-  return (
-    <article className="panel sideCard">
-      <h3>Linha do tempo preservada</h3>
-      <div className="timeline">
-        {[...items].reverse().map((item) => (
-          <div className={`timelineItem timeline-${item.kind.toLowerCase()}`} key={`${item.date}-${item.text}`}>
-            <small>{item.date} · {item.kind}</small>
-            {item.text}
-          </div>
-        ))}
-      </div>
-    </article>
+    <>
+      <NextActionCard project={project} />
+      {isFechai ? <IntegrityStrip /> : null}
+      {isFechai ? <WbsCommandCenter /> : <GenericProjectStructure project={project} />}
+      <RisksCard project={project} />
+      <EvidenceCard project={project} />
+    </>
   );
 }
 
 export function WorkspaceHome() {
+  const initialProject =
+    workspaceDemo.externalProjects.find((project) => project.name === FECHAI) ??
+    workspaceDemo.externalProjects[0];
+
+  const [selectedProjectName, setSelectedProjectName] = useState(initialProject.name);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
-  const program = workspaceDemo.fechaiProgram;
-  const currentState: SourceRow[] = [
-    { label: "Último milestone concluído", value: program.lastCompletedMilestone },
-    { label: "Próxima continuidade", value: program.activeWorkstream },
-    { label: "Próximo milestone", value: program.nextProgramMilestone },
-    { label: "Modelo temporal", value: "Passado + Agora + Futuro" }
-  ];
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+
+  const closeMobileMenu = () => {
+    setMenuOpen(false);
+    requestAnimationFrame(() => menuButtonRef.current?.focus());
+  };
+
+  useEffect(() => {
+    const closeDrawerOnDesktop = () => {
+      if (window.innerWidth > 980) setMenuOpen(false);
+    };
+
+    window.addEventListener("resize", closeDrawerOnDesktop);
+    closeDrawerOnDesktop();
+    return () => window.removeEventListener("resize", closeDrawerOnDesktop);
+  }, []);
+
+  const selectedProject =
+    workspaceDemo.externalProjects.find((project) => project.name === selectedProjectName) ??
+    initialProject;
 
   return (
-    <>
-      <div className="demoNotice">{workspaceDemo.notice}</div>
-      <div className="app">
-        <Sidebar open={menuOpen} />
-        <main className="main">
-          <header className="topbar">
-            <div>
-              <h1>Bom dia, Wagner.</h1>
-              <p>De onde você precisa continuar hoje?</p>
-            </div>
-            <div className="tools">
-              <button aria-label="Abrir menu" className="tool mobile" onClick={() => setMenuOpen((value) => !value)}>☰</button>
-              <button aria-label="Buscar" className="tool">⌕</button>
-              <button aria-label="Notificações" className="tool">♢</button>
-              <button aria-label="Painel" className="tool">▤</button>
-            </div>
-          </header>
-
-          <div className="layout">
-            <section className="stack">
-              <ContinuityState />
-              <NextSafeAction onContinue={() => setModalOpen(true)} />
-              <PreservedContexts />
-              <JourneyOverview />
-              <FechaiProgramTracking />
-              <FechaiWbsView />
-              <FechaiExecutionBoard />
-              <ExternalProjects />
-              <article className="panel footer">
-                <span>SFJM preserva plano, jornada e continuidade; FECH.AI permanece autoridade sobre a verdade.</span>
-                <a href="#fechai-program">Abrir Roadmap →</a>
-              </article>
-            </section>
-
-            <aside className="stack right">
-              <SideCard title="Posição no programa" rows={currentState} />
-              <SideCard title="Fontes canônicas" rows={workspaceDemo.sources} />
-              <Timeline items={program.eventLedger} />
-            </aside>
-          </div>
-        </main>
-      </div>
-
-      <div className={`modal ${modalOpen ? "open" : ""}`} role="dialog" aria-modal="true" aria-hidden={!modalOpen}>
-        <div className="modalCard">
-          <h2>Continuidade FECH.AI</h2>
-          <p className="muted">
-            Objetivo: {program.objectiveIntegrity}. Último milestone: {program.lastCompletedMilestone}. Workstream atual: {program.activeWorkstream}. Próxima ação: {program.nextSafeAction}.
-            Próximo milestone: {program.nextProgramMilestone}. Destino primário: {program.specialistRouting[0].targetName}. Transporte: {program.specialistTransport}.
-          </p>
-          <div className="modalActions">
-            <button className="secondary" onClick={() => setModalOpen(false)}>Fechar</button>
-          </div>
-        </div>
-      </div>
-    </>
+    <div className="workspaceShell">
+      <Sidebar
+        open={menuOpen}
+        selectedProject={selectedProject.name}
+        onSelectProject={setSelectedProjectName}
+        onClose={closeMobileMenu}
+      />
+      <main className="commandMain" inert={menuOpen ? true : undefined}>
+        <ProjectHeader
+          project={selectedProject}
+          onMenu={() => setMenuOpen(true)}
+          menuButtonRef={menuButtonRef}
+        />
+        <ProjectDashboard project={selectedProject} />
+        <footer className="commandFooter">
+          <span>SFJM Workspace · visão operacional multi-projeto</span>
+          <span>Dados apresentados somente quando sustentados pelo snapshot canônico disponível.</span>
+        </footer>
+      </main>
+    </div>
   );
 }
