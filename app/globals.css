@@ -1033,3 +1033,207 @@ button { color: inherit; }
     visibility: visible;
   }
 }
+
+
+/* Final visual polish: larger type, stronger completion signal, futuristic depth */
+body {
+  background:
+    linear-gradient(rgba(34, 211, 238, .018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 92, 246, .018) 1px, transparent 1px),
+    radial-gradient(circle at 78% -10%, rgba(88, 80, 236, .22), transparent 30%),
+    radial-gradient(circle at 24% 0%, rgba(34, 211, 238, .10), transparent 24%),
+    var(--bg);
+  background-size: 30px 30px, 30px 30px, auto, auto, auto;
+}
+
+.projectHero,
+.commandCard,
+.integrityStrip {
+  border-color: rgba(64, 91, 132, .62);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .025),
+    0 12px 32px rgba(1, 5, 14, .18);
+}
+
+.projectHero {
+  position: relative;
+  overflow: hidden;
+}
+
+.projectHero::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(34, 211, 238, .72), rgba(139, 92, 246, .64), transparent);
+  pointer-events: none;
+}
+
+.brandMark {
+  box-shadow:
+    0 0 22px rgba(34, 211, 238, .22),
+    0 0 34px rgba(139, 92, 246, .28);
+}
+
+.brandTitle { font-size: 23px; }
+.brandSub { font-size: 13px; }
+.sidebarSectionLabel { font-size: 11px; }
+.projectNavButton strong { font-size: 14px; }
+.projectNavButton small { font-size: 11px; }
+.projectSubnav a,
+.projectSubnav span { font-size: 11px; }
+
+.projectIdentity h1 {
+  font-size: 30px;
+  line-height: 1.08;
+}
+
+.eyebrow { font-size: 10px; }
+.sourceStamp strong { font-size: 11px; }
+.sourceStamp small { font-size: 10px; }
+
+.heroMetrics {
+  grid-template-columns: 1.35fr .9fr 1fr 1.1fr;
+}
+
+.heroMetric > span { font-size: 9px; }
+.heroMetric > strong { font-size: 16px; }
+.heroMetric > small { font-size: 10px; }
+.heroMetric code { font-size: 10px; }
+.sourceMetric strong { font-size: 12px; }
+
+.progressMetric {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(34, 211, 238, .52);
+  background:
+    radial-gradient(circle at 88% 12%, rgba(34, 211, 238, .16), transparent 42%),
+    linear-gradient(145deg, rgba(40, 229, 140, .07), rgba(34, 211, 238, .045) 48%, #081322);
+  box-shadow:
+    inset 0 0 0 1px rgba(34, 211, 238, .04),
+    0 0 24px rgba(34, 211, 238, .07);
+}
+
+.progressMetric::after {
+  content: "";
+  position: absolute;
+  width: 72px;
+  height: 72px;
+  right: -18px;
+  top: -20px;
+  border: 1px solid rgba(34, 211, 238, .14);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 12px rgba(34, 211, 238, .025),
+    0 0 0 24px rgba(139, 92, 246, .018);
+  pointer-events: none;
+}
+
+.progressMetric strong {
+  position: relative;
+  z-index: 1;
+  color: #7ff0c0;
+  font-size: 36px;
+  line-height: 1;
+  letter-spacing: -.055em;
+  text-shadow: 0 0 18px rgba(40, 229, 140, .22);
+}
+
+.totalProgressTrack {
+  position: relative;
+  z-index: 1;
+  height: 6px;
+  margin: 8px 0 5px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #102036;
+  box-shadow: inset 0 0 0 1px rgba(118, 151, 199, .08);
+}
+
+.totalProgressTrack > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--green), var(--cyan), var(--purple));
+  box-shadow: 0 0 12px rgba(34, 211, 238, .28);
+}
+
+.cardHeading h2,
+.sectionHeader h2 { font-size: 20px; }
+.cardHeading.compact h2 { font-size: 22px; }
+
+.statusPill,
+.countBadge,
+.manualChip { font-size: 9px; }
+
+.actionFacts span { font-size: 8px; }
+.actionFacts strong { font-size: 11px; }
+.actionFooter { font-size: 10px; }
+.safeSequence { font-size: 10px; }
+
+.riskList li { font-size: 10px; }
+.riskIndex { font-size: 9px; }
+
+.integrityItem small { font-size: 8px; }
+.integrityItem strong { font-size: 10px; }
+
+.wbsCommand {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .025),
+    0 0 36px rgba(34, 211, 238, .045);
+}
+
+.wbsTotals small { font-size: 8px; }
+.wbsTotals strong { font-size: 14px; }
+
+.wbsMilestoneTab > div span { font-size: 13px; }
+.wbsMilestoneTab > div b { font-size: 10px; }
+.wbsMilestoneTab > strong { font-size: 10px; }
+.milestoneMetaLine small { font-size: 8px; }
+.milestoneOperationalState { font-size: 7px; }
+
+.wbsMilestoneTab {
+  transition:
+    transform .16s ease,
+    border-color .16s ease,
+    box-shadow .16s ease,
+    background .16s ease;
+}
+
+.wbsMilestoneTab.selected {
+  box-shadow:
+    inset 0 0 0 1px rgba(34, 211, 238, .12),
+    0 0 28px rgba(34, 211, 238, .11);
+}
+
+.currentBlockHeader span:first-child { font-size: 9px; }
+.currentBlockHeader h3 { font-size: 27px; }
+.currentBlockHeader strong { font-size: 13px; }
+.selectedBlockStatus small { font-size: 9px; }
+.selectedBlockProgressMeta { font-size: 9px; }
+.selectedBlockProgressMeta strong { font-size: 11px; }
+
+.taskTitleLine span { font-size: 9px; }
+.taskTitleLine strong { font-size: 11px; }
+.focusTask small { font-size: 8px; }
+.focusTask > b { font-size: 10px; }
+
+.evidenceGrid span { font-size: 8px; }
+.evidenceGrid strong,
+.evidenceGrid code { font-size: 10px; }
+
+.evidenceBoundaryCompact span { font-size: 8px; }
+.evidenceBoundaryCompact strong { font-size: 9px; }
+
+.commandFooter { font-size: 9px; }
+
+@media (max-width: 1250px) {
+  .heroMetrics {
+    grid-template-columns: 1.2fr .9fr 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .projectIdentity h1 { font-size: 25px; }
+  .progressMetric strong { font-size: 32px; }
+}
