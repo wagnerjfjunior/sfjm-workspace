@@ -153,8 +153,8 @@ function ProjectHeader({ project, onMenu }: { project: ExternalProject; onMenu: 
         <div className="projectIdentity">
           <button className="mobileMenu" type="button" onClick={onMenu} aria-label="Abrir menu de projetos">☰</button>
           <div>
-            <div className="eyebrow">Dashboard operacional</div>
-            <h1>{project.name}</h1>
+            <div className="eyebrow projectNameLabel">{project.name}</div>
+            <h1>De onde você precisa continuar hoje?</h1>
           </div>
         </div>
         <div className="sourceStamp">
@@ -199,6 +199,7 @@ function NextActionCard({ project }: { project: ExternalProject }) {
   const focusTask = activeMilestone?.tasks.find((task) => task.note?.includes("NEXT GATE")) ??
     activeMilestone?.tasks.find((task) => task.state !== "COMPLETE");
   const requiredRoutes = program.specialistRouting.filter((route) => route.requirement === "REQUIRED");
+  const conditionalRoute = program.specialistRouting.find((route) => route.requirement === "CONDITIONAL");
 
   return (
     <article className="commandCard nextActionCard" id="next-action">
@@ -222,9 +223,16 @@ function NextActionCard({ project }: { project: ExternalProject }) {
               <strong>{requiredRoutes.map((route) => route.targetName).join(" → ")}</strong>
             </div>
           </div>
-          <div className="actionFooter">
-            <span className="manualChip">MANUAL COPY/PASTE</span>
-            <span>{program.specialistTransport}</span>
+          <div className="actionFooter actionFooterStack">
+            <div>
+              <span className="manualChip">MANUAL COPY/PASTE</span>
+              <span>{program.specialistTransport}</span>
+            </div>
+            {conditionalRoute ? (
+              <div className="conditionalRoute">
+                <strong>Escalonamento condicional:</strong> {conditionalRoute.targetName} · {conditionalRoute.purpose}
+              </div>
+            ) : null}
           </div>
         </>
       ) : (
@@ -368,13 +376,22 @@ function WbsFocusTask({ task, focusId }: { task: WbsTask; focusId?: string }) {
   );
 }
 
-function WbsMilestoneTab({ milestone, active }: { milestone: WbsMilestone; active: boolean }) {
+function WbsMilestoneTab({
+  milestone,
+  active,
+  totalHours
+}: {
+  milestone: WbsMilestone;
+  active: boolean;
+  totalHours: number;
+}) {
   const completed = milestone.tasks.filter((task) => task.state === "COMPLETE").length;
+  const effortShare = totalHours ? (milestone.hours / totalHours) * 100 : 0;
   return (
     <div className={`wbsMilestoneTab ${milestone.state.toLowerCase()} ${active ? "selected" : ""}`}>
       <div>
         <span>{milestone.id}</span>
-        <b>{milestone.hours}h</b>
+        <b>{milestone.hours}h · {effortShare.toFixed(2)}%</b>
       </div>
       <strong>{milestone.label}</strong>
       <small>{completed}/{milestone.tasks.length} tarefas concluídas</small>
@@ -441,7 +458,12 @@ function WbsCommandCenter() {
 
       <div className="wbsTabs" tabIndex={0} role="region" aria-label="Blocos do WBS STS-M0 a STS-M6">
         {wbs.milestones.map((milestone) => (
-          <WbsMilestoneTab milestone={milestone} active={milestone.id === activeMilestone.id} key={milestone.id} />
+          <WbsMilestoneTab
+            milestone={milestone}
+            active={milestone.id === activeMilestone.id}
+            totalHours={wbs.totalCriticalHours}
+            key={milestone.id}
+          />
         ))}
       </div>
 
@@ -525,6 +547,12 @@ function EvidenceCard({ project }: { project: ExternalProject }) {
         <div><span>Verificação</span><strong>{project.verification}</strong></div>
         <div><span>Handoff</span><strong>{isFechai ? workspaceDemo.fechaiProgram.specialistTransport : "Não definido neste snapshot"}</strong></div>
       </div>
+      {isFechai ? (
+        <div className="evidenceBoundaryCompact">
+          <span>Boundary de evidência</span>
+          <strong>{workspaceDemo.fechaiProgram.evidenceBoundary}</strong>
+        </div>
+      ) : null}
     </article>
   );
 }
