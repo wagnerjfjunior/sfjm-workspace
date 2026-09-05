@@ -102,8 +102,8 @@ function Sidebar({
                   <div className="projectSubnav">
                     <a href="#overview">Estado & continuidade</a>
                     <a href="#next-action">Próxima ação</a>
-                    <a href="#risks">Problemas</a>
                     {selectedIsFechai ? <a href="#wbs">WBS</a> : <span>WBS · indisponível</span>}
+                    <a href="#risks">Problemas</a>
                     <a href="#evidence">Evidências</a>
                   </div>
                 ) : null}
@@ -497,12 +497,10 @@ function ProjectDashboard({ project }: { project: ExternalProject }) {
   const isFechai = project.name === FECHAI;
   return (
     <>
-      <div className="topGrid">
-        <NextActionCard project={project} />
-        <RisksCard project={project} />
-      </div>
+      <NextActionCard project={project} />
       {isFechai ? <IntegrityStrip /> : null}
       {isFechai ? <WbsCommandCenter /> : <GenericProjectStructure project={project} />}
+      <RisksCard project={project} />
       <EvidenceCard project={project} />
     </>
   );
