@@ -5,8 +5,6 @@ import {
   calculateAcceptedProgramProgress,
   workspaceDemo,
   type ExternalProject,
-  type ProgramMilestone,
-  type TimelineItem,
   type WbsBacklog,
   type WbsMilestone,
   type WbsTask
@@ -20,12 +18,6 @@ function taskStateLabel(task: WbsTask, isFocus: boolean) {
   if (task.state === "PARKED") return "Backlog";
   if (task.state === "ACTIVE") return "Em execução";
   return "Planejada";
-}
-
-function milestoneStateLabel(state: ProgramMilestone["status"]) {
-  if (state === "COMPLETE") return "Concluído";
-  if (state === "ACTIVE") return "Atual";
-  return "Planejado";
 }
 
 function trapDrawerFocus(event: KeyboardEvent<HTMLElement>) {
@@ -286,78 +278,6 @@ function IntegrityStrip() {
   );
 }
 
-function JourneyEvent({ item }: { item: TimelineItem }) {
-  return (
-    <div className={`journeyEvent ${item.kind.toLowerCase()}`}>
-      <div className="journeyEventTop">
-        <span>{item.date}</span>
-        <b>{item.kind}</b>
-      </div>
-      <strong>{item.text}</strong>
-    </div>
-  );
-}
-
-function ExecutiveMap() {
-  const program = workspaceDemo.fechaiProgram;
-  const wbs = workspaceDemo.fechaiWbs;
-
-  return (
-    <article className="commandCard executiveMap" id="roadmap">
-      <div className="sectionHeader">
-        <div>
-          <div className="eyebrow">Mapa executivo + jornada</div>
-          <h2>Onde estamos, o que foi aceito e como chegamos aqui</h2>
-        </div>
-        <div className="legend" aria-label="Legenda de estados">
-          <span><i className="legendDot complete" />Concluído</span>
-          <span><i className="legendDot active" />Atual</span>
-          <span><i className="legendDot planned" />Planejado</span>
-        </div>
-      </div>
-
-      <div className="roadmapRail" tabIndex={0} role="region" aria-label="Macro roadmap STS-M0 a STS-M6">
-        {program.milestones.map((milestone, index) => {
-          const wbsMilestone = wbs.milestones.find((item) => item.id === milestone.id);
-          const completedTasks = wbsMilestone?.tasks.filter((task) => task.state === "COMPLETE").length ?? 0;
-          const taskCount = wbsMilestone?.tasks.length ?? 0;
-
-          return (
-            <div className={`roadmapNode ${milestone.status.toLowerCase()}`} key={milestone.id}>
-              <div className="roadmapNodeTop">
-                <span>{milestone.id}</span>
-                <span className={`roadmapStateLabel ${milestone.status.toLowerCase()}`}>
-                  {milestoneStateLabel(milestone.status)}
-                </span>
-              </div>
-              <strong>{milestone.label}</strong>
-              <div className="roadmapMeta">
-                <span>{milestone.window}</span>
-                <span>{milestone.owner}</span>
-                <span>{milestone.acceptedPercent}% aceito</span>
-              </div>
-              <div className="roadmapMiniTrack" aria-label={`${milestone.acceptedPercent}% aceito`}>
-                <span style={{ width: `${milestone.acceptedPercent}%` }} />
-              </div>
-              <small className="roadmapTasks">{taskCount ? `${completedTasks}/${taskCount} tarefas do WBS` : "Sem tarefas WBS associadas"}</small>
-              <small className="roadmapExit">{milestone.exit}</small>
-              {index < program.milestones.length - 1 ? <i className="roadmapConnector" aria-hidden="true" /> : null}
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="journeyHeader">
-        <span>Event ledger preservado</span>
-        <strong>{program.eventLedger.length} eventos</strong>
-      </div>
-      <div className="journeyRail" tabIndex={0} role="region" aria-label="Jornada histórica completa do FECH.AI">
-        {program.eventLedger.map((item, index) => <JourneyEvent item={item} key={`${item.date}-${index}`} />)}
-      </div>
-    </article>
-  );
-}
-
 function WbsFocusTask({ task, focusId }: { task: WbsTask; focusId?: string }) {
   const isFocus = task.id === focusId;
   return (
@@ -581,7 +501,6 @@ function ProjectDashboard({ project }: { project: ExternalProject }) {
         <RisksCard project={project} />
       </div>
       {isFechai ? <IntegrityStrip /> : null}
-      {isFechai ? <ExecutiveMap /> : null}
       {isFechai ? <WbsCommandCenter /> : <GenericProjectStructure project={project} />}
       <EvidenceCard project={project} />
     </>
