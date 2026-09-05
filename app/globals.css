@@ -1560,3 +1560,34 @@ body {
     font-size: 13px;
   }
 }
+
+
+/* Final responsive closure */
+@media (max-width: 980px) {
+  .commandSidebar {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
+@media (max-width: 680px) {
+  .heroMetrics {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .continuityMetric,
+  .sourceMetric {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 430px) {
+  .heroMetrics {
+    grid-template-columns: 1fr;
+  }
+
+  .continuityMetric,
+  .sourceMetric {
+    grid-column: auto;
+  }
+}
