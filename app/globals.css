@@ -848,3 +848,176 @@ button { color: inherit; }
     grid-template-columns: 70px minmax(0, 1fr) auto 16px;
   }
 }
+
+
+/* Interactive WBS block explorer */
+.wbsMilestoneTab {
+  appearance: none;
+  color: inherit;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+.wbsMilestoneTab:hover {
+  border-color: #3a557b;
+  transform: translateY(-1px);
+}
+
+.wbsMilestoneTab:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+.wbsMilestoneTab.active {
+  border-color: rgba(34, 211, 238, .5);
+}
+
+.wbsMilestoneTab.active:not(.selected) {
+  box-shadow: inset 0 0 0 1px rgba(34, 211, 238, .08);
+}
+
+.wbsMilestoneTab.selected {
+  border-color: #8bdcf2;
+  background: linear-gradient(180deg, rgba(34, 211, 238, .12), #071222);
+  box-shadow:
+    inset 0 0 0 1px rgba(34, 211, 238, .12),
+    0 0 22px rgba(34, 211, 238, .08);
+}
+
+.wbsMilestoneTab.complete.selected {
+  border-color: rgba(40, 229, 140, .72);
+  background: linear-gradient(180deg, rgba(40, 229, 140, .09), #071222);
+}
+
+.wbsMilestoneTab.planned.selected {
+  border-color: rgba(167, 139, 250, .72);
+  background: linear-gradient(180deg, rgba(139, 92, 246, .11), #071222);
+}
+
+.milestoneMetaLine {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.milestoneMetaLine small {
+  color: var(--muted);
+  font-size: 7px;
+}
+
+.milestoneOperationalState {
+  flex: 0 0 auto;
+  padding: 3px 5px;
+  border: 1px solid #314867;
+  border-radius: 999px;
+  color: #aebbd0;
+  font-size: 6px;
+  font-weight: 850;
+  letter-spacing: .06em;
+}
+
+.milestoneOperationalState.complete {
+  color: #80edb4;
+  border-color: rgba(40, 229, 140, .3);
+}
+
+.milestoneOperationalState.active {
+  color: #8be9f8;
+  border-color: rgba(34, 211, 238, .5);
+  box-shadow: 0 0 10px rgba(34, 211, 238, .08);
+}
+
+.milestoneOperationalState.planned {
+  color: #c9b8ff;
+  border-color: rgba(139, 92, 246, .3);
+}
+
+.selectedBlock {
+  margin-top: 4px;
+  width: 100%;
+}
+
+.selectedBlock.complete {
+  border-color: rgba(40, 229, 140, .35);
+}
+
+.selectedBlock.active {
+  border-color: rgba(34, 211, 238, .48);
+}
+
+.selectedBlock.planned {
+  border-color: rgba(139, 92, 246, .34);
+}
+
+.selectedBlock.complete .currentBlockHeader h3 {
+  color: var(--green);
+}
+
+.selectedBlock.planned .currentBlockHeader h3 {
+  color: #bcaaff;
+}
+
+.selectedBlockStatus {
+  display: grid;
+  justify-items: end;
+  gap: 5px;
+}
+
+.selectedBlockStatus small {
+  color: var(--muted);
+  font-size: 8px;
+  line-height: 1.3;
+}
+
+.statusPill.complete {
+  color: #80edb4;
+  border: 1px solid rgba(40, 229, 140, .34);
+  background: rgba(40, 229, 140, .06);
+}
+
+.statusPill.planned {
+  color: #c9b8ff;
+  border: 1px solid rgba(139, 92, 246, .34);
+  background: rgba(139, 92, 246, .07);
+}
+
+.selectedBlockProgressMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 8px;
+}
+
+.selectedBlockProgressMeta strong {
+  color: #dce7f7;
+  font-size: 9px;
+}
+
+.selectedTaskList {
+  margin-top: 2px;
+}
+
+.wbsFootnote {
+  padding-top: 8px;
+  border-top: 1px solid #182b44;
+}
+
+@media (max-width: 680px) {
+  .selectedBlockStatus {
+    justify-items: start;
+  }
+
+  .currentBlockHeader {
+    flex-direction: column;
+  }
+
+  .milestoneMetaLine {
+    align-items: flex-end;
+  }
+}
