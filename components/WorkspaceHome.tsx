@@ -5,7 +5,6 @@ import {
   calculateAcceptedProgramProgress,
   workspaceDemo,
   type ExternalProject,
-  type WbsBacklog,
   type WbsMilestone,
   type WbsTask
 } from "@/data/workspace-demo";
@@ -300,75 +299,96 @@ function WbsFocusTask({ task, focusId }: { task: WbsTask; focusId?: string }) {
 function WbsMilestoneTab({
   milestone,
   active,
-  totalHours
+  selected,
+  totalHours,
+  onSelect
 }: {
   milestone: WbsMilestone;
   active: boolean;
+  selected: boolean;
   totalHours: number;
+  onSelect: () => void;
 }) {
   const completed = milestone.tasks.filter((task) => task.state === "COMPLETE").length;
   const effortShare = totalHours ? (milestone.hours / totalHours) * 100 : 0;
+  const operationalLabel =
+    milestone.state === "COMPLETE" ? "Concluído" :
+    milestone.state === "ACTIVE" ? "Atual" :
+    "Planejado";
+
   return (
-    <div className={`wbsMilestoneTab ${milestone.state.toLowerCase()} ${active ? "selected" : ""}`}>
+    <button
+      className={`wbsMilestoneTab ${milestone.state.toLowerCase()} ${selected ? "selected" : ""}`}
+      type="button"
+      onClick={onSelect}
+      aria-pressed={selected}
+      aria-label={`${milestone.id}: ${milestone.label}. ${operationalLabel}. ${completed} de ${milestone.tasks.length} tarefas concluídas.`}
+    >
       <div>
         <span>{milestone.id}</span>
         <b>{milestone.hours}h · {effortShare.toFixed(2)}%</b>
       </div>
       <strong>{milestone.label}</strong>
-      <small>{completed}/{milestone.tasks.length} tarefas concluídas</small>
-    </div>
-  );
-}
-
-function FullMilestoneDetails({ milestone, focusId }: { milestone: WbsMilestone; focusId?: string }) {
-  return (
-    <details className={`wbsDetail ${milestone.state.toLowerCase()}`} open={milestone.state === "ACTIVE"}>
-      <summary>
-        <span>{milestone.id}</span>
-        <strong>{milestone.label}</strong>
-        <b>{milestone.hours}h</b>
-      </summary>
-      <ul className="focusTaskList detailTaskList">
-        {milestone.tasks.map((task) => <WbsFocusTask task={task} focusId={focusId} key={task.id} />)}
-      </ul>
-    </details>
-  );
-}
-
-function BacklogDetails({ backlog }: { backlog: WbsBacklog }) {
-  const taskHours = backlog.tasks.reduce((total, task) => total + task.hours, 0);
-  return (
-    <details className="wbsDetail backlogDetail">
-      <summary>
-        <span>{backlog.id}</span>
-        <strong>{backlog.label}</strong>
-        <b>{taskHours}h</b>
-      </summary>
-      <ul className="focusTaskList detailTaskList">
-        {backlog.tasks.map((task) => <WbsFocusTask task={task} key={task.id} />)}
-      </ul>
-    </details>
+      <div className="milestoneMetaLine">
+        <small>{completed}/{milestone.tasks.length} tarefas concluídas</small>
+        <span className={`milestoneOperationalState ${milestone.state.toLowerCase()}`}>
+          {active ? "ATUAL" : operationalLabel.toUpperCase()}
+        </span>
+      </div>
+    </button>
   );
 }
 
 function WbsCommandCenter() {
   const wbs = workspaceDemo.fechaiWbs;
-  const activeMilestone = wbs.milestones.find((milestone) => milestone.state === "ACTIVE") ?? wbs.milestones[0];
+  const activeMilestone =
+    wbs.milestones.find((milestone) => milestone.state === "ACTIVE") ??
+    wbs.milestones[0];
+
+  const [selectedMilestoneId, setSelectedMilestoneId] = useState(activeMilestone.id);
+
+  const selectedMilestone =
+    wbs.milestones.find((milestone) => milestone.id === selectedMilestoneId) ??
+    activeMilestone;
+
   const activeTasks: WbsTask[] = activeMilestone.tasks;
-  const focusTask = activeTasks.find((task) => task.note?.includes("NEXT GATE")) ??
+  const focusTask =
+    activeTasks.find((task) => task.note?.includes("NEXT GATE")) ??
     activeTasks.find((task) => task.state !== "COMPLETE");
+
   const completedHours = wbs.milestones.reduce(
-    (total, milestone) => total + milestone.tasks.filter((task) => task.state === "COMPLETE").reduce((sum, task) => sum + task.hours, 0),
+    (total, milestone) =>
+      total +
+      milestone.tasks
+        .filter((task) => task.state === "COMPLETE")
+        .reduce((sum, task) => sum + task.hours, 0),
     0
   );
   const remaining = wbs.totalCriticalHours - completedHours;
+
+  const selectedCompletedTasks = selectedMilestone.tasks.filter(
+    (task) => task.state === "COMPLETE"
+  ).length;
+  const selectedProgress = selectedMilestone.tasks.length
+    ? (selectedCompletedTasks / selectedMilestone.tasks.length) * 100
+    : 0;
+
+  const selectedIsActive = selectedMilestone.id === activeMilestone.id;
+  const selectedStateLabel =
+    selectedMilestone.state === "COMPLETE"
+      ? "CONCLUÍDO"
+      : selectedMilestone.state === "ACTIVE"
+        ? "ACTIVE"
+        : "PLANEJADO";
+
+  const selectedFocusId = selectedIsActive ? focusTask?.id : undefined;
 
   return (
     <article className="commandCard wbsCommand" id="wbs">
       <div className="sectionHeader">
         <div>
           <div className="eyebrow">WBS / effort</div>
-          <h2>Bloco atual, tarefa seguinte e WBS completo</h2>
+          <h2>Bloco, tarefa e caminho operacional</h2>
         </div>
         <div className="wbsTotals">
           <span><small>Concluído</small><strong>{completedHours}h</strong></span>
@@ -377,76 +397,54 @@ function WbsCommandCenter() {
         </div>
       </div>
 
-      <div className="wbsTabs" tabIndex={0} role="region" aria-label="Blocos do WBS STS-M0 a STS-M6">
+      <div className="wbsTabs" role="region" aria-label="Selecione um bloco do WBS STS-M0 a STS-M6">
         {wbs.milestones.map((milestone) => (
           <WbsMilestoneTab
             milestone={milestone}
             active={milestone.id === activeMilestone.id}
+            selected={milestone.id === selectedMilestone.id}
             totalHours={wbs.totalCriticalHours}
+            onSelect={() => setSelectedMilestoneId(milestone.id)}
             key={milestone.id}
           />
         ))}
       </div>
 
-      <div className="wbsFocusGrid">
-        <section className="currentBlock">
-          <div className="currentBlockHeader">
-            <div>
-              <span>Bloco atual</span>
-              <h3>{activeMilestone.id}</h3>
-              <strong>{activeMilestone.label}</strong>
-            </div>
-            <span className="statusPill active">ACTIVE</span>
+      <section className={`currentBlock selectedBlock ${selectedMilestone.state.toLowerCase()}`}>
+        <div className="currentBlockHeader">
+          <div>
+            <span>{selectedIsActive ? "Bloco atual" : "Bloco selecionado"}</span>
+            <h3>{selectedMilestone.id}</h3>
+            <strong>{selectedMilestone.label}</strong>
           </div>
-          <div className="currentBlockProgress">
-            <span style={{ width: `${(activeMilestone.tasks.filter((task) => task.state === "COMPLETE").length / activeMilestone.tasks.length) * 100}%` }} />
+          <div className="selectedBlockStatus">
+            <span className={`statusPill ${selectedMilestone.state.toLowerCase()}`}>
+              {selectedStateLabel}
+            </span>
+            {!selectedIsActive ? (
+              <small>Bloco operacional atual: {activeMilestone.id}</small>
+            ) : null}
           </div>
-          <ul className="focusTaskList">
-            {activeMilestone.tasks.map((task) => <WbsFocusTask task={task} focusId={focusTask?.id} key={task.id} />)}
-          </ul>
-        </section>
+        </div>
 
-        <aside className="nextBlocks">
-          <div className="nextBlocksHeader">
-            <span>Próximos blocos</span>
-            <strong>Visão futura preservada</strong>
-          </div>
-          {wbs.milestones.filter((milestone) => milestone.state === "PLANNED").map((milestone) => (
-            <div className="nextBlockRow" key={milestone.id}>
-              <span>{milestone.id}</span>
-              <div>
-                <strong>{milestone.label}</strong>
-                <small>{milestone.tasks.length} tarefas · {milestone.hours}h</small>
-              </div>
-              <b>○</b>
-            </div>
+        <div className="selectedBlockProgressMeta">
+          <span>{selectedCompletedTasks}/{selectedMilestone.tasks.length} tarefas concluídas</span>
+          <strong>{selectedProgress.toFixed(0)}%</strong>
+        </div>
+        <div className="currentBlockProgress" aria-label={`${selectedProgress.toFixed(0)}% das tarefas do bloco selecionado concluídas`}>
+          <span style={{ width: `${selectedProgress}%` }} />
+        </div>
+
+        <ul className="focusTaskList selectedTaskList">
+          {selectedMilestone.tasks.map((task) => (
+            <WbsFocusTask task={task} focusId={selectedFocusId} key={task.id} />
           ))}
-        </aside>
-      </div>
+        </ul>
+      </section>
 
-      <div className="fullWbsHeader">
-        <div>
-          <span>WBS completo</span>
-          <strong>Todas as tarefas e backlogs continuam disponíveis sem dominar a tela.</strong>
-        </div>
-        <small>Expanda somente o bloco que precisar consultar.</small>
+      <div className="wbsFootnote">
+        Seleção é apenas navegação visual. O bloco operacional atual continua sendo {activeMilestone.id}. Horas não são timesheet, confiança ou Security Go.
       </div>
-      <div className="wbsDetailsGrid">
-        <div className="wbsDetailsColumn">
-          {wbs.milestones.map((milestone) => (
-            <FullMilestoneDetails
-              milestone={milestone}
-              focusId={milestone.id === activeMilestone.id ? focusTask?.id : undefined}
-              key={milestone.id}
-            />
-          ))}
-        </div>
-        <div className="wbsDetailsColumn backlogColumn">
-          {wbs.backlogs.map((backlog) => <BacklogDetails backlog={backlog} key={backlog.id} />)}
-        </div>
-      </div>
-
-      <div className="wbsFootnote">Planejamento estrutural: horas não são timesheet, confiança ou Security Go.</div>
     </article>
   );
 }
