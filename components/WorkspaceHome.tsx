@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type KeyboardEvent } from "react";
+import { useEffect, useState, type KeyboardEvent } from "react";
 import {
   calculateAcceptedProgramProgress,
   workspaceDemo,
@@ -466,6 +466,7 @@ function EvidenceCard({ project }: { project: ExternalProject }) {
         <div><span>Repositório</span><strong>{project.repository}</strong></div>
         <div><span>SHA observado</span><code>{project.observedSha}</code></div>
         <div><span>Verificação</span><strong>{project.verification}</strong></div>
+        <div><span>Observado em</span><strong>{project.observedAt}</strong></div>
         <div><span>Handoff</span><strong>{isFechai ? workspaceDemo.fechaiProgram.specialistTransport : "Não definido neste snapshot"}</strong></div>
       </div>
       {isFechai ? (
@@ -514,6 +515,16 @@ export function WorkspaceHome() {
 
   const [selectedProjectName, setSelectedProjectName] = useState(initialProject.name);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const closeDrawerOnDesktop = () => {
+      if (window.innerWidth > 980) setMenuOpen(false);
+    };
+
+    window.addEventListener("resize", closeDrawerOnDesktop);
+    closeDrawerOnDesktop();
+    return () => window.removeEventListener("resize", closeDrawerOnDesktop);
+  }, []);
 
   const selectedProject =
     workspaceDemo.externalProjects.find((project) => project.name === selectedProjectName) ??
