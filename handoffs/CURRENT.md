@@ -1,41 +1,159 @@
 # SFJM Workspace — Current Handoff
 
-## CURRENT FECH.AI DERIVED SNAPSHOT — PR #170 MERGED — 2026-09-04
+## CURRENT AUTHORITY — MANUAL DERIVED SNAPSHOT — 2026-09-05
 
 ```text
-Workspace duty = DERIVED VISUALIZATION / CONTINUITY
-FECH.AI canonical main observed = 252fb981bba4fb410136fd34cb29b9f2d0e057f8
-PR #170 = CLOSED / MERGED
+Workspace role = DERIVED VISUALIZATION / CONTINUITY ONLY
+Workspace canonical main at preparation = 107a249528fac505c8c93427b00383eb5775212d
+FECH.AI canonical main observed = 558a0eb5b504e85c670be4bc7cc8b7878ff3745f
+SES canonical main observed = 61cee7b39d1220543d75b35f58472f562ffa2fc7
+
 current execution program = Issue #141 — Security-to-Scale 2026
 program hierarchy = docs/governance/2026-09-04-fechai-bcr-security-to-scale-program-hierarchy-core-dod.md
-current granular execution baseline = docs/roadmap/fechai-security-to-scale-2026-wbs.md
+WBS structure source = docs/roadmap/fechai-security-to-scale-2026-wbs.md
+current-state source = docs/sfjm/CURRENT_STATE.md + NEXT_SAFE_ACTION.md + handoffs/CURRENT.md
+specialist-routing source = docs/skills/SES_SPECIALIST_ROUTING.md + SES archetypes/REGISTRY.md
 
-STS-M1 = COMPLETE WITH DEFERRED SECURITY ASSURANCE
-J4 environment-dependent evidence = DEFERRED / NOT PASS
-IMP-003 = NOT_DETERMINED
-ROLLBACK_REAPPLY = NOT_DETERMINED
+OBJECTIVE_INTEGRITY = PRESERVED
+STS-M2 = STARTED
+STS-M2-01 = COMPLETE / ACCEPTED
+STS-M2-02 = COMPLETE / ACCEPTED WITH RESIDUALS
+STS-M2-03 = COMPLETE / ACCEPTED WITH RESIDUALS
+STS-M2-04 = NEXT GATE / NOT STARTED
 SECURITY_GO = NOT_GRANTED
-OC-01 = REQUIRED BEFORE EXTERNAL USERS
-
-STS-M2 = ELIGIBLE / NOT STARTED
-STS-M2-01 = Matriz de 43 tabelas / 20h
-STS-M2-01 current authority = READ_ONLY SCOPE/EVIDENCE RECONSTRUCTION ONLY
-STS-M2-01 implementation = NOT_AUTHORIZED
-
-CRITICAL_PATH_TOTAL = 832h
-CURRENT_ACCEPTED_COMPLETE = 204h
-REMAINING_CRITICAL_PATH = 628h
 ```
 
-### Receiving-conversation handoff
+### Objective integrity
 
-Use `252fb981bba4fb410136fd34cb29b9f2d0e057f8` as the observed FECH.AI source anchor for this Workspace snapshot. Do not replay closed STS-M1 work absent a material invalidator. The only represented continuation is **STS-M2-01 — 43-table canonicality matrix — READ_ONLY scope/evidence reconstruction**.
+Canonical program objective, derived from FECH.AI Issue #141 and its hierarchy BCR:
 
-This Workspace update does not authorize FECH.AI mutation, STS-M2 implementation, Supabase/Auth, production/runtime work, Security Go, Ready, merge or Vercel configuration changes.
+> Reach a sellable, operable FECH.AI with a defensible Security Go candidate and a clear path out of the current frontend/backend monolith before year-end, without hiding unresolved risk or performing a big-bang rewrite.
 
-CURRENT SNAPSHOT AUTHORITY — 2026-09-04
+Workspace rule:
 
-This top section is the current Workspace representation. Any older "current" wording below is historical lineage when it conflicts.
+```text
+OBJECTIVE != ACTIVE_TASK
+PROGRAM -> MILESTONE -> TASK -> SUCCESSOR
+
+material objective change
+-> must exist in the canonical external project
+-> must be explicitly approved/versioned there
+-> otherwise Workspace reports OBJECTIVE_DRIFT / STATE_INCONSISTENT
+-> do not claim safe continuity
+```
+
+### Source-role classification
+
+```text
+CURRENT_STATE
+  = top current FECH.AI SFJM semantic overrides
+
+STRUCTURAL_BASELINE
+  = WBS task labels / hours / milestone structure
+  != current task status when the WBS embeds an older state-at-canonicalization snapshot
+
+HISTORICAL_LINEAGE
+  = preserved provenance
+  != current authority
+
+SUPERSEDED
+  = must never drive next action
+
+EXTERNAL_SNAPSHOT
+  = manual and invalidated by material external-project drift
+```
+
+This prevents an older “current” block or an embedded WBS status from overriding newer canonical continuity.
+
+### Current journey position
+
+```text
+Issue #141 — Security-to-Scale 2026
+-> STS-M2 — Database Simplification & Optimization Plan / STARTED
+-> STS-M2-01 COMPLETE
+-> STS-M2-02 COMPLETE WITH RESIDUALS
+-> STS-M2-03 COMPLETE WITH RESIDUALS
+-> STS-M2-04 NEXT GATE / NOT STARTED
+-> STS-M2-05 Database Contract Map
+-> STS-M2-06 architectural database decision
+```
+
+Opening a new conversation alone does not turn STS-M2-04 into STARTED. Only a material canonical project event may change that state.
+
+### Specialist destination
+
+```text
+1. backend_data
+   -> backend-data-platform-specialist
+   -> SES — Backend & Data Platform Specialist
+   -> REQUIRED / PRIMARY
+
+2. architecture
+   -> software-systems-architect
+   -> SES — Software Systems Architect
+   -> REQUIRED / SECOND
+
+3. application_security
+   -> application-security-assurance-specialist
+   -> SES — Application Security Assurance Specialist
+   -> CONDITIONAL / bounded target-security-policy assurance only
+
+TRANSPORT = MANUAL COPY/PASTE
+WORKSPACE ACTION = INDICATE DESTINATION ONLY
+AUTOMATIC ROUTING / SEND = NO
+```
+
+
+## Minimal receiving-conversation envelope
+
+For Workspace-mediated continuity, the receiving conversation should need only:
+
+```text
+PROJECT = FECH.AI
+INTENT = continue the canonical next safe action
+NEW_AUTHORIZATION = only if the user is granting something not already versioned
+```
+
+The receiving conversation must reconstruct the durable state from the canonical sources instead of trusting a copied historical mega-prompt. It must still resolve live refs because a handoff anchor is not proof of current freshness.
+
+### Current handoff
+
+```text
+WHERE WE ARE
+  STS-M2 STARTED
+  M2-01..03 accepted
+  M2-04 NEXT GATE / NOT STARTED
+
+WHERE WE ARE GOING
+  M2-04 target authority policy
+  -> M2-05 Database Contract Map
+  -> M2-06 database architecture decision
+
+WHY
+  preserve Issue #141 objective and avoid task-local regression
+
+FIRST SPECIALIST DESTINATION
+  SES — Backend & Data Platform Specialist
+
+SECOND SPECIALIST DESTINATION
+  SES — Software Systems Architect
+
+TRANSPORT
+  MANUAL COPY/PASTE
+```
+
+No automatic specialist invocation, transport, mutation authority or external-project write-back is implied.
+
+
+---
+
+## HISTORICAL LINEAGE — DO NOT USE AS CURRENT AUTHORITY
+
+Everything below is preserved for provenance only. Any old heading or sentence that says “current” describes its capture time and is superseded by the CURRENT AUTHORITY section above.
+
+## HISTORICAL SNAPSHOT — SUPERSEDED — 2026-09-04
+
+This section was current at capture time and is now historical lineage. Any older "current" wording below is historical lineage when it conflicts.
 
 ```text
 FECH.AI canonical live main:
@@ -92,7 +210,7 @@ This Workspace snapshot does not authorize FECH.AI runtime, Supabase/Auth, produ
 
 ---
 
-# Current handoff override — WBS / Effort comparison candidate — 2026-09-03
+# Historical handoff override — WBS / Effort comparison candidate — 2026-09-03
 
 ## Workspace candidate
 
@@ -293,7 +411,7 @@ Repository: `wagnerjfjunior/sfjm-workspace`
 
 Live `main` is canonical for Workspace product state. External projects remain canonical for their own product, security, runtime and program state.
 
-## Current Workspace state
+## Historical Workspace state
 
 The FECH.AI Security-to-Scale dashboard delivery cycle is complete.
 

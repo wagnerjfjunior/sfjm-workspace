@@ -36,12 +36,27 @@ export type ExecutionItem = {
   nextAction: string;
 };
 
+export type SpecialistRoute = {
+  sequence: number;
+  role: string;
+  archetypeId: string;
+  targetName: string;
+  purpose: string;
+  requirement: "REQUIRED" | "CONDITIONAL";
+};
+
 export type ProgramSnapshot = {
   name: string;
   repository: string;
   observedSha: string;
   observedAt: string;
   programIssue: string;
+  programObjective: string;
+  objectiveSource: string;
+  objectiveIntegrity: string;
+  objectiveChangePolicy: string;
+  specialistTransport: string;
+  specialistRouting: SpecialistRoute[];
   lastCompletedMilestone: string;
   nextProgramMilestone: string;
   activeWorkstream: string;
@@ -88,7 +103,7 @@ export function calculateAcceptedProgramProgress(milestones: ProgramMilestone[])
 }
 
 export const workspaceDemo = {
-  notice: "Snapshot manual · plano + histórico + estado atual + futuro preservados separadamente.",
+  notice: "Snapshot manual · objetivo + plano + histórico + estado atual + futuro + roteamento preservados separadamente.",
   nav: [
     { icon: "▶", label: "Continue", helper: "Próxima ação segura", href: "#continue", active: true },
     { icon: "◎", label: "Roadmap", helper: "Security-to-Scale", href: "#fechai-program" },
@@ -103,9 +118,9 @@ export const workspaceDemo = {
 
   checks: [
     { label: "Último milestone", value: "STS-M1 fechado · deferred assurance" },
-    { label: "Workstream atual", value: "STS-M2 bootstrap · não iniciado" },
-    { label: "Próximo milestone", value: "STS-M2 elegível" },
-    { label: "Próxima ação", value: "STS-M2-01 · reconstruir escopo" },
+    { label: "Milestone atual", value: "STS-M2 · STARTED" },
+    { label: "Próxima ação", value: "STS-M2-04 · target policy READ_ONLY" },
+    { label: "Objetivo principal", value: "Preservado · Issue #141" },
     { label: "Histórico", value: "Preservado" },
     { label: "Security Go", value: "Não concedido" }
   ] satisfies StatusCheck[],
@@ -114,8 +129,8 @@ export const workspaceDemo = {
     {
       name: "FECH.AI",
       kind: "Projeto externo",
-      continuityState: "STS-M1 COMPLETE WITH DEFERRED SECURITY ASSURANCE · F1-02 fechado no roadmap STS-M1 · STS-M2 elegível / não iniciado",
-      nextSafeAction: "STS-M2-01 → reconstrução READ_ONLY do escopo/evidência da matriz canônica de 43 tabelas (20h), antes de qualquer implementação.",
+      continuityState: "STS-M2 STARTED · STS-M2-01 COMPLETE · STS-M2-02 COMPLETE WITH RESIDUALS · STS-M2-03 COMPLETE WITH RESIDUALS · STS-M2-04 NEXT GATE / NOT STARTED",
+      nextSafeAction: "STS-M2-04 → bootstrap READ_ONLY da política target de SECURITY DEFINER / RLS / DML, consumindo M2-01..03 e preparando M2-05/M2-06.",
       blockers: [
         "Security Go continua DENIED / NOT_GRANTED",
         "Broad paid commercialization continua BLOCKED",
@@ -123,11 +138,11 @@ export const workspaceDemo = {
         "IMP-003 permanece NOT_DETERMINED",
         "ROLLBACK_REAPPLY permanece NOT_DETERMINED",
         "OC-01 é REQUIRED BEFORE EXTERNAL USERS",
-        "STS-M2 ainda NÃO FOI INICIADO e não herda autorização de implementação"
+        "STS-M2-04 é NEXT GATE / NOT STARTED e não possui autorização de implementação"
       ],
       repository: "wagnerjfjunior/fecha.ai",
-      observedSha: "252fb981bba4fb410136fd34cb29b9f2d0e057f8",
-      observedAt: "4 Sep 2026",
+      observedSha: "558a0eb5b504e85c670be4bc7cc8b7878ff3745f",
+      observedAt: "5 Sep 2026",
       verification: "Snapshot manual · FECH.AI continua sendo a autoridade"
     },
     {
@@ -151,17 +166,48 @@ export const workspaceDemo = {
   fechaiProgram: {
     name: "FECH.AI Security-to-Scale 2026",
     repository: "wagnerjfjunior/fecha.ai",
-    observedSha: "252fb981bba4fb410136fd34cb29b9f2d0e057f8",
-    observedAt: "4 Sep 2026",
+    observedSha: "558a0eb5b504e85c670be4bc7cc8b7878ff3745f",
+    observedAt: "5 Sep 2026",
     programIssue: "#141",
+    programObjective: "Reach a sellable, operable FECH.AI with a defensible Security Go candidate and a clear path out of the current frontend/backend monolith before year-end, without hiding unresolved risk or performing a big-bang rewrite.",
+    objectiveSource: "FECH.AI Issue #141 + program-hierarchy BCR",
+    objectiveIntegrity: "PRESERVED · no approved objective drift observed",
+    objectiveChangePolicy: "Material objective change must be versioned in the canonical project and explicitly approved; otherwise flag OBJECTIVE_DRIFT and do not claim safe continuity.",
+    specialistTransport: "MANUAL COPY/PASTE · Workspace only indicates the destination",
+    specialistRouting: [
+      {
+        sequence: 1,
+        role: "backend_data",
+        archetypeId: "backend-data-platform-specialist",
+        targetName: "SES — Backend & Data Platform Specialist",
+        purpose: "Primary M2-04 target-policy reconstruction",
+        requirement: "REQUIRED"
+      },
+      {
+        sequence: 2,
+        role: "architecture",
+        archetypeId: "software-systems-architect",
+        targetName: "SES — Software Systems Architect",
+        purpose: "Architecture adjudication and downstream M2-05/M2-06 fit",
+        requirement: "REQUIRED"
+      },
+      {
+        sequence: 3,
+        role: "application_security",
+        archetypeId: "application-security-assurance-specialist",
+        targetName: "SES — Application Security Assurance Specialist",
+        purpose: "Bounded independent assurance only for material target-security-policy questions",
+        requirement: "CONDITIONAL"
+      }
+    ],
     lastCompletedMilestone: "STS-M1 — COMPLETE WITH DEFERRED SECURITY ASSURANCE",
-    nextProgramMilestone: "STS-M2 — Database Simplification & Optimization Plan · ELIGIBLE / NOT STARTED",
-    activeWorkstream: "STS-M2-01 · 43-table scope/evidence reconstruction · READ_ONLY / NOT STARTED",
-    nextSafeAction: "Resolve live main 252fb981… → STS-M2-01 READ_ONLY scope/evidence reconstruction for the 43-table canonicality matrix",
+    nextProgramMilestone: "STS-M3 — Backend Authority Contract Freeze · PLANNED",
+    activeWorkstream: "STS-M2 · STARTED · STS-M2-04 target-policy gate is NEXT / NOT STARTED",
+    nextSafeAction: "Resolve live main 558a0eb5… → bootstrap STS-M2-04 READ_ONLY target policy → route package manually to Backend/Data, then Architecture",
     securityGo: "NOT GRANTED",
     commercialization: "BLOCKED",
     weightingBasis: "Peso = duração planejada; progresso só avança quando o gate do milestone é aceito.",
-    evidenceBoundary: "STATIC != LIVE != RUNTIME · VERSIONED != APPLIED · RUNTIME_BOUNDED != SECURITY_GO",
+    evidenceBoundary: "OBJECTIVE != TASK · WBS_STRUCTURE != CURRENT_STATE · STATIC != LIVE != RUNTIME · VERSIONED != APPLIED · RUNTIME_BOUNDED != SECURITY_GO",
     invalidatesOn: "Mudança material no plano #141, evidência, findings, Security Go, comercialização ou classificação de workstreams.",
     milestones: [
       {
@@ -190,9 +236,9 @@ export const workspaceDemo = {
         window: "18 Sep–9 Oct",
         weight: 18.75,
         acceptedPercent: 0,
-        status: "PLANNED",
+        status: "ACTIVE",
         owner: "Backend/Data + Architecture",
-        exit: "Canonicality matrix + routine/policy/trigger/grant map + Database Contract Map + evolution decision."
+        exit: "Canonicality matrix + routine/policy/trigger/grant map + target authority policy + Database Contract Map + evolution decision."
       },
       {
         id: "STS-M3",
@@ -352,19 +398,46 @@ export const workspaceDemo = {
         state: "COMPLETE",
         owner: "Product Authority + Documentation",
         evidence: "PR #168 merged at 4ede55df…; PR #169 reconciled handoff; PR #170 canonicalized the STS program hierarchy/WBS; STS-M1 remains closed with deferred security assurance.",
-        nextAction: "STS-M2 is next eligible milestone; STS-M2_STARTED = NO."
+        nextAction: "STS-M2 está STARTED; M2-01..03 foram consumidos e M2-04 é o próximo gate."
+      },
+      {
+        id: "STS-M2-01",
+        label: "Database canonicality matrix",
+        category: "PROGRAM",
+        state: "COMPLETE",
+        owner: "Backend/Data + Architecture",
+        evidence: "COMPLETE / ACCEPTED; matriz canônica preservada em durable evidence.",
+        nextAction: "Não reabrir sem invalidação material."
+      },
+      {
+        id: "STS-M2-02",
+        label: "Database authority map",
+        category: "PROGRAM",
+        state: "COMPLETE",
+        owner: "Backend/Data + Architecture",
+        evidence: "COMPLETE / ACCEPTED WITH RESIDUALS; authority map suficientemente compreendido.",
+        nextAction: "Residuals alimentam target policy; não reabrir globalmente."
+      },
+      {
+        id: "STS-M2-03",
+        label: "Indexes / ACL contradictions",
+        category: "PROGRAM",
+        state: "COMPLETE",
+        owner: "Backend/Data + Architecture",
+        evidence: "COMPLETE / ACCEPTED WITH RESIDUALS; current live state suficientemente conhecido.",
+        nextAction: "Consumir como input do M2-04; nenhuma remoção/alteração implícita."
       }
     ] satisfies ExecutionItem[],
 
     active: [
       {
-        id: "STS-M2-01 SCOPE",
-        label: "43-table canonicality matrix · bounded scope/evidence reconstruction",
+        id: "STS-M2-04 NEXT GATE",
+        label: "Target Database Authority Policy · SECURITY DEFINER / RLS / DML",
         category: "PROGRAM",
         state: "PLANNED",
         owner: "Backend/Data + Architecture",
-        evidence: "STS-M1 está fechado com deferred security assurance; PR #170 tornou o WBS FECH.AI canônico; STS-M2 é elegível, mas STS-M2_STARTED = NO.",
-        nextAction: "Resolver o live main 252fb981… e executar somente a reconstrução READ_ONLY de escopo/evidência de STS-M2-01 antes de solicitar qualquer implementação."
+        evidence: "STS-M2 está STARTED. STS-M2-01..03 estão aceitos; STS-M2-04 permanece NEXT GATE / NOT STARTED. Durable evidence de M2-02 e M2-03 deve ser consumida, não reconstruída do zero.",
+        nextAction: "Resolver live main 558a0eb5…; bootstrap READ_ONLY; enviar manualmente o primeiro pacote ao SES — Backend & Data Platform Specialist e depois ao SES — Software Systems Architect."
       }
     ] satisfies ExecutionItem[],
 
@@ -457,22 +530,26 @@ export const workspaceDemo = {
       { date: "3 Sep 2026", text: "PR #166 mergeada; PR-08 static phases 1–4 fechadas; runtime permanece NOT_EXECUTED", kind: "REMEDIATION" },
       { date: "4 Sep 2026", text: "PR #168 mergeada: M1 COMPLETE WITH DEFERRED SECURITY ASSURANCE; F1-02 fechado para o roadmap M1", kind: "PROGRAM" },
       { date: "4 Sep 2026", text: "PR #169 mergeada: handoff pós-STS-M1 reconciliado; STS-M2 torna-se NEXT ELIGIBLE / NOT STARTED", kind: "PROGRAM" },
-      { date: "4 Sep 2026", text: "PR #170 mergeada no FECH.AI main 252fb981…: hierarquia STS e WBS granular de 832h tornam-se baseline canônica; STS-M2 permanece ELIGIBLE / NOT STARTED", kind: "PROGRAM" }
+      { date: "4 Sep 2026", text: "PR #170 mergeada no FECH.AI main 252fb981…: hierarquia STS e WBS granular de 832h tornam-se baseline canônica", kind: "PROGRAM" },
+      { date: "4 Sep 2026", text: "STS-M2 iniciado; STS-M2-01 aceito e durable canonicality matrix preservada", kind: "PROGRAM" },
+      { date: "5 Sep 2026", text: "STS-M2-02 COMPLETE / ACCEPTED WITH RESIDUALS; authority map preservado", kind: "PROGRAM" },
+      { date: "5 Sep 2026", text: "STS-M2-03 COMPLETE / ACCEPTED WITH RESIDUALS; STS-M2-04 torna-se NEXT GATE / NOT STARTED", kind: "PROGRAM" },
+      { date: "5 Sep 2026", text: "PR #179 alinha handoffs FECH.AI à identidade canônica SES; transporte permanece manual copy/paste", kind: "EVIDENCE" }
     ] satisfies TimelineItem[]
 
   } satisfies ProgramSnapshot,
 
   fechaiWbs: {
-    source: "FECH.AI canonical WBS · docs/roadmap/fechai-security-to-scale-2026-wbs.md @ 252fb981…",
+    source: "WBS structure: docs/roadmap/fechai-security-to-scale-2026-wbs.md @ FECH.AI 558a0eb5… · current task state: docs/sfjm/CURRENT_STATE.md + NEXT_SAFE_ACTION.md",
     basis: "Planning estimates for visibility, not clocked timesheets.",
     totalCriticalHours: 832,
-    completedHours: 204,
-    remainingCriticalHours: 628,
+    completedHours: 264,
+    remainingCriticalHours: 568,
     preSecurityGoBacklogHours: 116,
     plannedBacklogHours: 104,
-    currentPackage: "STS-M2 — ELIGIBLE / NOT STARTED",
-    currentTask: "STS-M2-01 · Matriz de 43 tabelas · READ_ONLY scope reconstruction · 20h",
-    note: "STS-M1/F1-02 foi concluído com deferred security assurance. STS-M2 é elegível, mas ainda não iniciado. STS-M2-01 permite apenas reconstrução READ_ONLY de escopo/evidência; as horas são estimativas de planejamento, não timesheet.",
+    currentPackage: "STS-M2 — STARTED",
+    currentTask: "STS-M2-04 · Política target de DEFINER / RLS / DML · NEXT GATE / NOT STARTED · 20h",
+    note: "Rótulos/horas vêm da WBS estrutural; estado corrente vem do SFJM do FECH.AI. STS-M2-01..03 estão COMPLETE; STS-M2-04 é o próximo gate READ_ONLY e ainda não foi iniciado. Horas são planejamento, não timesheet.",
     milestones: [
       {
         id: "STS-M0",
@@ -505,14 +582,14 @@ export const workspaceDemo = {
         id: "STS-M2",
         label: "Database Simplification & Optimization Plan",
         hours: 116,
-        state: "PLANNED",
+        state: "ACTIVE",
         tasks: [
-          { id: "STS-M2-01", label: "Matriz de 43 tabelas", hours: 20, state: "PLANNED" },
-          { id: "STS-M2-02", label: "Mapa routines / policies / triggers / grants", hours: 24, state: "PLANNED" },
-          { id: "STS-M2-03", label: "Índices / ACL contraditórias", hours: 16, state: "PLANNED" },
-          { id: "STS-M2-04", label: "Política target de DEFINER / RLS / DML", hours: 20, state: "PLANNED" },
-          { id: "STS-M2-05", label: "Database Contract Map", hours: 20, state: "PLANNED" },
-          { id: "STS-M2-06", label: "Decisão arquitetural do banco", hours: 16, state: "PLANNED" }
+          { id: "STS-M2-01", label: "Matriz de 43 tabelas", hours: 20, state: "COMPLETE" },
+          { id: "STS-M2-02", label: "Mapa routines / policies / triggers / grants", hours: 24, state: "COMPLETE", note: "Accepted with residuals." },
+          { id: "STS-M2-03", label: "Índices / ACL contraditórias", hours: 16, state: "COMPLETE", note: "Accepted with residuals." },
+          { id: "STS-M2-04", label: "Política target de DEFINER / RLS / DML", hours: 20, state: "PLANNED", note: "NEXT GATE / NOT STARTED · READ_ONLY bootstrap first." },
+          { id: "STS-M2-05", label: "Database Contract Map", hours: 20, state: "PLANNED", note: "Successor; consumes M2-04 target policy." },
+          { id: "STS-M2-06", label: "Decisão arquitetural do banco", hours: 16, state: "PLANNED", note: "Successor; consumes M2-04/M2-05 evidence." }
         ]
       },
       {
@@ -601,7 +678,7 @@ export const workspaceDemo = {
   },
 
   contexts: [
-    { icon: "🧠", label: "Contexto Preservado", value: "Confirmado" },
+    { icon: "🧠", label: "Objetivo Preservado", value: "Issue #141" },
     { icon: "☑", label: "Histórico Preservado", value: "Append-only" },
     { icon: "🗺", label: "Plano Futuro", value: "STS-M2–STS-M6" },
     { icon: "📁", label: "Evidências Canônicas", value: "GitHub" },
@@ -611,16 +688,17 @@ export const workspaceDemo = {
 
   currentState: [
     { label: "Último milestone concluído", value: "STS-M1 · deferred assurance" },
-    { label: "Próxima continuidade", value: "STS-M2-01 · READ_ONLY scope" },
-    { label: "Próximo milestone", value: "STS-M2 eligible" },
-    { label: "Modelo temporal", value: "Passado + Agora + Futuro" }
+    { label: "Milestone atual", value: "STS-M2 · STARTED" },
+    { label: "Próxima continuidade", value: "STS-M2-04 · READ_ONLY target policy" },
+    { label: "Objetivo", value: "Issue #141 · PRESERVED" }
   ] satisfies SourceRow[],
 
   sources: [
-    { label: "FECH.AI main", value: "252fb981…", badge: true },
-    { label: "Program issue", value: "#141 OPEN", badge: true },
-    { label: "M1 issue", value: "#150 CLOSED", badge: true },
-    { label: "Program hierarchy / WBS", value: "#170 MERGED", badge: true },
-    { label: "Snapshot", value: "Manual · 4 Sep", badge: true }
+    { label: "FECH.AI main", value: "558a0eb5…", badge: true },
+    { label: "Program objective", value: "#141 OPEN · PRESERVED", badge: true },
+    { label: "Current state source", value: "docs/sfjm/CURRENT_STATE.md", badge: true },
+    { label: "WBS structure", value: "832h · structural baseline", badge: true },
+    { label: "SES main / routing", value: "61cee7b3… · manual", badge: true },
+    { label: "Snapshot", value: "Manual · 5 Sep", badge: true }
   ] satisfies SourceRow[]
 };

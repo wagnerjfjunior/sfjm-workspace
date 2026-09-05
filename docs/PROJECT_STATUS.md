@@ -1,39 +1,150 @@
 # SFJM Workspace — Current Project Status
 
-## CURRENT FECH.AI DERIVED SNAPSHOT — PR #170 MERGED — 2026-09-04
+## CURRENT AUTHORITY — MANUAL DERIVED SNAPSHOT — 2026-09-05
 
 ```text
-Workspace duty = DERIVED VISUALIZATION / CONTINUITY
-FECH.AI canonical main observed = 252fb981bba4fb410136fd34cb29b9f2d0e057f8
-PR #170 = CLOSED / MERGED
+Workspace role = DERIVED VISUALIZATION / CONTINUITY ONLY
+Workspace canonical main at preparation = 107a249528fac505c8c93427b00383eb5775212d
+FECH.AI canonical main observed = 558a0eb5b504e85c670be4bc7cc8b7878ff3745f
+SES canonical main observed = 61cee7b39d1220543d75b35f58472f562ffa2fc7
+
 current execution program = Issue #141 — Security-to-Scale 2026
 program hierarchy = docs/governance/2026-09-04-fechai-bcr-security-to-scale-program-hierarchy-core-dod.md
-current granular execution baseline = docs/roadmap/fechai-security-to-scale-2026-wbs.md
+WBS structure source = docs/roadmap/fechai-security-to-scale-2026-wbs.md
+current-state source = docs/sfjm/CURRENT_STATE.md + NEXT_SAFE_ACTION.md + handoffs/CURRENT.md
+specialist-routing source = docs/skills/SES_SPECIALIST_ROUTING.md + SES archetypes/REGISTRY.md
 
-STS-M1 = COMPLETE WITH DEFERRED SECURITY ASSURANCE
-J4 environment-dependent evidence = DEFERRED / NOT PASS
-IMP-003 = NOT_DETERMINED
-ROLLBACK_REAPPLY = NOT_DETERMINED
+OBJECTIVE_INTEGRITY = PRESERVED
+STS-M2 = STARTED
+STS-M2-01 = COMPLETE / ACCEPTED
+STS-M2-02 = COMPLETE / ACCEPTED WITH RESIDUALS
+STS-M2-03 = COMPLETE / ACCEPTED WITH RESIDUALS
+STS-M2-04 = NEXT GATE / NOT STARTED
 SECURITY_GO = NOT_GRANTED
-OC-01 = REQUIRED BEFORE EXTERNAL USERS
-
-STS-M2 = ELIGIBLE / NOT STARTED
-STS-M2-01 = Matriz de 43 tabelas / 20h
-STS-M2-01 current authority = READ_ONLY SCOPE/EVIDENCE RECONSTRUCTION ONLY
-STS-M2-01 implementation = NOT_AUTHORIZED
-
-CRITICAL_PATH_TOTAL = 832h
-CURRENT_ACCEPTED_COMPLETE = 204h
-REMAINING_CRITICAL_PATH = 628h
 ```
 
-The Workspace now follows the FECH.AI-owned granular WBS as the execution baseline. The previously approved Workspace WBS structure is preserved, but FECH.AI is now the authority for task labels, hours and STS program semantics. Cross-program milestone references are qualified as `STS-M0..STS-M6`.
+### Objective integrity
 
-This is a manual derived snapshot. FECH.AI remains authoritative and any later material change to FECH.AI invalidates this representation until another bounded refresh.
+Canonical program objective, derived from FECH.AI Issue #141 and its hierarchy BCR:
 
-CURRENT SNAPSHOT AUTHORITY — 2026-09-04
+> Reach a sellable, operable FECH.AI with a defensible Security Go candidate and a clear path out of the current frontend/backend monolith before year-end, without hiding unresolved risk or performing a big-bang rewrite.
 
-This top section is the current Workspace representation. Any older "current" wording below is historical lineage when it conflicts.
+Workspace rule:
+
+```text
+OBJECTIVE != ACTIVE_TASK
+PROGRAM -> MILESTONE -> TASK -> SUCCESSOR
+
+material objective change
+-> must exist in the canonical external project
+-> must be explicitly approved/versioned there
+-> otherwise Workspace reports OBJECTIVE_DRIFT / STATE_INCONSISTENT
+-> do not claim safe continuity
+```
+
+### Source-role classification
+
+```text
+CURRENT_STATE
+  = top current FECH.AI SFJM semantic overrides
+
+STRUCTURAL_BASELINE
+  = WBS task labels / hours / milestone structure
+  != current task status when the WBS embeds an older state-at-canonicalization snapshot
+
+HISTORICAL_LINEAGE
+  = preserved provenance
+  != current authority
+
+SUPERSEDED
+  = must never drive next action
+
+EXTERNAL_SNAPSHOT
+  = manual and invalidated by material external-project drift
+```
+
+This prevents an older “current” block or an embedded WBS status from overriding newer canonical continuity.
+
+### Current journey position
+
+```text
+Issue #141 — Security-to-Scale 2026
+-> STS-M2 — Database Simplification & Optimization Plan / STARTED
+-> STS-M2-01 COMPLETE
+-> STS-M2-02 COMPLETE WITH RESIDUALS
+-> STS-M2-03 COMPLETE WITH RESIDUALS
+-> STS-M2-04 NEXT GATE / NOT STARTED
+-> STS-M2-05 Database Contract Map
+-> STS-M2-06 architectural database decision
+```
+
+Opening a new conversation alone does not turn STS-M2-04 into STARTED. Only a material canonical project event may change that state.
+
+### Specialist destination
+
+```text
+1. backend_data
+   -> backend-data-platform-specialist
+   -> SES — Backend & Data Platform Specialist
+   -> REQUIRED / PRIMARY
+
+2. architecture
+   -> software-systems-architect
+   -> SES — Software Systems Architect
+   -> REQUIRED / SECOND
+
+3. application_security
+   -> application-security-assurance-specialist
+   -> SES — Application Security Assurance Specialist
+   -> CONDITIONAL / bounded target-security-policy assurance only
+
+TRANSPORT = MANUAL COPY/PASTE
+WORKSPACE ACTION = INDICATE DESTINATION ONLY
+AUTOMATIC ROUTING / SEND = NO
+```
+
+
+## Workspace delivery state
+
+```text
+approved visual/WBS baseline = 505d6466b421b6b04a9225cc1e55f3f86fffddae
+active delivery PR = #27 / Draft
+current Workspace main = 107a249528fac505c8c93427b00383eb5775212d
+PR #24 = superseded candidate; Search/MoreNumTegra scope is future non-blocking work
+Issue #18 = remains open until WBS/current-continuity candidate reaches Workspace main + Vercel Production
+```
+
+The approved WBS layout remains the delivery baseline. This refresh changes state/provenance/routing semantics, not the approved visual direction.
+
+### Non-blocking deferred scope from PR #24
+
+The unified Search/SEO/MoreNumTegra idea remains valid product backlog, but PR #24 shares stale dashboard files and external snapshots with the current delivery line. It must not be merged over the WBS baseline. Its unique intent is preserved as historical/future work and should be re-applied from the post-#27 main only if still desired.
+
+### Workspace-specific continuity behavior
+
+This is a product behavior, not a StopJuniorMode protocol change:
+
+```text
+new conversation
+-> resolve project + canonical live source
+-> recover objective + program + milestone + task + successor
+-> recover authority + durable evidence + specialist destination
+-> present one next safe action
+
+prompt text != canonical state
+Workspace does not require a mega-prompt when durable versioned state is sufficient
+```
+
+
+---
+
+## HISTORICAL LINEAGE — DO NOT USE AS CURRENT AUTHORITY
+
+Everything below is preserved for provenance only. Any old heading or sentence that says “current” describes its capture time and is superseded by the CURRENT AUTHORITY section above.
+
+## HISTORICAL SNAPSHOT — SUPERSEDED — 2026-09-04
+
+This section was current at capture time and is now historical lineage. Any older "current" wording below is historical lineage when it conflicts.
 
 ```text
 FECH.AI canonical live main:
@@ -312,7 +423,7 @@ Not implemented or implied:
 - Security Go automation;
 - deployment/runtime monitoring.
 
-## Current lifecycle state
+## Historical lifecycle state
 
 The PR #21 delivery gate is closed and must not be reopened without material invalidation.
 

@@ -1,44 +1,141 @@
 # FECH.AI — Current Project Context
 
-## CURRENT FECH.AI DERIVED SNAPSHOT — PR #170 MERGED — 2026-09-04
+## CURRENT AUTHORITY — MANUAL DERIVED SNAPSHOT — 2026-09-05
 
 ```text
-Workspace duty = DERIVED VISUALIZATION / CONTINUITY
-FECH.AI canonical main observed = 252fb981bba4fb410136fd34cb29b9f2d0e057f8
-PR #170 = CLOSED / MERGED
+Workspace role = DERIVED VISUALIZATION / CONTINUITY ONLY
+Workspace canonical main at preparation = 107a249528fac505c8c93427b00383eb5775212d
+FECH.AI canonical main observed = 558a0eb5b504e85c670be4bc7cc8b7878ff3745f
+SES canonical main observed = 61cee7b39d1220543d75b35f58472f562ffa2fc7
+
 current execution program = Issue #141 — Security-to-Scale 2026
 program hierarchy = docs/governance/2026-09-04-fechai-bcr-security-to-scale-program-hierarchy-core-dod.md
-current granular execution baseline = docs/roadmap/fechai-security-to-scale-2026-wbs.md
+WBS structure source = docs/roadmap/fechai-security-to-scale-2026-wbs.md
+current-state source = docs/sfjm/CURRENT_STATE.md + NEXT_SAFE_ACTION.md + handoffs/CURRENT.md
+specialist-routing source = docs/skills/SES_SPECIALIST_ROUTING.md + SES archetypes/REGISTRY.md
 
-STS-M1 = COMPLETE WITH DEFERRED SECURITY ASSURANCE
-J4 environment-dependent evidence = DEFERRED / NOT PASS
-IMP-003 = NOT_DETERMINED
-ROLLBACK_REAPPLY = NOT_DETERMINED
+OBJECTIVE_INTEGRITY = PRESERVED
+STS-M2 = STARTED
+STS-M2-01 = COMPLETE / ACCEPTED
+STS-M2-02 = COMPLETE / ACCEPTED WITH RESIDUALS
+STS-M2-03 = COMPLETE / ACCEPTED WITH RESIDUALS
+STS-M2-04 = NEXT GATE / NOT STARTED
 SECURITY_GO = NOT_GRANTED
-OC-01 = REQUIRED BEFORE EXTERNAL USERS
-
-STS-M2 = ELIGIBLE / NOT STARTED
-STS-M2-01 = Matriz de 43 tabelas / 20h
-STS-M2-01 current authority = READ_ONLY SCOPE/EVIDENCE RECONSTRUCTION ONLY
-STS-M2-01 implementation = NOT_AUTHORIZED
-
-CRITICAL_PATH_TOTAL = 832h
-CURRENT_ACCEPTED_COMPLETE = 204h
-REMAINING_CRITICAL_PATH = 628h
 ```
 
-### Current authority boundary
+### Objective integrity
 
-The canonical FECH.AI program hierarchy now distinguishes:
-- `PRODUCT_MODULE_M1..M6` — product capability taxonomy;
-- `B0-M1..M6` — immutable historical 300 WDP comparison baseline;
-- `STS-M0..STS-M6` — current Security-to-Scale execution milestones.
+Canonical program objective, derived from FECH.AI Issue #141 and its hierarchy BCR:
 
-The SFJM Workspace is a derived visualization only. It must not redefine FECH.AI program authority, silently start STS-M2, convert deferred evidence to PASS, or infer Security Go.
+> Reach a sellable, operable FECH.AI with a defensible Security Go candidate and a clear path out of the current frontend/backend monolith before year-end, without hiding unresolved risk or performing a big-bang rewrite.
 
-CURRENT SNAPSHOT AUTHORITY — 2026-09-04
+Workspace rule:
 
-This top section is the current Workspace representation. Any older "current" wording below is historical lineage when it conflicts.
+```text
+OBJECTIVE != ACTIVE_TASK
+PROGRAM -> MILESTONE -> TASK -> SUCCESSOR
+
+material objective change
+-> must exist in the canonical external project
+-> must be explicitly approved/versioned there
+-> otherwise Workspace reports OBJECTIVE_DRIFT / STATE_INCONSISTENT
+-> do not claim safe continuity
+```
+
+### Source-role classification
+
+```text
+CURRENT_STATE
+  = top current FECH.AI SFJM semantic overrides
+
+STRUCTURAL_BASELINE
+  = WBS task labels / hours / milestone structure
+  != current task status when the WBS embeds an older state-at-canonicalization snapshot
+
+HISTORICAL_LINEAGE
+  = preserved provenance
+  != current authority
+
+SUPERSEDED
+  = must never drive next action
+
+EXTERNAL_SNAPSHOT
+  = manual and invalidated by material external-project drift
+```
+
+This prevents an older “current” block or an embedded WBS status from overriding newer canonical continuity.
+
+### Current journey position
+
+```text
+Issue #141 — Security-to-Scale 2026
+-> STS-M2 — Database Simplification & Optimization Plan / STARTED
+-> STS-M2-01 COMPLETE
+-> STS-M2-02 COMPLETE WITH RESIDUALS
+-> STS-M2-03 COMPLETE WITH RESIDUALS
+-> STS-M2-04 NEXT GATE / NOT STARTED
+-> STS-M2-05 Database Contract Map
+-> STS-M2-06 architectural database decision
+```
+
+Opening a new conversation alone does not turn STS-M2-04 into STARTED. Only a material canonical project event may change that state.
+
+### Specialist destination
+
+```text
+1. backend_data
+   -> backend-data-platform-specialist
+   -> SES — Backend & Data Platform Specialist
+   -> REQUIRED / PRIMARY
+
+2. architecture
+   -> software-systems-architect
+   -> SES — Software Systems Architect
+   -> REQUIRED / SECOND
+
+3. application_security
+   -> application-security-assurance-specialist
+   -> SES — Application Security Assurance Specialist
+   -> CONDITIONAL / bounded target-security-policy assurance only
+
+TRANSPORT = MANUAL COPY/PASTE
+WORKSPACE ACTION = INDICATE DESTINATION ONLY
+AUTOMATIC ROUTING / SEND = NO
+```
+
+
+## FECH.AI context preserved by the Workspace
+
+The Workspace must preserve the distinction between the FECH.AI **program objective** and the current task. STS-M2-04 is not an isolated database-security exercise: it consumes M2-01..03 and must produce a target authority policy that feeds M2-05 Database Contract Map and M2-06 architectural decision.
+
+Current M2-03 durable evidence remains external FECH.AI authority:
+
+- `docs/security/evidence/2026-09-05-sts-m2-02-database-authority-map.md`;
+- `docs/security/evidence/2026-09-05-sts-m2-03-index-acl-contradictions.md`.
+
+The Workspace does not copy those artifacts into its own authority model. It records where the operator is in the journey and which source must be resolved.
+
+## Objective-drift gate
+
+A future refresh that observes a materially different objective in the canonical project must not silently rewrite the Workspace objective. The projection must move to an inconsistent/attention state until the change is proven versioned and approved by the project authority.
+
+```text
+canonical objective changed materially
+AND approval/provenance unresolved
+=> OBJECTIVE_DRIFT
+=> CONTINUATION_NOT_SAFE
+```
+
+
+---
+
+## HISTORICAL LINEAGE — DO NOT USE AS CURRENT AUTHORITY
+
+Everything below is preserved for provenance only. Any old heading or sentence that says “current” describes its capture time and is superseded by the CURRENT AUTHORITY section above.
+
+## HISTORICAL SNAPSHOT — SUPERSEDED — 2026-09-04
+
+This section was current at capture time and is now historical lineage. Any older "current" wording below is historical lineage when it conflicts.
 
 ```text
 FECH.AI canonical live main:
@@ -164,7 +261,7 @@ The B4 advancement does not consume or replace M2–M6.
 
 # FECH.AI — Persistent Continuity Model v2
 
-## Current representation contract — 2026-09-01
+## Historical representation contract — 2026-09-01
 
 This section supersedes older snapshot-shape guidance when it conflicts. Historical evidence below remains lineage and must not be deleted merely because current state advances.
 
@@ -209,7 +306,7 @@ Historical material events are append-only for ordinary refreshes.
 
 A refresh may append a new event or correct a proven factual error. It must not delete prior completed gates, remediations or transitions merely because a newer action exists.
 
-### Current projection
+### Historical projection
 
 Current projection answers only:
 
@@ -251,7 +348,7 @@ If canonical FECH.AI changes the actual plan, record that change as a material p
 ---
 # FECH.AI — External Project Context
 
-## Current manual refresh override — 2026-09-01
+## Historical manual refresh override — 2026-09-01
 
 FECH.AI main is `bd645210d61b2a7e4af60112c2fe8cef71d761cc`. M1 Security Truth Baseline is complete and Issue #150 is closed. F1-02/B3 and F1-02/B2 are both `REMEDIATED — MERGED + APPLIED + READ_ONLY_CATALOG_PROVEN`. B2 used migration `f1_02_b2_revoke_direct_crm_writes` and its post-application READ_ONLY catalog proof passed. The next bounded risk is F1-02/B4 — list ACL cross-tenant target risk / PR-06. The next action is `TARGET DESIGN + AUTHORIZATION MATRIX FIRST` with Architecture, AppSec and LeadOps before implementation. `RUNTIME_NEGATIVE_PASS = NOT ESTABLISHED`; Security Go remains denied and broad paid commercialization remains blocked. Accepted macro program progress remains 18.75%; M2 is not advanced by this snapshot.
 
@@ -359,7 +456,7 @@ VERSIONED != MERGED != APPLIED != DEPLOYED != RUNTIME_TESTED
 
 Historical catalog counts or runtime results remain evidence-at-capture until revalidated when material.
 
-## Current next safe action
+## Historical next safe action
 
 Canonical FECH.AI semantic next action at this snapshot:
 
@@ -375,7 +472,7 @@ documentation_audit -> documentation-auditor
 
 Manual specialist transport may be used when the SES runtime route is unavailable; no Gateway receipt may be invented.
 
-## Current blockers preserved
+## Historical blockers preserved
 
 - Security Go: `NOT GRANTED`;
 - broad paid commercialization: `BLOCKED`;

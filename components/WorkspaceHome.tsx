@@ -58,6 +58,7 @@ function ContinuityState() {
     { label: "Workstream atual", value: program.activeWorkstream },
     { label: "Próximo milestone", value: program.nextProgramMilestone },
     { label: "Próxima ação", value: program.nextSafeAction },
+    { label: "Objetivo principal", value: program.objectiveIntegrity },
     { label: "Histórico", value: "Preservado" },
     { label: "Security Go", value: program.securityGo }
   ];
@@ -72,7 +73,7 @@ function ContinuityState() {
         </div>
         <p>
           O trabalho atual é {program.activeWorkstream}. A próxima ação segura é {program.nextSafeAction}.
-          O próximo milestone permanece {program.nextProgramMilestone}; histórico e futuro continuam preservados.
+          Objetivo principal: {program.objectiveIntegrity}. O próximo milestone é {program.nextProgramMilestone}; histórico e futuro continuam preservados.
         </p>
         <div className="checks">
           {checks.map((item) => (
@@ -133,6 +134,20 @@ function NextSafeAction({ onContinue }: { onContinue: () => void }) {
           <div className="meta">
             Mutação
             <strong>Nenhuma autorizada</strong>
+          </div>
+        </div>
+        <div className="metaRow">
+          {program.specialistRouting.map((route) => (
+            <div className="meta" key={route.archetypeId}>
+              {route.requirement === "REQUIRED" ? `Encaminhamento ${route.sequence}` : "Consulta condicional"}
+              <strong>{route.targetName}</strong>
+              <span>{route.purpose}</span>
+            </div>
+          ))}
+          <div className="meta">
+            Transporte
+            <strong>{program.specialistTransport}</strong>
+            <span>Sem roteamento ou envio automático pelo Workspace.</span>
           </div>
         </div>
         <button className="primary" onClick={onContinue}>▶ VER CONTINUIDADE</button>
@@ -227,6 +242,11 @@ function FechaiProgramTracking() {
       </div>
 
       <div className="programSummary continuitySummary">
+        <div>
+          <span>Objetivo principal</span>
+          <strong>{program.objectiveIntegrity}</strong>
+          <small>{program.programObjective}</small>
+        </div>
         <div>
           <span>Progresso ponderado</span>
           <strong>{progress.toFixed(2)}%</strong>
@@ -556,7 +576,7 @@ function JourneyOverview() {
         <h3>Visão da jornada · event ledger</h3>
         <a href="#fechai-execution">Ver execução →</a>
       </div>
-      <div className="journey">
+      <div className="journey" tabIndex={0} role="region" aria-label="Linha do tempo preservada do FECH.AI; use as setas ou rolagem horizontal para navegar">
         {events.map((item) => (
           <div className="step" key={`${item.date}-${item.text}`}>
             <div className="stepDot">✓</div>
@@ -658,8 +678,8 @@ export function WorkspaceHome() {
         <div className="modalCard">
           <h2>Continuidade FECH.AI</h2>
           <p className="muted">
-            Último milestone: {program.lastCompletedMilestone}. Workstream atual: {program.activeWorkstream}. Próxima ação: {program.nextSafeAction}.
-            Próximo milestone: {program.nextProgramMilestone}. A ação atual não apaga nem substitui nenhuma dessas posições.
+            Objetivo: {program.objectiveIntegrity}. Último milestone: {program.lastCompletedMilestone}. Workstream atual: {program.activeWorkstream}. Próxima ação: {program.nextSafeAction}.
+            Próximo milestone: {program.nextProgramMilestone}. Destino primário: {program.specialistRouting[0].targetName}. Transporte: {program.specialistTransport}.
           </p>
           <div className="modalActions">
             <button className="secondary" onClick={() => setModalOpen(false)}>Fechar</button>

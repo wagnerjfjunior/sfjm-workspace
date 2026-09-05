@@ -97,15 +97,17 @@ No Workspace decision transfers authority over an external represented project.
 
 Project-local specialist mappings must not be guessed.
 
-When SES-mediated specialist work is used:
+When SES-mediated specialist work is used, resolve the current SES `core/protocols/MANUAL_SPECIALIST_HANDOFF_CONTRACT.md` when the consultation uses manual copy/paste:
 
 1. resolve the current SES canonical source;
 2. resolve the Workspace project identity through the SES Project Registry when registered;
 3. read the current Workspace Project Adapter and exact role map;
 4. use only explicitly adopted role mappings;
-5. if a requested role is not adopted, do not infer a nearby specialist.
+5. if a requested role is not adopted, do not infer a nearby specialist;
+6. for any selected SES archetype, resolve its exact `CANONICAL_NAME` from `archetypes/REGISTRY.md` and use it as `SPECIALIST_TARGET_NAME` in human handoff instructions;
+7. legacy/project-local aliases may be carried only as continuity and must not replace the canonical SES destination identity.
 
-A certified SES specialist may be consulted ad hoc only when the current SES contract explicitly permits it. Such consultation must be labeled ad hoc and must not be represented as project adoption.
+`SPECIALIST_TARGET_NAME = ARCHETYPE_REGISTRY.CANONICAL_NAME` for any SES-selected specialist. A certified SES specialist may be consulted ad hoc only when the current SES contract explicitly permits it. Such consultation must be labeled ad hoc and must not be represented as project adoption.
 
 If required specialist rules cannot be resolved, stop with `SPECIALIST_RULES_UNRESOLVED`.
 
