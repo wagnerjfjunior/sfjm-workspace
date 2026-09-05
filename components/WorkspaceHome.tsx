@@ -4,10 +4,14 @@ import { useState } from "react";
 import {
   calculateAcceptedProgramProgress,
   workspaceDemo,
+  type ExecutionItem,
   type ExternalProject,
   type ProgramMilestone,
-  type RunbookItem,
-  type SourceRow
+  type SourceRow,
+  type TimelineItem,
+  type WbsBacklog,
+  type WbsMilestone,
+  type WbsTask
 } from "@/data/workspace-demo";
 
 function Sidebar({ open }: { open: boolean }) {
@@ -47,7 +51,17 @@ function Sidebar({ open }: { open: boolean }) {
 }
 
 function ContinuityState() {
-  const progress = calculateAcceptedProgramProgress(workspaceDemo.fechaiProgram.milestones);
+  const program = workspaceDemo.fechaiProgram;
+  const progress = calculateAcceptedProgramProgress(program.milestones);
+  const checks: SourceRow[] = [
+    { label: "Último milestone", value: program.lastCompletedMilestone },
+    { label: "Workstream atual", value: program.activeWorkstream },
+    { label: "Próximo milestone", value: program.nextProgramMilestone },
+    { label: "Próxima ação", value: program.nextSafeAction },
+    { label: "Objetivo principal", value: program.objectiveIntegrity },
+    { label: "Histórico", value: "Preservado" },
+    { label: "Security Go", value: program.securityGo }
+  ];
 
   return (
     <article className="panel statePanel" id="continue">
@@ -55,11 +69,14 @@ function ContinuityState() {
         <div className="eyebrow">Estado de continuidade</div>
         <div className="stateTitle">
           <div className="shield">✓</div>
-          <h2>M1 COMPLETO · REMEDIAÇÃO ATIVA</h2>
+          <h2>{program.lastCompletedMilestone} · CONTINUIDADE ATIVA</h2>
         </div>
-        <p>M0 e M1 foram encerrados no FECH.AI. O baseline está completo, os achados seguem em remediação e o Workspace continua sendo um snapshot manual.</p>
+        <p>
+          O trabalho atual é {program.activeWorkstream}. A próxima ação segura é {program.nextSafeAction}.
+          Objetivo principal: {program.objectiveIntegrity}. O próximo milestone é {program.nextProgramMilestone}; histórico e futuro continuam preservados.
+        </p>
         <div className="checks">
-          {workspaceDemo.checks.map((item) => (
+          {checks.map((item) => (
             <div className="check" key={item.label}>
               <strong>
                 {item.label}
@@ -78,7 +95,7 @@ function ContinuityState() {
           <div className="ringContent">
             <strong>{progress.toFixed(2)}%</strong>
             <span>gates aceitos</span>
-            <span>snapshot manual</span>
+            <span>macro programa</span>
           </div>
         </div>
       </div>
@@ -87,6 +104,8 @@ function ContinuityState() {
 }
 
 function NextSafeAction({ onContinue }: { onContinue: () => void }) {
+  const program = workspaceDemo.fechaiProgram;
+
   return (
     <article className="panel actionPanel">
       <div className="actionArt">
@@ -94,25 +113,44 @@ function NextSafeAction({ onContinue }: { onContinue: () => void }) {
       </div>
       <div className="actionContent">
         <div className="eyebrow">Próxima ação segura</div>
-        <h3>Fechar target design e matriz do B4</h3>
+        <h3>{program.nextSafeAction}</h3>
         <p className="muted">
-          Definir o boundary tenant-safe de visibilidade de listas e a matriz de autorização com Architecture, AppSec e LeadOps antes de qualquer implementação.
+          Workstream atual: {program.activeWorkstream}. Fonte observada: {program.repository} @ {program.observedSha}.
+          O Workspace apenas representa essa continuidade; a autoridade continua no FECH.AI.
         </p>
         <div className="metaRow">
           <div className="meta">
-            Escopo
-            <strong>Security Truth Baseline</strong>
+            Último milestone
+            <strong>{program.lastCompletedMilestone}</strong>
           </div>
           <div className="meta">
-            Estado
-            <strong>Remediação ativa</strong>
+            Workstream atual
+            <strong>{program.activeWorkstream}</strong>
+          </div>
+          <div className="meta">
+            Próximo milestone
+            <strong>{program.nextProgramMilestone}</strong>
           </div>
           <div className="meta">
             Mutação
-            <strong>Somente leitura</strong>
+            <strong>Nenhuma autorizada</strong>
           </div>
         </div>
-        <button className="primary" onClick={onContinue}>▶ VER BOUNDARY</button>
+        <div className="metaRow">
+          {program.specialistRouting.map((route) => (
+            <div className="meta" key={route.archetypeId}>
+              {route.requirement === "REQUIRED" ? `Encaminhamento ${route.sequence}` : "Consulta condicional"}
+              <strong>{route.targetName}</strong>
+              <span>{route.purpose}</span>
+            </div>
+          ))}
+          <div className="meta">
+            Transporte
+            <strong>{program.specialistTransport}</strong>
+            <span>Sem roteamento ou envio automático pelo Workspace.</span>
+          </div>
+        </div>
+        <button className="primary" onClick={onContinue}>▶ VER CONTINUIDADE</button>
       </div>
     </article>
   );
@@ -166,6 +204,7 @@ function ExternalProjects() {
 
 function MilestoneCard({ milestone }: { milestone: ProgramMilestone }) {
   const contribution = milestone.weight * (milestone.acceptedPercent / 100);
+
   return (
     <div className={`milestoneCard ${milestone.status.toLowerCase()}`}>
       <div className="milestoneTop">
@@ -196,32 +235,42 @@ function FechaiProgramTracking() {
     <article className="panel panelInner programPanel" id="fechai-program">
       <div className="sectionTitle programTitle">
         <div>
-          <div className="eyebrow">Macro Roadmap / Executive View</div>
+          <div className="eyebrow">Macro Roadmap / plano preservado</div>
           <h3>{program.name}</h3>
         </div>
         <span className="manualBadge">MANUAL · {program.observedAt}</span>
       </div>
 
-      <div className="programSummary">
+      <div className="programSummary continuitySummary">
+        <div>
+          <span>Objetivo principal</span>
+          <strong>{program.objectiveIntegrity}</strong>
+          <small>{program.programObjective}</small>
+        </div>
         <div>
           <span>Progresso ponderado</span>
           <strong>{progress.toFixed(2)}%</strong>
           <small>{program.weightingBasis}</small>
         </div>
         <div>
-          <span>Milestone atual</span>
-          <strong>{program.currentMilestone}</strong>
-          <small>{program.programIssue} · {program.repository}</small>
+          <span>Último milestone concluído</span>
+          <strong>{program.lastCompletedMilestone}</strong>
+          <small>Histórico preservado; não é substituído pelo workstream atual.</small>
+        </div>
+        <div>
+          <span>Workstream ativo</span>
+          <strong>{program.activeWorkstream}</strong>
+          <small>{program.nextSafeAction}</small>
+        </div>
+        <div>
+          <span>Próximo milestone do programa</span>
+          <strong>{program.nextProgramMilestone}</strong>
+          <small>O futuro permanece visível antes de começar.</small>
         </div>
         <div>
           <span>Security Go</span>
           <strong className="dangerText">{program.securityGo}</strong>
           <small>Comercialização ampla: {program.commercialization}</small>
-        </div>
-        <div>
-          <span>Fonte observada</span>
-          <code>{program.observedSha}</code>
-          <small>{program.invalidatesOn}</small>
         </div>
       </div>
 
@@ -237,47 +286,265 @@ function FechaiProgramTracking() {
   );
 }
 
-function RunbookRow({ item }: { item: RunbookItem }) {
+
+function WbsTaskRow({ task }: { task: WbsTask }) {
+  const stateLabel =
+    task.state === "COMPLETE" ? "Concluída" :
+    task.state === "ACTIVE" ? "Agora" :
+    task.state === "PARKED" ? "Backlog" : "Planejada";
+
   return (
-    <tr>
-      <th scope="row" data-label="ID">{item.id}</th>
-      <td data-label="Tarefa / evidência">
-        <strong>{item.task}</strong>
-        <small>{item.evidence}</small>
-      </td>
-      <td data-label="Owner">{item.owner}</td>
-      <td data-label="Estado"><span className={`runbookState ${item.state.toLowerCase()}`}>{item.state}</span></td>
-      <td data-label="Próxima ação">{item.nextAction}</td>
-    </tr>
+    <li className={`wbsTask ${task.state.toLowerCase()}`}>
+      <span className="wbsTaskState" role="status">
+        <span aria-hidden="true">{task.state === "COMPLETE" ? "✓" : task.state === "ACTIVE" ? "●" : "○"}</span>
+        <span className="srOnly">{stateLabel}</span>
+      </span>
+      <div className="wbsTaskBody">
+        <div className="wbsTaskTitle">
+          <span>{task.id}</span>
+          <strong>{task.label}</strong>
+        </div>
+        {task.note ? <small>{task.note}</small> : null}
+      </div>
+      <b>{task.hours}h</b>
+    </li>
   );
 }
 
-function FechaiRunbook() {
+function WbsMilestoneCard({
+  milestone,
+  totalHours
+}: {
+  milestone: WbsMilestone;
+  totalHours: number;
+}) {
+  const effortShare = (milestone.hours / totalHours) * 100;
+  const completedTaskHours = milestone.tasks
+    .filter((task) => task.state === "COMPLETE")
+    .reduce((total, task) => total + task.hours, 0);
+
   return (
-    <article className="panel panelInner runbookPanel" id="fechai-runbook">
-      <div className="sectionTitle">
+    <section className={`wbsMilestone ${milestone.state.toLowerCase()}`} aria-labelledby={`wbs-${milestone.id}`}>
+      <header className="wbsMilestoneHeader">
         <div>
-          <div className="eyebrow">Operational Runbook View</div>
-          <h3>M1 — Security Truth Baseline</h3>
+          <div className="wbsMilestoneId">{milestone.id}</div>
+          <h4 id={`wbs-${milestone.id}`}>{milestone.label}</h4>
         </div>
-        <span className="manualBadge">READ_ONLY FIRST</span>
+        <span className={`wbsMilestoneState ${milestone.state.toLowerCase()}`}>{milestone.state}</span>
+      </header>
+      <div className="wbsMilestoneNumbers">
+        <div>
+          <span>Esforço</span>
+          <strong>{milestone.hours}h</strong>
+        </div>
+        <div>
+          <span>% do objetivo final</span>
+          <strong>{effortShare.toFixed(2)}%</strong>
+        </div>
+        <div>
+          <span>Horas de tarefas concluídas</span>
+          <strong>{completedTaskHours}h</strong>
+        </div>
       </div>
-      <div className="runbookScroll">
-        <table className="runbookTable">
-          <caption className="srOnly">Runbook operacional do M1 Security Truth Baseline</caption>
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Tarefa / evidência</th>
-              <th scope="col">Owner</th>
-              <th scope="col">Estado</th>
-              <th scope="col">Próxima ação</th>
-            </tr>
-          </thead>
-          <tbody>
-            {workspaceDemo.fechaiProgram.runbook.map((item) => <RunbookRow item={item} key={item.id} />)}
-          </tbody>
-        </table>
+      <ul className="wbsTasks">
+        {milestone.tasks.map((task) => <WbsTaskRow task={task} key={task.id} />)}
+      </ul>
+    </section>
+  );
+}
+
+function WbsBacklogCard({ backlog }: { backlog: WbsBacklog }) {
+  const taskHours = backlog.tasks.reduce((total, task) => total + task.hours, 0);
+
+  return (
+    <section className="wbsBacklogCard" aria-labelledby={`wbs-backlog-${backlog.id}`}>
+      <header>
+        <div>
+          <span>Backlog separado do caminho crítico</span>
+          <h4 id={`wbs-backlog-${backlog.id}`}>{backlog.label}</h4>
+        </div>
+        <strong>{taskHours}h</strong>
+      </header>
+      <ul className="wbsTasks">
+        {backlog.tasks.map((task) => <WbsTaskRow task={task} key={task.id} />)}
+      </ul>
+    </section>
+  );
+}
+
+function FechaiWbsView() {
+  const wbs = workspaceDemo.fechaiWbs;
+  const computedCriticalHours = wbs.milestones.reduce((total, milestone) => total + milestone.hours, 0);
+  const computedCompletedHours = wbs.milestones.reduce(
+    (total, milestone) =>
+      total + milestone.tasks
+        .filter((task) => task.state === "COMPLETE")
+        .reduce((taskTotal, task) => taskTotal + task.hours, 0),
+    0
+  );
+  const computedRemaining = computedCriticalHours - computedCompletedHours;
+  const preSecurityGoBacklogHours =
+    wbs.backlogs.find((backlog) => backlog.id === "PRE_SECURITY_GO")?.tasks.reduce(
+      (total, task) => total + task.hours,
+      0
+    ) ?? 0;
+  const plannedBacklogHours =
+    wbs.backlogs.find((backlog) => backlog.id === "PLANNED_FUTURE")?.tasks.reduce(
+      (total, task) => total + task.hours,
+      0
+    ) ?? 0;
+
+  return (
+    <article className="panel panelInner wbsPanel" id="fechai-wbs">
+      <div className="sectionTitle programTitle">
+        <div>
+          <div className="eyebrow">WBS / Effort View · visão complementar</div>
+          <h3>FECH.AI — caminho crítico até o final</h3>
+        </div>
+        <span className="manualBadge">PLANNING BASELINE · NÃO É TIMESHEET</span>
+      </div>
+
+      <p className="wbsIntro">
+        Esta view não substitui Roadmap, Continuidade ou Evidências. Ela mostra todas as tarefas descritas,
+        suas horas estimadas e a participação de cada milestone no esforço total de {computedCriticalHours}h.
+        Percentuais são exibidos somente em STS-M0–STS-M6.
+      </p>
+
+      <div className="wbsSummary">
+        <div>
+          <span>Status atual</span>
+          <strong>{wbs.currentPackage}</strong>
+          <small>{wbs.currentTask}</small>
+        </div>
+        <div>
+          <span>Horas concluídas</span>
+          <strong>{computedCompletedHours}h</strong>
+          <small>Somente tarefas marcadas COMPLETE</small>
+        </div>
+        <div>
+          <span>Restante no caminho crítico</span>
+          <strong>{computedRemaining}h</strong>
+          <small>Total crítico = {computedCriticalHours}h</small>
+        </div>
+        <div>
+          <span>Backlog pré-Security-Go</span>
+          <strong>{preSecurityGoBacklogHours}h</strong>
+          <small>Fora do caminho crítico até classificação material</small>
+        </div>
+        <div>
+          <span>Backlog planejado</span>
+          <strong>{plannedBacklogHours}h</strong>
+          <small>Futuro / não bloqueante</small>
+        </div>
+      </div>
+
+      <div className="wbsBoundary">{wbs.note}</div>
+
+      <div className="wbsMilestoneGrid" tabIndex={0} role="region" aria-label="Milestones STS-M0 a STS-M6 do caminho crítico">
+        {wbs.milestones.map((milestone) => (
+          <WbsMilestoneCard milestone={milestone} totalHours={computedCriticalHours} key={milestone.id} />
+        ))}
+      </div>
+
+      <div className="wbsBacklogGrid">
+        {wbs.backlogs.map((backlog) => <WbsBacklogCard backlog={backlog} key={backlog.id} />)}
+      </div>
+    </article>
+  );
+}
+
+function ExecutionCard({ item }: { item: ExecutionItem }) {
+  return (
+    <li className={`executionCard ${item.state.toLowerCase()}`}>
+      <div className="executionTop">
+        <span className="executionId">{item.id}</span>
+        <span className={`runbookState ${item.state.toLowerCase()}`}>{item.state}</span>
+      </div>
+      <strong>{item.label}</strong>
+      <span className="executionCategory">{item.category}</span>
+      <p>{item.evidence}</p>
+      <small>{item.owner}</small>
+      <div className="executionNext">{item.nextAction}</div>
+    </li>
+  );
+}
+
+function ExecutionLane({
+  title,
+  helper,
+  items,
+  laneClass
+}: {
+  title: string;
+  helper: string;
+  items: ExecutionItem[];
+  laneClass: string;
+}) {
+  const headingId = `execution-${laneClass}-heading`;
+
+  return (
+    <section className={`executionLane ${laneClass}`} aria-labelledby={headingId}>
+      <div className="executionLaneHeader">
+        <div>
+          <h4 id={headingId}>{title}</h4>
+          <small>{helper}</small>
+        </div>
+        <b>{items.length}</b>
+      </div>
+      <ul className="executionItems">
+        {items.map((item) => <ExecutionCard item={item} key={item.id} />)}
+      </ul>
+    </section>
+  );
+}
+
+function FechaiExecutionBoard() {
+  const program = workspaceDemo.fechaiProgram;
+  const futureProgram = program.milestones
+    .filter((milestone) => milestone.status === "PLANNED")
+    .map<ExecutionItem>((milestone) => ({
+      id: milestone.id,
+      label: milestone.label,
+      category: "PROGRAM",
+      state: "PLANNED",
+      owner: milestone.owner,
+      evidence: `Milestone futuro definido no programa ${program.programIssue} · ${milestone.window}.`,
+      nextAction: "Preservar como futuro até a transição canônica do programa."
+    }));
+  const futureItems = [...program.future, ...futureProgram];
+
+  return (
+    <article className="panel panelInner executionPanel" id="fechai-execution">
+      <div className="sectionTitle programTitle">
+        <div>
+          <div className="eyebrow">Mapa operacional persistente</div>
+          <h3>Histórico · Agora · Futuro</h3>
+        </div>
+        <span className="manualBadge">NÃO SOBRESCREVER O PASSADO</span>
+      </div>
+      <p className="executionIntro">
+        Refresh altera a projeção atual, não apaga eventos concluídos nem tarefas planejadas.
+        Remediações e milestones permanecem em trilhas separadas.
+      </p>
+      <div className="executionBoard">
+        <ExecutionLane
+          title="Histórico"
+          helper="Gates e remediações já concluídos"
+          items={program.history}
+          laneClass="historyLane"
+        />
+        <ExecutionLane
+          title="Agora"
+          helper="Único workstream operacional em foco"
+          items={program.active}
+          laneClass="nowLane"
+        />
+        <ExecutionLane
+          title="Futuro"
+          helper="Findings pendentes + STS-M2–STS-M6 já conhecidos"
+          items={futureItems}
+          laneClass="futureLane"
+        />
       </div>
     </article>
   );
@@ -301,17 +568,19 @@ function PreservedContexts() {
 }
 
 function JourneyOverview() {
+  const events = workspaceDemo.fechaiProgram.eventLedger;
+
   return (
     <article className="panel panelInner" id="journey">
       <div className="sectionTitle">
-        <h3>Visão da jornada</h3>
-        <a href="#fechai-program">Ver programa →</a>
+        <h3>Visão da jornada · event ledger</h3>
+        <a href="#fechai-execution">Ver execução →</a>
       </div>
-      <div className="journey">
-        {workspaceDemo.journey.map((item) => (
-          <div className={`step ${item.current ? "current" : ""}`} key={item.label}>
-            <div className="stepDot">{item.current ? "●" : "✓"}</div>
-            <strong>{item.label}</strong>
+      <div className="journey" tabIndex={0} role="region" aria-label="Linha do tempo preservada do FECH.AI; use as setas ou rolagem horizontal para navegar">
+        {events.map((item) => (
+          <div className="step" key={`${item.date}-${item.text}`}>
+            <div className="stepDot">✓</div>
+            <strong>{item.text}</strong>
             <small>{item.date}</small>
           </div>
         ))}
@@ -334,14 +603,14 @@ function SideCard({ title, rows }: { title: string; rows: SourceRow[] }) {
   );
 }
 
-function Timeline() {
+function Timeline({ items }: { items: TimelineItem[] }) {
   return (
     <article className="panel sideCard">
-      <h3>Linha do tempo</h3>
+      <h3>Linha do tempo preservada</h3>
       <div className="timeline">
-        {workspaceDemo.timeline.map((item) => (
-          <div className="timelineItem" key={`${item.date}-${item.text}`}>
-            <small>{item.date}</small>
+        {[...items].reverse().map((item) => (
+          <div className={`timelineItem timeline-${item.kind.toLowerCase()}`} key={`${item.date}-${item.text}`}>
+            <small>{item.date} · {item.kind}</small>
             {item.text}
           </div>
         ))}
@@ -353,6 +622,13 @@ function Timeline() {
 export function WorkspaceHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const program = workspaceDemo.fechaiProgram;
+  const currentState: SourceRow[] = [
+    { label: "Último milestone concluído", value: program.lastCompletedMilestone },
+    { label: "Próxima continuidade", value: program.activeWorkstream },
+    { label: "Próximo milestone", value: program.nextProgramMilestone },
+    { label: "Modelo temporal", value: "Passado + Agora + Futuro" }
+  ];
 
   return (
     <>
@@ -372,6 +648,7 @@ export function WorkspaceHome() {
               <button aria-label="Painel" className="tool">▤</button>
             </div>
           </header>
+
           <div className="layout">
             <section className="stack">
               <ContinuityState />
@@ -379,26 +656,30 @@ export function WorkspaceHome() {
               <PreservedContexts />
               <JourneyOverview />
               <FechaiProgramTracking />
-              <FechaiRunbook />
+              <FechaiWbsView />
+              <FechaiExecutionBoard />
               <ExternalProjects />
               <article className="panel footer">
-                <span>SFJM preserva continuidade; FECH.AI permanece autoridade sobre o programa.</span>
+                <span>SFJM preserva plano, jornada e continuidade; FECH.AI permanece autoridade sobre a verdade.</span>
                 <a href="#fechai-program">Abrir Roadmap →</a>
               </article>
             </section>
+
             <aside className="stack right">
-              <SideCard title="Estado atual" rows={workspaceDemo.currentState} />
+              <SideCard title="Posição no programa" rows={currentState} />
               <SideCard title="Fontes canônicas" rows={workspaceDemo.sources} />
-              <Timeline />
+              <Timeline items={program.eventLedger} />
             </aside>
           </div>
         </main>
       </div>
+
       <div className={`modal ${modalOpen ? "open" : ""}`} role="dialog" aria-modal="true" aria-hidden={!modalOpen}>
         <div className="modalCard">
-          <h2>Boundary M1</h2>
+          <h2>Continuidade FECH.AI</h2>
           <p className="muted">
-            M1-A é read-only. DDL/DML, migration apply, Supabase mutation, deploy, Auth/business-data mutation e Security Go permanecem bloqueados.
+            Objetivo: {program.objectiveIntegrity}. Último milestone: {program.lastCompletedMilestone}. Workstream atual: {program.activeWorkstream}. Próxima ação: {program.nextSafeAction}.
+            Próximo milestone: {program.nextProgramMilestone}. Destino primário: {program.specialistRouting[0].targetName}. Transporte: {program.specialistTransport}.
           </p>
           <div className="modalActions">
             <button className="secondary" onClick={() => setModalOpen(false)}>Fechar</button>
