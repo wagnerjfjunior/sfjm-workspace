@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent, type RefObject } from "react";
 import {
   calculateAcceptedProgramProgress,
   workspaceDemo,
@@ -126,7 +126,15 @@ function Sidebar({
   );
 }
 
-function ProjectHeader({ project, onMenu }: { project: ExternalProject; onMenu: () => void }) {
+function ProjectHeader({
+  project,
+  onMenu,
+  menuButtonRef
+}: {
+  project: ExternalProject;
+  onMenu: () => void;
+  menuButtonRef: RefObject<HTMLButtonElement | null>;
+}) {
   const isFechai = project.name === FECHAI;
   const programProgress = calculateAcceptedProgramProgress(workspaceDemo.fechaiProgram.milestones);
   const wbs = workspaceDemo.fechaiWbs;
@@ -142,7 +150,7 @@ function ProjectHeader({ project, onMenu }: { project: ExternalProject; onMenu: 
     <section className="projectHero" id="overview">
       <div className="projectHeroTop">
         <div className="projectIdentity">
-          <button className="mobileMenu" type="button" onClick={onMenu} aria-label="Abrir menu de projetos">☰</button>
+          <button ref={menuButtonRef} className="mobileMenu" type="button" onClick={onMenu} aria-label="Abrir menu de projetos">☰</button>
           <div>
             <div className="eyebrow projectNameLabel">{project.name}</div>
             <h1>De onde você precisa continuar hoje?</h1>
@@ -513,6 +521,12 @@ export function WorkspaceHome() {
 
   const [selectedProjectName, setSelectedProjectName] = useState(initialProject.name);
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+
+  const closeMobileMenu = () => {
+    setMenuOpen(false);
+    requestAnimationFrame(() => menuButtonRef.current?.focus());
+  };
 
   useEffect(() => {
     const closeDrawerOnDesktop = () => {
@@ -534,10 +548,14 @@ export function WorkspaceHome() {
         open={menuOpen}
         selectedProject={selectedProject.name}
         onSelectProject={setSelectedProjectName}
-        onClose={() => setMenuOpen(false)}
+        onClose={closeMobileMenu}
       />
       <main className="commandMain" inert={menuOpen ? true : undefined}>
-        <ProjectHeader project={selectedProject} onMenu={() => setMenuOpen(true)} />
+        <ProjectHeader
+          project={selectedProject}
+          onMenu={() => setMenuOpen(true)}
+          menuButtonRef={menuButtonRef}
+        />
         <ProjectDashboard project={selectedProject} />
         <footer className="commandFooter">
           <span>SFJM Workspace · visão operacional multi-projeto</span>
