@@ -196,8 +196,9 @@ function NextActionCard({ project }: { project: ExternalProject }) {
   const isFechai = project.name === FECHAI;
   const program = workspaceDemo.fechaiProgram;
   const activeMilestone = workspaceDemo.fechaiWbs.milestones.find((milestone) => milestone.state === "ACTIVE");
-  const focusTask = activeMilestone?.tasks.find((task) => task.note?.includes("NEXT GATE")) ??
-    activeMilestone?.tasks.find((task) => task.state !== "COMPLETE");
+  const activeTasks: WbsTask[] = activeMilestone?.tasks ?? [];
+  const focusTask = activeTasks.find((task) => task.note?.includes("NEXT GATE")) ??
+    activeTasks.find((task) => task.state !== "COMPLETE");
   const requiredRoutes = program.specialistRouting.filter((route) => route.requirement === "REQUIRED");
   const conditionalRoute = program.specialistRouting.find((route) => route.requirement === "CONDITIONAL");
 
