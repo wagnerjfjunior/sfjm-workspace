@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import {
   calculateAcceptedProgramProgress,
   workspaceDemo,
@@ -423,10 +423,9 @@ export function WorkspaceHome() {
   const [selectedProjectName, setSelectedProjectName] = useState(initialProject.name);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const selectedProject = useMemo(
-    () => workspaceDemo.externalProjects.find((project) => project.name === selectedProjectName) ?? initialProject,
-    [selectedProjectName, initialProject]
-  );
+  const selectedProject =
+    workspaceDemo.externalProjects.find((project) => project.name === selectedProjectName) ??
+    initialProject;
 
   return (
     <div className="workspaceShell">
