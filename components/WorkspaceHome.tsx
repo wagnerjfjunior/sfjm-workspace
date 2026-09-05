@@ -1,10 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type KeyboardEvent } from "react";
 import {
   calculateAcceptedProgramProgress,
   workspaceDemo,
   type ExternalProject,
+  type ProgramMilestone,
+  type TimelineItem,
+  type WbsBacklog,
   type WbsMilestone,
   type WbsTask
 } from "@/data/workspace-demo";
@@ -17,6 +20,33 @@ function taskStateLabel(task: WbsTask, isFocus: boolean) {
   if (task.state === "PARKED") return "Backlog";
   if (task.state === "ACTIVE") return "Em execução";
   return "Planejada";
+}
+
+function milestoneStateLabel(state: ProgramMilestone["status"]) {
+  if (state === "COMPLETE") return "Concluído";
+  if (state === "ACTIVE") return "Atual";
+  return "Planejado";
+}
+
+function trapDrawerFocus(event: KeyboardEvent<HTMLElement>) {
+  if (event.key !== "Tab") return;
+
+  const focusable = Array.from(
+    event.currentTarget.querySelectorAll<HTMLElement>('button:not([disabled]), a[href]')
+  ).filter((element) => element.offsetParent !== null);
+
+  if (!focusable.length) return;
+
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
 }
 
 function Sidebar({
@@ -34,13 +64,24 @@ function Sidebar({
 
   return (
     <>
-      <aside className={`commandSidebar ${open ? "open" : ""}`}>
-        <div className="brand">
-          <div className="brandMark" aria-hidden="true" />
-          <div>
-            <div className="brandTitle">SFJM</div>
-            <div className="brandSub">Workspace</div>
+      <aside
+        className={`commandSidebar ${open ? "open" : ""}`}
+        aria-label="Navegação de projetos"
+        onKeyDown={open ? trapDrawerFocus : undefined}
+      >
+        <div className="brandRow">
+          <div className="brand">
+            <div className="brandMark" aria-hidden="true" />
+            <div>
+              <div className="brandTitle">SFJM</div>
+              <div className="brandSub">Workspace</div>
+            </div>
           </div>
+          {open ? (
+            <button className="drawerClose" type="button" onClick={onClose} autoFocus aria-label="Fechar menu de projetos">
+              ×
+            </button>
+          ) : null}
         </div>
 
         <div className="sidebarSectionLabel">Continue</div>
@@ -89,7 +130,7 @@ function Sidebar({
           </div>
         </div>
       </aside>
-      {open ? <button className="sidebarBackdrop" type="button" aria-label="Fechar menu" onClick={onClose} /> : null}
+      {open ? <button className="sidebarBackdrop" type="button" tabIndex={-1} aria-label="Fechar menu" onClick={onClose} /> : null}
     </>
   );
 }
@@ -128,8 +169,8 @@ function ProjectHeader({ project, onMenu }: { project: ExternalProject; onMenu: 
       <div className="heroMetrics">
         <div className="heroMetric continuityMetric">
           <span>Estado & continuidade</span>
-          <strong>{isFechai ? "STS-M2 · STARTED" : project.continuityState}</strong>
-          <small>{isFechai ? "M2-04 é o próximo gate · ainda não iniciado" : "Snapshot manual do projeto"}</small>
+          <strong>{isFechai ? wbs.currentPackage : project.continuityState}</strong>
+          <small>{isFechai ? wbs.currentTask : "Snapshot manual do projeto"}</small>
         </div>
         <div className="heroMetric progressMetric">
           <span>Concluído</span>
@@ -138,7 +179,7 @@ function ProjectHeader({ project, onMenu }: { project: ExternalProject; onMenu: 
         </div>
         <div className="heroMetric">
           <span>Bloco atual</span>
-          <strong>{isFechai ? workspaceDemo.fechaiWbs.currentPackage : "Não modelado"}</strong>
+          <strong>{isFechai ? wbs.currentPackage : "Não modelado"}</strong>
           <small>{isFechai ? `${programProgress.toFixed(2)}% de gates aceitos no macro programa` : "Sem inferência automática"}</small>
         </div>
         <div className="heroMetric sourceMetric">
@@ -153,10 +194,11 @@ function ProjectHeader({ project, onMenu }: { project: ExternalProject; onMenu: 
 
 function NextActionCard({ project }: { project: ExternalProject }) {
   const isFechai = project.name === FECHAI;
+  const program = workspaceDemo.fechaiProgram;
   const activeMilestone = workspaceDemo.fechaiWbs.milestones.find((milestone) => milestone.state === "ACTIVE");
   const focusTask = activeMilestone?.tasks.find((task) => task.note?.includes("NEXT GATE")) ??
     activeMilestone?.tasks.find((task) => task.state !== "COMPLETE");
-  const primaryRoute = workspaceDemo.fechaiProgram.specialistRouting.find((route) => route.requirement === "REQUIRED");
+  const requiredRoutes = program.specialistRouting.filter((route) => route.requirement === "REQUIRED");
 
   return (
     <article className="commandCard nextActionCard" id="next-action">
@@ -169,20 +211,30 @@ function NextActionCard({ project }: { project: ExternalProject }) {
       </div>
 
       {isFechai && focusTask && activeMilestone ? (
-        <div className="actionFacts">
-          <div><span>Bloco</span><strong>{activeMilestone.id}</strong></div>
-          <div><span>Tarefa</span><strong>{focusTask.id} · {focusTask.hours}h</strong></div>
-          <div><span>Situação</span><strong>Next gate / not started</strong></div>
-          <div><span>Destino</span><strong>{primaryRoute?.targetName ?? "Manual"}</strong></div>
-        </div>
+        <>
+          <p className="safeSequence">{program.nextSafeAction}</p>
+          <div className="actionFacts">
+            <div><span>Bloco</span><strong>{activeMilestone.id}</strong></div>
+            <div><span>Tarefa</span><strong>{focusTask.id} · {focusTask.hours}h</strong></div>
+            <div><span>Situação</span><strong>{taskStateLabel(focusTask, true)}</strong></div>
+            <div>
+              <span>Sequência de especialistas</span>
+              <strong>{requiredRoutes.map((route) => route.targetName).join(" → ")}</strong>
+            </div>
+          </div>
+          <div className="actionFooter">
+            <span className="manualChip">MANUAL COPY/PASTE</span>
+            <span>{program.specialistTransport}</span>
+          </div>
+        </>
       ) : (
-        <div className="genericActionText">{project.nextSafeAction}</div>
+        <>
+          <div className="genericActionText">{project.nextSafeAction}</div>
+          <div className="actionFooter">
+            <span>{project.verification}</span>
+          </div>
+        </>
       )}
-
-      <div className="actionFooter">
-        <span className="manualChip">MANUAL COPY/PASTE</span>
-        <span>{isFechai ? "Workspace indica o destino; não executa automaticamente." : project.verification}</span>
-      </div>
     </article>
   );
 }
@@ -225,39 +277,73 @@ function IntegrityStrip() {
   );
 }
 
+function JourneyEvent({ item }: { item: TimelineItem }) {
+  return (
+    <div className={`journeyEvent ${item.kind.toLowerCase()}`}>
+      <div className="journeyEventTop">
+        <span>{item.date}</span>
+        <b>{item.kind}</b>
+      </div>
+      <strong>{item.text}</strong>
+    </div>
+  );
+}
+
 function ExecutiveMap() {
-  const milestones = workspaceDemo.fechaiWbs.milestones;
+  const program = workspaceDemo.fechaiProgram;
+  const wbs = workspaceDemo.fechaiWbs;
+
   return (
     <article className="commandCard executiveMap" id="roadmap">
       <div className="sectionHeader">
         <div>
-          <div className="eyebrow">Mapa executivo</div>
-          <h2>Onde estamos no caminho completo</h2>
+          <div className="eyebrow">Mapa executivo + jornada</div>
+          <h2>Onde estamos, o que foi aceito e como chegamos aqui</h2>
         </div>
         <div className="legend" aria-label="Legenda de estados">
           <span><i className="legendDot complete" />Concluído</span>
           <span><i className="legendDot active" />Atual</span>
-          <span><i className="legendDot planned" />Próximo</span>
+          <span><i className="legendDot planned" />Planejado</span>
         </div>
       </div>
-      <div className="roadmapRail" tabIndex={0} role="region" aria-label="Mapa executivo STS-M0 a STS-M6">
-        {milestones.map((milestone, index) => {
-          const done = milestone.tasks.filter((task) => task.state === "COMPLETE").length;
+
+      <div className="roadmapRail" tabIndex={0} role="region" aria-label="Macro roadmap STS-M0 a STS-M6">
+        {program.milestones.map((milestone, index) => {
+          const wbsMilestone = wbs.milestones.find((item) => item.id === milestone.id);
+          const completedTasks = wbsMilestone?.tasks.filter((task) => task.state === "COMPLETE").length ?? 0;
+          const taskCount = wbsMilestone?.tasks.length ?? 0;
+
           return (
-            <div className={`roadmapNode ${milestone.state.toLowerCase()}`} key={milestone.id}>
+            <div className={`roadmapNode ${milestone.status.toLowerCase()}`} key={milestone.id}>
               <div className="roadmapNodeTop">
                 <span>{milestone.id}</span>
-                <b>{done}/{milestone.tasks.length}</b>
+                <span className={`roadmapStateLabel ${milestone.status.toLowerCase()}`}>
+                  {milestoneStateLabel(milestone.status)}
+                </span>
               </div>
               <strong>{milestone.label}</strong>
-              <small>{milestone.hours}h</small>
-              <div className="roadmapMiniTrack">
-                <span style={{ width: `${(done / milestone.tasks.length) * 100}%` }} />
+              <div className="roadmapMeta">
+                <span>{milestone.window}</span>
+                <span>{milestone.owner}</span>
+                <span>{milestone.acceptedPercent}% aceito</span>
               </div>
-              {index < milestones.length - 1 ? <i className="roadmapConnector" aria-hidden="true" /> : null}
+              <div className="roadmapMiniTrack" aria-label={`${milestone.acceptedPercent}% aceito`}>
+                <span style={{ width: `${milestone.acceptedPercent}%` }} />
+              </div>
+              <small className="roadmapTasks">{taskCount ? `${completedTasks}/${taskCount} tarefas do WBS` : "Sem tarefas WBS associadas"}</small>
+              <small className="roadmapExit">{milestone.exit}</small>
+              {index < program.milestones.length - 1 ? <i className="roadmapConnector" aria-hidden="true" /> : null}
             </div>
           );
         })}
+      </div>
+
+      <div className="journeyHeader">
+        <span>Event ledger preservado</span>
+        <strong>{program.eventLedger.length} eventos</strong>
+      </div>
+      <div className="journeyRail" tabIndex={0} role="region" aria-label="Jornada histórica completa do FECH.AI">
+        {program.eventLedger.map((item, index) => <JourneyEvent item={item} key={`${item.date}-${index}`} />)}
       </div>
     </article>
   );
@@ -296,6 +382,37 @@ function WbsMilestoneTab({ milestone, active }: { milestone: WbsMilestone; activ
   );
 }
 
+function FullMilestoneDetails({ milestone, focusId }: { milestone: WbsMilestone; focusId?: string }) {
+  return (
+    <details className={`wbsDetail ${milestone.state.toLowerCase()}`} open={milestone.state === "ACTIVE"}>
+      <summary>
+        <span>{milestone.id}</span>
+        <strong>{milestone.label}</strong>
+        <b>{milestone.hours}h</b>
+      </summary>
+      <ul className="focusTaskList detailTaskList">
+        {milestone.tasks.map((task) => <WbsFocusTask task={task} focusId={focusId} key={task.id} />)}
+      </ul>
+    </details>
+  );
+}
+
+function BacklogDetails({ backlog }: { backlog: WbsBacklog }) {
+  const taskHours = backlog.tasks.reduce((total, task) => total + task.hours, 0);
+  return (
+    <details className="wbsDetail backlogDetail">
+      <summary>
+        <span>{backlog.id}</span>
+        <strong>{backlog.label}</strong>
+        <b>{taskHours}h</b>
+      </summary>
+      <ul className="focusTaskList detailTaskList">
+        {backlog.tasks.map((task) => <WbsFocusTask task={task} key={task.id} />)}
+      </ul>
+    </details>
+  );
+}
+
 function WbsCommandCenter() {
   const wbs = workspaceDemo.fechaiWbs;
   const activeMilestone = wbs.milestones.find((milestone) => milestone.state === "ACTIVE") ?? wbs.milestones[0];
@@ -312,7 +429,7 @@ function WbsCommandCenter() {
       <div className="sectionHeader">
         <div>
           <div className="eyebrow">WBS / effort</div>
-          <h2>Bloco atual, tarefa seguinte e caminho futuro</h2>
+          <h2>Bloco atual, tarefa seguinte e WBS completo</h2>
         </div>
         <div className="wbsTotals">
           <span><small>Concluído</small><strong>{completedHours}h</strong></span>
@@ -362,6 +479,29 @@ function WbsCommandCenter() {
           ))}
         </aside>
       </div>
+
+      <div className="fullWbsHeader">
+        <div>
+          <span>WBS completo</span>
+          <strong>Todas as tarefas e backlogs continuam disponíveis sem dominar a tela.</strong>
+        </div>
+        <small>Expanda somente o bloco que precisar consultar.</small>
+      </div>
+      <div className="wbsDetailsGrid">
+        <div className="wbsDetailsColumn">
+          {wbs.milestones.map((milestone) => (
+            <FullMilestoneDetails
+              milestone={milestone}
+              focusId={milestone.id === activeMilestone.id ? focusTask?.id : undefined}
+              key={milestone.id}
+            />
+          ))}
+        </div>
+        <div className="wbsDetailsColumn backlogColumn">
+          {wbs.backlogs.map((backlog) => <BacklogDetails backlog={backlog} key={backlog.id} />)}
+        </div>
+      </div>
+
       <div className="wbsFootnote">Planejamento estrutural: horas não são timesheet, confiança ou Security Go.</div>
     </article>
   );
@@ -382,7 +522,7 @@ function EvidenceCard({ project }: { project: ExternalProject }) {
         <div><span>Repositório</span><strong>{project.repository}</strong></div>
         <div><span>SHA observado</span><code>{project.observedSha}</code></div>
         <div><span>Verificação</span><strong>{project.verification}</strong></div>
-        <div><span>Handoff</span><strong>{isFechai ? workspaceDemo.fechaiProgram.specialistTransport : "Snapshot manual"}</strong></div>
+        <div><span>Handoff</span><strong>{isFechai ? workspaceDemo.fechaiProgram.specialistTransport : "Não definido neste snapshot"}</strong></div>
       </div>
     </article>
   );
@@ -419,7 +559,10 @@ function ProjectDashboard({ project }: { project: ExternalProject }) {
 }
 
 export function WorkspaceHome() {
-  const initialProject = workspaceDemo.externalProjects.find((project) => project.name === FECHAI) ?? workspaceDemo.externalProjects[0];
+  const initialProject =
+    workspaceDemo.externalProjects.find((project) => project.name === FECHAI) ??
+    workspaceDemo.externalProjects[0];
+
   const [selectedProjectName, setSelectedProjectName] = useState(initialProject.name);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -435,7 +578,7 @@ export function WorkspaceHome() {
         onSelectProject={setSelectedProjectName}
         onClose={() => setMenuOpen(false)}
       />
-      <main className="commandMain">
+      <main className="commandMain" inert={menuOpen ? true : undefined}>
         <ProjectHeader project={selectedProject} onMenu={() => setMenuOpen(true)} />
         <ProjectDashboard project={selectedProject} />
         <footer className="commandFooter">
