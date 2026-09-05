@@ -111,6 +111,22 @@ When SES-mediated specialist work is used, resolve the current SES `core/protoco
 
 If required specialist rules cannot be resolved, stop with `SPECIALIST_RULES_UNRESOLVED`.
 
+## 6.1 Consumer consultation versus SES release lifecycle
+
+SFJM Workspace must not infer that a newer/noncurrent SES specialist candidate invalidates an already adopted ACTIVE/certified role or requires the Workspace to perform SES release certification.
+
+```text
+ADOPTED ROLE + ACTIVE ARCHETYPE + CURRENT SES LEDGER YES
+→ CONSULTATION ELIGIBLE
+
+NONCURRENT SES CANDIDATE EXISTS
+!= WORKSPACE BLOCKED
+
+CONSUMER_RECERTIFICATION_DETOUR_FORBIDDEN = YES
+```
+
+Exact runtime certification is material only when the task/authority explicitly requires that exact fingerprint.
+
 ## 7. Evidence rules
 
 Rank evidence as follows for Workspace product-state decisions:
