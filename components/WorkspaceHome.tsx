@@ -164,8 +164,13 @@ function ProjectHeader({ project, onMenu }: { project: ExternalProject; onMenu: 
           <small>{isFechai ? wbs.currentTask : "Snapshot manual do projeto"}</small>
         </div>
         <div className="heroMetric progressMetric">
-          <span>Concluído</span>
+          <span>Conclusão total</span>
           <strong>{isFechai ? `${wbsPercent.toFixed(1)}%` : "—"}</strong>
+          {isFechai ? (
+            <div className="totalProgressTrack" aria-label={`${wbsPercent.toFixed(1)}% do WBS crítico concluído`}>
+              <span style={{ width: `${wbsPercent}%` }} />
+            </div>
+          ) : null}
           <small>{isFechai ? `${completedHours}h de ${criticalHours}h do WBS crítico` : "Sem WBS canônica suficiente no snapshot"}</small>
         </div>
         <div className="heroMetric">
