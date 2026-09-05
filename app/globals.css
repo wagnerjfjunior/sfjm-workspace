@@ -757,3 +757,50 @@ button { color: inherit; }
   .wbsDetail summary { grid-template-columns: 70px minmax(0,1fr) auto; }
   .roadmapNode { flex-basis: 160px; }
 }
+
+
+/* Continuity-first exact-head refinements */
+.projectNameLabel {
+  color: #8bdcf2;
+  letter-spacing: .08em;
+}
+.actionFooterStack {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+}
+.actionFooterStack > div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+.conditionalRoute {
+  padding-top: 6px;
+  border-top: 1px solid #1b2e48;
+  color: var(--muted);
+  font-size: 8px;
+  line-height: 1.4;
+}
+.conditionalRoute strong { color: #d8c7ff; }
+.evidenceBoundaryCompact {
+  margin-top: 8px;
+  padding: 8px 9px;
+  border: 1px dashed #2a4162;
+  border-radius: 9px;
+  background: #07111f;
+}
+.evidenceBoundaryCompact span {
+  display: block;
+  color: var(--muted);
+  font-size: 7px;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+.evidenceBoundaryCompact strong {
+  display: block;
+  margin-top: 4px;
+  color: #cbd7e9;
+  font-size: 8px;
+  line-height: 1.4;
+}
