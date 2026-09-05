@@ -117,7 +117,7 @@ button { color: inherit; }
   text-decoration: none;
 }
 .projectSubnav a:hover { color: white; border-left-color: var(--cyan); }
-.projectSubnav span { color: #5f6f89; }
+.projectSubnav span { color: var(--muted); }
 .sidebarSpacer { flex: 1; }
 .sidebarFoot {
   display: flex;
@@ -1019,5 +1019,17 @@ button { color: inherit; }
 
   .milestoneMetaLine {
     align-items: flex-end;
+  }
+}
+
+
+/* Review closure: mobile drawer focus + unavailable-state contrast */
+@media (max-width: 980px) {
+  .commandSidebar {
+    visibility: hidden;
+  }
+
+  .commandSidebar.open {
+    visibility: visible;
   }
 }
