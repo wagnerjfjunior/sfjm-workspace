@@ -228,12 +228,9 @@ function NextActionCard({ project }: { project: ExternalProject }) {
           </div>
         </>
       ) : (
-        <>
-          <div className="genericActionText">{project.nextSafeAction}</div>
-          <div className="actionFooter">
-            <span>{project.verification}</span>
-          </div>
-        </>
+        <div className="actionFooter">
+          <span>{project.verification}</span>
+        </div>
       )}
     </article>
   );
