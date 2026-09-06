@@ -1591,3 +1591,248 @@ body {
     grid-column: auto;
   }
 }
+
+
+/* Generic current-task decomposition panel */
+.nextActionLayout {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
+}
+
+.nextActionLayout.hasDecomposition {
+  grid-template-columns: minmax(0, 1.65fr) minmax(340px, .95fr);
+  align-items: stretch;
+}
+
+.nextActionPrimary {
+  min-width: 0;
+}
+
+.taskDecompositionPanel {
+  min-width: 0;
+  padding: 15px;
+  border: 1px solid rgba(34, 211, 238, .28);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(139, 92, 246, .11), transparent 34%),
+    linear-gradient(180deg, rgba(8, 20, 36, .97), rgba(5, 14, 27, .97));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.025),
+    0 0 24px rgba(34, 211, 238, .045);
+}
+
+.taskDecompositionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding-bottom: 11px;
+  border-bottom: 1px solid rgba(58, 82, 120, .42);
+}
+
+.taskDecompositionHeader > div {
+  min-width: 0;
+}
+
+.taskDecompositionHeader strong {
+  display: block;
+  margin-top: 3px;
+  color: #b8ecf5;
+  font-size: 19px;
+  letter-spacing: -.02em;
+}
+
+.taskDecompositionHeader span:not(.decompositionCount) {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.decompositionCount {
+  flex: 0 0 auto;
+  padding: 5px 8px;
+  border: 1px solid rgba(139, 92, 246, .32);
+  border-radius: 999px;
+  color: #cdbfff;
+  background: rgba(139, 92, 246, .065);
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.decompositionList {
+  display: grid;
+  gap: 7px;
+  margin: 11px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.decompositionItem {
+  display: grid;
+  grid-template-columns: 25px minmax(0, 1fr);
+  gap: 9px;
+  padding: 9px 10px;
+  border: 1px solid #1d3553;
+  border-radius: 12px;
+  background: rgba(7, 18, 32, .84);
+}
+
+.decompositionItem.complete {
+  border-color: rgba(40, 229, 140, .27);
+}
+
+.decompositionItem.active,
+.decompositionItem.next {
+  border-color: rgba(34, 211, 238, .48);
+  box-shadow: 0 0 18px rgba(34, 211, 238, .055);
+}
+
+.decompositionItem.not_authorized {
+  border-color: rgba(139, 92, 246, .28);
+}
+
+.decompositionItem.blocked {
+  border-color: rgba(251, 191, 36, .34);
+}
+
+.decompositionStateIcon {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  margin-top: 1px;
+  border: 1px solid #345172;
+  border-radius: 50%;
+  color: #90a6c3;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.decompositionItem.complete .decompositionStateIcon {
+  color: var(--green);
+  border-color: rgba(40, 229, 140, .48);
+}
+
+.decompositionItem.active .decompositionStateIcon,
+.decompositionItem.next .decompositionStateIcon {
+  color: var(--cyan);
+  border-color: rgba(34, 211, 238, .58);
+}
+
+.decompositionItem.not_authorized .decompositionStateIcon {
+  color: #c4b5fd;
+  border-color: rgba(139, 92, 246, .45);
+}
+
+.decompositionTitleLine {
+  display: flex;
+  gap: 7px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.decompositionTitleLine strong {
+  color: #8bdcf2;
+  font-size: 10px;
+  letter-spacing: .03em;
+}
+
+.decompositionTitleLine span {
+  color: #eef4ff;
+  font-size: 11px;
+  font-weight: 760;
+  line-height: 1.3;
+}
+
+.decompositionItem small {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 750;
+  letter-spacing: .035em;
+}
+
+.decompositionItem.complete small {
+  color: #79d9aa;
+}
+
+.decompositionItem.not_authorized small {
+  color: #b9a9ea;
+}
+
+.decompositionItem p {
+  margin: 4px 0 0;
+  color: #879ab7;
+  font-size: 9px;
+  line-height: 1.35;
+}
+
+.decompositionSource {
+  margin-top: 10px;
+  padding-top: 9px;
+  border-top: 1px solid rgba(58, 82, 120, .35);
+}
+
+.decompositionSource span {
+  display: block;
+  color: #87dcea;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+
+.decompositionSource small {
+  display: block;
+  margin-top: 3px;
+  color: #7185a2;
+  font-size: 8px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.nextActionLayout.hasDecomposition .actionFacts {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.nextActionLayout.hasDecomposition .safeSequence {
+  max-width: none;
+}
+
+@media (max-width: 1120px) {
+  .nextActionLayout.hasDecomposition {
+    grid-template-columns: 1fr;
+  }
+
+  .taskDecompositionPanel {
+    max-width: none;
+  }
+}
+
+@media (max-width: 680px) {
+  .taskDecompositionPanel {
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .taskDecompositionHeader {
+    flex-direction: column;
+  }
+
+  .nextActionLayout.hasDecomposition .actionFacts {
+    grid-template-columns: 1fr;
+  }
+
+  .decompositionTitleLine {
+    display: grid;
+    gap: 2px;
+  }
+}
