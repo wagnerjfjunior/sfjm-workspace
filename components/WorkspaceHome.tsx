@@ -204,6 +204,16 @@ function decompositionIcon(state: NonNullable<ExternalProject["taskDecomposition
   return "○";
 }
 
+function decompositionStateLabel(state: NonNullable<ExternalProject["taskDecomposition"]>["items"][number]["state"]) {
+  if (state === "COMPLETE") return "Concluído";
+  if (state === "ACTIVE") return "Em execução";
+  if (state === "NEXT") return "Próxima";
+  if (state === "BLOCKED") return "Bloqueado";
+  if (state === "NOT_AUTHORIZED") return "Não autorizado";
+  if (state === "PLANNED") return "Planejado";
+  return "Estado indefinido";
+}
+
 function TaskDecompositionPanel({
   decomposition
 }: {
@@ -217,20 +227,26 @@ function TaskDecompositionPanel({
           <strong>{decomposition.parentTaskId}</strong>
           <span>{decomposition.parentLabel}</span>
         </div>
-        <span className="decompositionCount">{decomposition.items.length} slices</span>
+        <span className="decompositionCount">{decomposition.items.length} etapas</span>
       </div>
 
-      <ol className="decompositionList">
+      <ol className="decompositionList" role="list">
         {decomposition.items.map((item) => (
-          <li className={`decompositionItem ${item.state.toLowerCase()}`} key={item.id}>
+          <li
+            className={`decompositionItem ${item.state.toLowerCase()}`}
+            key={item.id}
+            title={item.note ?? item.status}
+          >
             <span className="decompositionStateIcon" aria-hidden="true">{decompositionIcon(item.state)}</span>
-            <div>
+            <div className="decompositionItemMain">
               <div className="decompositionTitleLine">
                 <strong>{item.id}</strong>
                 <span>{item.label}</span>
               </div>
-              <small>{item.status}</small>
-              {item.note ? <p>{item.note}</p> : null}
+              <span className={`decompositionStatusPill ${item.state.toLowerCase()}`}>
+                {decompositionStateLabel(item.state)}
+              </span>
+              <small className="decompositionCanonicalStatus">{item.status}</small>
             </div>
           </li>
         ))}
@@ -264,24 +280,24 @@ function NextActionCard({ project }: { project: ExternalProject }) {
               <div className="eyebrow">Próxima ação segura</div>
               <h2>{isFechai && focusTask ? focusTask.label : project.nextSafeAction}</h2>
             </div>
-            <span className="statusPill next">NEXT</span>
+            <span className="statusPill next">PRÓXIMA</span>
           </div>
 
           {isFechai && focusTask && activeMilestone ? (
             <>
-              <p className="safeSequence">{program.nextSafeAction}</p>
+              <p className="safeSequence" title={program.nextSafeAction}>{project.nextSafeAction}</p>
               <div className="actionFacts">
                 <div><span>Bloco</span><strong>{activeMilestone.id}</strong></div>
                 <div><span>Tarefa</span><strong>{focusTask.id} · {focusTask.hours}h</strong></div>
                 <div><span>Situação</span><strong>{taskStateLabel(focusTask, true)}</strong></div>
                 <div>
                   <span>Roteamento previsto</span>
-                  <strong>{requiredRoutes.map((route) => route.targetName).join(" → ")}</strong>
+                  <strong>{requiredRoutes.map((route) => route.targetName.replace("SES — ", "")).join(" → ")}</strong>
                 </div>
               </div>
               <div className="actionFooter actionFooterStack">
                 <div>
-                  <span className="manualChip">MANUAL COPY/PASTE</span>
+                  <span className="manualChip">CÓPIA MANUAL</span>
                   <span>{program.specialistTransport}</span>
                 </div>
                 {conditionalRoute ? (
