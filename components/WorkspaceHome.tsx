@@ -254,6 +254,20 @@ function TaskDecompositionPanel({
                 {decompositionStateLabel(item.state)}
               </span>
               <small className="decompositionCanonicalStatus">{item.status}</small>
+              {item.children?.length ? (
+                <div className="nestedDecomposition" aria-label={`Histórico de subetapas de ${item.id}`}>
+                  {item.children.map((child) => (
+                    <span
+                      className={`nestedDecompositionItem ${child.state.toLowerCase()}`}
+                      key={child.id}
+                      title={`${child.label} · ${child.status}`}
+                    >
+                      <span aria-hidden="true">{decompositionIcon(child.state)}</span>
+                      <strong>{child.id.replace(item.id, "") || child.id}</strong>
+                    </span>
+                  ))}
+                </div>
+              ) : null}
             </div>
           </li>
         ))}
