@@ -3,6 +3,33 @@ export type StatusCheck = { label: string; value: string };
 export type ContextCard = { icon: string; label: string; value: string };
 export type SourceRow = { label: string; value: string; badge?: boolean };
 export type TimelineItem = { date: string; text: string; kind: "PROGRAM" | "BASELINE" | "REMEDIATION" | "EVIDENCE" };
+export type TaskDecompositionState =
+  | "COMPLETE"
+  | "ACTIVE"
+  | "NEXT"
+  | "PLANNED"
+  | "BLOCKED"
+  | "NOT_AUTHORIZED"
+  | "UNKNOWN";
+
+export type TaskDecompositionItem = {
+  id: string;
+  label: string;
+  state: TaskDecompositionState;
+  status: string;
+  note?: string;
+  hours?: number;
+  owner?: string;
+  evidenceRef?: string;
+};
+
+export type TaskDecomposition = {
+  parentTaskId: string;
+  parentLabel: string;
+  source: string;
+  items: TaskDecompositionItem[];
+};
+
 export type ExternalProject = {
   name: string;
   kind: string;
@@ -13,6 +40,7 @@ export type ExternalProject = {
   observedSha: string;
   observedAt: string;
   verification: string;
+  taskDecomposition?: TaskDecomposition;
 };
 
 export type ProgramMilestone = {
@@ -119,7 +147,7 @@ export const workspaceDemo = {
   checks: [
     { label: "Último milestone", value: "STS-M1 fechado · deferred assurance" },
     { label: "Milestone atual", value: "STS-M2 · STARTED" },
-    { label: "Próxima ação", value: "STS-M2-04 · target policy READ_ONLY" },
+    { label: "Próxima ação", value: "STS-M2-04 · selecionar/autorizar próximo bounded slice" },
     { label: "Objetivo principal", value: "Preservado · Issue #141" },
     { label: "Histórico", value: "Preservado" },
     { label: "Security Go", value: "Não concedido" }
@@ -129,8 +157,8 @@ export const workspaceDemo = {
     {
       name: "FECH.AI",
       kind: "Projeto externo",
-      continuityState: "STS-M2 STARTED · STS-M2-01 COMPLETE · STS-M2-02 COMPLETE WITH RESIDUALS · STS-M2-03 COMPLETE WITH RESIDUALS · STS-M2-04 NEXT GATE / NOT STARTED",
-      nextSafeAction: "STS-M2-04 → bootstrap READ_ONLY da política target de SECURITY DEFINER / RLS / DML, consumindo M2-01..03 e preparando M2-05/M2-06.",
+      continuityState: "STS-M2 STARTED · STS-M2-04 IN PROGRESS · B1/B2 COMPLETE WITH RESIDUALS · B3 COMPLETE / ACCEPTED",
+      nextSafeAction: "STS-M2-04 → selecionar e autorizar o próximo bounded target-policy slice. M2-04C tem a dependência direta mais forte; M2-04D continua requerido. Nenhum slice é iniciado automaticamente.",
       blockers: [
         "Security Go continua DENIED / NOT_GRANTED",
         "Broad paid commercialization continua BLOCKED",
@@ -138,12 +166,59 @@ export const workspaceDemo = {
         "IMP-003 permanece NOT_DETERMINED",
         "ROLLBACK_REAPPLY permanece NOT_DETERMINED",
         "OC-01 é REQUIRED BEFORE EXTERNAL USERS",
-        "STS-M2-04 é NEXT GATE / NOT STARTED e não possui autorização de implementação"
+        "57 decisões B3 TARGET_SECURITY_MODE permanecem NOT_DETERMINED",
+        "Seis current authority blockers permanecem: 004, 031, 036, 047, 119, 127",
+        "STS-M2-04C e STS-M2-04D ainda não estão autorizados"
       ],
       repository: "wagnerjfjunior/fecha.ai",
-      observedSha: "558a0eb5b504e85c670be4bc7cc8b7878ff3745f",
-      observedAt: "5 Sep 2026",
-      verification: "Snapshot manual · FECH.AI continua sendo a autoridade"
+      observedSha: "53a70f814e8b695439358ebe609850f25bf636a9",
+      observedAt: "5 Sep 2026 · pós-PR #183",
+      verification: "Snapshot manual · FECH.AI continua sendo a autoridade",
+      taskDecomposition: {
+        parentTaskId: "STS-M2-04",
+        parentLabel: "Política target de DEFINER / RLS / DML",
+        source: "FECH.AI docs/sfjm/CURRENT_STATE.md + NEXT_SAFE_ACTION.md + handoffs/CURRENT.md @ 53a70f81…",
+        items: [
+          {
+            id: "M2-04B1",
+            label: "Routine Authority Policy Core",
+            state: "COMPLETE",
+            status: "COMPLETE / ACCEPTED WITH RESIDUALS",
+            note: "Target contract accepted; per-routine compliance remained downstream.",
+            evidenceRef: "docs/security/evidence/2026-09-05-sts-m2-04b1-routine-authority-policy.md"
+          },
+          {
+            id: "M2-04B2",
+            label: "High-Risk Routine Authority Classification",
+            state: "COMPLETE",
+            status: "COMPLETE / ACCEPTED WITH RESIDUALS",
+            note: "15 high-risk routines classified; runtime/AppSec residuals preserved.",
+            evidenceRef: "docs/security/evidence/2026-09-05-sts-m2-04b2-high-risk-routine-authority-classification.md"
+          },
+          {
+            id: "M2-04B3",
+            label: "Remaining Routine Authority Classification",
+            state: "COMPLETE",
+            status: "COMPLETE / ACCEPTED",
+            note: "113/113 classified · 52 DEFINER · 4 INVOKER · 57 NOT_DETERMINED · six authority blockers preserved.",
+            evidenceRef: "docs/security/evidence/2026-09-05-sts-m2-04b3-remaining-routine-authority-classification.md"
+          },
+          {
+            id: "M2-04C",
+            label: "RLS / FORCE RLS / direct DML / policy composition",
+            state: "NOT_AUTHORIZED",
+            status: "NOT AUTHORIZED / NOT STARTED",
+            note: "Strongest direct dependency for unresolved B3 target-security-mode decisions."
+          },
+          {
+            id: "M2-04D",
+            label: "Trigger / trigger-helper authority",
+            state: "NOT_AUTHORIZED",
+            status: "NOT AUTHORIZED / NOT STARTED",
+            note: "Still required for the SECURITY DEFINER trigger-provenance routines excluded from B3."
+          }
+        ]
+      }
     },
     {
       name: "MoreNumTegra",
@@ -166,8 +241,8 @@ export const workspaceDemo = {
   fechaiProgram: {
     name: "FECH.AI Security-to-Scale 2026",
     repository: "wagnerjfjunior/fecha.ai",
-    observedSha: "558a0eb5b504e85c670be4bc7cc8b7878ff3745f",
-    observedAt: "5 Sep 2026",
+    observedSha: "53a70f814e8b695439358ebe609850f25bf636a9",
+    observedAt: "5 Sep 2026 · pós-PR #183",
     programIssue: "#141",
     programObjective: "Reach a sellable, operable FECH.AI with a defensible Security Go candidate and a clear path out of the current frontend/backend monolith before year-end, without hiding unresolved risk or performing a big-bang rewrite.",
     objectiveSource: "FECH.AI Issue #141 + program-hierarchy BCR",
@@ -202,8 +277,8 @@ export const workspaceDemo = {
     ],
     lastCompletedMilestone: "STS-M1 — COMPLETE WITH DEFERRED SECURITY ASSURANCE",
     nextProgramMilestone: "STS-M3 — Backend Authority Contract Freeze · PLANNED",
-    activeWorkstream: "STS-M2 · STARTED · STS-M2-04 target-policy gate is NEXT / NOT STARTED",
-    nextSafeAction: "Resolve live main 558a0eb5… → bootstrap STS-M2-04 READ_ONLY target policy → route package manually to Backend/Data, then Architecture",
+    activeWorkstream: "STS-M2 · STARTED · STS-M2-04 IN PROGRESS · B1/B2/B3 classification complete",
+    nextSafeAction: "Resolve live main 53a70f81… → select/authorize the next bounded M2-04 target-policy slice → M2-04C has the strongest direct dependency; M2-04D remains required → no slice auto-starts",
     securityGo: "NOT GRANTED",
     commercialization: "BLOCKED",
     weightingBasis: "Peso = duração planejada; progresso só avança quando o gate do milestone é aceito.",
@@ -431,13 +506,13 @@ export const workspaceDemo = {
 
     active: [
       {
-        id: "STS-M2-04 NEXT GATE",
+        id: "STS-M2-04",
         label: "Target Database Authority Policy · SECURITY DEFINER / RLS / DML",
         category: "PROGRAM",
-        state: "PLANNED",
+        state: "ACTIVE",
         owner: "Backend/Data + Architecture",
-        evidence: "STS-M2 está STARTED. STS-M2-01..03 estão aceitos; STS-M2-04 permanece NEXT GATE / NOT STARTED. Durable evidence de M2-02 e M2-03 deve ser consumida, não reconstruída do zero.",
-        nextAction: "Resolver live main 558a0eb5…; bootstrap READ_ONLY; enviar manualmente o primeiro pacote ao SES — Backend & Data Platform Specialist e depois ao SES — Software Systems Architect."
+        evidence: "STS-M2-04 está IN PROGRESS. B1 e B2 estão COMPLETE / ACCEPTED WITH RESIDUALS; B3 está COMPLETE / ACCEPTED com cobertura 113/113. M2-04C e M2-04D permanecem não autorizados.",
+        nextAction: "Selecionar e autorizar o próximo bounded M2-04 target-policy slice; nenhum candidato é iniciado automaticamente."
       }
     ] satisfies ExecutionItem[],
 
@@ -540,7 +615,7 @@ export const workspaceDemo = {
   } satisfies ProgramSnapshot,
 
   fechaiWbs: {
-    source: "WBS structure: docs/roadmap/fechai-security-to-scale-2026-wbs.md @ FECH.AI 558a0eb5… · current task state: docs/sfjm/CURRENT_STATE.md + NEXT_SAFE_ACTION.md",
+    source: "WBS structure: docs/roadmap/fechai-security-to-scale-2026-wbs.md · current task state: FECH.AI docs/sfjm/CURRENT_STATE.md + NEXT_SAFE_ACTION.md @ 53a70f81…",
     basis: "Planning estimates for visibility, not clocked timesheets.",
     totalCriticalHours: 832,
     completedHours: 264,
@@ -548,8 +623,8 @@ export const workspaceDemo = {
     preSecurityGoBacklogHours: 116,
     plannedBacklogHours: 104,
     currentPackage: "STS-M2 — STARTED",
-    currentTask: "STS-M2-04 · Política target de DEFINER / RLS / DML · NEXT GATE / NOT STARTED · 20h",
-    note: "Rótulos/horas vêm da WBS estrutural; estado corrente vem do SFJM do FECH.AI. STS-M2-01..03 estão COMPLETE; STS-M2-04 é o próximo gate READ_ONLY e ainda não foi iniciado. Horas são planejamento, não timesheet.",
+    currentTask: "STS-M2-04 · Política target de DEFINER / RLS / DML · IN PROGRESS · 20h",
+    note: "Rótulos/horas vêm da WBS estrutural; estado corrente vem do SFJM do FECH.AI. STS-M2-04 está em progresso; B1/B2/B3 estão concluídos no micro-split publicado; o próximo bounded slice ainda precisa ser selecionado/autorizado. Horas são planejamento, não timesheet.",
     milestones: [
       {
         id: "STS-M0",
@@ -587,7 +662,7 @@ export const workspaceDemo = {
           { id: "STS-M2-01", label: "Matriz de 43 tabelas", hours: 20, state: "COMPLETE" },
           { id: "STS-M2-02", label: "Mapa routines / policies / triggers / grants", hours: 24, state: "COMPLETE", note: "Accepted with residuals." },
           { id: "STS-M2-03", label: "Índices / ACL contraditórias", hours: 16, state: "COMPLETE", note: "Accepted with residuals." },
-          { id: "STS-M2-04", label: "Política target de DEFINER / RLS / DML", hours: 20, state: "PLANNED", note: "NEXT GATE / NOT STARTED · READ_ONLY bootstrap first." },
+          { id: "STS-M2-04", label: "Política target de DEFINER / RLS / DML", hours: 20, state: "ACTIVE", note: "IN PROGRESS / TARGET-POLICY DESIGN · B1/B2/B3 complete; next bounded slice not yet selected/authorized." },
           { id: "STS-M2-05", label: "Database Contract Map", hours: 20, state: "PLANNED", note: "Successor; consumes M2-04 target policy." },
           { id: "STS-M2-06", label: "Decisão arquitetural do banco", hours: 16, state: "PLANNED", note: "Successor; consumes M2-04/M2-05 evidence." }
         ]
@@ -689,12 +764,12 @@ export const workspaceDemo = {
   currentState: [
     { label: "Último milestone concluído", value: "STS-M1 · deferred assurance" },
     { label: "Milestone atual", value: "STS-M2 · STARTED" },
-    { label: "Próxima continuidade", value: "STS-M2-04 · READ_ONLY target policy" },
+    { label: "Próxima continuidade", value: "STS-M2-04 · selecionar/autorizar próximo bounded slice" },
     { label: "Objetivo", value: "Issue #141 · PRESERVED" }
   ] satisfies SourceRow[],
 
   sources: [
-    { label: "FECH.AI main", value: "558a0eb5…", badge: true },
+    { label: "FECH.AI main", value: "53a70f81…", badge: true },
     { label: "Program objective", value: "#141 OPEN · PRESERVED", badge: true },
     { label: "Current state source", value: "docs/sfjm/CURRENT_STATE.md", badge: true },
     { label: "WBS structure", value: "832h · structural baseline", badge: true },
