@@ -13,9 +13,9 @@ const FECHAI = "FECH.AI";
 
 function taskStateLabel(task: WbsTask, isFocus: boolean) {
   if (task.state === "COMPLETE") return "Concluída";
+  if (task.state === "ACTIVE") return "Em execução";
   if (isFocus) return "Próximo gate";
   if (task.state === "PARKED") return "Backlog";
-  if (task.state === "ACTIVE") return "Em execução";
   return "Planejada";
 }
 
@@ -196,6 +196,54 @@ function ProjectHeader({
   );
 }
 
+function decompositionIcon(state: NonNullable<ExternalProject["taskDecomposition"]>["items"][number]["state"]) {
+  if (state === "COMPLETE") return "✓";
+  if (state === "ACTIVE" || state === "NEXT") return "▶";
+  if (state === "BLOCKED") return "!";
+  if (state === "NOT_AUTHORIZED") return "⊘";
+  return "○";
+}
+
+function TaskDecompositionPanel({
+  decomposition
+}: {
+  decomposition: NonNullable<ExternalProject["taskDecomposition"]>;
+}) {
+  return (
+    <aside className="taskDecompositionPanel" aria-label={`Decomposição da tarefa ${decomposition.parentTaskId}`}>
+      <div className="taskDecompositionHeader">
+        <div>
+          <div className="eyebrow">Decomposição da tarefa</div>
+          <strong>{decomposition.parentTaskId}</strong>
+          <span>{decomposition.parentLabel}</span>
+        </div>
+        <span className="decompositionCount">{decomposition.items.length} slices</span>
+      </div>
+
+      <ol className="decompositionList">
+        {decomposition.items.map((item) => (
+          <li className={`decompositionItem ${item.state.toLowerCase()}`} key={item.id}>
+            <span className="decompositionStateIcon" aria-hidden="true">{decompositionIcon(item.state)}</span>
+            <div>
+              <div className="decompositionTitleLine">
+                <strong>{item.id}</strong>
+                <span>{item.label}</span>
+              </div>
+              <small>{item.status}</small>
+              {item.note ? <p>{item.note}</p> : null}
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <div className="decompositionSource">
+        <span>Fonte publicada pelo projeto</span>
+        <small>{decomposition.source}</small>
+      </div>
+    </aside>
+  );
+}
+
 function NextActionCard({ project }: { project: ExternalProject }) {
   const isFechai = project.name === FECHAI;
   const program = workspaceDemo.fechaiProgram;
@@ -205,46 +253,53 @@ function NextActionCard({ project }: { project: ExternalProject }) {
     activeTasks.find((task) => task.state !== "COMPLETE");
   const requiredRoutes = program.specialistRouting.filter((route) => route.requirement === "REQUIRED");
   const conditionalRoute = program.specialistRouting.find((route) => route.requirement === "CONDITIONAL");
+  const decomposition = project.taskDecomposition;
 
   return (
     <article className="commandCard nextActionCard" id="next-action">
-      <div className="cardHeading">
-        <div>
-          <div className="eyebrow">Próxima ação segura</div>
-          <h2>{isFechai && focusTask ? focusTask.label : project.nextSafeAction}</h2>
-        </div>
-        <span className="statusPill next">NEXT</span>
-      </div>
+      <div className={`nextActionLayout ${decomposition ? "hasDecomposition" : ""}`}>
+        <div className="nextActionPrimary">
+          <div className="cardHeading">
+            <div>
+              <div className="eyebrow">Próxima ação segura</div>
+              <h2>{isFechai && focusTask ? focusTask.label : project.nextSafeAction}</h2>
+            </div>
+            <span className="statusPill next">NEXT</span>
+          </div>
 
-      {isFechai && focusTask && activeMilestone ? (
-        <>
-          <p className="safeSequence">{program.nextSafeAction}</p>
-          <div className="actionFacts">
-            <div><span>Bloco</span><strong>{activeMilestone.id}</strong></div>
-            <div><span>Tarefa</span><strong>{focusTask.id} · {focusTask.hours}h</strong></div>
-            <div><span>Situação</span><strong>{taskStateLabel(focusTask, true)}</strong></div>
-            <div>
-              <span>Sequência de especialistas</span>
-              <strong>{requiredRoutes.map((route) => route.targetName).join(" → ")}</strong>
-            </div>
-          </div>
-          <div className="actionFooter actionFooterStack">
-            <div>
-              <span className="manualChip">MANUAL COPY/PASTE</span>
-              <span>{program.specialistTransport}</span>
-            </div>
-            {conditionalRoute ? (
-              <div className="conditionalRoute">
-                <strong>Escalonamento condicional:</strong> {conditionalRoute.targetName} · {conditionalRoute.purpose}
+          {isFechai && focusTask && activeMilestone ? (
+            <>
+              <p className="safeSequence">{program.nextSafeAction}</p>
+              <div className="actionFacts">
+                <div><span>Bloco</span><strong>{activeMilestone.id}</strong></div>
+                <div><span>Tarefa</span><strong>{focusTask.id} · {focusTask.hours}h</strong></div>
+                <div><span>Situação</span><strong>{taskStateLabel(focusTask, true)}</strong></div>
+                <div>
+                  <span>Roteamento previsto</span>
+                  <strong>{requiredRoutes.map((route) => route.targetName).join(" → ")}</strong>
+                </div>
               </div>
-            ) : null}
-          </div>
-        </>
-      ) : (
-        <div className="actionFooter">
-          <span>{project.verification}</span>
+              <div className="actionFooter actionFooterStack">
+                <div>
+                  <span className="manualChip">MANUAL COPY/PASTE</span>
+                  <span>{program.specialistTransport}</span>
+                </div>
+                {conditionalRoute ? (
+                  <div className="conditionalRoute">
+                    <strong>Escalonamento condicional:</strong> {conditionalRoute.targetName} · {conditionalRoute.purpose}
+                  </div>
+                ) : null}
+              </div>
+            </>
+          ) : (
+            <div className="actionFooter">
+              <span>{project.verification}</span>
+            </div>
+          )}
         </div>
-      )}
+
+        {decomposition ? <TaskDecompositionPanel decomposition={decomposition} /> : null}
+      </div>
     </article>
   );
 }
