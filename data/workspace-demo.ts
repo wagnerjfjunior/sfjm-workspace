@@ -40,7 +40,7 @@ export type ExternalProject = {
   observedSha: string;
   observedAt: string;
   verification: string;
-  taskDecomposition?: TaskDecomposition;
+  taskDecompositions?: TaskDecomposition[];
 };
 
 export type ProgramMilestone = {
@@ -174,7 +174,7 @@ export const workspaceDemo = {
       observedSha: "53a70f814e8b695439358ebe609850f25bf636a9",
       observedAt: "5 Sep 2026 · pós-PR #183",
       verification: "Snapshot manual · FECH.AI continua sendo a autoridade",
-      taskDecomposition: {
+      taskDecompositions: [{
         parentTaskId: "STS-M2-04",
         parentLabel: "Política target de DEFINER / RLS / DML",
         source: "FECH.AI docs/sfjm/CURRENT_STATE.md + NEXT_SAFE_ACTION.md + handoffs/CURRENT.md @ 53a70f81…",
@@ -218,7 +218,7 @@ export const workspaceDemo = {
             note: "Still required for the SECURITY DEFINER trigger-provenance routines excluded from B3."
           }
         ]
-      }
+      }]
     },
     {
       name: "MoreNumTegra",
