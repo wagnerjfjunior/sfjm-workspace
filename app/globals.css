@@ -2491,3 +2491,58 @@ body {
     align-items: center;
   }
 }
+
+
+/* Nested split history inside a published parent decomposition */
+.nestedDecomposition {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.nestedDecompositionItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 24px;
+  padding: 4px 7px;
+  border: 1px solid #2f4667;
+  border-radius: 999px;
+  color: #aebdd2;
+  background: rgba(10, 23, 40, .78);
+  font-size: 10px;
+  line-height: 1;
+}
+
+.nestedDecompositionItem strong {
+  font-size: 10px;
+  letter-spacing: .035em;
+}
+
+.nestedDecompositionItem.complete {
+  color: #7ce7b1;
+  border-color: rgba(40, 229, 140, .28);
+  background: rgba(40, 229, 140, .05);
+}
+
+.nestedDecompositionItem.active,
+.nestedDecompositionItem.next {
+  color: #8be9f8;
+  border-color: rgba(34, 211, 238, .35);
+  background: rgba(34, 211, 238, .05);
+}
+
+.nestedDecompositionItem.not_authorized {
+  color: #c9bbfa;
+  border-color: rgba(139, 92, 246, .28);
+  background: rgba(139, 92, 246, .05);
+}
+
+@media (min-width: 1600px) {
+  .nestedDecompositionItem,
+  .nestedDecompositionItem strong {
+    font-size: 12px;
+  }
+}
