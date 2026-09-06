@@ -11,6 +11,13 @@ import {
 
 const FECHAI = "FECH.AI";
 
+type ProjectTaskDecomposition = NonNullable<ExternalProject["taskDecompositions"]>[number];
+
+function findTaskDecomposition(project: ExternalProject, parentTaskId?: string) {
+  if (!parentTaskId) return undefined;
+  return project.taskDecompositions?.find((decomposition) => decomposition.parentTaskId === parentTaskId);
+}
+
 function taskStateLabel(task: WbsTask, isFocus: boolean) {
   if (task.state === "COMPLETE") return "Concluída";
   if (task.state === "ACTIVE") return "Em execução";
@@ -196,7 +203,7 @@ function ProjectHeader({
   );
 }
 
-function decompositionIcon(state: NonNullable<ExternalProject["taskDecomposition"]>["items"][number]["state"]) {
+function decompositionIcon(state: ProjectTaskDecomposition["items"][number]["state"]) {
   if (state === "COMPLETE") return "✓";
   if (state === "ACTIVE" || state === "NEXT") return "▶";
   if (state === "BLOCKED") return "!";
@@ -204,7 +211,7 @@ function decompositionIcon(state: NonNullable<ExternalProject["taskDecomposition
   return "○";
 }
 
-function decompositionStateLabel(state: NonNullable<ExternalProject["taskDecomposition"]>["items"][number]["state"]) {
+function decompositionStateLabel(state: ProjectTaskDecomposition["items"][number]["state"]) {
   if (state === "COMPLETE") return "Concluído";
   if (state === "ACTIVE") return "Em execução";
   if (state === "NEXT") return "Próxima";
@@ -217,7 +224,7 @@ function decompositionStateLabel(state: NonNullable<ExternalProject["taskDecompo
 function TaskDecompositionPanel({
   decomposition
 }: {
-  decomposition: NonNullable<ExternalProject["taskDecomposition"]>;
+  decomposition: ProjectTaskDecomposition;
 }) {
   return (
     <aside className="taskDecompositionPanel" aria-label={`Decomposição da tarefa ${decomposition.parentTaskId}`}>
@@ -269,7 +276,7 @@ function NextActionCard({ project }: { project: ExternalProject }) {
     activeTasks.find((task) => task.state !== "COMPLETE");
   const requiredRoutes = program.specialistRouting.filter((route) => route.requirement === "REQUIRED");
   const conditionalRoute = program.specialistRouting.find((route) => route.requirement === "CONDITIONAL");
-  const decomposition = project.taskDecomposition;
+  const decomposition = findTaskDecomposition(project, focusTask?.id);
 
   return (
     <article className="commandCard nextActionCard" id="next-action">
@@ -358,7 +365,15 @@ function IntegrityStrip() {
   );
 }
 
-function WbsFocusTask({ task, focusId }: { task: WbsTask; focusId?: string }) {
+function WbsFocusTask({
+  task,
+  focusId,
+  decomposition
+}: {
+  task: WbsTask;
+  focusId?: string;
+  decomposition?: ProjectTaskDecomposition;
+}) {
   const isFocus = task.id === focusId;
   return (
     <li className={`focusTask ${task.state.toLowerCase()} ${isFocus ? "focus" : ""}`}>
@@ -372,7 +387,17 @@ function WbsFocusTask({ task, focusId }: { task: WbsTask; focusId?: string }) {
         </div>
         <small>{taskStateLabel(task, isFocus)}{task.note ? ` · ${task.note}` : ""}</small>
       </div>
-      <b>{task.hours}h</b>
+      <div className="taskMetaStack">
+        {decomposition ? (
+          <span
+            className="taskSplitBadge"
+            title={`Decomposição publicada para ${decomposition.parentTaskId}`}
+          >
+            {decomposition.items.length} subetapas
+          </span>
+        ) : null}
+        <b>{task.hours}h</b>
+      </div>
     </li>
   );
 }
@@ -420,7 +445,7 @@ function WbsMilestoneTab({
   );
 }
 
-function WbsCommandCenter() {
+function WbsCommandCenter({ project }: { project: ExternalProject }) {
   const wbs = workspaceDemo.fechaiWbs;
   const activeMilestone =
     wbs.milestones.find((milestone) => milestone.state === "ACTIVE") ??
@@ -518,7 +543,12 @@ function WbsCommandCenter() {
 
         <ul className="focusTaskList selectedTaskList">
           {selectedMilestone.tasks.map((task) => (
-            <WbsFocusTask task={task} focusId={selectedFocusId} key={task.id} />
+            <WbsFocusTask
+              task={task}
+              focusId={selectedFocusId}
+              decomposition={findTaskDecomposition(project, task.id)}
+              key={task.id}
+            />
           ))}
         </ul>
       </section>
@@ -578,7 +608,7 @@ function ProjectDashboard({ project }: { project: ExternalProject }) {
     <>
       <NextActionCard project={project} />
       {isFechai ? <IntegrityStrip /> : null}
-      {isFechai ? <WbsCommandCenter /> : <GenericProjectStructure project={project} />}
+      {isFechai ? <WbsCommandCenter project={project} /> : <GenericProjectStructure project={project} />}
       <RisksCard project={project} />
       <EvidenceCard project={project} />
     </>
