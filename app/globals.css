@@ -2967,3 +2967,28 @@ body {
     margin-top: 5px;
   }
 }
+
+
+/* Eligibility is not authorization */
+.statusPill.restricted {
+  color: #d4c4ff;
+  border: 1px solid rgba(139, 92, 246, .42);
+  background: rgba(139, 92, 246, .08);
+}
+
+.focusTask.eligibleUnauthorized {
+  border-color: rgba(139, 92, 246, .34);
+  background:
+    linear-gradient(90deg, rgba(139, 92, 246, .055), transparent 52%),
+    #081322;
+}
+
+.focusTask.eligibleUnauthorized .taskStateIcon {
+  color: #cdbfff;
+  border-color: rgba(139, 92, 246, .48);
+  box-shadow: 0 0 12px rgba(139, 92, 246, .10);
+}
+
+.focusTask.eligibleUnauthorized small {
+  color: #b6a8dd;
+}
