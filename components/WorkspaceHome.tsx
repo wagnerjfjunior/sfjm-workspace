@@ -221,11 +221,28 @@ function decompositionStateLabel(state: ProjectTaskDecomposition["items"][number
   return "Estado indefinido";
 }
 
+function decompositionVisualStateLabel(item: ProjectTaskDecomposition["items"][number]) {
+  if (item.state === "NOT_AUTHORIZED" && item.status.includes("NEXT CANDIDATE")) {
+    return "Próxima · Não autorizado";
+  }
+  return decompositionStateLabel(item.state);
+}
+
+function decompositionRegionId(parentTaskId: string, itemId: string) {
+  return `decomposition-${parentTaskId}-${itemId}`.replace(/[^a-zA-Z0-9_-]/g, "-");
+}
+
 function TaskDecompositionPanel({
   decomposition
 }: {
   decomposition: ProjectTaskDecomposition;
 }) {
+  const [expandedItemId, setExpandedItemId] = useState<string | null>(null);
+
+  useEffect(() => {
+    setExpandedItemId(null);
+  }, [decomposition.parentTaskId]);
+
   return (
     <aside className="taskDecompositionPanel" aria-label={`Decomposição da tarefa ${decomposition.parentTaskId}`}>
       <div className="taskDecompositionHeader">
@@ -238,39 +255,98 @@ function TaskDecompositionPanel({
       </div>
 
       <ol className="decompositionList" role="list">
-        {decomposition.items.map((item) => (
-          <li
-            className={`decompositionItem ${item.state.toLowerCase()}`}
-            key={item.id}
-            title={item.note ?? item.status}
-          >
-            <span className="decompositionStateIcon" aria-hidden="true">{decompositionIcon(item.state)}</span>
-            <div className="decompositionItemMain">
-              <div className="decompositionTitleLine">
-                <strong>{item.id}</strong>
-                <span>{item.label}</span>
-              </div>
-              <span className={`decompositionStatusPill ${item.state.toLowerCase()}`}>
-                {decompositionStateLabel(item.state)}
-              </span>
-              <small className="decompositionCanonicalStatus">{item.status}</small>
-              {item.children?.length ? (
-                <div className="nestedDecomposition" aria-label={`Histórico de subetapas de ${item.id}`}>
-                  {item.children.map((child) => (
-                    <span
-                      className={`nestedDecompositionItem ${child.state.toLowerCase()}`}
-                      key={child.id}
-                      title={`${child.label} · ${child.status}`}
-                    >
-                      <span aria-hidden="true">{decompositionIcon(child.state)}</span>
-                      <strong>{child.id.replace(item.id, "") || child.id}</strong>
+        {decomposition.items.map((item) => {
+          const children = item.children ?? [];
+          const hasChildren = children.length > 0;
+          const completedChildren = children.filter((child) => child.state === "COMPLETE").length;
+          const expanded = hasChildren && expandedItemId === item.id;
+          const childRegionId = decompositionRegionId(decomposition.parentTaskId, item.id);
+          const visibleChildren = children.slice(0, 8);
+          const hasInlineOverflow = children.length > visibleChildren.length;
+
+          return (
+            <li
+              className={`decompositionItem ${item.state.toLowerCase()} ${hasChildren ? "branch" : "leaf"} ${expanded ? "expanded" : ""}`}
+              key={item.id}
+            >
+              {hasChildren ? (
+                <>
+                  <button
+                    type="button"
+                    className="decompositionDisclosure"
+                    aria-expanded={expanded}
+                    aria-controls={childRegionId}
+                    aria-label={`${item.id}, ${item.label}, ${decompositionVisualStateLabel(item)}, ${completedChildren} de ${children.length} subetapas concluídas`}
+                    onClick={() => setExpandedItemId((current) => current === item.id ? null : item.id)}
+                  >
+                    <span className="decompositionChevron" aria-hidden="true">{expanded ? "⌄" : "›"}</span>
+                    <span className="decompositionStateIcon" aria-hidden="true">{decompositionIcon(item.state)}</span>
+                    <span className="decompositionItemMain">
+                      <span className="decompositionTitleLine">
+                        <strong>{item.id}</strong>
+                        <span>{item.label}</span>
+                      </span>
+                      <span className="decompositionBranchMeta">
+                        <span className="decompositionChildCount" aria-hidden="true">
+                          {completedChildren === children.length ? "✓ " : ""}{completedChildren}/{children.length}
+                        </span>
+                        <span className={`decompositionStatusPill ${item.state.toLowerCase()}`}>
+                          {decompositionVisualStateLabel(item)}
+                        </span>
+                      </span>
+                      <small className="decompositionCanonicalStatus">{item.status}</small>
                     </span>
-                  ))}
+                  </button>
+
+                  {expanded ? (
+                    <div
+                      className="decompositionChildrenRegion"
+                      id={childRegionId}
+                      aria-label={`Subetapas de ${item.id}`}
+                    >
+                      <ol className="decompositionChildrenList" role="list">
+                        {visibleChildren.map((child) => (
+                          <li className={`decompositionChildRow ${child.state.toLowerCase()}`} key={child.id}>
+                            <span className="decompositionChildGuide" aria-hidden="true">└</span>
+                            <span className="decompositionChildIcon" aria-hidden="true">{decompositionIcon(child.state)}</span>
+                            <span className="decompositionChildIdentity">
+                              <strong>{child.id}</strong>
+                              <span>{child.label}</span>
+                            </span>
+                            <span className="decompositionChildState">{decompositionVisualStateLabel(child)}</span>
+                          </li>
+                        ))}
+                      </ol>
+                      {hasInlineOverflow ? (
+                        <div className="decompositionOverflowNote">
+                          {children.length - visibleChildren.length} subetapas adicionais · visualização detalhada futura
+                        </div>
+                      ) : null}
+                    </div>
+                  ) : null}
+                </>
+              ) : (
+                <div
+                  className="decompositionLeafRow"
+                  title={item.note ?? item.status}
+                  aria-label={`${item.id}, ${item.label}, ${decompositionVisualStateLabel(item)}`}
+                >
+                  <span className="decompositionStateIcon" aria-hidden="true">{decompositionIcon(item.state)}</span>
+                  <span className="decompositionItemMain">
+                    <span className="decompositionTitleLine">
+                      <strong>{item.id}</strong>
+                      <span>{item.label}</span>
+                    </span>
+                    <span className={`decompositionStatusPill ${item.state.toLowerCase()}`}>
+                      {decompositionVisualStateLabel(item)}
+                    </span>
+                    <small className="decompositionCanonicalStatus">{item.status}</small>
+                  </span>
                 </div>
-              ) : null}
-            </div>
-          </li>
-        ))}
+              )}
+            </li>
+          );
+        })}
       </ol>
 
       <div className="decompositionSource">
