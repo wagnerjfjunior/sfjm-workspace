@@ -2992,3 +2992,25 @@ body {
 .focusTask.eligibleUnauthorized small {
   color: #b6a8dd;
 }
+
+
+/* PROGRAM_TASK_GRAPH future states */
+.focusTask.plannedUnauthorized {
+  border-color: rgba(139, 92, 246, .24);
+  background:
+    linear-gradient(90deg, rgba(139, 92, 246, .035), transparent 50%),
+    #081322;
+}
+
+.focusTask.plannedUnauthorized .taskStateIcon {
+  color: #b9a8ef;
+  border-color: rgba(139, 92, 246, .38);
+}
+
+.focusTask.plannedUnauthorized small {
+  color: #9d91c1;
+}
+
+.wbsMilestoneTab.planned .milestoneOperationalState {
+  white-space: nowrap;
+}
