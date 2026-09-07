@@ -248,14 +248,16 @@ function decompositionVisualStateLabel(item: ProjectTaskDecomposition["items"][n
   return decompositionStateLabel(item.state);
 }
 
-function decompositionRegionId(parentTaskId: string, itemId: string) {
-  return `decomposition-${parentTaskId}-${itemId}`.replace(/[^a-zA-Z0-9_-]/g, "-");
+function decompositionRegionId(instanceId: string, parentTaskId: string, itemId: string) {
+  return `decomposition-${instanceId}-${parentTaskId}-${itemId}`.replace(/[^a-zA-Z0-9_-]/g, "-");
 }
 
 function TaskDecompositionPanel({
-  decomposition
+  decomposition,
+  instanceId
 }: {
   decomposition: ProjectTaskDecomposition;
+  instanceId: string;
 }) {
   const [expandedItemId, setExpandedItemId] = useState<string | null>(null);
   const presentationGroups = decomposition.presentationGroups ?? [];
@@ -327,7 +329,7 @@ function TaskDecompositionPanel({
           const allComplete = members.length > 0 && completeMembers === members.length;
           const expansionId = `presentation:${group.id}`;
           const expanded = expandedItemId === expansionId;
-          const childRegionId = decompositionRegionId(decomposition.parentTaskId, `presentation-${group.id}`);
+          const childRegionId = decompositionRegionId(instanceId, decomposition.parentTaskId, `presentation-${group.id}`);
 
           return (
             <li
@@ -373,7 +375,7 @@ function TaskDecompositionPanel({
           const hasChildren = children.length > 0;
           const completedChildren = children.filter((child) => child.state === "COMPLETE").length;
           const expanded = hasChildren && expandedItemId === item.id;
-          const childRegionId = decompositionRegionId(decomposition.parentTaskId, item.id);
+          const childRegionId = decompositionRegionId(instanceId, decomposition.parentTaskId, item.id);
 
           return (
             <li
@@ -453,7 +455,7 @@ function NextActionCard({ project }: { project: ExternalProject }) {
   const requiredRoutes = program.specialistRouting.filter((route) => route.requirement === "REQUIRED");
   const conditionalRoute = program.specialistRouting.find((route) => route.requirement === "CONDITIONAL");
   const decomposition = findTaskDecomposition(project, focusTask?.id);
-  const focusEligibleUnauthorized = focusTask ? taskIsEligibleButUnauthorized(focusTask) : false;
+  const focusEligibleUnauthorized = isFechai && focusTask ? taskIsEligibleButUnauthorized(focusTask) : false;
 
   return (
     <article className="commandCard nextActionCard" id="next-action">
@@ -500,7 +502,7 @@ function NextActionCard({ project }: { project: ExternalProject }) {
           )}
         </div>
 
-        {decomposition ? <TaskDecompositionPanel decomposition={decomposition} /> : null}
+        {decomposition ? <TaskDecompositionPanel decomposition={decomposition} instanceId="next-action" /> : null}
       </div>
     </article>
   );
@@ -598,7 +600,7 @@ function WbsFocusTask({
           hidden={!expanded}
           aria-label={`Decomposição preservada de ${task.id}`}
         >
-          <TaskDecompositionPanel decomposition={decomposition} />
+          <TaskDecompositionPanel decomposition={decomposition} instanceId={`wbs-${task.id}`} />
         </div>
       ) : null}
     </li>
