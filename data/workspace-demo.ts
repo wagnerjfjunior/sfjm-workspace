@@ -739,6 +739,7 @@ export const workspaceDemo = {
         label: "Backend Authority Contract Freeze",
         hours: 152,
         state: "PLANNED",
+        operationalState: "PLANNED_NOT_AUTHORIZED",
         tasks: [
           { id: "STS-M3-01", label: "Identity / membership / team / role model", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
           { id: "STS-M3-02", label: "Authority contract por contexto", hours: 28, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
@@ -753,6 +754,7 @@ export const workspaceDemo = {
         label: "Frontend Modularization / App.jsx Extraction",
         hours: 172,
         state: "PLANNED",
+        operationalState: "PLANNED_NOT_AUTHORIZED",
         tasks: [
           { id: "STS-M4-01", label: "AppShell / Shared Frontend Boundary", hours: 20, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
           { id: "STS-M4-02", label: "CRM + Funil Core Slice", hours: 40, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
@@ -767,6 +769,7 @@ export const workspaceDemo = {
         label: "Integrated Security / Reliability Validation",
         hours: 128,
         state: "PLANNED",
+        operationalState: "PLANNED_NOT_AUTHORIZED",
         tasks: [
           { id: "STS-M5-01", label: "Hostile-client suite isolada", hours: 28, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
           { id: "STS-M5-02", label: "Regressão tenant / role / auth / storage", hours: 28, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
@@ -781,6 +784,7 @@ export const workspaceDemo = {
         label: "Security Go Candidate / Commercial Readiness",
         hours: 60,
         state: "PLANNED",
+        operationalState: "PLANNED_NOT_AUTHORIZED",
         tasks: [
           { id: "STS-M6-01", label: "Security Evidence + Final AS-BUILT Package", hours: 14, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
           { id: "STS-M6-02", label: "Blocker closeout", hours: 8, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
