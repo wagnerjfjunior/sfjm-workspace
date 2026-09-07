@@ -527,15 +527,21 @@ function IntegrityStrip() {
 function WbsFocusTask({
   task,
   focusId,
-  decomposition
+  decomposition,
+  expanded,
+  onToggleDecomposition
 }: {
   task: WbsTask;
   focusId?: string;
   decomposition?: ProjectTaskDecomposition;
+  expanded: boolean;
+  onToggleDecomposition: () => void;
 }) {
   const isFocus = task.id === focusId;
+  const decompositionRegionId = `wbs-decomposition-${task.id}`.replace(/[^a-zA-Z0-9_-]/g, "-");
+
   return (
-    <li className={`focusTask ${task.state.toLowerCase()} ${isFocus ? "focus" : ""}`}>
+    <li className={`focusTask ${task.state.toLowerCase()} ${isFocus ? "focus" : ""} ${decomposition ? "hasDecomposition" : ""} ${expanded ? "decompositionOpen" : ""}`}>
       <span className="taskStateIcon" aria-hidden="true">
         {task.state === "COMPLETE" ? "✓" : isFocus ? "▶" : "○"}
       </span>
@@ -548,15 +554,31 @@ function WbsFocusTask({
       </div>
       <div className="taskMetaStack">
         {decomposition ? (
-          <span
-            className="taskSplitBadge"
+          <button
+            type="button"
+            className="taskSplitBadge taskSplitToggle"
+            aria-expanded={expanded}
+            aria-controls={decompositionRegionId}
+            onClick={onToggleDecomposition}
             title={`Decomposição publicada para ${decomposition.parentTaskId}`}
           >
-            {decomposition.items.length} subetapas
-          </span>
+            <span>{decomposition.items.length} subetapas</span>
+            <span className="taskSplitChevron" aria-hidden="true">{expanded ? "⌄" : "›"}</span>
+          </button>
         ) : null}
         <b>{task.hours}h</b>
       </div>
+
+      {decomposition ? (
+        <div
+          className="wbsTaskDecomposition"
+          id={decompositionRegionId}
+          hidden={!expanded}
+          aria-label={`Decomposição preservada de ${task.id}`}
+        >
+          <TaskDecompositionPanel decomposition={decomposition} />
+        </div>
+      ) : null}
     </li>
   );
 }
@@ -611,6 +633,7 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
     wbs.milestones[0];
 
   const [selectedMilestoneId, setSelectedMilestoneId] = useState(activeMilestone.id);
+  const [expandedWbsTaskId, setExpandedWbsTaskId] = useState<string | null>(null);
 
   const selectedMilestone =
     wbs.milestones.find((milestone) => milestone.id === selectedMilestoneId) ??
@@ -647,6 +670,11 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
         : "PLANEJADO";
 
   const selectedFocusId = selectedIsActive ? focusTask?.id : undefined;
+
+  useEffect(() => {
+    const selectedTaskIds = new Set(selectedMilestone.tasks.map((task) => task.id));
+    setExpandedWbsTaskId((current) => current && selectedTaskIds.has(current) ? current : null);
+  }, [selectedMilestone]);
 
   return (
     <article className="commandCard wbsCommand" id="wbs">
@@ -701,14 +729,22 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
         </div>
 
         <ul className="focusTaskList selectedTaskList">
-          {selectedMilestone.tasks.map((task) => (
-            <WbsFocusTask
-              task={task}
-              focusId={selectedFocusId}
-              decomposition={findTaskDecomposition(project, task.id)}
-              key={task.id}
-            />
-          ))}
+          {selectedMilestone.tasks.map((task) => {
+            const decomposition = findTaskDecomposition(project, task.id);
+            return (
+              <WbsFocusTask
+                task={task}
+                focusId={selectedFocusId}
+                decomposition={decomposition}
+                expanded={expandedWbsTaskId === task.id}
+                onToggleDecomposition={() => {
+                  if (!decomposition) return;
+                  setExpandedWbsTaskId((current) => current === task.id ? null : task.id);
+                }}
+                key={task.id}
+              />
+            );
+          })}
         </ul>
       </section>
 
