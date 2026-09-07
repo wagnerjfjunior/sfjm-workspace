@@ -204,7 +204,7 @@ export const workspaceDemo = {
           label: "Security Go continua NOT_GRANTED",
           blockingForCurrentTask: false,
           source: "docs/sfjm/CURRENT_ISSUES.md",
-          sourceRef: "a8c607228e413f5f2ca8162c1c0adeac9fb22729",
+          sourceRef: "83186f5775e563e150329fa0b95dd1d7f3f3a516",
           lastValidatedAt: "2026-09-07",
           resolutionCondition: "Product Authority Security Go após evidência/assurance exigida",
           displayPolicy: "PROGRAM_SECURITY_GATES"
@@ -217,7 +217,7 @@ export const workspaceDemo = {
           label: "Broad paid commercialization permanece bloqueada",
           blockingForCurrentTask: false,
           source: "docs/sfjm/CURRENT_ISSUES.md",
-          sourceRef: "a8c607228e413f5f2ca8162c1c0adeac9fb22729",
+          sourceRef: "83186f5775e563e150329fa0b95dd1d7f3f3a516",
           lastValidatedAt: "2026-09-07",
           resolutionCondition: "decisão comercial separada da Product Authority quando condições de launch/security permitirem",
           displayPolicy: "PROGRAM_SECURITY_GATES"
@@ -230,7 +230,7 @@ export const workspaceDemo = {
           label: "J4 environment-dependent evidence",
           blockingForCurrentTask: false,
           source: "docs/security/evidence/F1-02_REMEDIATION_MASTER_PLAN.md",
-          sourceRef: "a8c607228e413f5f2ca8162c1c0adeac9fb22729",
+          sourceRef: "83186f5775e563e150329fa0b95dd1d7f3f3a516",
           lastValidatedAt: "2026-09-07",
           resolutionCondition: "Supabase Pro + ambiente isolado non-production + autorização explícita",
           displayPolicy: "DEFERRED_EVIDENCE"
@@ -243,7 +243,7 @@ export const workspaceDemo = {
           label: "IMP-003 permanece NOT_DETERMINED",
           blockingForCurrentTask: false,
           source: "docs/security/evidence/F1-02_REMEDIATION_MASTER_PLAN.md",
-          sourceRef: "a8c607228e413f5f2ca8162c1c0adeac9fb22729",
+          sourceRef: "83186f5775e563e150329fa0b95dd1d7f3f3a516",
           lastValidatedAt: "2026-09-07",
           resolutionCondition: "bounded evidence run após reopen gate",
           displayPolicy: "DEFERRED_EVIDENCE"
@@ -256,7 +256,7 @@ export const workspaceDemo = {
           label: "ROLLBACK_REAPPLY permanece NOT_DETERMINED",
           blockingForCurrentTask: false,
           source: "docs/security/evidence/F1-02_REMEDIATION_MASTER_PLAN.md",
-          sourceRef: "a8c607228e413f5f2ca8162c1c0adeac9fb22729",
+          sourceRef: "83186f5775e563e150329fa0b95dd1d7f3f3a516",
           lastValidatedAt: "2026-09-07",
           resolutionCondition: "bounded evidence run após reopen gate",
           displayPolicy: "DEFERRED_EVIDENCE"
@@ -269,7 +269,7 @@ export const workspaceDemo = {
           label: "OC-01 é requerido antes de external users",
           blockingForCurrentTask: false,
           source: "docs/security/evidence/F1-02_REMEDIATION_MASTER_PLAN.md",
-          sourceRef: "a8c607228e413f5f2ca8162c1c0adeac9fb22729",
+          sourceRef: "83186f5775e563e150329fa0b95dd1d7f3f3a516",
           lastValidatedAt: "2026-09-07",
           resolutionCondition: "satisfazer/adjudicar OC-01 antes da admissão de external users",
           displayPolicy: "PROGRAM_SECURITY_GATES"
@@ -282,7 +282,7 @@ export const workspaceDemo = {
           label: "Current implementation target-compliant = NOT_PROVEN",
           blockingForCurrentTask: false,
           source: "docs/sfjm/CURRENT_STATE.md",
-          sourceRef: "a8c607228e413f5f2ca8162c1c0adeac9fb22729",
+          sourceRef: "83186f5775e563e150329fa0b95dd1d7f3f3a516",
           lastValidatedAt: "2026-09-07",
           resolutionCondition: "implementação + validação independente suficiente para estabelecer target compliance",
           displayPolicy: "RESIDUAL_RISKS"
@@ -295,7 +295,7 @@ export const workspaceDemo = {
           label: "Residuals 004, 031, 036, 047, 119, 127 permanecem",
           blockingForCurrentTask: false,
           source: "docs/sfjm/BLOCKED_ACTIONS.md",
-          sourceRef: "a8c607228e413f5f2ca8162c1c0adeac9fb22729",
+          sourceRef: "83186f5775e563e150329fa0b95dd1d7f3f3a516",
           lastValidatedAt: "2026-09-07",
           resolutionCondition: "implementation/lifecycle/runtime work separadamente autorizado",
           displayPolicy: "RESIDUAL_RISKS"
@@ -308,7 +308,7 @@ export const workspaceDemo = {
           label: "D-01..D-08 remediation permanece NOT_IMPLEMENTED",
           blockingForCurrentTask: false,
           source: "docs/sfjm/BLOCKED_ACTIONS.md",
-          sourceRef: "a8c607228e413f5f2ca8162c1c0adeac9fb22729",
+          sourceRef: "83186f5775e563e150329fa0b95dd1d7f3f3a516",
           lastValidatedAt: "2026-09-07",
           resolutionCondition: "remediation separadamente autorizada + adjudicação",
           displayPolicy: "RESIDUAL_RISKS"
@@ -321,20 +321,20 @@ export const workspaceDemo = {
           label: "STS-M3..STS-M6 permanecem future gates",
           blockingForCurrentTask: false,
           source: "docs/sfjm/PROGRAM_TASK_GRAPH.md",
-          sourceRef: "a8c607228e413f5f2ca8162c1c0adeac9fb22729",
+          sourceRef: "83186f5775e563e150329fa0b95dd1d7f3f3a516",
           lastValidatedAt: "2026-09-07",
           resolutionCondition: "autorização sequencial da Product Authority quando cada milestone se tornar elegível",
           displayPolicy: "ROADMAP_GATES"
         }
       ] satisfies ProjectIssue[],
       repository: "wagnerjfjunior/fecha.ai",
-      observedSha: "a8c607228e413f5f2ca8162c1c0adeac9fb22729",
-      observedAt: "7 Sep 2026 · PR #198 merged / typed issue lifecycle published",
-      verification: "Snapshot manual validado em a8c60722… · WBS + PROGRAM_TASK_GRAPH + CURRENT_STATE + CURRENT_ISSUES + NEXT_SAFE_ACTION · sem live sync",
+      observedSha: "83186f5775e563e150329fa0b95dd1d7f3f3a516",
+      observedAt: "7 Sep 2026 · PR #199 merged / STS-M2-06 task graph reconciled",
+      verification: "Snapshot manual validado em 83186f57… · WBS + PROGRAM_TASK_GRAPH + CURRENT_STATE + CURRENT_ISSUES + NEXT_SAFE_ACTION · sem live sync",
       taskDecompositions: [{
         parentTaskId: "STS-M2-04",
         parentLabel: "Política target de DEFINER / RLS / DML",
-        source: "FECH.AI docs/sfjm/PROGRAM_TASK_GRAPH.md + CURRENT_STATE.md + NEXT_SAFE_ACTION.md @ a8c60722…",
+        source: "FECH.AI docs/sfjm/PROGRAM_TASK_GRAPH.md + CURRENT_STATE.md + NEXT_SAFE_ACTION.md @ 83186f57…",
         items: [
           {
             id: "STS-M2-04B",
@@ -437,8 +437,8 @@ export const workspaceDemo = {
   fechaiProgram: {
     name: "FECH.AI Security-to-Scale 2026",
     repository: "wagnerjfjunior/fecha.ai",
-    observedSha: "a8c607228e413f5f2ca8162c1c0adeac9fb22729",
-    observedAt: "7 Sep 2026 · PR #198 merged / typed issue lifecycle published",
+    observedSha: "83186f5775e563e150329fa0b95dd1d7f3f3a516",
+    observedAt: "7 Sep 2026 · PR #199 merged / STS-M2-06 task graph reconciled",
     programIssue: "#141",
     programObjective: "Reach a sellable, operable FECH.AI with a defensible Security Go candidate and a clear path out of the current frontend/backend monolith before year-end, without hiding unresolved risk or performing a big-bang rewrite.",
     objectiveSource: "FECH.AI Issue #141 + program-hierarchy BCR",
@@ -817,13 +817,14 @@ export const workspaceDemo = {
       { date: "5 Sep 2026", text: "PR #179 alinha handoffs FECH.AI à identidade canônica SES; transporte permanece manual copy/paste", kind: "EVIDENCE" },
       { date: "7 Sep 2026", text: "B2 High-Risk Target-Contract Closure aceita com residuals de implementação/lifecycle/runtime", kind: "PROGRAM" },
       { date: "7 Sep 2026", text: "STS-M2-04 COMPLETE / ACCEPTED; M2-05 torna-se NEXT ELIGIBLE / NOT AUTHORIZED", kind: "PROGRAM" },
-      { date: "7 Sep 2026", text: "PR #194 mergeada: PROGRAM_TASK_GRAPH publica overlay consumível M2→M6 e decomposição recursiva de M2-04", kind: "PROGRAM" }
+      { date: "7 Sep 2026", text: "PR #194 mergeada: PROGRAM_TASK_GRAPH publica overlay consumível M2→M6 e decomposição recursiva de M2-04", kind: "PROGRAM" },
+      { date: "7 Sep 2026", text: "PR #199 mergeada: PROGRAM_TASK_GRAPH reconciliado para STS-M2-06 AUTHORIZED_READ_ONLY / READY_TO_EXECUTE", kind: "PROGRAM" }
     ] satisfies TimelineItem[]
 
   } satisfies ProgramSnapshot,
 
   fechaiWbs: {
-    source: "WBS structure: docs/roadmap/fechai-security-to-scale-2026-wbs.md · operational overlay: docs/sfjm/PROGRAM_TASK_GRAPH.md · current meaning: CURRENT_STATE.md + NEXT_SAFE_ACTION.md @ a8c60722…",
+    source: "WBS structure: docs/roadmap/fechai-security-to-scale-2026-wbs.md · operational overlay: docs/sfjm/PROGRAM_TASK_GRAPH.md · current meaning: CURRENT_STATE.md + NEXT_SAFE_ACTION.md @ 83186f57…",
     basis: "Planning estimates for visibility, not clocked timesheets.",
     totalCriticalHours: 832,
     completedHours: 304,
@@ -981,7 +982,7 @@ export const workspaceDemo = {
   ] satisfies SourceRow[],
 
   sources: [
-    { label: "FECH.AI main", value: "a8c60722…", badge: true },
+    { label: "FECH.AI main", value: "83186f57…", badge: true },
     { label: "Program objective", value: "#141 OPEN · PRESERVED", badge: true },
     { label: "Current state source", value: "docs/sfjm/CURRENT_STATE.md", badge: true },
     { label: "Program task graph", value: "docs/sfjm/PROGRAM_TASK_GRAPH.md", badge: true },
