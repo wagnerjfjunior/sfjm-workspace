@@ -149,7 +149,7 @@ export type WbsMilestone = {
   label: string;
   hours: number;
   state: "COMPLETE" | "ACTIVE" | "PLANNED";
-  operationalState?: "PLANNED_NOT_AUTHORIZED";
+  operationalState?: "ELIGIBLE_NOT_AUTHORIZED" | "PLANNED_NOT_AUTHORIZED";
   tasks: WbsTask[];
 };
 export type WbsBacklog = {
@@ -181,9 +181,9 @@ export const workspaceDemo = {
   ] satisfies NavItem[],
 
   checks: [
-    { label: "Último milestone", value: "STS-M1 fechado · deferred assurance" },
-    { label: "Milestone atual", value: "STS-M2 · STARTED" },
-    { label: "Próxima ação", value: "STS-M2-06 · executar decisão arquitetural READ_ONLY autorizada" },
+    { label: "Último milestone", value: "STS-M2 fechado · accepted with residuals" },
+    { label: "Próximo milestone", value: "STS-M3 · elegível / não autorizado" },
+    { label: "Próxima ação", value: "Product Authority · autorizar bounded STS-M3-01" },
     { label: "Objetivo principal", value: "Preservado · Issue #141" },
     { label: "Histórico", value: "Preservado" },
     { label: "Security Go", value: "Não concedido" }
@@ -193,8 +193,8 @@ export const workspaceDemo = {
     {
       name: "FECH.AI",
       kind: "Projeto externo",
-      continuityState: "STS-M2 ACTIVE · STS-M2-05 COMPLETE / ACCEPTED WITH RESIDUALS · STS-M2-06 AUTHORIZED_READ_ONLY / READY_TO_EXECUTE",
-      nextSafeAction: "STS-M2-06 — Database Architecture Decision → executar bounded READ_ONLY evidence reconstruction + comparar EVOLVE_IN_PLACE vs V2_STRANGLER vs NEW_DATABASE → retornar recomendação para Product Authority.",
+      continuityState: "STS-M2 COMPLETE / ACCEPTED WITH RESIDUALS · STS-M2-06 COMPLETE / ACCEPTED · DATABASE STRATEGY = V2_STRANGLER / SAME_DATABASE_FIRST · STS-M3-01 NEXT_ELIGIBLE / NOT_AUTHORIZED",
+      nextSafeAction: "Product Authority → autorizar separadamente um bounded STS-M3-01. CURRENT_AUTHORIZED_EXECUTION = NONE; não iniciar STS-M3 nem implementar V2 sem nova autorização.",
       issues: [
         {
           id: "STS-GATE-SECURITY-GO",
@@ -317,24 +317,24 @@ export const workspaceDemo = {
           id: "STS-GATE-M3-M6",
           class: "FUTURE_GATE",
           scope: "STS-M3..STS-M6",
-          state: "NOT_AUTHORIZED",
-          label: "STS-M3..STS-M6 permanecem future gates",
+          state: "STS-M3 NEXT_ELIGIBLE / NOT_AUTHORIZED",
+          label: "STS-M3-01 é o próximo gate elegível; STS-M3..STS-M6 permanecem sem execução autorizada",
           blockingForCurrentTask: false,
           source: "docs/sfjm/PROGRAM_TASK_GRAPH.md",
           sourceRef: "83186f5775e563e150329fa0b95dd1d7f3f3a516",
           lastValidatedAt: "2026-09-07",
-          resolutionCondition: "autorização sequencial da Product Authority quando cada milestone se tornar elegível",
+          resolutionCondition: "Product Authority pode autorizar separadamente bounded STS-M3-01; demais milestones permanecem sequencialmente gated",
           displayPolicy: "ROADMAP_GATES"
         }
       ] satisfies ProjectIssue[],
       repository: "wagnerjfjunior/fecha.ai",
-      observedSha: "83186f5775e563e150329fa0b95dd1d7f3f3a516",
-      observedAt: "7 Sep 2026 · PR #199 merged / STS-M2-06 task graph reconciled",
-      verification: "Snapshot manual validado em 83186f57… · WBS + PROGRAM_TASK_GRAPH + CURRENT_STATE + CURRENT_ISSUES + NEXT_SAFE_ACTION · sem live sync",
+      observedSha: "661ef0014576d473088add0052d751e0a47d306e",
+      observedAt: "7 Sep 2026 · PR #200 merged / STS-M2-06 architecture decision accepted",
+      verification: "Snapshot manual validado em 661ef001… · WBS + PROGRAM_TASK_GRAPH + CURRENT_STATE + NEXT_SAFE_ACTION; CURRENT_ISSUES mantém validation anchor 83186f57… · sem live sync",
       taskDecompositions: [{
         parentTaskId: "STS-M2-04",
         parentLabel: "Política target de DEFINER / RLS / DML",
-        source: "FECH.AI docs/sfjm/PROGRAM_TASK_GRAPH.md + CURRENT_STATE.md + NEXT_SAFE_ACTION.md @ 83186f57…",
+        source: "FECH.AI docs/sfjm/PROGRAM_TASK_GRAPH.md + CURRENT_STATE.md + NEXT_SAFE_ACTION.md @ 661ef001…",
         items: [
           {
             id: "STS-M2-04B",
@@ -437,44 +437,19 @@ export const workspaceDemo = {
   fechaiProgram: {
     name: "FECH.AI Security-to-Scale 2026",
     repository: "wagnerjfjunior/fecha.ai",
-    observedSha: "83186f5775e563e150329fa0b95dd1d7f3f3a516",
-    observedAt: "7 Sep 2026 · PR #199 merged / STS-M2-06 task graph reconciled",
+    observedSha: "661ef0014576d473088add0052d751e0a47d306e",
+    observedAt: "7 Sep 2026 · PR #200 merged / STS-M2-06 accepted / STS-M2 closed",
     programIssue: "#141",
     programObjective: "Reach a sellable, operable FECH.AI with a defensible Security Go candidate and a clear path out of the current frontend/backend monolith before year-end, without hiding unresolved risk or performing a big-bang rewrite.",
     objectiveSource: "FECH.AI Issue #141 + program-hierarchy BCR",
     objectiveIntegrity: "PRESERVED · no approved objective drift observed",
     objectiveChangePolicy: "Material objective change must be versioned in the canonical project and explicitly approved; otherwise flag OBJECTIVE_DRIFT and do not claim safe continuity.",
     specialistTransport: "MANUAL COPY/PASTE · Workspace only indicates the destination",
-    specialistRouting: [
-      {
-        sequence: 1,
-        role: "architecture",
-        archetypeId: "software-systems-architect",
-        targetName: "SES — Software Systems Architect",
-        purpose: "Primary STS-M2-06 database architecture decision",
-        requirement: "REQUIRED"
-      },
-      {
-        sequence: 2,
-        role: "backend_data",
-        archetypeId: "backend-data-platform-specialist",
-        targetName: "SES — Backend & Data Platform Specialist",
-        purpose: "Conditional database/callsite evidence support when architecture analysis requires it",
-        requirement: "CONDITIONAL"
-      },
-      {
-        sequence: 3,
-        role: "application_security",
-        archetypeId: "application-security-assurance-specialist",
-        targetName: "SES — Application Security Assurance Specialist",
-        purpose: "Conditional assurance only for material security-policy questions",
-        requirement: "CONDITIONAL"
-      }
-    ],
-    lastCompletedMilestone: "STS-M1 — COMPLETE WITH DEFERRED SECURITY ASSURANCE",
-    nextProgramMilestone: "STS-M3 — Backend Authority Contract Freeze · PLANNED",
-    activeWorkstream: "STS-M2 · ACTIVE · STS-M2-05 COMPLETE / ACCEPTED WITH RESIDUALS · STS-M2-06 AUTHORIZED_READ_ONLY / READY_TO_EXECUTE",
-    nextSafeAction: "Resolve live FECH.AI main → execute bounded STS-M2-06 READ_ONLY architecture decision → compare EVOLVE_IN_PLACE vs V2_STRANGLER vs NEW_DATABASE → return recommendation for Product Authority adjudication",
+    specialistRouting: [],
+    lastCompletedMilestone: "STS-M2 — COMPLETE / ACCEPTED WITH IMPLEMENTATION-LIFECYCLE-CALLSITE-RUNTIME-APPSEC RESIDUALS",
+    nextProgramMilestone: "STS-M3 — Backend Authority Contract Freeze · NEXT_ELIGIBLE / NOT_AUTHORIZED",
+    activeWorkstream: "STS-M2 COMPLETE / ACCEPTED WITH RESIDUALS · STS-M3-01 NEXT_ELIGIBLE / NOT_AUTHORIZED · CURRENT_AUTHORIZED_EXECUTION = NONE",
+    nextSafeAction: "Resolve live FECH.AI main → request separate Product Authority authorization for bounded STS-M3-01 → do not start STS-M3 or implement V2 without that authorization",
     securityGo: "NOT GRANTED",
     commercialization: "BLOCKED",
     weightingBasis: "Peso = duração planejada; progresso só avança quando o gate do milestone é aceito.",
@@ -506,8 +481,8 @@ export const workspaceDemo = {
         label: "Database Simplification & Optimization Plan",
         window: "18 Sep–9 Oct",
         weight: 18.75,
-        acceptedPercent: 0,
-        status: "ACTIVE",
+        acceptedPercent: 100,
+        status: "COMPLETE",
         owner: "Backend/Data + Architecture",
         exit: "Canonicality matrix + routine/policy/trigger/grant map + target authority policy + Database Contract Map + evolution decision."
       },
@@ -706,18 +681,36 @@ export const workspaceDemo = {
         owner: "Backend/Data + Architecture",
         evidence: "COMPLETE / ACCEPTED WITH IMPLEMENTATION-LIFECYCLE-RUNTIME RESIDUALS. Target-policy objective closed; current implementation compliance, AppSec PASS, runtime assurance and Security Go remain unproven.",
         nextAction: "Não reabrir B1/B2/B3/C/D/E ou M2-04 sem invalidação material."
+      },
+      {
+        id: "STS-M2-05",
+        label: "Database Contract Map",
+        category: "PROGRAM",
+        state: "COMPLETE",
+        owner: "Backend/Data + Architecture",
+        evidence: "COMPLETE / ACCEPTED WITH IMPLEMENTATION-LIFECYCLE-CALLSITE-EVIDENCE-RUNTIME-APPSEC RESIDUALS.",
+        nextAction: "Consumir como evidência aceita; residuals permanecem preservados."
+      },
+      {
+        id: "STS-M2-06",
+        label: "Database Architecture Decision",
+        category: "PROGRAM",
+        state: "COMPLETE",
+        owner: "Architecture + Product Authority",
+        evidence: "COMPLETE / ACCEPTED. DATABASE STRATEGY = V2_STRANGLER / SAME_DATABASE_FIRST. NEW PRODUCTION DATABASE = NOT SELECTED AT THIS STAGE.",
+        nextAction: "Não implementar V2 sob esta aceitação; implementação permanece separadamente não autorizada."
       }
     ] satisfies ExecutionItem[],
 
     active: [
       {
-        id: "STS-M2-06",
-        label: "Database Architecture Decision",
+        id: "STS-M3-01",
+        label: "Identity / membership / team / role model",
         category: "PROGRAM",
         state: "PLANNED",
-        owner: "Architecture",
-        evidence: "AUTHORIZED_READ_ONLY / READY_TO_EXECUTE. STS-M2-05 is COMPLETE / ACCEPTED WITH RESIDUALS.",
-        nextAction: "Executar READ_ONLY evidence reconstruction + comparar EVOLVE_IN_PLACE vs V2_STRANGLER vs NEW_DATABASE; retornar recomendação para Product Authority."
+        owner: "Product Authority gate",
+        evidence: "NEXT_ELIGIBLE / NOT_AUTHORIZED. CURRENT_AUTHORIZED_EXECUTION = NONE.",
+        nextAction: "Obter autorização separada da Product Authority para bounded STS-M3-01 antes de qualquer execução."
       }
     ] satisfies ExecutionItem[],
 
@@ -818,22 +811,23 @@ export const workspaceDemo = {
       { date: "7 Sep 2026", text: "B2 High-Risk Target-Contract Closure aceita com residuals de implementação/lifecycle/runtime", kind: "PROGRAM" },
       { date: "7 Sep 2026", text: "STS-M2-04 COMPLETE / ACCEPTED; M2-05 torna-se NEXT ELIGIBLE / NOT AUTHORIZED", kind: "PROGRAM" },
       { date: "7 Sep 2026", text: "PR #194 mergeada: PROGRAM_TASK_GRAPH publica overlay consumível M2→M6 e decomposição recursiva de M2-04", kind: "PROGRAM" },
-      { date: "7 Sep 2026", text: "PR #199 mergeada: PROGRAM_TASK_GRAPH reconciliado para STS-M2-06 AUTHORIZED_READ_ONLY / READY_TO_EXECUTE", kind: "PROGRAM" }
+      { date: "7 Sep 2026", text: "PR #199 mergeada: PROGRAM_TASK_GRAPH reconciliado para STS-M2-06 AUTHORIZED_READ_ONLY / READY_TO_EXECUTE", kind: "PROGRAM" },
+      { date: "7 Sep 2026", text: "PR #200 mergeada: STS-M2-06 aceito com V2_STRANGLER / SAME_DATABASE_FIRST; STS-M2 fechado com residuals; STS-M3-01 torna-se NEXT_ELIGIBLE / NOT_AUTHORIZED", kind: "PROGRAM" }
     ] satisfies TimelineItem[]
 
   } satisfies ProgramSnapshot,
 
   fechaiWbs: {
-    source: "WBS structure: docs/roadmap/fechai-security-to-scale-2026-wbs.md · operational overlay: docs/sfjm/PROGRAM_TASK_GRAPH.md · current meaning: CURRENT_STATE.md + NEXT_SAFE_ACTION.md @ 83186f57…",
+    source: "WBS structure: docs/roadmap/fechai-security-to-scale-2026-wbs.md · operational overlay: docs/sfjm/PROGRAM_TASK_GRAPH.md · current meaning: CURRENT_STATE.md + NEXT_SAFE_ACTION.md @ 661ef001…",
     basis: "Planning estimates for visibility, not clocked timesheets.",
     totalCriticalHours: 832,
-    completedHours: 304,
-    remainingCriticalHours: 528,
+    completedHours: 320,
+    remainingCriticalHours: 512,
     preSecurityGoBacklogHours: 116,
     plannedBacklogHours: 104,
-    currentPackage: "STS-M2 — STARTED",
-    currentTask: "STS-M2-06 · Decisão arquitetural do banco · AUTHORIZED_READ_ONLY / READY_TO_EXECUTE · 16h",
-    note: "Rótulos/horas vêm da WBS estrutural; identidade externa usa STS-Mx-yy e wbsId preserva Mx-yy. STS-M2-05 está COMPLETE / ACCEPTED WITH RESIDUALS; STS-M2-06 está AUTHORIZED_READ_ONLY / READY_TO_EXECUTE. Horas são planejamento, não timesheet.",
+    currentPackage: "STS-M3 — NEXT_ELIGIBLE / NOT_AUTHORIZED",
+    currentTask: "STS-M3-01 · Identity / membership / team / role model · NEXT_ELIGIBLE / NOT_AUTHORIZED · 24h",
+    note: "Rótulos/horas vêm da WBS estrutural; identidade externa usa STS-Mx-yy e wbsId preserva Mx-yy. STS-M2 está COMPLETE / ACCEPTED WITH RESIDUALS; STS-M3-01 é NEXT_ELIGIBLE / NOT_AUTHORIZED. Horas são planejamento, não timesheet.",
     milestones: [
       {
         id: "STS-M0",
@@ -866,14 +860,14 @@ export const workspaceDemo = {
         id: "STS-M2", wbsId: "M2",
         label: "Database Simplification & Optimization Plan",
         hours: 116,
-        state: "ACTIVE",
+        state: "COMPLETE",
         tasks: [
           { id: "STS-M2-01", wbsId: "M2-01", label: "Matriz de 43 tabelas", hours: 20, state: "COMPLETE" },
           { id: "STS-M2-02", wbsId: "M2-02", label: "Mapa routines / policies / triggers / grants", hours: 24, state: "COMPLETE", note: "Accepted with residuals." },
           { id: "STS-M2-03", wbsId: "M2-03", label: "Índices / ACL contraditórias", hours: 16, state: "COMPLETE", note: "Accepted with residuals." },
           { id: "STS-M2-04", wbsId: "M2-04", label: "Política target de DEFINER / RLS / DML", hours: 20, state: "COMPLETE", note: "COMPLETE / ACCEPTED WITH IMPLEMENTATION-LIFECYCLE-RUNTIME RESIDUALS." },
           { id: "STS-M2-05", wbsId: "M2-05", label: "Database Contract Map", hours: 20, state: "COMPLETE", note: "COMPLETE / ACCEPTED WITH IMPLEMENTATION-LIFECYCLE-CALLSITE-EVIDENCE-RUNTIME-APPSEC RESIDUALS." },
-          { id: "STS-M2-06", wbsId: "M2-06", label: "Decisão arquitetural do banco", hours: 16, state: "PLANNED", note: "AUTHORIZED_READ_ONLY / READY_TO_EXECUTE · children = NONE YET · consumes STS-M2-04/STS-M2-05 evidence." }
+          { id: "STS-M2-06", wbsId: "M2-06", label: "Decisão arquitetural do banco", hours: 16, state: "COMPLETE", note: "COMPLETE / ACCEPTED · DATABASE STRATEGY = V2_STRANGLER / SAME_DATABASE_FIRST · NEW PRODUCTION DATABASE = NOT SELECTED AT THIS STAGE." }
         ]
       },
       {
@@ -881,9 +875,9 @@ export const workspaceDemo = {
         label: "Backend Authority Contract Freeze",
         hours: 152,
         state: "PLANNED",
-        operationalState: "PLANNED_NOT_AUTHORIZED",
+        operationalState: "ELIGIBLE_NOT_AUTHORIZED",
         tasks: [
-          { id: "STS-M3-01", wbsId: "M3-01", label: "Identity / membership / team / role model", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
+          { id: "STS-M3-01", wbsId: "M3-01", label: "Identity / membership / team / role model", hours: 24, state: "PLANNED", note: "NEXT_ELIGIBLE / NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
           { id: "STS-M3-02", wbsId: "M3-02", label: "Authority contract por contexto", hours: 28, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
           { id: "STS-M3-03", wbsId: "M3-03", label: "Allowlist de RPCs privilegiadas", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
           { id: "STS-M3-04", wbsId: "M3-04", label: "Redução de DML sensível direto", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
@@ -968,21 +962,21 @@ export const workspaceDemo = {
   contexts: [
     { icon: "🧠", label: "Objetivo Preservado", value: "Issue #141" },
     { icon: "☑", label: "Histórico Preservado", value: "Append-only" },
-    { icon: "🗺", label: "Plano Futuro", value: "STS-M2–STS-M6" },
+    { icon: "🗺", label: "Plano Futuro", value: "STS-M3–STS-M6" },
     { icon: "📁", label: "Evidências Canônicas", value: "GitHub" },
     { icon: "🔒", label: "Governança Mantida", value: "Ativa" },
     { icon: "◉", label: "Fonte Verificada", value: "main" }
   ] satisfies ContextCard[],
 
   currentState: [
-    { label: "Último milestone concluído", value: "STS-M1 · deferred assurance" },
-    { label: "Milestone atual", value: "STS-M2 · STARTED" },
-    { label: "Próxima continuidade", value: "STS-M2-06 · AUTHORIZED_READ_ONLY / READY_TO_EXECUTE" },
+    { label: "Último milestone concluído", value: "STS-M2 · accepted with residuals" },
+    { label: "Próximo milestone", value: "STS-M3 · NEXT_ELIGIBLE / NOT_AUTHORIZED" },
+    { label: "Próxima continuidade", value: "Product Authority · autorizar bounded STS-M3-01" },
     { label: "Objetivo", value: "Issue #141 · PRESERVED" }
   ] satisfies SourceRow[],
 
   sources: [
-    { label: "FECH.AI main", value: "83186f57…", badge: true },
+    { label: "FECH.AI main", value: "661ef001…", badge: true },
     { label: "Program objective", value: "#141 OPEN · PRESERVED", badge: true },
     { label: "Current state source", value: "docs/sfjm/CURRENT_STATE.md", badge: true },
     { label: "Program task graph", value: "docs/sfjm/PROGRAM_TASK_GRAPH.md", badge: true },
