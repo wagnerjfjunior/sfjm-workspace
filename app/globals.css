@@ -2860,3 +2860,37 @@ body {
     gap: 1px;
   }
 }
+
+
+/* Presentation-only decomposition grouping */
+.decompositionItem.presentationGroup {
+  border-color: rgba(34, 211, 238, .3);
+  background:
+    linear-gradient(90deg, rgba(34, 211, 238, .035), transparent 42%),
+    rgba(7, 18, 32, .84);
+}
+
+.decompositionStatusPill.presentation {
+  color: #9ee9f5;
+  border-color: rgba(34, 211, 238, .36);
+  background: rgba(34, 211, 238, .06);
+}
+
+.decompositionItem.presentationGroup.complete .decompositionStatusPill.presentation {
+  color: #80eab5;
+  border-color: rgba(40, 229, 140, .35);
+  background: rgba(40, 229, 140, .055);
+}
+
+.decompositionCanonicalStatus.presentationOnly {
+  color: #7992ae;
+  font-size: 9px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 1600px) {
+  .decompositionCanonicalStatus.presentationOnly {
+    font-size: 10px;
+  }
+}
