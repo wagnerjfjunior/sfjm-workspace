@@ -2821,3 +2821,42 @@ body {
     font-size: 10px;
   }
 }
+
+
+/* Visible canonical status for expanded child history */
+.decompositionChildIdentity {
+  display: grid;
+  gap: 2px;
+}
+
+.decompositionChildTitle {
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+}
+
+.decompositionChildCanonicalStatus {
+  color: #7185a2;
+  font-size: 9px;
+  font-weight: 750;
+  line-height: 1.2;
+  letter-spacing: .025em;
+}
+
+.decompositionChildRow.complete .decompositionChildCanonicalStatus {
+  color: #6fc899;
+}
+
+@media (min-width: 1600px) {
+  .decompositionChildCanonicalStatus {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 680px) {
+  .decompositionChildTitle {
+    display: grid;
+    gap: 1px;
+  }
+}
