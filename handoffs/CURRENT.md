@@ -4,14 +4,14 @@
 
 ```text
 Workspace role = DERIVED VISUALIZATION / CONTINUITY ONLY
-Workspace canonical main = RESOLVE LIVE
-PR #32 lifecycle = MERGED / CLOSED
-PR #32 merge anchor = 98bad9cdfbded6d0beaecde89fbce5839c8a305e
-published feature = recursive task decomposition + typed FECH.AI issue rendering
-latest FECH.AI reconciliation = PR #199 / STS-M2-06 task graph state
-FECH.AI canonical main observed = 83186f5775e563e150329fa0b95dd1d7f3f3a516
+Workspace canonical main = 1769d2407550330c4a6500054a35889445a45ab8
+refresh candidate = PR #34 / DRAFT / NOT YET CANONICAL
+published baseline = PR #32 MERGED / recursive task decomposition + typed FECH.AI issue rendering
 
+FECH.AI canonical main observed = 661ef0014576d473088add0052d751e0a47d306e
+FECH.AI acceptance publication = PR #200 MERGED
 current execution program = Issue #141 — Security-to-Scale 2026
+
 WBS source = docs/roadmap/fechai-security-to-scale-2026-wbs.md
 task graph source = docs/sfjm/PROGRAM_TASK_GRAPH.md
 current-state source = docs/sfjm/CURRENT_STATE.md
@@ -19,100 +19,105 @@ typed issue source = docs/sfjm/CURRENT_ISSUES.md
 next-action source = docs/sfjm/NEXT_SAFE_ACTION.md
 
 OBJECTIVE_INTEGRITY = PRESERVED
-STS-M2 = ACTIVE
-STS-M2-01 = COMPLETE / ACCEPTED
-STS-M2-02 = COMPLETE / ACCEPTED WITH RESIDUALS
-STS-M2-03 = COMPLETE / ACCEPTED WITH RESIDUALS
-STS-M2-04 = COMPLETE / ACCEPTED WITH IMPLEMENTATION-LIFECYCLE-RUNTIME RESIDUALS
-STS-M2-05 = COMPLETE / ACCEPTED WITH RESIDUALS
-STS-M2-06 = AUTHORIZED_READ_ONLY / READY_TO_EXECUTE
-CURRENT_TASK_BLOCKERS = 0
+
+STS-M2 = COMPLETE / ACCEPTED WITH IMPLEMENTATION-LIFECYCLE-CALLSITE-RUNTIME-APPSEC RESIDUALS
+STS-M2-06 = COMPLETE / ACCEPTED
+DATABASE_STRATEGY = V2_STRANGLER / SAME_DATABASE_FIRST
+NEW_PRODUCTION_DATABASE = NOT_SELECTED_AT_THIS_STAGE
+
+STS-M3 = NEXT_ELIGIBLE / NOT_AUTHORIZED
+STS-M3-01 = NEXT_ELIGIBLE / NOT_AUTHORIZED
+CURRENT_AUTHORIZED_EXECUTION = NONE
+CURRENT_BLOCKER_COUNT = 0
 SECURITY_GO = NOT_GRANTED
 
 SNAPSHOT = MANUAL / NOT LIVE-SYNCED
-```
-
-### Objective integrity
-
-Canonical program objective remains Issue #141: reach a sellable, operable FECH.AI with a defensible Security Go candidate and a clear path out of the current monolith without hiding unresolved risk or performing a big-bang rewrite.
-
-Workspace remains a consumer:
-
-```text
-WORKSPACE_RENDERING != FECH.AI_AUTHORITY
-SNAPSHOT_MANUAL != LIVE_SYNC
-NON_PASS_FACT != CURRENT_BLOCKER
 ```
 
 ### Current journey position
 
 ```text
 Issue #141 — Security-to-Scale 2026
-→ STS-M2 — ACTIVE
-→ STS-M2-01 COMPLETE
-→ STS-M2-02 COMPLETE WITH RESIDUALS
-→ STS-M2-03 COMPLETE WITH RESIDUALS
-→ STS-M2-04 COMPLETE / ACCEPTED WITH RESIDUALS
-→ STS-M2-05 COMPLETE / ACCEPTED WITH RESIDUALS
-→ STS-M2-06 AUTHORIZED_READ_ONLY / READY_TO_EXECUTE
+→ STS-M2 COMPLETE / ACCEPTED WITH RESIDUALS
+  → STS-M2-01 COMPLETE
+  → STS-M2-02 COMPLETE WITH RESIDUALS
+  → STS-M2-03 COMPLETE WITH RESIDUALS
+  → STS-M2-04 COMPLETE / ACCEPTED WITH RESIDUALS
+  → STS-M2-05 COMPLETE / ACCEPTED WITH RESIDUALS
+  → STS-M2-06 COMPLETE / ACCEPTED
+       DATABASE STRATEGY = V2_STRANGLER / SAME_DATABASE_FIRST
+→ STS-M3 NEXT_ELIGIBLE / NOT_AUTHORIZED
+  → STS-M3-01 NEXT_ELIGIBLE / NOT_AUTHORIZED
+```
+
+### Current authority boundary
+
+```text
+M2 acceptance != V2 implementation authority
+M3 eligibility != M3 execution authority
+CURRENT_AUTHORIZED_EXECUTION = NONE
+
+NO runtime/frontend implementation
+NO Supabase/Auth/data mutation
+NO SQL / DDL / DML mutation
+NO migration execution
+NO RLS / policy / grant / owner / search_path mutation
+NO function / trigger / RPC / Edge Function mutation
+NO STS-M3 execution
+NO deploy / production mutation
+NO Security Go
+NO commercialization authorization
 ```
 
 ### Current issue semantics
 
 ```text
-Bloqueios atuais = 0
-Residual risks = 3
-Deferred evidence = 3
-Program / security gates = 4
-source = FECH.AI docs/sfjm/CURRENT_ISSUES.md @ 83186f5775e563e150329fa0b95dd1d7f3f3a516
+source = FECH.AI docs/sfjm/CURRENT_ISSUES.md
+validation anchor inside CURRENT_ISSUES = 83186f5775e563e150329fa0b95dd1d7f3f3a516
+
+BLOCKING = 0
+REQUIRED_CURRENT = 0
+RESIDUAL = 3
+DEFERRED_EVIDENCE = 3
+SECURITY_GATE = 3
+FUTURE_GATE = 1
+
+CURRENT_BLOCKER_COUNT = 0
 ```
 
-Residuals, deferred evidence and gates remain material; they are not silently resolved and are not flattened into the current-blocker count.
+Residuals, deferred evidence and gates remain material. They are not silently resolved and are not flattened into the current-blocker count.
 
-### Specialist destination
+### Specialist / execution routing
+
+No specialist execution route is current merely from STS-M3 eligibility.
 
 ```text
-1. architecture
-   → software-systems-architect
-   → SES — Software Systems Architect
-   → REQUIRED / PRIMARY for STS-M2-06
-
-2. backend_data
-   → backend-data-platform-specialist
-   → SES — Backend & Data Platform Specialist
-   → CONDITIONAL / evidence support
-
-3. application_security
-   → application-security-assurance-specialist
-   → SES — Application Security Assurance Specialist
-   → CONDITIONAL / bounded assurance
-
-TRANSPORT = MANUAL COPY/PASTE
-AUTOMATIC ROUTING / SEND = NO
+STS-M3-01 authorization = REQUIRED FIRST
+specialist destination = RESOLVE AFTER AUTHORIZATION / BOOTSTRAP
+automatic routing = NO
+transport = MANUAL COPY/PASTE when/if a route becomes authorized
 ```
+
+The receiving conversation must resolve FECH.AI live again before acting.
 
 ### Current handoff
 
 ```text
 WHERE WE ARE
-  STS-M2 ACTIVE
-  STS-M2-05 COMPLETE / ACCEPTED WITH RESIDUALS
-  STS-M2-06 AUTHORIZED_READ_ONLY / READY_TO_EXECUTE
+  STS-M2 COMPLETE / ACCEPTED WITH RESIDUALS
+  STS-M2-06 COMPLETE / ACCEPTED
+  DATABASE STRATEGY = V2_STRANGLER / SAME_DATABASE_FIRST
 
 WHERE WE ARE GOING
-  STS-M2-06 database architecture decision
-  → EVOLVE_IN_PLACE vs V2_STRANGLER vs NEW_DATABASE
-  → recommendation / evidence packet
-  → Product Authority adjudication
+  STS-M3-01 is the next eligible task
+  but execution remains NOT_AUTHORIZED
 
-FIRST SPECIALIST DESTINATION
-  SES — Software Systems Architect
-
-TRANSPORT
-  MANUAL COPY/PASTE
+NEXT GATE
+  separate Product Authority authorization
+  for bounded STS-M3-01
 ```
 
-The receiving conversation must resolve FECH.AI live again before acting. This Workspace snapshot does not authorize implementation, Supabase/Auth/data mutation, M3 execution, deploy, Security Go or commercialization.
+This Workspace snapshot does not authorize implementation, V2 runtime work, Supabase/Auth/data mutation, STS-M3 execution, deploy, Security Go or commercialization.
 
 ---
 
