@@ -187,7 +187,7 @@ export const workspaceDemo = {
       observedAt: "7 Sep 2026 · PR #194 merged / Program Task Graph published",
       verification: "Snapshot manual · WBS + PROGRAM_TASK_GRAPH + CURRENT_STATE + NEXT_SAFE_ACTION · FECH.AI continua sendo a autoridade",
       taskDecompositions: [{
-        parentTaskId: "STS-M2-04",
+        parentTaskId: "M2-04",
         parentLabel: "Política target de DEFINER / RLS / DML",
         source: "FECH.AI docs/sfjm/PROGRAM_TASK_GRAPH.md + CURRENT_STATE.md + NEXT_SAFE_ACTION.md @ e07254ef…",
         items: [
@@ -329,7 +329,7 @@ export const workspaceDemo = {
     lastCompletedMilestone: "STS-M1 — COMPLETE WITH DEFERRED SECURITY ASSURANCE",
     nextProgramMilestone: "STS-M3 — Backend Authority Contract Freeze · PLANNED",
     activeWorkstream: "STS-M2 · STARTED · STS-M2-04 COMPLETE / ACCEPTED · M2-05 NEXT ELIGIBLE / NOT AUTHORIZED",
-    nextSafeAction: "Resolve live main f7a6c69b… → Product Authority select/authorize a bounded M2-05 READ_ONLY scope + evidence reconstruction → eligibility is not execution authority → M2-05 remains NOT_AUTHORIZED",
+    nextSafeAction: "Resolve live main e07254ef… → read PROGRAM_TASK_GRAPH → Product Authority select/authorize a bounded M2-05 READ_ONLY scope + evidence reconstruction → eligibility is not execution authority → M2-05 remains NOT_AUTHORIZED",
     securityGo: "NOT GRANTED",
     commercialization: "BLOCKED",
     weightingBasis: "Peso = duração planejada; progresso só avança quando o gate do milestone é aceito.",
