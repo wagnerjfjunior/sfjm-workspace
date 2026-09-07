@@ -22,10 +22,15 @@ function taskIsEligibleButUnauthorized(task: WbsTask) {
   return task.note?.includes("NEXT ELIGIBLE / NOT_AUTHORIZED") ?? false;
 }
 
+function taskIsPlannedButUnauthorized(task: WbsTask) {
+  return task.note?.includes("PLANNED_NOT_AUTHORIZED") ?? false;
+}
+
 function taskStateLabel(task: WbsTask, isFocus: boolean) {
   if (task.state === "COMPLETE") return "Concluída";
   if (task.state === "ACTIVE") return "Em execução";
   if (taskIsEligibleButUnauthorized(task)) return "Próxima elegível · Não autorizada";
+  if (taskIsPlannedButUnauthorized(task)) return "Planejada · Não autorizada";
   if (isFocus) return "Próximo gate";
   if (task.state === "PARKED") return "Backlog";
   return "Planejada";
@@ -33,7 +38,7 @@ function taskStateLabel(task: WbsTask, isFocus: boolean) {
 
 function taskStateIcon(task: WbsTask, isFocus: boolean) {
   if (task.state === "COMPLETE") return "✓";
-  if (taskIsEligibleButUnauthorized(task)) return "⊘";
+  if (taskIsEligibleButUnauthorized(task) || taskIsPlannedButUnauthorized(task)) return "⊘";
   if (isFocus || task.state === "ACTIVE") return "▶";
   return "○";
 }
@@ -554,10 +559,11 @@ function WbsFocusTask({
 }) {
   const isFocus = task.id === focusId;
   const eligibleUnauthorized = taskIsEligibleButUnauthorized(task);
+  const plannedUnauthorized = taskIsPlannedButUnauthorized(task);
   const decompositionRegionId = `wbs-decomposition-${task.id}`.replace(/[^a-zA-Z0-9_-]/g, "-");
 
   return (
-    <li className={`focusTask ${task.state.toLowerCase()} ${isFocus ? "focus" : ""} ${eligibleUnauthorized ? "eligibleUnauthorized" : ""} ${decomposition ? "hasDecomposition" : ""} ${expanded ? "decompositionOpen" : ""}`}>
+    <li className={`focusTask ${task.state.toLowerCase()} ${isFocus ? "focus" : ""} ${eligibleUnauthorized ? "eligibleUnauthorized" : ""} ${plannedUnauthorized ? "plannedUnauthorized" : ""} ${decomposition ? "hasDecomposition" : ""} ${expanded ? "decompositionOpen" : ""}`}>
       <span className="taskStateIcon" aria-hidden="true">
         {taskStateIcon(task, isFocus)}
       </span>
@@ -617,6 +623,7 @@ function WbsMilestoneTab({
   const operationalLabel =
     milestone.state === "COMPLETE" ? "Concluído" :
     milestone.state === "ACTIVE" ? "Atual" :
+    milestone.operationalState === "PLANNED_NOT_AUTHORIZED" ? "Planejado · Não autorizado" :
     "Planejado";
 
   return (
@@ -683,7 +690,9 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
       ? "CONCLUÍDO"
       : selectedMilestone.state === "ACTIVE"
         ? "ACTIVE"
-        : "PLANEJADO";
+        : selectedMilestone.operationalState === "PLANNED_NOT_AUTHORIZED"
+          ? "PLANEJADO · NÃO AUTORIZADO"
+          : "PLANEJADO";
 
   const selectedFocusId = selectedIsActive ? focusTask?.id : undefined;
 
