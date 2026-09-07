@@ -4,14 +4,14 @@
 
 ```text
 Workspace role = DERIVED VISUALIZATION / CONTINUITY ONLY
-Workspace canonical main = RESOLVE LIVE
-PR #32 lifecycle = MERGED / CLOSED
-PR #32 merge anchor = 98bad9cdfbded6d0beaecde89fbce5839c8a305e
-published feature = recursive task decomposition + typed FECH.AI issue rendering
-latest FECH.AI reconciliation = PR #199 / STS-M2-06 task graph state
-FECH.AI canonical main observed = 83186f5775e563e150329fa0b95dd1d7f3f3a516
+Workspace canonical main = 1769d2407550330c4a6500054a35889445a45ab8
+refresh candidate = PR #34 / DRAFT / NOT YET CANONICAL
+published baseline = PR #32 MERGED / recursive task decomposition + typed FECH.AI issue rendering
 
+FECH.AI canonical main observed = 661ef0014576d473088add0052d751e0a47d306e
+FECH.AI acceptance publication = PR #200 MERGED
 current execution program = Issue #141 — Security-to-Scale 2026
+
 WBS source = docs/roadmap/fechai-security-to-scale-2026-wbs.md
 task graph source = docs/sfjm/PROGRAM_TASK_GRAPH.md
 current-state source = docs/sfjm/CURRENT_STATE.md
@@ -19,91 +19,114 @@ typed issue source = docs/sfjm/CURRENT_ISSUES.md
 next-action source = docs/sfjm/NEXT_SAFE_ACTION.md
 
 OBJECTIVE_INTEGRITY = PRESERVED
-STS-M2 = ACTIVE
-STS-M2-01 = COMPLETE / ACCEPTED
-STS-M2-02 = COMPLETE / ACCEPTED WITH RESIDUALS
-STS-M2-03 = COMPLETE / ACCEPTED WITH RESIDUALS
-STS-M2-04 = COMPLETE / ACCEPTED WITH IMPLEMENTATION-LIFECYCLE-RUNTIME RESIDUALS
-STS-M2-05 = COMPLETE / ACCEPTED WITH RESIDUALS
-STS-M2-06 = AUTHORIZED_READ_ONLY / READY_TO_EXECUTE
-CURRENT_TASK_BLOCKERS = 0
+
+STS-M2 = COMPLETE / ACCEPTED WITH IMPLEMENTATION-LIFECYCLE-CALLSITE-RUNTIME-APPSEC RESIDUALS
+STS-M2-06 = COMPLETE / ACCEPTED
+DATABASE_STRATEGY = V2_STRANGLER / SAME_DATABASE_FIRST
+NEW_PRODUCTION_DATABASE = NOT_SELECTED_AT_THIS_STAGE
+
+STS-M3 = NEXT_ELIGIBLE / NOT_AUTHORIZED
+STS-M3-01 = NEXT_ELIGIBLE / NOT_AUTHORIZED
+CURRENT_AUTHORIZED_EXECUTION = NONE
+CURRENT_BLOCKER_COUNT = 0
 SECURITY_GO = NOT_GRANTED
 
 SNAPSHOT = MANUAL / NOT LIVE-SYNCED
-```
-
-### Objective integrity
-
-Canonical program objective remains Issue #141: reach a sellable, operable FECH.AI with a defensible Security Go candidate and a clear path out of the current monolith without hiding unresolved risk or performing a big-bang rewrite.
-
-Workspace remains a consumer:
-
-```text
-WORKSPACE_RENDERING != FECH.AI_AUTHORITY
-SNAPSHOT_MANUAL != LIVE_SYNC
-NON_PASS_FACT != CURRENT_BLOCKER
 ```
 
 ### Current journey position
 
 ```text
 Issue #141 — Security-to-Scale 2026
-→ STS-M2 — ACTIVE
-→ STS-M2-01 COMPLETE
-→ STS-M2-02 COMPLETE WITH RESIDUALS
-→ STS-M2-03 COMPLETE WITH RESIDUALS
-→ STS-M2-04 COMPLETE / ACCEPTED WITH RESIDUALS
-→ STS-M2-05 COMPLETE / ACCEPTED WITH RESIDUALS
-→ STS-M2-06 AUTHORIZED_READ_ONLY / READY_TO_EXECUTE
+→ STS-M2 COMPLETE / ACCEPTED WITH RESIDUALS
+  → STS-M2-01 COMPLETE
+  → STS-M2-02 COMPLETE WITH RESIDUALS
+  → STS-M2-03 COMPLETE WITH RESIDUALS
+  → STS-M2-04 COMPLETE / ACCEPTED WITH RESIDUALS
+  → STS-M2-05 COMPLETE / ACCEPTED WITH RESIDUALS
+  → STS-M2-06 COMPLETE / ACCEPTED
+       DATABASE STRATEGY = V2_STRANGLER / SAME_DATABASE_FIRST
+→ STS-M3 NEXT_ELIGIBLE / NOT_AUTHORIZED
+  → STS-M3-01 NEXT_ELIGIBLE / NOT_AUTHORIZED
 ```
 
-### Specialist destination
+### Current authority boundary
 
 ```text
-1. architecture
-   → software-systems-architect
-   → SES — Software Systems Architect
-   → REQUIRED / PRIMARY for STS-M2-06
+M2 acceptance != V2 implementation authority
+M3 eligibility != M3 execution authority
+CURRENT_AUTHORIZED_EXECUTION = NONE
 
-2. backend_data
-   → backend-data-platform-specialist
-   → SES — Backend & Data Platform Specialist
-   → CONDITIONAL / evidence support
-
-3. application_security
-   → application-security-assurance-specialist
-   → SES — Application Security Assurance Specialist
-   → CONDITIONAL / bounded assurance
-
-TRANSPORT = MANUAL COPY/PASTE
-AUTOMATIC ROUTING / SEND = NO
+NO runtime/frontend implementation
+NO Supabase/Auth/data mutation
+NO SQL / DDL / DML mutation
+NO migration execution
+NO RLS / policy / grant / owner / search_path mutation
+NO function / trigger / RPC / Edge Function mutation
+NO STS-M3 execution
+NO deploy / production mutation
+NO Security Go
+NO commercialization authorization
 ```
 
-## Single next safe action
-
-Resolve FECH.AI `main` live from the observed anchor `83186f5775e563e150329fa0b95dd1d7f3f3a516`.
-
-If no material invalidator has changed the STS-M2-06 contract, continue only with the already-authorized bounded **STS-M2-06 — Database Architecture Decision — READ_ONLY** work:
-
-1. reconstruct only the additional current architecture evidence required by STS-M2-06;
-2. consume accepted STS-M2-01..STS-M2-05 evidence without global replay;
-3. compare `EVOLVE_IN_PLACE` vs `V2_STRANGLER` vs `NEW_DATABASE`;
-4. analyze multi-tenancy, trust boundaries, coupling, migration blast radius, rollback and proof obligations;
-5. return an evidence-backed recommendation to Product Authority for adjudication.
-
-Current typed issue view:
+### Current issue semantics
 
 ```text
 source = FECH.AI docs/sfjm/CURRENT_ISSUES.md
-current blockers = 0
-residuals = 3
-deferred evidence = 3
-program/security gates = 4
+validation anchor inside CURRENT_ISSUES = 83186f5775e563e150329fa0b95dd1d7f3f3a516
+
+BLOCKING = 0
+REQUIRED_CURRENT = 0
+RESIDUAL = 3
+DEFERRED_EVIDENCE = 3
+SECURITY_GATE = 3
+FUTURE_GATE = 1
+
+CURRENT_BLOCKER_COUNT = 0
 ```
 
-Do not treat those residual/deferred/gate counts as STS-M2-06 blockers merely because they remain open.
+Residuals, deferred evidence and gates remain material. They are not silently resolved and are not flattened into the current-blocker count.
 
-No implementation, runtime/frontend mutation, Supabase/Auth/data mutation, SQL/DDL/DML, migration execution, RLS/policy/grant/function/trigger mutation, STS-M3 execution, deploy, Security Go or commercialization is authorized by this Workspace state.
+### Specialist / execution routing
+
+No specialist execution route is current merely from STS-M3 eligibility.
+
+```text
+STS-M3-01 authorization = REQUIRED FIRST
+specialist destination = RESOLVE AFTER AUTHORIZATION / BOOTSTRAP
+automatic routing = NO
+transport = MANUAL COPY/PASTE when/if a route becomes authorized
+```
+
+The receiving conversation must resolve FECH.AI live again before acting.
+
+## Single next safe action
+
+Resolve FECH.AI `main` live from the observed anchor `661ef0014576d473088add0052d751e0a47d306e`.
+
+If no material invalidator has changed the accepted M2 closure, the next material program gate is:
+
+```text
+SEPARATE PRODUCT AUTHORITY AUTHORIZATION
+FOR BOUNDED STS-M3-01
+```
+
+Until that authorization exists:
+
+```text
+DO NOT start STS-M3
+DO NOT implement V2_STRANGLER
+DO NOT mutate Supabase/Auth/data/runtime
+DO NOT deploy
+DO NOT grant Security Go
+```
+
+The accepted M2 architecture decision remains:
+
+```text
+V2_STRANGLER / SAME_DATABASE_FIRST
+NEW PRODUCTION DATABASE = NOT SELECTED AT THIS STAGE
+```
 
 ---
 
