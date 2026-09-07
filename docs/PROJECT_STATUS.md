@@ -8,7 +8,8 @@ Workspace canonical main = RESOLVE LIVE
 PR #32 lifecycle = MERGED / CLOSED
 PR #32 merge anchor = 98bad9cdfbded6d0beaecde89fbce5839c8a305e
 published feature = recursive task decomposition + typed FECH.AI issue rendering
-FECH.AI canonical main observed = a8c607228e413f5f2ca8162c1c0adeac9fb22729
+latest FECH.AI reconciliation = PR #199 / STS-M2-06 task graph state
+FECH.AI canonical main observed = 83186f5775e563e150329fa0b95dd1d7f3f3a516
 
 current execution program = Issue #141 — Security-to-Scale 2026
 WBS source = docs/roadmap/fechai-security-to-scale-2026-wbs.md
@@ -85,7 +86,7 @@ Workspace current main = RESOLVE LIVE
 PR #32 = MERGED / CLOSED
 PR #32 merge anchor = 98bad9cdfbded6d0beaecde89fbce5839c8a305e
 published state = recursive task decomposition + typed FECH.AI issue rendering on canonical Workspace main
-FECH.AI snapshot source = a8c607228e413f5f2ca8162c1c0adeac9fb22729
+FECH.AI snapshot source = 83186f5775e563e150329fa0b95dd1d7f3f3a516
 snapshot transport = MANUAL
 live synchronization = NO
 ```
