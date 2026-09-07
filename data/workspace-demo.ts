@@ -570,10 +570,6 @@ export const workspaceDemo = {
         label: "Database Contract Map",
         category: "PROGRAM",
         state: "PLANNED",
-        operationalState: "PLANNED_NOT_AUTHORIZED",
-        operationalState: "PLANNED_NOT_AUTHORIZED",
-        operationalState: "PLANNED_NOT_AUTHORIZED",
-        operationalState: "PLANNED_NOT_AUTHORIZED",
         owner: "Backend/Data + Architecture",
         evidence: "NEXT ELIGIBLE WBS TASK / EXECUTION NOT_AUTHORIZED. Eligibility follows accepted STS-M2-04 target-policy closure.",
         nextAction: "Product Authority selecionar/autorizar um bounded M2-05 READ_ONLY scope + evidence reconstruction."
