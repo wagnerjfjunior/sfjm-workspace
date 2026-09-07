@@ -33,9 +33,14 @@ function taskIsPlannedButUnauthorized(task: WbsTask) {
   return task.note?.includes("PLANNED_NOT_AUTHORIZED") ?? false;
 }
 
+function taskIsAuthorizedReadOnly(task: WbsTask) {
+  return task.note?.includes("AUTHORIZED_READ_ONLY") ?? false;
+}
+
 function taskStateLabel(task: WbsTask, isFocus: boolean) {
   if (task.state === "COMPLETE") return "Concluída";
   if (task.state === "ACTIVE") return "Em execução";
+  if (taskIsAuthorizedReadOnly(task)) return "Autorizada READ_ONLY · Pronta";
   if (taskIsEligibleButUnauthorized(task)) return "Próxima elegível · Não autorizada";
   if (taskIsPlannedButUnauthorized(task)) return "Planejada · Não autorizada";
   if (isFocus) return "Próximo gate";
@@ -46,7 +51,7 @@ function taskStateLabel(task: WbsTask, isFocus: boolean) {
 function taskStateIcon(task: WbsTask, isFocus: boolean) {
   if (task.state === "COMPLETE") return "✓";
   if (taskIsEligibleButUnauthorized(task) || taskIsPlannedButUnauthorized(task)) return "⊘";
-  if (isFocus || task.state === "ACTIVE") return "▶";
+  if (taskIsAuthorizedReadOnly(task) || isFocus || task.state === "ACTIVE") return "▶";
   return "○";
 }
 
@@ -516,23 +521,104 @@ function NextActionCard({ project }: { project: ExternalProject }) {
 }
 
 function RisksCard({ project }: { project: ExternalProject }) {
+  const issues = project.issues ?? [];
+
+  if (!issues.length) {
+    const blockers = project.blockers ?? [];
+    return (
+      <article className="commandCard risksCard" id="risks">
+        <div className="cardHeading compact">
+          <div>
+            <div className="eyebrow">Problemas / restrições</div>
+            <h2>{blockers.length} abertos no snapshot</h2>
+          </div>
+          <span className="countBadge">{blockers.length}</span>
+        </div>
+        <ul className="riskList">
+          {blockers.map((blocker, index) => (
+            <li key={blocker}>
+              <span className="riskIndex">{String(index + 1).padStart(2, "0")}</span>
+              <span>{blocker}</span>
+            </li>
+          ))}
+        </ul>
+      </article>
+    );
+  }
+
+  const currentBlockers = issues.filter(
+    (issue) => issue.class === "BLOCKING" || issue.class === "REQUIRED_CURRENT"
+  );
+
+  const groups = [
+    {
+      key: "blockers",
+      label: "Bloqueios atuais",
+      items: currentBlockers
+    },
+    {
+      key: "residuals",
+      label: "Riscos / residuais",
+      items: issues.filter((issue) => issue.class === "RESIDUAL")
+    },
+    {
+      key: "deferred",
+      label: "Evidências deferred",
+      items: issues.filter((issue) => issue.class === "DEFERRED_EVIDENCE")
+    },
+    {
+      key: "gates",
+      label: "Gates programa / segurança",
+      items: issues.filter(
+        (issue) => issue.class === "FUTURE_GATE" || issue.class === "SECURITY_GATE"
+      )
+    }
+  ];
+
   return (
-    <article className="commandCard risksCard" id="risks">
+    <article className="commandCard risksCard typedRisksCard" id="risks">
       <div className="cardHeading compact">
         <div>
           <div className="eyebrow">Problemas / restrições</div>
-          <h2>{project.blockers.length} abertos</h2>
+          <h2>{currentBlockers.length} bloqueios atuais</h2>
+          <small className="riskFreshness">
+            Snapshot manual · validado em {project.observedAt} · sem live sync
+          </small>
         </div>
-        <span className="countBadge">{project.blockers.length}</span>
+        <span className="countBadge">{currentBlockers.length}</span>
       </div>
-      <ul className="riskList">
-        {project.blockers.map((blocker, index) => (
-          <li key={blocker}>
-            <span className="riskIndex">{String(index + 1).padStart(2, "0")}</span>
-            <span>{blocker}</span>
-          </li>
+
+      <div className="issueSummaryGrid">
+        {groups.map((group) => (
+          <section className={`issueGroup ${group.key}`} key={group.key}>
+            <div className="issueGroupHeader">
+              <strong>{group.label}</strong>
+              <span>{group.items.length}</span>
+            </div>
+            {group.items.length ? (
+              <ul className="issueList">
+                {group.items.map((issue) => (
+                  <li key={issue.id}>
+                    <div className="issueLine">
+                      <strong>{issue.label}</strong>
+                      <span>{issue.state}</span>
+                    </div>
+                    <small>{issue.scope} · {issue.id}</small>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="issueEmpty">Nenhum item nesta classe.</p>
+            )}
+          </section>
         ))}
-      </ul>
+      </div>
+
+      <div className="riskSource">
+        <span>Fonte tipada</span>
+        <strong>docs/sfjm/CURRENT_ISSUES.md</strong>
+        <code>{project.observedSha}</code>
+      </div>
     </article>
   );
 }

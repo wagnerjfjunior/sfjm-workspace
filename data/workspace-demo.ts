@@ -38,12 +38,37 @@ export type TaskDecomposition = {
   presentationGroups?: TaskDecompositionPresentationGroup[];
 };
 
+export type ProjectIssueClass =
+  | "BLOCKING"
+  | "REQUIRED_CURRENT"
+  | "RESIDUAL"
+  | "DEFERRED_EVIDENCE"
+  | "FUTURE_GATE"
+  | "SECURITY_GATE"
+  | "RESOLVED"
+  | "SUPERSEDED";
+
+export type ProjectIssue = {
+  id: string;
+  class: ProjectIssueClass;
+  scope: string;
+  state: string;
+  label: string;
+  blockingForCurrentTask: boolean;
+  source: string;
+  sourceRef: string;
+  lastValidatedAt: string;
+  resolutionCondition: string;
+  displayPolicy: string;
+};
+
 export type ExternalProject = {
   name: string;
   kind: string;
   continuityState: string;
   nextSafeAction: string;
-  blockers: string[];
+  blockers?: string[];
+  issues?: ProjectIssue[];
   repository: string;
   observedSha: string;
   observedAt: string;
@@ -112,6 +137,7 @@ export type ProgramSnapshot = {
 export type WbsTaskState = "COMPLETE" | "ACTIVE" | "PLANNED" | "PARKED";
 export type WbsTask = {
   id: string;
+  wbsId?: string;
   label: string;
   hours: number;
   state: WbsTaskState;
@@ -119,6 +145,7 @@ export type WbsTask = {
 };
 export type WbsMilestone = {
   id: string;
+  wbsId?: string;
   label: string;
   hours: number;
   state: "COMPLETE" | "ACTIVE" | "PLANNED";
@@ -156,7 +183,7 @@ export const workspaceDemo = {
   checks: [
     { label: "Último milestone", value: "STS-M1 fechado · deferred assurance" },
     { label: "Milestone atual", value: "STS-M2 · STARTED" },
-    { label: "Próxima ação", value: "STS-M2-05 · autorizar scope/evidence reconstruction READ_ONLY" },
+    { label: "Próxima ação", value: "STS-M2-06 · executar decisão arquitetural READ_ONLY autorizada" },
     { label: "Objetivo principal", value: "Preservado · Issue #141" },
     { label: "Histórico", value: "Preservado" },
     { label: "Security Go", value: "Não concedido" }
@@ -166,30 +193,148 @@ export const workspaceDemo = {
     {
       name: "FECH.AI",
       kind: "Projeto externo",
-      continuityState: "STS-M2 STARTED · STS-M2-04 COMPLETE / ACCEPTED WITH IMPLEMENTATION-LIFECYCLE-RUNTIME RESIDUALS · M2-05 NEXT ELIGIBLE / NOT AUTHORIZED",
-      nextSafeAction: "STS-M2-05 — Database Contract Map → Product Authority selecionar/autorizar um scope + evidence reconstruction bounded READ_ONLY. Elegibilidade não equivale a autorização; M2-05 permanece NOT_AUTHORIZED.",
-      blockers: [
-        "Security Go continua DENIED / NOT_GRANTED",
-        "Broad paid commercialization continua BLOCKED",
-        "J4 environment-dependent evidence está DEFERRED, não PASS",
-        "IMP-003 permanece NOT_DETERMINED",
-        "ROLLBACK_REAPPLY permanece NOT_DETERMINED",
-        "OC-01 é REQUIRED BEFORE EXTERNAL USERS",
-        "Current implementation target-compliant = NOT_PROVEN",
-        "Seis residuals de implementação/lifecycle/runtime permanecem: 004, 031, 036, 047, 119, 127",
-        "M2-04D remediation backlog D-01..D-08 permanece NOT_IMPLEMENTED",
-        "M2-05 execution = NOT_AUTHORIZED",
-        "M2-06 execution = NOT_AUTHORIZED",
-        "M3..M6 execution = NOT_AUTHORIZED"
-      ],
+      continuityState: "STS-M2 ACTIVE · STS-M2-05 COMPLETE / ACCEPTED WITH RESIDUALS · STS-M2-06 AUTHORIZED_READ_ONLY / READY_TO_EXECUTE",
+      nextSafeAction: "STS-M2-06 — Database Architecture Decision → executar bounded READ_ONLY evidence reconstruction + comparar EVOLVE_IN_PLACE vs V2_STRANGLER vs NEW_DATABASE → retornar recomendação para Product Authority.",
+      issues: [
+        {
+          id: "STS-GATE-SECURITY-GO",
+          class: "SECURITY_GATE",
+          scope: "PROGRAM",
+          state: "OPEN / NOT_GRANTED",
+          label: "Security Go continua NOT_GRANTED",
+          blockingForCurrentTask: false,
+          source: "docs/sfjm/CURRENT_ISSUES.md",
+          sourceRef: "a8c607228e413f5f2ca8162c1c0adeac9fb22729",
+          lastValidatedAt: "2026-09-07",
+          resolutionCondition: "Product Authority Security Go após evidência/assurance exigida",
+          displayPolicy: "PROGRAM_SECURITY_GATES"
+        },
+        {
+          id: "STS-GATE-COMMERCIALIZATION",
+          class: "SECURITY_GATE",
+          scope: "COMMERCIALIZATION",
+          state: "BLOCKED",
+          label: "Broad paid commercialization permanece bloqueada",
+          blockingForCurrentTask: false,
+          source: "docs/sfjm/CURRENT_ISSUES.md",
+          sourceRef: "a8c607228e413f5f2ca8162c1c0adeac9fb22729",
+          lastValidatedAt: "2026-09-07",
+          resolutionCondition: "decisão comercial separada da Product Authority quando condições de launch/security permitirem",
+          displayPolicy: "PROGRAM_SECURITY_GATES"
+        },
+        {
+          id: "STS-DEFER-J4",
+          class: "DEFERRED_EVIDENCE",
+          scope: "STS-M1 / F1-02",
+          state: "DEFERRED",
+          label: "J4 environment-dependent evidence",
+          blockingForCurrentTask: false,
+          source: "docs/security/evidence/F1-02_REMEDIATION_MASTER_PLAN.md",
+          sourceRef: "a8c607228e413f5f2ca8162c1c0adeac9fb22729",
+          lastValidatedAt: "2026-09-07",
+          resolutionCondition: "Supabase Pro + ambiente isolado non-production + autorização explícita",
+          displayPolicy: "DEFERRED_EVIDENCE"
+        },
+        {
+          id: "STS-DEFER-IMP-003",
+          class: "DEFERRED_EVIDENCE",
+          scope: "STS-M1 / F1-02",
+          state: "NOT_DETERMINED",
+          label: "IMP-003 permanece NOT_DETERMINED",
+          blockingForCurrentTask: false,
+          source: "docs/security/evidence/F1-02_REMEDIATION_MASTER_PLAN.md",
+          sourceRef: "a8c607228e413f5f2ca8162c1c0adeac9fb22729",
+          lastValidatedAt: "2026-09-07",
+          resolutionCondition: "bounded evidence run após reopen gate",
+          displayPolicy: "DEFERRED_EVIDENCE"
+        },
+        {
+          id: "STS-DEFER-ROLLBACK-REAPPLY",
+          class: "DEFERRED_EVIDENCE",
+          scope: "STS-M1 / F1-02",
+          state: "NOT_DETERMINED",
+          label: "ROLLBACK_REAPPLY permanece NOT_DETERMINED",
+          blockingForCurrentTask: false,
+          source: "docs/security/evidence/F1-02_REMEDIATION_MASTER_PLAN.md",
+          sourceRef: "a8c607228e413f5f2ca8162c1c0adeac9fb22729",
+          lastValidatedAt: "2026-09-07",
+          resolutionCondition: "bounded evidence run após reopen gate",
+          displayPolicy: "DEFERRED_EVIDENCE"
+        },
+        {
+          id: "STS-GATE-OC-01",
+          class: "SECURITY_GATE",
+          scope: "EXTERNAL_USERS",
+          state: "REQUIRED_BEFORE_EXTERNAL_USERS",
+          label: "OC-01 é requerido antes de external users",
+          blockingForCurrentTask: false,
+          source: "docs/security/evidence/F1-02_REMEDIATION_MASTER_PLAN.md",
+          sourceRef: "a8c607228e413f5f2ca8162c1c0adeac9fb22729",
+          lastValidatedAt: "2026-09-07",
+          resolutionCondition: "satisfazer/adjudicar OC-01 antes da admissão de external users",
+          displayPolicy: "PROGRAM_SECURITY_GATES"
+        },
+        {
+          id: "STS-RESIDUAL-M2-TARGET-COMPLIANCE",
+          class: "RESIDUAL",
+          scope: "STS-M2-04 / STS-M2-05",
+          state: "OPEN / NOT_PROVEN",
+          label: "Current implementation target-compliant = NOT_PROVEN",
+          blockingForCurrentTask: false,
+          source: "docs/sfjm/CURRENT_STATE.md",
+          sourceRef: "a8c607228e413f5f2ca8162c1c0adeac9fb22729",
+          lastValidatedAt: "2026-09-07",
+          resolutionCondition: "implementação + validação independente suficiente para estabelecer target compliance",
+          displayPolicy: "RESIDUAL_RISKS"
+        },
+        {
+          id: "STS-RESIDUAL-M2-04-E",
+          class: "RESIDUAL",
+          scope: "STS-M2-04",
+          state: "OPEN",
+          label: "Residuals 004, 031, 036, 047, 119, 127 permanecem",
+          blockingForCurrentTask: false,
+          source: "docs/sfjm/BLOCKED_ACTIONS.md",
+          sourceRef: "a8c607228e413f5f2ca8162c1c0adeac9fb22729",
+          lastValidatedAt: "2026-09-07",
+          resolutionCondition: "implementation/lifecycle/runtime work separadamente autorizado",
+          displayPolicy: "RESIDUAL_RISKS"
+        },
+        {
+          id: "STS-RESIDUAL-M2-04D",
+          class: "RESIDUAL",
+          scope: "STS-M2-04D",
+          state: "OPEN / NOT_IMPLEMENTED",
+          label: "D-01..D-08 remediation permanece NOT_IMPLEMENTED",
+          blockingForCurrentTask: false,
+          source: "docs/sfjm/BLOCKED_ACTIONS.md",
+          sourceRef: "a8c607228e413f5f2ca8162c1c0adeac9fb22729",
+          lastValidatedAt: "2026-09-07",
+          resolutionCondition: "remediation separadamente autorizada + adjudicação",
+          displayPolicy: "RESIDUAL_RISKS"
+        },
+        {
+          id: "STS-GATE-M3-M6",
+          class: "FUTURE_GATE",
+          scope: "STS-M3..STS-M6",
+          state: "NOT_AUTHORIZED",
+          label: "STS-M3..STS-M6 permanecem future gates",
+          blockingForCurrentTask: false,
+          source: "docs/sfjm/PROGRAM_TASK_GRAPH.md",
+          sourceRef: "a8c607228e413f5f2ca8162c1c0adeac9fb22729",
+          lastValidatedAt: "2026-09-07",
+          resolutionCondition: "autorização sequencial da Product Authority quando cada milestone se tornar elegível",
+          displayPolicy: "ROADMAP_GATES"
+        }
+      ] satisfies ProjectIssue[],
       repository: "wagnerjfjunior/fecha.ai",
-      observedSha: "e07254ef6b2d7184e749463727df2e6d404226a7",
-      observedAt: "7 Sep 2026 · PR #194 merged / Program Task Graph published",
-      verification: "Snapshot manual · WBS + PROGRAM_TASK_GRAPH + CURRENT_STATE + NEXT_SAFE_ACTION · FECH.AI continua sendo a autoridade",
+      observedSha: "a8c607228e413f5f2ca8162c1c0adeac9fb22729",
+      observedAt: "7 Sep 2026 · PR #198 merged / typed issue lifecycle published",
+      verification: "Snapshot manual validado em a8c60722… · WBS + PROGRAM_TASK_GRAPH + CURRENT_STATE + CURRENT_ISSUES + NEXT_SAFE_ACTION · sem live sync",
       taskDecompositions: [{
-        parentTaskId: "M2-04",
+        parentTaskId: "STS-M2-04",
         parentLabel: "Política target de DEFINER / RLS / DML",
-        source: "FECH.AI docs/sfjm/PROGRAM_TASK_GRAPH.md + CURRENT_STATE.md + NEXT_SAFE_ACTION.md @ e07254ef…",
+        source: "FECH.AI docs/sfjm/PROGRAM_TASK_GRAPH.md + CURRENT_STATE.md + NEXT_SAFE_ACTION.md @ a8c60722…",
         items: [
           {
             id: "STS-M2-04B",
@@ -292,8 +437,8 @@ export const workspaceDemo = {
   fechaiProgram: {
     name: "FECH.AI Security-to-Scale 2026",
     repository: "wagnerjfjunior/fecha.ai",
-    observedSha: "e07254ef6b2d7184e749463727df2e6d404226a7",
-    observedAt: "7 Sep 2026 · PR #194 merged / Program Task Graph published",
+    observedSha: "a8c607228e413f5f2ca8162c1c0adeac9fb22729",
+    observedAt: "7 Sep 2026 · PR #198 merged / typed issue lifecycle published",
     programIssue: "#141",
     programObjective: "Reach a sellable, operable FECH.AI with a defensible Security Go candidate and a clear path out of the current frontend/backend monolith before year-end, without hiding unresolved risk or performing a big-bang rewrite.",
     objectiveSource: "FECH.AI Issue #141 + program-hierarchy BCR",
@@ -303,33 +448,33 @@ export const workspaceDemo = {
     specialistRouting: [
       {
         sequence: 1,
-        role: "backend_data",
-        archetypeId: "backend-data-platform-specialist",
-        targetName: "SES — Backend & Data Platform Specialist",
-        purpose: "Primary M2-04 target-policy reconstruction",
+        role: "architecture",
+        archetypeId: "software-systems-architect",
+        targetName: "SES — Software Systems Architect",
+        purpose: "Primary STS-M2-06 database architecture decision",
         requirement: "REQUIRED"
       },
       {
         sequence: 2,
-        role: "architecture",
-        archetypeId: "software-systems-architect",
-        targetName: "SES — Software Systems Architect",
-        purpose: "Architecture adjudication and downstream M2-05/M2-06 fit",
-        requirement: "REQUIRED"
+        role: "backend_data",
+        archetypeId: "backend-data-platform-specialist",
+        targetName: "SES — Backend & Data Platform Specialist",
+        purpose: "Conditional database/callsite evidence support when architecture analysis requires it",
+        requirement: "CONDITIONAL"
       },
       {
         sequence: 3,
         role: "application_security",
         archetypeId: "application-security-assurance-specialist",
         targetName: "SES — Application Security Assurance Specialist",
-        purpose: "Bounded independent assurance only for material target-security-policy questions",
+        purpose: "Conditional assurance only for material security-policy questions",
         requirement: "CONDITIONAL"
       }
     ],
     lastCompletedMilestone: "STS-M1 — COMPLETE WITH DEFERRED SECURITY ASSURANCE",
     nextProgramMilestone: "STS-M3 — Backend Authority Contract Freeze · PLANNED",
-    activeWorkstream: "STS-M2 · STARTED · STS-M2-04 COMPLETE / ACCEPTED · M2-05 NEXT ELIGIBLE / NOT AUTHORIZED",
-    nextSafeAction: "Resolve live main e07254ef… → read PROGRAM_TASK_GRAPH → Product Authority select/authorize a bounded M2-05 READ_ONLY scope + evidence reconstruction → eligibility is not execution authority → M2-05 remains NOT_AUTHORIZED",
+    activeWorkstream: "STS-M2 · ACTIVE · STS-M2-05 COMPLETE / ACCEPTED WITH RESIDUALS · STS-M2-06 AUTHORIZED_READ_ONLY / READY_TO_EXECUTE",
+    nextSafeAction: "Resolve live FECH.AI main → execute bounded STS-M2-06 READ_ONLY architecture decision → compare EVOLVE_IN_PLACE vs V2_STRANGLER vs NEW_DATABASE → return recommendation for Product Authority adjudication",
     securityGo: "NOT GRANTED",
     commercialization: "BLOCKED",
     weightingBasis: "Peso = duração planejada; progresso só avança quando o gate do milestone é aceito.",
@@ -566,13 +711,13 @@ export const workspaceDemo = {
 
     active: [
       {
-        id: "STS-M2-05",
-        label: "Database Contract Map",
+        id: "STS-M2-06",
+        label: "Database Architecture Decision",
         category: "PROGRAM",
         state: "PLANNED",
-        owner: "Backend/Data + Architecture",
-        evidence: "NEXT ELIGIBLE WBS TASK / EXECUTION NOT_AUTHORIZED. Eligibility follows accepted STS-M2-04 target-policy closure.",
-        nextAction: "Product Authority selecionar/autorizar um bounded M2-05 READ_ONLY scope + evidence reconstruction."
+        owner: "Architecture",
+        evidence: "AUTHORIZED_READ_ONLY / READY_TO_EXECUTE. STS-M2-05 is COMPLETE / ACCEPTED WITH RESIDUALS.",
+        nextAction: "Executar READ_ONLY evidence reconstruction + comparar EVOLVE_IN_PLACE vs V2_STRANGLER vs NEW_DATABASE; retornar recomendação para Product Authority."
       }
     ] satisfies ExecutionItem[],
 
@@ -678,16 +823,16 @@ export const workspaceDemo = {
   } satisfies ProgramSnapshot,
 
   fechaiWbs: {
-    source: "WBS structure: docs/roadmap/fechai-security-to-scale-2026-wbs.md · operational overlay: docs/sfjm/PROGRAM_TASK_GRAPH.md · current meaning: CURRENT_STATE.md + NEXT_SAFE_ACTION.md @ e07254ef…",
+    source: "WBS structure: docs/roadmap/fechai-security-to-scale-2026-wbs.md · operational overlay: docs/sfjm/PROGRAM_TASK_GRAPH.md · current meaning: CURRENT_STATE.md + NEXT_SAFE_ACTION.md @ a8c60722…",
     basis: "Planning estimates for visibility, not clocked timesheets.",
     totalCriticalHours: 832,
-    completedHours: 284,
-    remainingCriticalHours: 548,
+    completedHours: 304,
+    remainingCriticalHours: 528,
     preSecurityGoBacklogHours: 116,
     plannedBacklogHours: 104,
     currentPackage: "STS-M2 — STARTED",
-    currentTask: "STS-M2-05 · Database Contract Map · NEXT ELIGIBLE / NOT AUTHORIZED · 20h",
-    note: "Rótulos/horas vêm da WBS estrutural; estado corrente vem do SFJM do FECH.AI. STS-M2-04 foi aceito com residuals de implementação/lifecycle/runtime; M2-05 é o próximo WBS elegível, mas sua execução permanece não autorizada. Horas são planejamento, não timesheet.",
+    currentTask: "STS-M2-06 · Decisão arquitetural do banco · AUTHORIZED_READ_ONLY / READY_TO_EXECUTE · 16h",
+    note: "Rótulos/horas vêm da WBS estrutural; identidade externa usa STS-Mx-yy e wbsId preserva Mx-yy. STS-M2-05 está COMPLETE / ACCEPTED WITH RESIDUALS; STS-M2-06 está AUTHORIZED_READ_ONLY / READY_TO_EXECUTE. Horas são planejamento, não timesheet.",
     milestones: [
       {
         id: "STS-M0",
@@ -717,76 +862,76 @@ export const workspaceDemo = {
         ]
       },
       {
-        id: "STS-M2",
+        id: "STS-M2", wbsId: "M2",
         label: "Database Simplification & Optimization Plan",
         hours: 116,
         state: "ACTIVE",
         tasks: [
-          { id: "STS-M2-01", label: "Matriz de 43 tabelas", hours: 20, state: "COMPLETE" },
-          { id: "STS-M2-02", label: "Mapa routines / policies / triggers / grants", hours: 24, state: "COMPLETE", note: "Accepted with residuals." },
-          { id: "STS-M2-03", label: "Índices / ACL contraditórias", hours: 16, state: "COMPLETE", note: "Accepted with residuals." },
-          { id: "STS-M2-04", label: "Política target de DEFINER / RLS / DML", hours: 20, state: "COMPLETE", note: "COMPLETE / ACCEPTED WITH IMPLEMENTATION-LIFECYCLE-RUNTIME RESIDUALS." },
-          { id: "STS-M2-05", label: "Database Contract Map", hours: 20, state: "PLANNED", note: "NEXT ELIGIBLE / NOT_AUTHORIZED · Product Authority must authorize a bounded READ_ONLY scope + evidence reconstruction." },
-          { id: "STS-M2-06", label: "Decisão arquitetural do banco", hours: 16, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET · consumes M2-04/M2-05 evidence." }
+          { id: "STS-M2-01", wbsId: "M2-01", label: "Matriz de 43 tabelas", hours: 20, state: "COMPLETE" },
+          { id: "STS-M2-02", wbsId: "M2-02", label: "Mapa routines / policies / triggers / grants", hours: 24, state: "COMPLETE", note: "Accepted with residuals." },
+          { id: "STS-M2-03", wbsId: "M2-03", label: "Índices / ACL contraditórias", hours: 16, state: "COMPLETE", note: "Accepted with residuals." },
+          { id: "STS-M2-04", wbsId: "M2-04", label: "Política target de DEFINER / RLS / DML", hours: 20, state: "COMPLETE", note: "COMPLETE / ACCEPTED WITH IMPLEMENTATION-LIFECYCLE-RUNTIME RESIDUALS." },
+          { id: "STS-M2-05", wbsId: "M2-05", label: "Database Contract Map", hours: 20, state: "COMPLETE", note: "COMPLETE / ACCEPTED WITH IMPLEMENTATION-LIFECYCLE-CALLSITE-EVIDENCE-RUNTIME-APPSEC RESIDUALS." },
+          { id: "STS-M2-06", wbsId: "M2-06", label: "Decisão arquitetural do banco", hours: 16, state: "PLANNED", note: "AUTHORIZED_READ_ONLY / READY_TO_EXECUTE · children = NONE YET · consumes STS-M2-04/STS-M2-05 evidence." }
         ]
       },
       {
-        id: "STS-M3",
+        id: "STS-M3", wbsId: "M3",
         label: "Backend Authority Contract Freeze",
         hours: 152,
         state: "PLANNED",
         operationalState: "PLANNED_NOT_AUTHORIZED",
         tasks: [
-          { id: "STS-M3-01", label: "Identity / membership / team / role model", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M3-02", label: "Authority contract por contexto", hours: 28, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M3-03", label: "Allowlist de RPCs privilegiadas", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M3-04", label: "Redução de DML sensível direto", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M3-05", label: "Fechamento Auth / Admin flows", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M3-06", label: "Staging / test plan de segurança", hours: 28, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" }
+          { id: "STS-M3-01", wbsId: "M3-01", label: "Identity / membership / team / role model", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
+          { id: "STS-M3-02", wbsId: "M3-02", label: "Authority contract por contexto", hours: 28, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
+          { id: "STS-M3-03", wbsId: "M3-03", label: "Allowlist de RPCs privilegiadas", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
+          { id: "STS-M3-04", wbsId: "M3-04", label: "Redução de DML sensível direto", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
+          { id: "STS-M3-05", wbsId: "M3-05", label: "Fechamento Auth / Admin flows", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
+          { id: "STS-M3-06", wbsId: "M3-06", label: "Staging / test plan de segurança", hours: 28, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" }
         ]
       },
       {
-        id: "STS-M4",
+        id: "STS-M4", wbsId: "M4",
         label: "Frontend Modularization / App.jsx Extraction",
         hours: 172,
         state: "PLANNED",
         operationalState: "PLANNED_NOT_AUTHORIZED",
         tasks: [
-          { id: "STS-M4-01", label: "AppShell / Shared Frontend Boundary", hours: 20, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M4-02", label: "CRM + Funil Core Slice", hours: 40, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M4-03", label: "LeadOps Execution Slice — Leads / Listas / Distribuição / Discador / Power Message Engine", hours: 32, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M4-04", label: "MesaCliente Core Slice", hours: 32, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M4-05", label: "Feature Gateways / API Boundaries", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M4-06", label: "Core Functional Equivalence & Regression", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" }
+          { id: "STS-M4-01", wbsId: "M4-01", label: "AppShell / Shared Frontend Boundary", hours: 20, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
+          { id: "STS-M4-02", wbsId: "M4-02", label: "CRM + Funil Core Slice", hours: 40, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
+          { id: "STS-M4-03", wbsId: "M4-03", label: "LeadOps Execution Slice — Leads / Listas / Distribuição / Discador / Power Message Engine", hours: 32, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
+          { id: "STS-M4-04", wbsId: "M4-04", label: "MesaCliente Core Slice", hours: 32, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
+          { id: "STS-M4-05", wbsId: "M4-05", label: "Feature Gateways / API Boundaries", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
+          { id: "STS-M4-06", wbsId: "M4-06", label: "Core Functional Equivalence & Regression", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" }
         ]
       },
       {
-        id: "STS-M5",
+        id: "STS-M5", wbsId: "M5",
         label: "Integrated Security / Reliability Validation",
         hours: 128,
         state: "PLANNED",
         operationalState: "PLANNED_NOT_AUTHORIZED",
         tasks: [
-          { id: "STS-M5-01", label: "Hostile-client suite isolada", hours: 28, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M5-02", label: "Regressão tenant / role / auth / storage", hours: 28, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M5-03", label: "Dependency / CVE gate", hours: 12, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M5-04", label: "Secrets / config / deploy gate", hours: 16, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M5-05", label: "Observabilidade / rollback / incidente", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M5-06", label: "Adjudicação de residual risk", hours: 20, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" }
+          { id: "STS-M5-01", wbsId: "M5-01", label: "Hostile-client suite isolada", hours: 28, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
+          { id: "STS-M5-02", wbsId: "M5-02", label: "Regressão tenant / role / auth / storage", hours: 28, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
+          { id: "STS-M5-03", wbsId: "M5-03", label: "Dependency / CVE gate", hours: 12, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
+          { id: "STS-M5-04", wbsId: "M5-04", label: "Secrets / config / deploy gate", hours: 16, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
+          { id: "STS-M5-05", wbsId: "M5-05", label: "Observabilidade / rollback / incidente", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
+          { id: "STS-M5-06", wbsId: "M5-06", label: "Adjudicação de residual risk", hours: 20, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" }
         ]
       },
       {
-        id: "STS-M6",
+        id: "STS-M6", wbsId: "M6",
         label: "Security Go Candidate / Commercial Readiness",
         hours: 60,
         state: "PLANNED",
         operationalState: "PLANNED_NOT_AUTHORIZED",
         tasks: [
-          { id: "STS-M6-01", label: "Security Evidence + Final AS-BUILT Package", hours: 14, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M6-02", label: "Blocker closeout", hours: 8, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M6-03", label: "Onboarding / support / operational runbooks", hours: 18, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M6-04", label: "Decisão comercial controlada", hours: 8, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M6-05", label: "Launch readiness + AS-BUILT acceptance review", hours: 12, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" }
+          { id: "STS-M6-01", wbsId: "M6-01", label: "Security Evidence + Final AS-BUILT Package", hours: 14, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
+          { id: "STS-M6-02", wbsId: "M6-02", label: "Blocker closeout", hours: 8, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
+          { id: "STS-M6-03", wbsId: "M6-03", label: "Onboarding / support / operational runbooks", hours: 18, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
+          { id: "STS-M6-04", wbsId: "M6-04", label: "Decisão comercial controlada", hours: 8, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
+          { id: "STS-M6-05", wbsId: "M6-05", label: "Launch readiness + AS-BUILT acceptance review", hours: 12, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" }
         ]
       }
     ] satisfies WbsMilestone[],
@@ -831,17 +976,18 @@ export const workspaceDemo = {
   currentState: [
     { label: "Último milestone concluído", value: "STS-M1 · deferred assurance" },
     { label: "Milestone atual", value: "STS-M2 · STARTED" },
-    { label: "Próxima continuidade", value: "STS-M2-05 · autorizar scope/evidence reconstruction READ_ONLY" },
+    { label: "Próxima continuidade", value: "STS-M2-06 · AUTHORIZED_READ_ONLY / READY_TO_EXECUTE" },
     { label: "Objetivo", value: "Issue #141 · PRESERVED" }
   ] satisfies SourceRow[],
 
   sources: [
-    { label: "FECH.AI main", value: "e07254ef…", badge: true },
+    { label: "FECH.AI main", value: "a8c60722…", badge: true },
     { label: "Program objective", value: "#141 OPEN · PRESERVED", badge: true },
     { label: "Current state source", value: "docs/sfjm/CURRENT_STATE.md", badge: true },
     { label: "Program task graph", value: "docs/sfjm/PROGRAM_TASK_GRAPH.md", badge: true },
+    { label: "Current issues", value: "docs/sfjm/CURRENT_ISSUES.md · typed", badge: true },
     { label: "WBS structure", value: "832h · structural baseline", badge: true },
     { label: "SES main / routing", value: "61cee7b3… · manual", badge: true },
-    { label: "Snapshot", value: "Manual · 7 Sep", badge: true }
+    { label: "Snapshot", value: "Manual · validated 7 Sep · not live-synced", badge: true }
   ] satisfies SourceRow[]
 };
