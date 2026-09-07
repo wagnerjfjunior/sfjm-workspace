@@ -24,11 +24,18 @@ export type TaskDecompositionItem = {
   children?: TaskDecompositionItem[];
 };
 
+export type TaskDecompositionPresentationGroup = {
+  id: string;
+  label: string;
+  memberIds: string[];
+};
+
 export type TaskDecomposition = {
   parentTaskId: string;
   parentLabel: string;
   source: string;
   items: TaskDecompositionItem[];
+  presentationGroups?: TaskDecompositionPresentationGroup[];
 };
 
 export type ExternalProject = {
@@ -179,6 +186,13 @@ export const workspaceDemo = {
         parentTaskId: "STS-M2-04",
         parentLabel: "Política target de DEFINER / RLS / DML",
         source: "FECH.AI docs/sfjm/CURRENT_STATE.md + NEXT_SAFE_ACTION.md + handoffs/CURRENT.md @ aa266df3…",
+        presentationGroups: [
+          {
+            id: "M2-04B",
+            label: "Routine authority classification",
+            memberIds: ["M2-04B1", "M2-04B2", "M2-04B3"]
+          }
+        ],
         items: [
           {
             id: "M2-04B1",
