@@ -249,13 +249,19 @@ function TaskDecompositionPanel({
   const renderCanonicalChildren = (
     parentId: string,
     children: ProjectTaskDecomposition["items"],
-    regionId: string
+    regionId: string,
+    hidden: boolean
   ) => {
     const visibleChildren = children.slice(0, 8);
     const hasInlineOverflow = children.length > visibleChildren.length;
 
     return (
-      <div className="decompositionChildrenRegion" id={regionId} aria-label={`Subetapas de ${parentId}`}>
+      <div
+        className="decompositionChildrenRegion"
+        id={regionId}
+        aria-label={`Subetapas de ${parentId}`}
+        hidden={hidden}
+      >
         <ol className="decompositionChildrenList" role="list">
           {visibleChildren.map((child) => (
             <li className={`decompositionChildRow ${child.state.toLowerCase()}`} key={child.id}>
@@ -361,7 +367,7 @@ function TaskDecompositionPanel({
                     className="decompositionDisclosure"
                     aria-expanded={expanded}
                     aria-controls={childRegionId}
-                    aria-label={`${item.id}, ${item.label}, ${decompositionVisualStateLabel(item)}, ${completedChildren} de ${children.length} subetapas concluídas`}
+                    aria-label={`${item.id}, ${item.label}, ${decompositionVisualStateLabel(item)}, status canônico: ${item.status}, ${completedChildren} de ${children.length} subetapas concluídas`}
                     onClick={() => setExpandedItemId((current) => current === item.id ? null : item.id)}
                   >
                     <span className="decompositionChevron" aria-hidden="true">{expanded ? "⌄" : "›"}</span>
@@ -383,13 +389,13 @@ function TaskDecompositionPanel({
                     </span>
                   </button>
 
-                  {expanded ? renderCanonicalChildren(item.id, children, childRegionId) : null}
+                  {renderCanonicalChildren(item.id, children, childRegionId, !expanded)}
                 </>
               ) : (
                 <div
                   className="decompositionLeafRow"
                   title={item.note ?? item.status}
-                  aria-label={`${item.id}, ${item.label}, ${decompositionVisualStateLabel(item)}`}
+                  aria-label={`${item.id}, ${item.label}, ${decompositionVisualStateLabel(item)}, status canônico: ${item.status}`}
                 >
                   <span className="decompositionStateIcon" aria-hidden="true">{decompositionIcon(item.state)}</span>
                   <span className="decompositionItemMain">
