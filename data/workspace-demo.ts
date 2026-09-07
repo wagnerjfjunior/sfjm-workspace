@@ -267,7 +267,7 @@ export const workspaceDemo = {
           },
           {
             id: "M2-04F",
-            label: "AppSec assurance",
+            label: "Semântica ainda não definida",
             state: "UNKNOWN",
             status: "SEMANTICS NOT_CANONICALLY_DEFINED / EXECUTION NOT_AUTHORIZED",
             note: "Do not infer M2-04F as the next slice from sequence; Product Authority has not selected the next bounded M2-04 action."
