@@ -18,12 +18,24 @@ function findTaskDecomposition(project: ExternalProject, parentTaskId?: string) 
   return project.taskDecompositions?.find((decomposition) => decomposition.parentTaskId === parentTaskId);
 }
 
+function taskIsEligibleButUnauthorized(task: WbsTask) {
+  return task.note?.includes("NEXT ELIGIBLE / NOT_AUTHORIZED") ?? false;
+}
+
 function taskStateLabel(task: WbsTask, isFocus: boolean) {
   if (task.state === "COMPLETE") return "Concluída";
   if (task.state === "ACTIVE") return "Em execução";
+  if (taskIsEligibleButUnauthorized(task)) return "Próxima elegível · Não autorizada";
   if (isFocus) return "Próximo gate";
   if (task.state === "PARKED") return "Backlog";
   return "Planejada";
+}
+
+function taskStateIcon(task: WbsTask, isFocus: boolean) {
+  if (task.state === "COMPLETE") return "✓";
+  if (taskIsEligibleButUnauthorized(task)) return "⊘";
+  if (isFocus || task.state === "ACTIVE") return "▶";
+  return "○";
 }
 
 function trapDrawerFocus(event: KeyboardEvent<HTMLElement>) {
@@ -436,6 +448,7 @@ function NextActionCard({ project }: { project: ExternalProject }) {
   const requiredRoutes = program.specialistRouting.filter((route) => route.requirement === "REQUIRED");
   const conditionalRoute = program.specialistRouting.find((route) => route.requirement === "CONDITIONAL");
   const decomposition = findTaskDecomposition(project, focusTask?.id);
+  const focusEligibleUnauthorized = focusTask ? taskIsEligibleButUnauthorized(focusTask) : false;
 
   return (
     <article className="commandCard nextActionCard" id="next-action">
@@ -446,7 +459,9 @@ function NextActionCard({ project }: { project: ExternalProject }) {
               <div className="eyebrow">Próxima ação segura</div>
               <h2>{isFechai && focusTask ? focusTask.label : project.nextSafeAction}</h2>
             </div>
-            <span className="statusPill next">PRÓXIMA</span>
+            <span className={`statusPill ${focusEligibleUnauthorized ? "restricted" : "next"}`}>
+              {focusEligibleUnauthorized ? "PRÓXIMA ELEGÍVEL · NÃO AUTORIZADA" : "PRÓXIMA"}
+            </span>
           </div>
 
           {isFechai && focusTask && activeMilestone ? (
@@ -538,12 +553,13 @@ function WbsFocusTask({
   onToggleDecomposition: () => void;
 }) {
   const isFocus = task.id === focusId;
+  const eligibleUnauthorized = taskIsEligibleButUnauthorized(task);
   const decompositionRegionId = `wbs-decomposition-${task.id}`.replace(/[^a-zA-Z0-9_-]/g, "-");
 
   return (
-    <li className={`focusTask ${task.state.toLowerCase()} ${isFocus ? "focus" : ""} ${decomposition ? "hasDecomposition" : ""} ${expanded ? "decompositionOpen" : ""}`}>
+    <li className={`focusTask ${task.state.toLowerCase()} ${isFocus ? "focus" : ""} ${eligibleUnauthorized ? "eligibleUnauthorized" : ""} ${decomposition ? "hasDecomposition" : ""} ${expanded ? "decompositionOpen" : ""}`}>
       <span className="taskStateIcon" aria-hidden="true">
-        {task.state === "COMPLETE" ? "✓" : isFocus ? "▶" : "○"}
+        {taskStateIcon(task, isFocus)}
       </span>
       <div>
         <div className="taskTitleLine">
