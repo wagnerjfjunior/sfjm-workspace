@@ -310,8 +310,11 @@ function TaskDecompositionPanel({
                             <span className="decompositionChildGuide" aria-hidden="true">└</span>
                             <span className="decompositionChildIcon" aria-hidden="true">{decompositionIcon(child.state)}</span>
                             <span className="decompositionChildIdentity">
-                              <strong>{child.id}</strong>
-                              <span>{child.label}</span>
+                              <span className="decompositionChildTitle">
+                                <strong>{child.id}</strong>
+                                <span>{child.label}</span>
+                              </span>
+                              <small className="decompositionChildCanonicalStatus">{child.status}</small>
                             </span>
                             <span className="decompositionChildState">{decompositionVisualStateLabel(child)}</span>
                           </li>
