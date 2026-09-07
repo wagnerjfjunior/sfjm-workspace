@@ -13,9 +13,16 @@ const FECHAI = "FECH.AI";
 
 type ProjectTaskDecomposition = NonNullable<ExternalProject["taskDecompositions"]>[number];
 
+function normalizeWbsTaskIdentity(taskId: string) {
+  return taskId.startsWith("STS-") ? taskId.slice(4) : taskId;
+}
+
 function findTaskDecomposition(project: ExternalProject, parentTaskId?: string) {
   if (!parentTaskId) return undefined;
-  return project.taskDecompositions?.find((decomposition) => decomposition.parentTaskId === parentTaskId);
+  const normalizedParent = normalizeWbsTaskIdentity(parentTaskId);
+  return project.taskDecompositions?.find(
+    (decomposition) => normalizeWbsTaskIdentity(decomposition.parentTaskId) === normalizedParent
+  );
 }
 
 function taskIsEligibleButUnauthorized(task: WbsTask) {
