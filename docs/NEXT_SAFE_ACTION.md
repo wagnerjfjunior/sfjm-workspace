@@ -1,121 +1,106 @@
 # SFJM Workspace — Current Next Safe Action
 
-## CURRENT AUTHORITY — MANUAL DERIVED SNAPSHOT — 2026-09-05
+## CURRENT AUTHORITY — MANUAL DERIVED SNAPSHOT — 2026-09-07
 
 ```text
 Workspace role = DERIVED VISUALIZATION / CONTINUITY ONLY
-Workspace canonical main at preparation = 107a249528fac505c8c93427b00383eb5775212d
-FECH.AI canonical main observed = 558a0eb5b504e85c670be4bc7cc8b7878ff3745f
-SES canonical main observed = 61cee7b39d1220543d75b35f58472f562ffa2fc7
+Workspace canonical main observed = 50bec624825c69457e5cd86ee601f7e4ae68acbd
+Workspace candidate = PR #32 / feature/fechai-task-decomposition-panel
+FECH.AI canonical main observed = a8c607228e413f5f2ca8162c1c0adeac9fb22729
 
 current execution program = Issue #141 — Security-to-Scale 2026
-program hierarchy = docs/governance/2026-09-04-fechai-bcr-security-to-scale-program-hierarchy-core-dod.md
-WBS structure source = docs/roadmap/fechai-security-to-scale-2026-wbs.md
-current-state source = docs/sfjm/CURRENT_STATE.md + NEXT_SAFE_ACTION.md + handoffs/CURRENT.md
-specialist-routing source = docs/skills/SES_SPECIALIST_ROUTING.md + SES archetypes/REGISTRY.md
+WBS source = docs/roadmap/fechai-security-to-scale-2026-wbs.md
+task graph source = docs/sfjm/PROGRAM_TASK_GRAPH.md
+current-state source = docs/sfjm/CURRENT_STATE.md
+typed issue source = docs/sfjm/CURRENT_ISSUES.md
+next-action source = docs/sfjm/NEXT_SAFE_ACTION.md
 
 OBJECTIVE_INTEGRITY = PRESERVED
-STS-M2 = STARTED
+STS-M2 = ACTIVE
 STS-M2-01 = COMPLETE / ACCEPTED
 STS-M2-02 = COMPLETE / ACCEPTED WITH RESIDUALS
 STS-M2-03 = COMPLETE / ACCEPTED WITH RESIDUALS
-STS-M2-04 = NEXT GATE / NOT STARTED
+STS-M2-04 = COMPLETE / ACCEPTED WITH IMPLEMENTATION-LIFECYCLE-RUNTIME RESIDUALS
+STS-M2-05 = COMPLETE / ACCEPTED WITH RESIDUALS
+STS-M2-06 = AUTHORIZED_READ_ONLY / READY_TO_EXECUTE
+CURRENT_TASK_BLOCKERS = 0
 SECURITY_GO = NOT_GRANTED
+
+SNAPSHOT = MANUAL / NOT LIVE-SYNCED
 ```
 
 ### Objective integrity
 
-Canonical program objective, derived from FECH.AI Issue #141 and its hierarchy BCR:
+Canonical program objective remains Issue #141: reach a sellable, operable FECH.AI with a defensible Security Go candidate and a clear path out of the current monolith without hiding unresolved risk or performing a big-bang rewrite.
 
-> Reach a sellable, operable FECH.AI with a defensible Security Go candidate and a clear path out of the current frontend/backend monolith before year-end, without hiding unresolved risk or performing a big-bang rewrite.
-
-Workspace rule:
+Workspace remains a consumer:
 
 ```text
-OBJECTIVE != ACTIVE_TASK
-PROGRAM -> MILESTONE -> TASK -> SUCCESSOR
-
-material objective change
--> must exist in the canonical external project
--> must be explicitly approved/versioned there
--> otherwise Workspace reports OBJECTIVE_DRIFT / STATE_INCONSISTENT
--> do not claim safe continuity
+WORKSPACE_RENDERING != FECH.AI_AUTHORITY
+SNAPSHOT_MANUAL != LIVE_SYNC
+NON_PASS_FACT != CURRENT_BLOCKER
 ```
-
-### Source-role classification
-
-```text
-CURRENT_STATE
-  = top current FECH.AI SFJM semantic overrides
-
-STRUCTURAL_BASELINE
-  = WBS task labels / hours / milestone structure
-  != current task status when the WBS embeds an older state-at-canonicalization snapshot
-
-HISTORICAL_LINEAGE
-  = preserved provenance
-  != current authority
-
-SUPERSEDED
-  = must never drive next action
-
-EXTERNAL_SNAPSHOT
-  = manual and invalidated by material external-project drift
-```
-
-This prevents an older “current” block or an embedded WBS status from overriding newer canonical continuity.
 
 ### Current journey position
 
 ```text
 Issue #141 — Security-to-Scale 2026
--> STS-M2 — Database Simplification & Optimization Plan / STARTED
--> STS-M2-01 COMPLETE
--> STS-M2-02 COMPLETE WITH RESIDUALS
--> STS-M2-03 COMPLETE WITH RESIDUALS
--> STS-M2-04 NEXT GATE / NOT STARTED
--> STS-M2-05 Database Contract Map
--> STS-M2-06 architectural database decision
+→ STS-M2 — ACTIVE
+→ STS-M2-01 COMPLETE
+→ STS-M2-02 COMPLETE WITH RESIDUALS
+→ STS-M2-03 COMPLETE WITH RESIDUALS
+→ STS-M2-04 COMPLETE / ACCEPTED WITH RESIDUALS
+→ STS-M2-05 COMPLETE / ACCEPTED WITH RESIDUALS
+→ STS-M2-06 AUTHORIZED_READ_ONLY / READY_TO_EXECUTE
 ```
-
-Opening a new conversation alone does not turn STS-M2-04 into STARTED. Only a material canonical project event may change that state.
 
 ### Specialist destination
 
 ```text
-1. backend_data
-   -> backend-data-platform-specialist
-   -> SES — Backend & Data Platform Specialist
-   -> REQUIRED / PRIMARY
+1. architecture
+   → software-systems-architect
+   → SES — Software Systems Architect
+   → REQUIRED / PRIMARY for STS-M2-06
 
-2. architecture
-   -> software-systems-architect
-   -> SES — Software Systems Architect
-   -> REQUIRED / SECOND
+2. backend_data
+   → backend-data-platform-specialist
+   → SES — Backend & Data Platform Specialist
+   → CONDITIONAL / evidence support
 
 3. application_security
-   -> application-security-assurance-specialist
-   -> SES — Application Security Assurance Specialist
-   -> CONDITIONAL / bounded target-security-policy assurance only
+   → application-security-assurance-specialist
+   → SES — Application Security Assurance Specialist
+   → CONDITIONAL / bounded assurance
 
 TRANSPORT = MANUAL COPY/PASTE
-WORKSPACE ACTION = INDICATE DESTINATION ONLY
 AUTOMATIC ROUTING / SEND = NO
 ```
 
-
 ## Single next safe action
 
-Resolve FECH.AI `main` live from the observed anchor `558a0eb5b504e85c670be4bc7cc8b7878ff3745f`. If materially unchanged, continue only with **STS-M2-04 — Target Database Authority Policy — READ_ONLY bootstrap**:
+Resolve FECH.AI `main` live from the observed anchor `a8c607228e413f5f2ca8162c1c0adeac9fb22729`.
 
-1. consume the accepted M2-01/M2-02/M2-03 durable evidence rather than reconstructing it from scratch;
-2. define target rules for SECURITY DEFINER, RLS/FORCE RLS, direct DML, GRANT/REVOKE/default privileges, MAINTAIN, caller/EXECUTE ACL and tenant isolation;
-3. prepare the first manual copy/paste packet for **SES — Backend & Data Platform Specialist**;
-4. after that bounded result, route the architecture packet to **SES — Software Systems Architect**;
-5. use AppSec only for bounded independent assurance of material target-security-policy decisions.
+If no material invalidator has changed the STS-M2-06 contract, continue only with the already-authorized bounded **STS-M2-06 — Database Architecture Decision — READ_ONLY** work:
 
-No STS-M2-04 implementation, DDL/DML/migration, Supabase/Auth mutation, policy/grant/RPC/trigger change, runtime hostile testing, deploy, Security Go, Workspace Ready or Workspace merge is authorized by this documentation refresh.
+1. reconstruct only the additional current architecture evidence required by STS-M2-06;
+2. consume accepted STS-M2-01..STS-M2-05 evidence without global replay;
+3. compare `EVOLVE_IN_PLACE` vs `V2_STRANGLER` vs `NEW_DATABASE`;
+4. analyze multi-tenancy, trust boundaries, coupling, migration blast radius, rollback and proof obligations;
+5. return an evidence-backed recommendation to Product Authority for adjudication.
 
+Current typed issue view:
+
+```text
+source = FECH.AI docs/sfjm/CURRENT_ISSUES.md
+current blockers = 0
+residuals = 3
+deferred evidence = 3
+program/security gates = 4
+```
+
+Do not treat those residual/deferred/gate counts as STS-M2-06 blockers merely because they remain open.
+
+No implementation, runtime/frontend mutation, Supabase/Auth/data mutation, SQL/DDL/DML, migration execution, RLS/policy/grant/function/trigger mutation, STS-M3 execution, deploy, Security Go or commercialization is authorized by this Workspace state.
 
 ---
 

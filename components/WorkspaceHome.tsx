@@ -280,6 +280,43 @@ function TaskDecompositionPanel({
     setExpandedItemId(null);
   }, [decomposition.parentTaskId]);
 
+  type DecompositionItem = ProjectTaskDecomposition["items"][number];
+
+  const renderCanonicalChildNode = (child: DecompositionItem) => {
+    const descendants = child.children ?? [];
+    const visibleDescendants = descendants.slice(0, 8);
+    const hiddenDescendantCount = descendants.length - visibleDescendants.length;
+
+    return (
+      <li className={`decompositionChildNode ${child.state.toLowerCase()}`} key={child.id}>
+        <div className={`decompositionChildRow ${child.state.toLowerCase()}`}>
+          <span className="decompositionChildGuide" aria-hidden="true">└</span>
+          <span className="decompositionChildIcon" aria-hidden="true">{decompositionIcon(child.state)}</span>
+          <span className="decompositionChildIdentity">
+            <span className="decompositionChildTitle">
+              <strong>{child.id}</strong>
+              <span>{child.label}</span>
+            </span>
+            <small className="decompositionChildCanonicalStatus">{child.status}</small>
+          </span>
+          <span className="decompositionChildState">{decompositionVisualStateLabel(child)}</span>
+        </div>
+
+        {visibleDescendants.length ? (
+          <ol className="decompositionNestedChildren" role="list" aria-label={`Subetapas de ${child.id}`}>
+            {visibleDescendants.map((descendant) => renderCanonicalChildNode(descendant))}
+          </ol>
+        ) : null}
+
+        {hiddenDescendantCount > 0 ? (
+          <div className="decompositionOverflowNote nested">
+            {hiddenDescendantCount} descendentes adicionais não expandidos neste nível
+          </div>
+        ) : null}
+      </li>
+    );
+  };
+
   const renderCanonicalChildren = (
     parentId: string,
     children: ProjectTaskDecomposition["items"],
@@ -287,7 +324,7 @@ function TaskDecompositionPanel({
     hidden: boolean
   ) => {
     const visibleChildren = children.slice(0, 8);
-    const hasInlineOverflow = children.length > visibleChildren.length;
+    const hiddenChildCount = children.length - visibleChildren.length;
 
     return (
       <div
@@ -297,24 +334,11 @@ function TaskDecompositionPanel({
         hidden={hidden}
       >
         <ol className="decompositionChildrenList" role="list">
-          {visibleChildren.map((child) => (
-            <li className={`decompositionChildRow ${child.state.toLowerCase()}`} key={child.id}>
-              <span className="decompositionChildGuide" aria-hidden="true">└</span>
-              <span className="decompositionChildIcon" aria-hidden="true">{decompositionIcon(child.state)}</span>
-              <span className="decompositionChildIdentity">
-                <span className="decompositionChildTitle">
-                  <strong>{child.id}</strong>
-                  <span>{child.label}</span>
-                </span>
-                <small className="decompositionChildCanonicalStatus">{child.status}</small>
-              </span>
-              <span className="decompositionChildState">{decompositionVisualStateLabel(child)}</span>
-            </li>
-          ))}
+          {visibleChildren.map((child) => renderCanonicalChildNode(child))}
         </ol>
-        {hasInlineOverflow ? (
+        {hiddenChildCount > 0 ? (
           <div className="decompositionOverflowNote">
-            {children.length - visibleChildren.length} subetapas adicionais · visualização detalhada futura
+            {hiddenChildCount} subetapas adicionais não expandidas neste nível
           </div>
         ) : null}
       </div>

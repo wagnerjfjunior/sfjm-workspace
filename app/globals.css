@@ -3166,3 +3166,35 @@ body {
     font-size: 12px;
   }
 }
+
+
+/* Recursive canonical task descendants */
+.decompositionChildNode {
+  min-width: 0;
+  list-style: none;
+}
+
+.decompositionNestedChildren {
+  display: grid;
+  gap: 4px;
+  margin: 4px 0 2px 24px;
+  padding: 0 0 0 10px;
+  border-left: 1px solid rgba(34, 211, 238, .16);
+  list-style: none;
+}
+
+.decompositionNestedChildren .decompositionChildRow {
+  border-radius: 8px;
+  background: rgba(7, 18, 32, .58);
+}
+
+.decompositionOverflowNote.nested {
+  margin: 4px 0 4px 34px;
+}
+
+@media (max-width: 680px) {
+  .decompositionNestedChildren {
+    margin-left: 12px;
+    padding-left: 7px;
+  }
+}
