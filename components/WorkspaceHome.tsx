@@ -660,7 +660,7 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
   const [selectedMilestoneId, setSelectedMilestoneId] = useState(activeMilestone.id);
   const [expandedWbsTaskId, setExpandedWbsTaskId] = useState<string | null>(null);
 
-  const selectedMilestone =
+  const selectedMilestone: WbsMilestone =
     wbs.milestones.find((milestone) => milestone.id === selectedMilestoneId) ??
     activeMilestone;
 
