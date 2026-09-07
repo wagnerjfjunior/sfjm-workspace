@@ -1591,3 +1591,1610 @@ body {
     grid-column: auto;
   }
 }
+
+
+/* Generic current-task decomposition panel */
+.nextActionLayout {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
+}
+
+.nextActionLayout.hasDecomposition {
+  grid-template-columns: minmax(0, 1.65fr) minmax(340px, .95fr);
+  align-items: stretch;
+}
+
+.nextActionPrimary {
+  min-width: 0;
+}
+
+.taskDecompositionPanel {
+  min-width: 0;
+  padding: 15px;
+  border: 1px solid rgba(34, 211, 238, .28);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(139, 92, 246, .11), transparent 34%),
+    linear-gradient(180deg, rgba(8, 20, 36, .97), rgba(5, 14, 27, .97));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.025),
+    0 0 24px rgba(34, 211, 238, .045);
+}
+
+.taskDecompositionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding-bottom: 11px;
+  border-bottom: 1px solid rgba(58, 82, 120, .42);
+}
+
+.taskDecompositionHeader > div {
+  min-width: 0;
+}
+
+.taskDecompositionHeader strong {
+  display: block;
+  margin-top: 3px;
+  color: #b8ecf5;
+  font-size: 19px;
+  letter-spacing: -.02em;
+}
+
+.taskDecompositionHeader span:not(.decompositionCount) {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.decompositionCount {
+  flex: 0 0 auto;
+  padding: 5px 8px;
+  border: 1px solid rgba(139, 92, 246, .32);
+  border-radius: 999px;
+  color: #cdbfff;
+  background: rgba(139, 92, 246, .065);
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.decompositionList {
+  display: grid;
+  gap: 7px;
+  margin: 11px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.decompositionItem {
+  display: grid;
+  grid-template-columns: 25px minmax(0, 1fr);
+  gap: 9px;
+  padding: 9px 10px;
+  border: 1px solid #1d3553;
+  border-radius: 12px;
+  background: rgba(7, 18, 32, .84);
+}
+
+.decompositionItem.complete {
+  border-color: rgba(40, 229, 140, .27);
+}
+
+.decompositionItem.active,
+.decompositionItem.next {
+  border-color: rgba(34, 211, 238, .48);
+  box-shadow: 0 0 18px rgba(34, 211, 238, .055);
+}
+
+.decompositionItem.not_authorized {
+  border-color: rgba(139, 92, 246, .28);
+}
+
+.decompositionItem.blocked {
+  border-color: rgba(251, 191, 36, .34);
+}
+
+.decompositionStateIcon {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  margin-top: 1px;
+  border: 1px solid #345172;
+  border-radius: 50%;
+  color: #90a6c3;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.decompositionItem.complete .decompositionStateIcon {
+  color: var(--green);
+  border-color: rgba(40, 229, 140, .48);
+}
+
+.decompositionItem.active .decompositionStateIcon,
+.decompositionItem.next .decompositionStateIcon {
+  color: var(--cyan);
+  border-color: rgba(34, 211, 238, .58);
+}
+
+.decompositionItem.not_authorized .decompositionStateIcon {
+  color: #c4b5fd;
+  border-color: rgba(139, 92, 246, .45);
+}
+
+.decompositionTitleLine {
+  display: flex;
+  gap: 7px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.decompositionTitleLine strong {
+  color: #8bdcf2;
+  font-size: 10px;
+  letter-spacing: .03em;
+}
+
+.decompositionTitleLine span {
+  color: #eef4ff;
+  font-size: 11px;
+  font-weight: 760;
+  line-height: 1.3;
+}
+
+.decompositionItem small {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 750;
+  letter-spacing: .035em;
+}
+
+.decompositionItem.complete small {
+  color: #79d9aa;
+}
+
+.decompositionItem.not_authorized small {
+  color: #b9a9ea;
+}
+
+.decompositionItem p {
+  margin: 4px 0 0;
+  color: #879ab7;
+  font-size: 9px;
+  line-height: 1.35;
+}
+
+.decompositionSource {
+  margin-top: 10px;
+  padding-top: 9px;
+  border-top: 1px solid rgba(58, 82, 120, .35);
+}
+
+.decompositionSource span {
+  display: block;
+  color: #87dcea;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+
+.decompositionSource small {
+  display: block;
+  margin-top: 3px;
+  color: #7185a2;
+  font-size: 8px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.nextActionLayout.hasDecomposition .actionFacts {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.nextActionLayout.hasDecomposition .safeSequence {
+  max-width: none;
+}
+
+@media (max-width: 1120px) {
+  .nextActionLayout.hasDecomposition {
+    grid-template-columns: 1fr;
+  }
+
+  .taskDecompositionPanel {
+    max-width: none;
+  }
+}
+
+@media (max-width: 680px) {
+  .taskDecompositionPanel {
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .taskDecompositionHeader {
+    flex-direction: column;
+  }
+
+  .nextActionLayout.hasDecomposition .actionFacts {
+    grid-template-columns: 1fr;
+  }
+
+  .decompositionTitleLine {
+    display: grid;
+    gap: 2px;
+  }
+}
+
+
+/* Wallboard readability pass */
+.workspaceShell {
+  grid-template-columns: 216px minmax(0, 1fr);
+}
+
+.commandSidebar {
+  padding: 16px 12px;
+}
+
+.brand {
+  padding-bottom: 14px;
+}
+
+.brandTitle {
+  font-size: 24px;
+}
+
+.brandSub,
+.projectNavButton small,
+.projectSubnav a,
+.projectSubnav span {
+  font-size: 12px;
+}
+
+.projectNavButton strong {
+  font-size: 15px;
+}
+
+.projectNavButton {
+  padding: 10px 9px;
+}
+
+.commandMain {
+  padding: 20px 22px 26px;
+  gap: 16px;
+}
+
+.projectHero {
+  padding: 19px 20px 16px;
+}
+
+.projectIdentity h1 {
+  font-size: 42px;
+  line-height: 1.04;
+  letter-spacing: -.045em;
+}
+
+.eyebrow {
+  font-size: 14px;
+  letter-spacing: .12em;
+}
+
+.sourceStamp strong {
+  font-size: 14px;
+}
+
+.sourceStamp small {
+  font-size: 12px;
+}
+
+.heroMetrics {
+  grid-template-columns: 1.45fr 1.08fr .9fr .95fr;
+  gap: 10px;
+}
+
+.heroMetric {
+  min-height: 118px;
+  padding: 15px 16px;
+}
+
+.heroMetric > span {
+  font-size: 14px;
+}
+
+.heroMetric > strong {
+  font-size: 23px;
+  line-height: 1.12;
+}
+
+.heroMetric > small {
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.heroMetric code {
+  font-size: 13px;
+}
+
+.progressMetric {
+  min-width: 0;
+  padding: 14px 17px;
+}
+
+.progressMetric strong {
+  font-size: 64px;
+  line-height: .92;
+  letter-spacing: -.065em;
+}
+
+.totalProgressTrack {
+  height: 9px;
+  margin: 10px 0 7px;
+}
+
+.nextActionCard {
+  min-height: 0;
+  padding: 18px;
+}
+
+.nextActionCard::before,
+.nextActionCard::after {
+  opacity: .18;
+}
+
+.nextActionLayout.hasDecomposition {
+  grid-template-columns: minmax(0, 1.55fr) minmax(390px, .95fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.nextActionPrimary {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+}
+
+.cardHeading {
+  margin-bottom: 0;
+}
+
+.cardHeading h2,
+.sectionHeader h2 {
+  font-size: 30px;
+  line-height: 1.08;
+}
+
+.statusPill,
+.countBadge,
+.manualChip {
+  font-size: 12px;
+}
+
+.safeSequence {
+  margin: 0;
+  max-width: none;
+  padding: 13px 15px;
+  font-size: 16px;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.actionFacts {
+  grid-template-columns: .78fr .95fr .95fr 1.55fr;
+  gap: 9px;
+}
+
+.nextActionLayout.hasDecomposition .actionFacts {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.actionFacts > div {
+  min-height: 86px;
+  padding: 12px 13px;
+}
+
+.actionFacts span {
+  font-size: 13px;
+}
+
+.actionFacts strong {
+  font-size: 17px;
+  line-height: 1.28;
+}
+
+.actionFooter {
+  font-size: 13px;
+}
+
+.conditionalRoute {
+  font-size: 12px;
+}
+
+.taskDecompositionPanel {
+  padding: 14px;
+  border-radius: 16px;
+}
+
+.taskDecompositionHeader {
+  padding-bottom: 10px;
+}
+
+.taskDecompositionHeader strong {
+  font-size: 24px;
+}
+
+.taskDecompositionHeader span:not(.decompositionCount) {
+  font-size: 14px;
+}
+
+.decompositionCount {
+  font-size: 11px;
+  padding: 6px 9px;
+}
+
+.decompositionList {
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.decompositionItem {
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 10px;
+  min-height: 62px;
+  padding: 9px 10px;
+  align-items: center;
+}
+
+.decompositionStateIcon {
+  width: 30px;
+  height: 30px;
+  font-size: 13px;
+}
+
+.decompositionItemMain {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 5px 10px;
+}
+
+.decompositionTitleLine {
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 8px;
+  align-items: baseline;
+}
+
+.decompositionTitleLine strong {
+  font-size: 14px;
+}
+
+.decompositionTitleLine span {
+  font-size: 15px;
+  line-height: 1.22;
+}
+
+.decompositionStatusPill {
+  justify-self: end;
+  padding: 5px 7px;
+  border: 1px solid #345172;
+  border-radius: 999px;
+  color: #b9c8dd;
+  font-size: 11px;
+  font-weight: 850;
+  line-height: 1;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.decompositionStatusPill.complete {
+  color: #7ef0b7;
+  border-color: rgba(40, 229, 140, .42);
+  background: rgba(40, 229, 140, .07);
+}
+
+.decompositionStatusPill.active,
+.decompositionStatusPill.next {
+  color: #8be9f8;
+  border-color: rgba(34, 211, 238, .5);
+  background: rgba(34, 211, 238, .07);
+}
+
+.decompositionStatusPill.not_authorized {
+  color: #cebfff;
+  border-color: rgba(139, 92, 246, .42);
+  background: rgba(139, 92, 246, .07);
+}
+
+.decompositionCanonicalStatus {
+  grid-column: 1 / -1;
+  margin-top: 0;
+  color: #7589a7;
+  font-size: 11px;
+  line-height: 1.15;
+  letter-spacing: .025em;
+}
+
+.decompositionItem.complete .decompositionCanonicalStatus {
+  color: #6fc899;
+}
+
+.decompositionItem.not_authorized .decompositionCanonicalStatus {
+  color: #9d8ec9;
+}
+
+.decompositionItem p {
+  display: none;
+}
+
+.decompositionSource {
+  margin-top: 8px;
+  padding-top: 8px;
+}
+
+.decompositionSource span {
+  font-size: 10px;
+}
+
+.decompositionSource small {
+  font-size: 10px;
+  line-height: 1.25;
+}
+
+.integrityItem small {
+  font-size: 12px;
+}
+
+.integrityItem strong {
+  font-size: 14px;
+}
+
+.wbsMilestoneTab > div span {
+  font-size: 17px;
+}
+
+.wbsMilestoneTab > div b {
+  font-size: 13px;
+}
+
+.wbsMilestoneTab > strong {
+  font-size: 15px;
+}
+
+.milestoneMetaLine small {
+  font-size: 12px;
+}
+
+.milestoneOperationalState {
+  font-size: 10px;
+}
+
+.currentBlockHeader h3 {
+  font-size: 36px;
+}
+
+.currentBlockHeader strong {
+  font-size: 18px;
+}
+
+.taskTitleLine span {
+  font-size: 13px;
+}
+
+.taskTitleLine strong {
+  font-size: 16px;
+}
+
+.focusTask small,
+.focusTask > b {
+  font-size: 13px;
+}
+
+.riskList li {
+  font-size: 14px;
+}
+
+.evidenceGrid span {
+  font-size: 12px;
+}
+
+.evidenceGrid strong,
+.evidenceGrid code {
+  font-size: 14px;
+}
+
+@media (min-width: 1600px) {
+  .workspaceShell {
+    grid-template-columns: 228px minmax(0, 1fr);
+  }
+
+  .commandMain {
+    padding: 24px 28px 30px;
+  }
+
+  .projectIdentity h1 {
+    font-size: 48px;
+  }
+
+  .heroMetric {
+    min-height: 132px;
+    padding: 17px 18px;
+  }
+
+  .heroMetric > span {
+    font-size: 15px;
+  }
+
+  .heroMetric > strong {
+    font-size: 26px;
+  }
+
+  .heroMetric > small {
+    font-size: 15px;
+  }
+
+  .progressMetric strong {
+    font-size: 76px;
+  }
+
+  .cardHeading h2,
+  .sectionHeader h2 {
+    font-size: 34px;
+  }
+
+  .safeSequence {
+    font-size: 18px;
+  }
+
+  .actionFacts strong {
+    font-size: 19px;
+  }
+
+  .taskDecompositionHeader strong {
+    font-size: 27px;
+  }
+
+  .decompositionTitleLine span {
+    font-size: 17px;
+  }
+
+  .decompositionTitleLine strong {
+    font-size: 15px;
+  }
+
+  .decompositionStatusPill {
+    font-size: 12px;
+  }
+
+  .decompositionItem {
+    min-height: 68px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .workspaceShell {
+    grid-template-columns: 204px minmax(0, 1fr);
+  }
+
+  .projectIdentity h1 {
+    font-size: 36px;
+  }
+
+  .heroMetrics {
+    grid-template-columns: 1.35fr 1fr 1fr;
+  }
+
+  .sourceMetric {
+    grid-column: 1 / -1;
+  }
+
+  .progressMetric strong {
+    font-size: 56px;
+  }
+
+  .nextActionLayout.hasDecomposition {
+    grid-template-columns: 1fr;
+  }
+
+  .taskDecompositionPanel {
+    max-width: none;
+  }
+}
+
+@media (max-width: 980px) {
+  .workspaceShell {
+    display: block;
+  }
+
+  .commandMain {
+    padding: 16px;
+  }
+
+  .projectIdentity h1 {
+    font-size: 32px;
+  }
+
+  .eyebrow {
+    font-size: 12px;
+  }
+
+  .heroMetric > span {
+    font-size: 12px;
+  }
+
+  .heroMetric > strong {
+    font-size: 19px;
+  }
+
+  .heroMetric > small {
+    font-size: 13px;
+  }
+
+  .progressMetric strong {
+    font-size: 48px;
+  }
+
+  .cardHeading h2,
+  .sectionHeader h2 {
+    font-size: 26px;
+  }
+
+  .safeSequence {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    font-size: 14px;
+  }
+
+  .actionFacts strong {
+    font-size: 15px;
+  }
+
+  .decompositionItemMain {
+    grid-template-columns: 1fr;
+  }
+
+  .decompositionStatusPill {
+    justify-self: start;
+  }
+
+  .decompositionCanonicalStatus {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 680px) {
+  .projectIdentity h1 {
+    font-size: 28px;
+  }
+
+  .heroMetrics {
+    grid-template-columns: 1fr;
+  }
+
+  .continuityMetric,
+  .sourceMetric {
+    grid-column: auto;
+  }
+
+  .heroMetric {
+    min-height: 0;
+  }
+
+  .progressMetric strong {
+    font-size: 44px;
+  }
+
+  .cardHeading h2,
+  .sectionHeader h2 {
+    font-size: 24px;
+  }
+
+  .actionFacts,
+  .nextActionLayout.hasDecomposition .actionFacts {
+    grid-template-columns: 1fr;
+  }
+
+  .decompositionTitleLine {
+    display: grid;
+    gap: 2px;
+  }
+
+  .decompositionTitleLine span {
+    font-size: 14px;
+  }
+
+  .decompositionItem {
+    min-height: 0;
+  }
+}
+
+
+/* WBS parent/decomposition binding + wallboard review closure */
+.safeSequence {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+.taskMetaStack {
+  display: grid;
+  justify-items: end;
+  align-content: center;
+  gap: 5px;
+}
+
+.taskMetaStack > b {
+  font-size: 13px;
+}
+
+.taskSplitBadge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 4px 7px;
+  border: 1px solid rgba(34, 211, 238, .28);
+  border-radius: 999px;
+  color: #91e5f2;
+  background: rgba(34, 211, 238, .055);
+  font-size: 10px;
+  font-weight: 850;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.focusTask.complete .taskSplitBadge {
+  color: #7ce7b1;
+  border-color: rgba(40, 229, 140, .28);
+  background: rgba(40, 229, 140, .05);
+}
+
+@media (max-width: 1280px) and (min-width: 1101px) {
+  .nextActionLayout.hasDecomposition {
+    grid-template-columns: minmax(0, 1.45fr) minmax(340px, .9fr);
+  }
+}
+
+@media (max-width: 1100px) {
+  .nextActionLayout.hasDecomposition {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .taskMetaStack {
+    justify-items: start;
+  }
+
+  .focusTask {
+    grid-template-columns: 28px minmax(0, 1fr);
+  }
+
+  .taskMetaStack {
+    grid-column: 2;
+    grid-template-columns: auto auto;
+    align-items: center;
+  }
+}
+
+
+/* Nested split history inside a published parent decomposition */
+.nestedDecomposition {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.nestedDecompositionItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 24px;
+  padding: 4px 7px;
+  border: 1px solid #2f4667;
+  border-radius: 999px;
+  color: #aebdd2;
+  background: rgba(10, 23, 40, .78);
+  font-size: 10px;
+  line-height: 1;
+}
+
+.nestedDecompositionItem strong {
+  font-size: 10px;
+  letter-spacing: .035em;
+}
+
+.nestedDecompositionItem.complete {
+  color: #7ce7b1;
+  border-color: rgba(40, 229, 140, .28);
+  background: rgba(40, 229, 140, .05);
+}
+
+.nestedDecompositionItem.active,
+.nestedDecompositionItem.next {
+  color: #8be9f8;
+  border-color: rgba(34, 211, 238, .35);
+  background: rgba(34, 211, 238, .05);
+}
+
+.nestedDecompositionItem.not_authorized {
+  color: #c9bbfa;
+  border-color: rgba(139, 92, 246, .28);
+  background: rgba(139, 92, 246, .05);
+}
+
+@media (min-width: 1600px) {
+  .nestedDecompositionItem,
+  .nestedDecompositionItem strong {
+    font-size: 12px;
+  }
+}
+
+
+/* Progressive task decomposition disclosure */
+.decompositionItem {
+  display: block;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.decompositionDisclosure,
+.decompositionLeafRow {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+}
+
+.decompositionDisclosure {
+  display: grid;
+  grid-template-columns: 18px 30px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  padding: 9px 10px;
+  cursor: pointer;
+}
+
+.decompositionLeafRow {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  padding: 9px 10px;
+}
+
+.decompositionDisclosure:hover {
+  background: rgba(255, 255, 255, .018);
+}
+
+.decompositionDisclosure:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: -3px;
+  border-radius: 11px;
+}
+
+.decompositionChevron {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 24px;
+  color: #9edfec;
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 1;
+  transition: transform .16s ease;
+}
+
+.decompositionItem.expanded .decompositionChevron {
+  color: #c5eff6;
+}
+
+.decompositionItem.branch .decompositionItemMain,
+.decompositionItem.leaf .decompositionItemMain {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 4px 10px;
+}
+
+.decompositionBranchMeta {
+  display: inline-flex;
+  align-items: center;
+  justify-self: end;
+  gap: 6px;
+  min-width: max-content;
+}
+
+.decompositionChildCount {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 4px 7px;
+  border: 1px solid rgba(34, 211, 238, .3);
+  border-radius: 999px;
+  color: #9ee9f5;
+  background: rgba(34, 211, 238, .055);
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.decompositionItem.complete .decompositionChildCount {
+  color: #80eab5;
+  border-color: rgba(40, 229, 140, .32);
+  background: rgba(40, 229, 140, .055);
+}
+
+.decompositionChildrenRegion {
+  padding: 0 10px 9px 56px;
+}
+
+.decompositionChildrenList {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 4px 0 0;
+  border-left: 1px solid rgba(34, 211, 238, .18);
+  list-style: none;
+}
+
+.decompositionChildRow {
+  display: grid;
+  grid-template-columns: 14px 22px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 5px 7px 5px 10px;
+  color: #aebdd2;
+}
+
+.decompositionChildRow + .decompositionChildRow {
+  border-top: 1px solid rgba(48, 71, 102, .22);
+}
+
+.decompositionChildGuide {
+  color: #456782;
+  font-size: 12px;
+}
+
+.decompositionChildIcon {
+  display: grid;
+  place-items: center;
+  width: 21px;
+  height: 21px;
+  border: 1px solid #345172;
+  border-radius: 50%;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.decompositionChildRow.complete .decompositionChildIcon {
+  color: var(--green);
+  border-color: rgba(40, 229, 140, .42);
+}
+
+.decompositionChildRow.active .decompositionChildIcon,
+.decompositionChildRow.next .decompositionChildIcon {
+  color: var(--cyan);
+  border-color: rgba(34, 211, 238, .45);
+}
+
+.decompositionChildRow.not_authorized .decompositionChildIcon {
+  color: #c4b5fd;
+  border-color: rgba(139, 92, 246, .42);
+}
+
+.decompositionChildIdentity {
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+}
+
+.decompositionChildIdentity strong {
+  flex: 0 0 auto;
+  color: #8bdcf2;
+  font-size: 11px;
+}
+
+.decompositionChildIdentity span {
+  min-width: 0;
+  color: #c6d2e5;
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.decompositionChildState {
+  color: #93a7c3;
+  font-size: 10px;
+  font-weight: 800;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.decompositionChildRow.complete .decompositionChildState {
+  color: #76d9a5;
+}
+
+.decompositionOverflowNote {
+  margin-top: 7px;
+  padding: 7px 9px;
+  border: 1px dashed rgba(139, 92, 246, .25);
+  border-radius: 9px;
+  color: #9a8ec0;
+  font-size: 10px;
+  line-height: 1.3;
+}
+
+@media (min-width: 1600px) {
+  .decompositionDisclosure,
+  .decompositionLeafRow {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .decompositionChildCount {
+    font-size: 12px;
+  }
+
+  .decompositionChildIdentity strong {
+    font-size: 12px;
+  }
+
+  .decompositionChildIdentity span {
+    font-size: 13px;
+  }
+
+  .decompositionChildState {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 980px) {
+  .decompositionItem.branch .decompositionItemMain,
+  .decompositionItem.leaf .decompositionItemMain {
+    grid-template-columns: 1fr;
+  }
+
+  .decompositionBranchMeta {
+    justify-self: start;
+    flex-wrap: wrap;
+  }
+
+  .decompositionChildrenRegion {
+    padding-left: 48px;
+  }
+
+  .decompositionChildRow {
+    grid-template-columns: 14px 22px minmax(0, 1fr);
+  }
+
+  .decompositionChildState {
+    grid-column: 3;
+    justify-self: start;
+  }
+}
+
+@media (max-width: 680px) {
+  .decompositionDisclosure {
+    grid-template-columns: 18px 28px minmax(0, 1fr);
+    padding: 9px 8px;
+  }
+
+  .decompositionLeafRow {
+    grid-template-columns: 28px minmax(0, 1fr);
+    padding: 9px 8px;
+  }
+
+  .decompositionChildrenRegion {
+    padding: 0 8px 8px 42px;
+  }
+
+  .decompositionChildIdentity {
+    display: grid;
+    gap: 1px;
+  }
+
+  .decompositionCanonicalStatus {
+    font-size: 10px;
+  }
+}
+
+
+/* Visible canonical status for expanded child history */
+.decompositionChildIdentity {
+  display: grid;
+  gap: 2px;
+}
+
+.decompositionChildTitle {
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+}
+
+.decompositionChildCanonicalStatus {
+  color: #7185a2;
+  font-size: 9px;
+  font-weight: 750;
+  line-height: 1.2;
+  letter-spacing: .025em;
+}
+
+.decompositionChildRow.complete .decompositionChildCanonicalStatus {
+  color: #6fc899;
+}
+
+@media (min-width: 1600px) {
+  .decompositionChildCanonicalStatus {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 680px) {
+  .decompositionChildTitle {
+    display: grid;
+    gap: 1px;
+  }
+}
+
+
+/* Presentation-only decomposition grouping */
+.decompositionItem.presentationGroup {
+  border-color: rgba(34, 211, 238, .3);
+  background:
+    linear-gradient(90deg, rgba(34, 211, 238, .035), transparent 42%),
+    rgba(7, 18, 32, .84);
+}
+
+.decompositionStatusPill.presentation {
+  color: #9ee9f5;
+  border-color: rgba(34, 211, 238, .36);
+  background: rgba(34, 211, 238, .06);
+}
+
+.decompositionItem.presentationGroup.complete .decompositionStatusPill.presentation {
+  color: #80eab5;
+  border-color: rgba(40, 229, 140, .35);
+  background: rgba(40, 229, 140, .055);
+}
+
+.decompositionCanonicalStatus.presentationOnly {
+  color: #7992ae;
+  font-size: 9px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 1600px) {
+  .decompositionCanonicalStatus.presentationOnly {
+    font-size: 10px;
+  }
+}
+
+
+/* WBS task → published SFJM decomposition inspection */
+.taskSplitToggle {
+  appearance: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.taskSplitToggle:hover {
+  border-color: rgba(34, 211, 238, .5);
+  background: rgba(34, 211, 238, .09);
+}
+
+.taskSplitToggle:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+.taskSplitChevron {
+  display: inline-grid;
+  place-items: center;
+  min-width: 12px;
+  margin-left: 3px;
+  font-size: 15px;
+  line-height: .7;
+}
+
+.focusTask.decompositionOpen {
+  border-color: rgba(34, 211, 238, .42);
+  background:
+    linear-gradient(90deg, rgba(34, 211, 238, .045), transparent 48%),
+    #081322;
+}
+
+.wbsTaskDecomposition {
+  grid-column: 1 / -1;
+  min-width: 0;
+  margin-top: 3px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(48, 73, 108, .36);
+}
+
+.wbsTaskDecomposition[hidden] {
+  display: none;
+}
+
+.wbsTaskDecomposition .taskDecompositionPanel {
+  width: 100%;
+  border-radius: 13px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(139, 92, 246, .07), transparent 32%),
+    linear-gradient(180deg, rgba(6, 17, 31, .97), rgba(4, 12, 23, .97));
+}
+
+.wbsTaskDecomposition .taskDecompositionHeader {
+  align-items: center;
+}
+
+.wbsTaskDecomposition .decompositionSource {
+  opacity: .85;
+}
+
+@media (max-width: 680px) {
+  .taskSplitToggle {
+    justify-self: start;
+  }
+
+  .wbsTaskDecomposition {
+    grid-column: 1 / -1;
+    margin-top: 5px;
+  }
+}
+
+
+/* Eligibility is not authorization */
+.statusPill.restricted {
+  color: #d4c4ff;
+  border: 1px solid rgba(139, 92, 246, .42);
+  background: rgba(139, 92, 246, .08);
+}
+
+.focusTask.eligibleUnauthorized {
+  border-color: rgba(139, 92, 246, .34);
+  background:
+    linear-gradient(90deg, rgba(139, 92, 246, .055), transparent 52%),
+    #081322;
+}
+
+.focusTask.eligibleUnauthorized .taskStateIcon {
+  color: #cdbfff;
+  border-color: rgba(139, 92, 246, .48);
+  box-shadow: 0 0 12px rgba(139, 92, 246, .10);
+}
+
+.focusTask.eligibleUnauthorized small {
+  color: #b6a8dd;
+}
+
+
+/* PROGRAM_TASK_GRAPH future states */
+.focusTask.plannedUnauthorized {
+  border-color: rgba(139, 92, 246, .24);
+  background:
+    linear-gradient(90deg, rgba(139, 92, 246, .035), transparent 50%),
+    #081322;
+}
+
+.focusTask.plannedUnauthorized .taskStateIcon {
+  color: #b9a8ef;
+  border-color: rgba(139, 92, 246, .38);
+}
+
+.focusTask.plannedUnauthorized small {
+  color: #9d91c1;
+}
+
+.wbsMilestoneTab.planned .milestoneOperationalState {
+  white-space: nowrap;
+}
+
+
+/* Mobile authority label containment */
+@media (max-width: 680px) {
+  .nextActionCard .cardHeading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .nextActionCard .statusPill.restricted {
+    max-width: 100%;
+    white-space: normal;
+    line-height: 1.2;
+  }
+}
+
+
+/* Typed current issues: blockers != residuals != deferred evidence != future/security gates */
+.typedRisksCard {
+  max-height: none;
+  overflow: visible;
+}
+
+.riskFreshness {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.issueSummaryGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 9px;
+  margin-top: 14px;
+}
+
+.issueGroup {
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid #213451;
+  border-radius: 12px;
+  background: rgba(7, 17, 32, .86);
+}
+
+.issueGroupHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid rgba(58, 82, 120, .36);
+}
+
+.issueGroupHeader strong {
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.issueGroupHeader span {
+  min-width: 26px;
+  padding: 4px 7px;
+  border: 1px solid rgba(139, 92, 246, .28);
+  border-radius: 999px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 850;
+}
+
+.issueList {
+  display: grid;
+  gap: 6px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.issueList li {
+  min-width: 0;
+  padding: 7px 8px;
+  border: 1px solid #1b2c46;
+  border-radius: 9px;
+  background: #081322;
+}
+
+.issueLine {
+  display: grid;
+  gap: 4px;
+}
+
+.issueLine strong {
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.issueLine span {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 750;
+  overflow-wrap: anywhere;
+}
+
+.issueList small {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted-2);
+  font-size: 9px;
+  overflow-wrap: anywhere;
+}
+
+.issueEmpty {
+  margin: 9px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.riskSource {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 10px;
+  align-items: center;
+  margin-top: 10px;
+  padding-top: 9px;
+  border-top: 1px solid rgba(58, 82, 120, .35);
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.riskSource strong {
+  color: #c9d3e6;
+}
+
+.riskSource code {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 1280px) {
+  .issueSummaryGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .issueSummaryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .issueGroupHeader strong {
+    font-size: 12px;
+  }
+}
+
+
+/* Recursive canonical task descendants */
+.decompositionChildNode {
+  min-width: 0;
+  list-style: none;
+}
+
+.decompositionNestedChildren {
+  display: grid;
+  gap: 4px;
+  margin: 4px 0 2px 24px;
+  padding: 0 0 0 10px;
+  border-left: 1px solid rgba(34, 211, 238, .16);
+  list-style: none;
+}
+
+.decompositionNestedChildren .decompositionChildRow {
+  border-radius: 8px;
+  background: rgba(7, 18, 32, .58);
+}
+
+.decompositionOverflowNote.nested {
+  margin: 4px 0 4px 34px;
+}
+
+@media (max-width: 680px) {
+  .decompositionNestedChildren {
+    margin-left: 12px;
+    padding-left: 7px;
+  }
+}
