@@ -238,10 +238,48 @@ function TaskDecompositionPanel({
   decomposition: ProjectTaskDecomposition;
 }) {
   const [expandedItemId, setExpandedItemId] = useState<string | null>(null);
+  const presentationGroups = decomposition.presentationGroups ?? [];
+  const groupedMemberIds = new Set(presentationGroups.flatMap((group) => group.memberIds));
+  const ungroupedItems = decomposition.items.filter((item) => !groupedMemberIds.has(item.id));
 
   useEffect(() => {
     setExpandedItemId(null);
   }, [decomposition.parentTaskId]);
+
+  const renderCanonicalChildren = (
+    parentId: string,
+    children: ProjectTaskDecomposition["items"],
+    regionId: string
+  ) => {
+    const visibleChildren = children.slice(0, 8);
+    const hasInlineOverflow = children.length > visibleChildren.length;
+
+    return (
+      <div className="decompositionChildrenRegion" id={regionId} aria-label={`Subetapas de ${parentId}`}>
+        <ol className="decompositionChildrenList" role="list">
+          {visibleChildren.map((child) => (
+            <li className={`decompositionChildRow ${child.state.toLowerCase()}`} key={child.id}>
+              <span className="decompositionChildGuide" aria-hidden="true">└</span>
+              <span className="decompositionChildIcon" aria-hidden="true">{decompositionIcon(child.state)}</span>
+              <span className="decompositionChildIdentity">
+                <span className="decompositionChildTitle">
+                  <strong>{child.id}</strong>
+                  <span>{child.label}</span>
+                </span>
+                <small className="decompositionChildCanonicalStatus">{child.status}</small>
+              </span>
+              <span className="decompositionChildState">{decompositionVisualStateLabel(child)}</span>
+            </li>
+          ))}
+        </ol>
+        {hasInlineOverflow ? (
+          <div className="decompositionOverflowNote">
+            {children.length - visibleChildren.length} subetapas adicionais · visualização detalhada futura
+          </div>
+        ) : null}
+      </div>
+    );
+  };
 
   return (
     <aside className="taskDecompositionPanel" aria-label={`Decomposição da tarefa ${decomposition.parentTaskId}`}>
@@ -255,14 +293,61 @@ function TaskDecompositionPanel({
       </div>
 
       <ol className="decompositionList" role="list">
-        {decomposition.items.map((item) => {
+        {presentationGroups.map((group) => {
+          const members = group.memberIds
+            .map((memberId) => decomposition.items.find((item) => item.id === memberId))
+            .filter((item): item is ProjectTaskDecomposition["items"][number] => Boolean(item));
+          const completeMembers = members.filter((item) => item.state === "COMPLETE").length;
+          const allComplete = members.length > 0 && completeMembers === members.length;
+          const expansionId = `presentation:${group.id}`;
+          const expanded = expandedItemId === expansionId;
+          const childRegionId = decompositionRegionId(decomposition.parentTaskId, `presentation-${group.id}`);
+
+          return (
+            <li
+              className={`decompositionItem presentationGroup branch ${allComplete ? "complete" : ""} ${expanded ? "expanded" : ""}`}
+              key={expansionId}
+            >
+              <button
+                type="button"
+                className="decompositionDisclosure"
+                aria-expanded={expanded}
+                aria-controls={childRegionId}
+                aria-label={`${group.id}, agrupamento visual ${group.label}, ${completeMembers} de ${members.length} etapas canônicas concluídas`}
+                onClick={() => setExpandedItemId((current) => current === expansionId ? null : expansionId)}
+              >
+                <span className="decompositionChevron" aria-hidden="true">{expanded ? "⌄" : "›"}</span>
+                <span className="decompositionStateIcon" aria-hidden="true">{allComplete ? "✓" : "○"}</span>
+                <span className="decompositionItemMain">
+                  <span className="decompositionTitleLine">
+                    <strong>{group.id}</strong>
+                    <span>{group.label}</span>
+                  </span>
+                  <span className="decompositionBranchMeta">
+                    <span className="decompositionChildCount" aria-hidden="true">
+                      {allComplete ? "✓ " : ""}{completeMembers}/{members.length}
+                    </span>
+                    <span className="decompositionStatusPill presentation">
+                      {completeMembers}/{members.length} concluídas
+                    </span>
+                  </span>
+                  <small className="decompositionCanonicalStatus presentationOnly">
+                    Agrupamento visual · membros canônicos preservados
+                  </small>
+                </span>
+              </button>
+
+              {expanded ? renderCanonicalChildren(group.id, members, childRegionId) : null}
+            </li>
+          );
+        })}
+
+        {ungroupedItems.map((item) => {
           const children = item.children ?? [];
           const hasChildren = children.length > 0;
           const completedChildren = children.filter((child) => child.state === "COMPLETE").length;
           const expanded = hasChildren && expandedItemId === item.id;
           const childRegionId = decompositionRegionId(decomposition.parentTaskId, item.id);
-          const visibleChildren = children.slice(0, 8);
-          const hasInlineOverflow = children.length > visibleChildren.length;
 
           return (
             <li
@@ -298,35 +383,7 @@ function TaskDecompositionPanel({
                     </span>
                   </button>
 
-                  {expanded ? (
-                    <div
-                      className="decompositionChildrenRegion"
-                      id={childRegionId}
-                      aria-label={`Subetapas de ${item.id}`}
-                    >
-                      <ol className="decompositionChildrenList" role="list">
-                        {visibleChildren.map((child) => (
-                          <li className={`decompositionChildRow ${child.state.toLowerCase()}`} key={child.id}>
-                            <span className="decompositionChildGuide" aria-hidden="true">└</span>
-                            <span className="decompositionChildIcon" aria-hidden="true">{decompositionIcon(child.state)}</span>
-                            <span className="decompositionChildIdentity">
-                              <span className="decompositionChildTitle">
-                                <strong>{child.id}</strong>
-                                <span>{child.label}</span>
-                              </span>
-                              <small className="decompositionChildCanonicalStatus">{child.status}</small>
-                            </span>
-                            <span className="decompositionChildState">{decompositionVisualStateLabel(child)}</span>
-                          </li>
-                        ))}
-                      </ol>
-                      {hasInlineOverflow ? (
-                        <div className="decompositionOverflowNote">
-                          {children.length - visibleChildren.length} subetapas adicionais · visualização detalhada futura
-                        </div>
-                      ) : null}
-                    </div>
-                  ) : null}
+                  {expanded ? renderCanonicalChildren(item.id, children, childRegionId) : null}
                 </>
               ) : (
                 <div
