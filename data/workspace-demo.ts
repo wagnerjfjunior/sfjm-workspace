@@ -445,7 +445,7 @@ export const workspaceDemo = {
     objectiveIntegrity: "PRESERVED · no approved objective drift observed",
     objectiveChangePolicy: "Material objective change must be versioned in the canonical project and explicitly approved; otherwise flag OBJECTIVE_DRIFT and do not claim safe continuity.",
     specialistTransport: "MANUAL COPY/PASTE · Workspace only indicates the destination",
-    specialistRouting: [],
+    specialistRouting: [] as SpecialistRoute[],
     lastCompletedMilestone: "STS-M2 — COMPLETE / ACCEPTED WITH IMPLEMENTATION-LIFECYCLE-CALLSITE-RUNTIME-APPSEC RESIDUALS",
     nextProgramMilestone: "STS-M3 — Backend Authority Contract Freeze · NEXT_ELIGIBLE / NOT_AUTHORIZED",
     activeWorkstream: "STS-M2 COMPLETE / ACCEPTED WITH RESIDUALS · STS-M3-01 NEXT_ELIGIBLE / NOT_AUTHORIZED · CURRENT_AUTHORIZED_EXECUTION = NONE",
