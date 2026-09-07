@@ -343,7 +343,7 @@ function TaskDecompositionPanel({
                 </span>
               </button>
 
-              {expanded ? renderCanonicalChildren(group.id, members, childRegionId) : null}
+              {renderCanonicalChildren(group.id, members, childRegionId, !expanded)}
             </li>
           );
         })}
