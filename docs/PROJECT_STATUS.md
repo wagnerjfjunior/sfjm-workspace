@@ -4,8 +4,10 @@
 
 ```text
 Workspace role = DERIVED VISUALIZATION / CONTINUITY ONLY
-Workspace canonical main observed = 50bec624825c69457e5cd86ee601f7e4ae68acbd
-Workspace candidate = PR #32 / feature/fechai-task-decomposition-panel
+Workspace canonical main = RESOLVE LIVE
+PR #32 lifecycle = MERGED / CLOSED
+PR #32 merge anchor = 98bad9cdfbded6d0beaecde89fbce5839c8a305e
+published feature = recursive task decomposition + typed FECH.AI issue rendering
 FECH.AI canonical main observed = a8c607228e413f5f2ca8162c1c0adeac9fb22729
 
 current execution program = Issue #141 — Security-to-Scale 2026
@@ -79,15 +81,16 @@ AUTOMATIC ROUTING / SEND = NO
 ### Workspace delivery state
 
 ```text
-Workspace main = 50bec624825c69457e5cd86ee601f7e4ae68acbd
-active candidate = PR #32 / feature/fechai-task-decomposition-panel
-candidate lifecycle = DRAFT until exact-head review/Ready
+Workspace current main = RESOLVE LIVE
+PR #32 = MERGED / CLOSED
+PR #32 merge anchor = 98bad9cdfbded6d0beaecde89fbce5839c8a305e
+published state = recursive task decomposition + typed FECH.AI issue rendering on canonical Workspace main
 FECH.AI snapshot source = a8c607228e413f5f2ca8162c1c0adeac9fb22729
 snapshot transport = MANUAL
 live synchronization = NO
 ```
 
-PR #32 is the active candidate for recursive task decomposition plus typed FECH.AI issue rendering. Candidate UI state does not become canonical Workspace product state until merge.
+PR #32 is merged. Recursive task decomposition and typed FECH.AI issue rendering are now canonical Workspace product behavior. This does not create FECH.AI authority or live synchronization.
 
 ### Current issue presentation contract
 

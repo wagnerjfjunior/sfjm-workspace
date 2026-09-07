@@ -4,8 +4,10 @@
 
 ```text
 Workspace role = DERIVED VISUALIZATION / CONTINUITY ONLY
-Workspace canonical main observed = 50bec624825c69457e5cd86ee601f7e4ae68acbd
-Workspace candidate = PR #32 / feature/fechai-task-decomposition-panel
+Workspace canonical main = RESOLVE LIVE
+PR #32 lifecycle = MERGED / CLOSED
+PR #32 merge anchor = 98bad9cdfbded6d0beaecde89fbce5839c8a305e
+published feature = recursive task decomposition + typed FECH.AI issue rendering
 FECH.AI canonical main observed = a8c607228e413f5f2ca8162c1c0adeac9fb22729
 
 current execution program = Issue #141 — Security-to-Scale 2026
