@@ -3014,3 +3014,18 @@ body {
 .wbsMilestoneTab.planned .milestoneOperationalState {
   white-space: nowrap;
 }
+
+
+/* Mobile authority label containment */
+@media (max-width: 680px) {
+  .nextActionCard .cardHeading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .nextActionCard .statusPill.restricted {
+    max-width: 100%;
+    white-space: normal;
+    line-height: 1.2;
+  }
+}
