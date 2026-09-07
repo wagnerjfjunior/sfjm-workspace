@@ -8,7 +8,8 @@ Workspace canonical main = RESOLVE LIVE
 PR #32 lifecycle = MERGED / CLOSED
 PR #32 merge anchor = 98bad9cdfbded6d0beaecde89fbce5839c8a305e
 published feature = recursive task decomposition + typed FECH.AI issue rendering
-FECH.AI canonical main observed = a8c607228e413f5f2ca8162c1c0adeac9fb22729
+latest FECH.AI reconciliation = PR #199 / STS-M2-06 task graph state
+FECH.AI canonical main observed = 83186f5775e563e150329fa0b95dd1d7f3f3a516
 
 current execution program = Issue #141 — Security-to-Scale 2026
 WBS source = docs/roadmap/fechai-security-to-scale-2026-wbs.md
@@ -63,7 +64,7 @@ Bloqueios atuais = 0
 Residual risks = 3
 Deferred evidence = 3
 Program / security gates = 4
-source = FECH.AI docs/sfjm/CURRENT_ISSUES.md @ a8c607228e413f5f2ca8162c1c0adeac9fb22729
+source = FECH.AI docs/sfjm/CURRENT_ISSUES.md @ 83186f5775e563e150329fa0b95dd1d7f3f3a516
 ```
 
 Residuals, deferred evidence and gates remain material; they are not silently resolved and are not flattened into the current-blocker count.
