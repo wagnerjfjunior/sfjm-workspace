@@ -225,6 +225,9 @@ function decompositionVisualStateLabel(item: ProjectTaskDecomposition["items"][n
   if (item.state === "NOT_AUTHORIZED" && item.status.includes("NEXT CANDIDATE")) {
     return "Próxima · Não autorizado";
   }
+  if (item.state === "UNKNOWN" && item.status.includes("NOT_CANONICALLY_DEFINED")) {
+    return "Semântica indefinida · Não autorizado";
+  }
   return decompositionStateLabel(item.state);
 }
 
