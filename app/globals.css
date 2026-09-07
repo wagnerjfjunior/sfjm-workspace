@@ -2894,3 +2894,76 @@ body {
     font-size: 10px;
   }
 }
+
+
+/* WBS task → published SFJM decomposition inspection */
+.taskSplitToggle {
+  appearance: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.taskSplitToggle:hover {
+  border-color: rgba(34, 211, 238, .5);
+  background: rgba(34, 211, 238, .09);
+}
+
+.taskSplitToggle:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+.taskSplitChevron {
+  display: inline-grid;
+  place-items: center;
+  min-width: 12px;
+  margin-left: 3px;
+  font-size: 15px;
+  line-height: .7;
+}
+
+.focusTask.decompositionOpen {
+  border-color: rgba(34, 211, 238, .42);
+  background:
+    linear-gradient(90deg, rgba(34, 211, 238, .045), transparent 48%),
+    #081322;
+}
+
+.wbsTaskDecomposition {
+  grid-column: 1 / -1;
+  min-width: 0;
+  margin-top: 3px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(48, 73, 108, .36);
+}
+
+.wbsTaskDecomposition[hidden] {
+  display: none;
+}
+
+.wbsTaskDecomposition .taskDecompositionPanel {
+  width: 100%;
+  border-radius: 13px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(139, 92, 246, .07), transparent 32%),
+    linear-gradient(180deg, rgba(6, 17, 31, .97), rgba(4, 12, 23, .97));
+}
+
+.wbsTaskDecomposition .taskDecompositionHeader {
+  align-items: center;
+}
+
+.wbsTaskDecomposition .decompositionSource {
+  opacity: .85;
+}
+
+@media (max-width: 680px) {
+  .taskSplitToggle {
+    justify-self: start;
+  }
+
+  .wbsTaskDecomposition {
+    grid-column: 1 / -1;
+    margin-top: 5px;
+  }
+}
