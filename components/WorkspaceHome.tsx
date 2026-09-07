@@ -26,7 +26,21 @@ function findTaskDecomposition(project: ExternalProject, parentTaskId?: string) 
 }
 
 function taskIsEligibleButUnauthorized(task: WbsTask) {
-  return task.note?.includes("NEXT ELIGIBLE / NOT_AUTHORIZED") ?? false;
+  const note = task.note ?? "";
+  return note.includes("NEXT ELIGIBLE / NOT_AUTHORIZED") ||
+    note.includes("NEXT_ELIGIBLE / NOT_AUTHORIZED") ||
+    note.includes("ELIGIBLE_NOT_AUTHORIZED");
+}
+
+function milestoneIsEligibleButUnauthorized(milestone: WbsMilestone) {
+  return milestone.operationalState === "ELIGIBLE_NOT_AUTHORIZED";
+}
+
+function findOperationalMilestone(milestones: WbsMilestone[]) {
+  return milestones.find((milestone) => milestone.state === "ACTIVE") ??
+    milestones.find(milestoneIsEligibleButUnauthorized) ??
+    milestones.find((milestone) => milestone.state !== "COMPLETE") ??
+    milestones[0];
 }
 
 function taskIsPlannedButUnauthorized(task: WbsTask) {
@@ -484,10 +498,11 @@ function TaskDecompositionPanel({
 function NextActionCard({ project }: { project: ExternalProject }) {
   const isFechai = project.name === FECHAI;
   const program = workspaceDemo.fechaiProgram;
-  const activeMilestone = workspaceDemo.fechaiWbs.milestones.find((milestone) => milestone.state === "ACTIVE");
-  const activeTasks: WbsTask[] = activeMilestone?.tasks ?? [];
-  const focusTask = activeTasks.find((task) => task.note?.includes("NEXT GATE")) ??
-    activeTasks.find((task) => task.state !== "COMPLETE");
+  const operationalMilestone = findOperationalMilestone(workspaceDemo.fechaiWbs.milestones);
+  const operationalTasks: WbsTask[] = operationalMilestone?.tasks ?? [];
+  const focusTask = operationalTasks.find(taskIsEligibleButUnauthorized) ??
+    operationalTasks.find((task) => task.note?.includes("NEXT GATE")) ??
+    operationalTasks.find((task) => task.state !== "COMPLETE");
   const requiredRoutes = program.specialistRouting.filter((route) => route.requirement === "REQUIRED");
   const conditionalRoute = program.specialistRouting.find((route) => route.requirement === "CONDITIONAL");
   const decomposition = findTaskDecomposition(project, focusTask?.id);
@@ -507,17 +522,19 @@ function NextActionCard({ project }: { project: ExternalProject }) {
             </span>
           </div>
 
-          {isFechai && focusTask && activeMilestone ? (
+          {isFechai && focusTask && operationalMilestone ? (
             <>
               <p className="safeSequence" title={program.nextSafeAction}>{project.nextSafeAction}</p>
               <div className="actionFacts">
-                <div><span>Bloco</span><strong>{activeMilestone.id}</strong></div>
+                <div><span>Bloco</span><strong>{operationalMilestone.id}</strong></div>
                 <div><span>Tarefa</span><strong>{focusTask.id} · {focusTask.hours}h</strong></div>
                 <div><span>Situação</span><strong>{taskStateLabel(focusTask, true)}</strong></div>
-                <div>
-                  <span>Roteamento previsto</span>
-                  <strong>{requiredRoutes.map((route) => route.targetName.replace("SES — ", "")).join(" → ")}</strong>
-                </div>
+                {requiredRoutes.length ? (
+                  <div>
+                    <span>Roteamento previsto</span>
+                    <strong>{requiredRoutes.map((route) => route.targetName.replace("SES — ", "")).join(" → ")}</strong>
+                  </div>
+                ) : null}
               </div>
               <div className="actionFooter actionFooterStack">
                 <div>
@@ -742,6 +759,7 @@ function WbsMilestoneTab({
   const operationalLabel =
     milestone.state === "COMPLETE" ? "Concluído" :
     milestone.state === "ACTIVE" ? "Atual" :
+    milestone.operationalState === "ELIGIBLE_NOT_AUTHORIZED" ? "Próximo elegível · Não autorizado" :
     milestone.operationalState === "PLANNED_NOT_AUTHORIZED" ? "Planejado · Não autorizado" :
     "Planejado";
 
@@ -761,7 +779,7 @@ function WbsMilestoneTab({
       <div className="milestoneMetaLine">
         <small>{completed}/{milestone.tasks.length} tarefas concluídas</small>
         <span className={`milestoneOperationalState ${milestone.state.toLowerCase()}`}>
-          {active ? "ATUAL" : operationalLabel.toUpperCase()}
+          {active && milestone.state === "ACTIVE" ? "ATUAL" : operationalLabel.toUpperCase()}
         </span>
       </div>
     </button>
@@ -770,21 +788,20 @@ function WbsMilestoneTab({
 
 function WbsCommandCenter({ project }: { project: ExternalProject }) {
   const wbs = workspaceDemo.fechaiWbs;
-  const activeMilestone =
-    wbs.milestones.find((milestone) => milestone.state === "ACTIVE") ??
-    wbs.milestones[0];
+  const operationalMilestone = findOperationalMilestone(wbs.milestones);
 
-  const [selectedMilestoneId, setSelectedMilestoneId] = useState(activeMilestone.id);
+  const [selectedMilestoneId, setSelectedMilestoneId] = useState(operationalMilestone.id);
   const [expandedWbsTaskId, setExpandedWbsTaskId] = useState<string | null>(null);
 
   const selectedMilestone: WbsMilestone =
     wbs.milestones.find((milestone) => milestone.id === selectedMilestoneId) ??
-    activeMilestone;
+    operationalMilestone;
 
-  const activeTasks: WbsTask[] = activeMilestone.tasks;
+  const operationalTasks: WbsTask[] = operationalMilestone.tasks;
   const focusTask =
-    activeTasks.find((task) => task.note?.includes("NEXT GATE")) ??
-    activeTasks.find((task) => task.state !== "COMPLETE");
+    operationalTasks.find(taskIsEligibleButUnauthorized) ??
+    operationalTasks.find((task) => task.note?.includes("NEXT GATE")) ??
+    operationalTasks.find((task) => task.state !== "COMPLETE");
 
   const completedHours = wbs.milestones.reduce(
     (total, milestone) =>
@@ -803,7 +820,7 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
     ? (selectedCompletedTasks / selectedMilestone.tasks.length) * 100
     : 0;
 
-  const selectedIsActive = selectedMilestone.id === activeMilestone.id;
+  const selectedIsActive = selectedMilestone.id === operationalMilestone.id;
   const selectedStateLabel =
     selectedMilestone.state === "COMPLETE"
       ? "CONCLUÍDO"
@@ -838,7 +855,7 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
         {wbs.milestones.map((milestone) => (
           <WbsMilestoneTab
             milestone={milestone}
-            active={milestone.id === activeMilestone.id}
+            active={milestone.id === operationalMilestone.id}
             selected={milestone.id === selectedMilestone.id}
             totalHours={wbs.totalCriticalHours}
             onSelect={() => setSelectedMilestoneId(milestone.id)}
@@ -859,7 +876,7 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
               {selectedStateLabel}
             </span>
             {!selectedIsActive ? (
-              <small>Bloco operacional atual: {activeMilestone.id}</small>
+              <small>Bloco operacional atual: {operationalMilestone.id}</small>
             ) : null}
           </div>
         </div>
@@ -893,7 +910,7 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
       </section>
 
       <div className="wbsFootnote">
-        Seleção é apenas navegação visual. O bloco operacional atual continua sendo {activeMilestone.id}. Horas não são timesheet, confiança ou Security Go.
+        Seleção é apenas navegação visual. O bloco operacional atual continua sendo {operationalMilestone.id}. Horas não são timesheet, confiança ou Security Go.
       </div>
     </article>
   );
