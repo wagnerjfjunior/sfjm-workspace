@@ -55,10 +55,17 @@ function taskIsAuthorizedReadOnly(task: WbsTask) {
   return task.note?.includes("AUTHORIZED_READ_ONLY") ?? false;
 }
 
+function taskIsAuthorizedNotInitiated(task: WbsTask) {
+  const note = task.note ?? "";
+  return note.includes("AUTHORIZED / NOT_INITIATED") ||
+    note.includes("AUTHORIZED_NOT_INITIATED");
+}
+
 function taskStateLabel(task: WbsTask, isFocus: boolean) {
   if (task.state === "COMPLETE") return "Concluída";
   if (task.state === "ACTIVE") return "Em execução";
   if (taskIsAuthorizedReadOnly(task)) return "Autorizada READ_ONLY · Pronta";
+  if (taskIsAuthorizedNotInitiated(task)) return "Autorizada · Não iniciada";
   if (taskIsEligibleButUnauthorized(task)) return "Próxima elegível · Não autorizada";
   if (taskIsPlannedButUnauthorized(task)) return "Planejada · Não autorizada";
   if (isFocus) return "Próximo gate";
@@ -69,7 +76,7 @@ function taskStateLabel(task: WbsTask, isFocus: boolean) {
 function taskStateIcon(task: WbsTask, isFocus: boolean) {
   if (task.state === "COMPLETE") return "✓";
   if (taskIsEligibleButUnauthorized(task) || taskIsPlannedButUnauthorized(task)) return "⊘";
-  if (taskIsAuthorizedReadOnly(task) || isFocus || task.state === "ACTIVE") return "▶";
+  if (taskIsAuthorizedReadOnly(task) || taskIsAuthorizedNotInitiated(task) || isFocus || task.state === "ACTIVE") return "▶";
   return "○";
 }
 
@@ -511,6 +518,7 @@ function NextActionCard({ project }: { project: ExternalProject }) {
   const conditionalRoute = program.specialistRouting.find((route) => route.requirement === "CONDITIONAL");
   const decomposition = findTaskDecomposition(project, focusTask?.id);
   const focusEligibleUnauthorized = isFechai && focusTask ? taskIsEligibleButUnauthorized(focusTask) : false;
+  const focusAuthorizedNotInitiated = isFechai && focusTask ? taskIsAuthorizedNotInitiated(focusTask) : false;
 
   return (
     <article className="commandCard nextActionCard" id="next-action">
@@ -522,7 +530,11 @@ function NextActionCard({ project }: { project: ExternalProject }) {
               <h2>{isFechai && focusTask ? focusTask.label : project.nextSafeAction}</h2>
             </div>
             <span className={`statusPill ${focusEligibleUnauthorized ? "restricted" : "next"}`}>
-              {focusEligibleUnauthorized ? "PRÓXIMA ELEGÍVEL · NÃO AUTORIZADA" : "PRÓXIMA"}
+              {focusEligibleUnauthorized
+                ? "PRÓXIMA ELEGÍVEL · NÃO AUTORIZADA"
+                : focusAuthorizedNotInitiated
+                  ? "AUTORIZADA · NÃO INICIADA"
+                  : "PRÓXIMA"}
             </span>
           </div>
 
