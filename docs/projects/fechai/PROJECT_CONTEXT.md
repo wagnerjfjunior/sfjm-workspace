@@ -1,45 +1,42 @@
 # FECH.AI — Current Project Context
 
-## CURRENT AUTHORITY — MANUAL DERIVED SNAPSHOT — 2026-09-08
+## CURRENT AUTHORITY — POST-MERGE RECONCILED SNAPSHOT — 2026-09-08
 
 ```text
 Workspace role = DERIVED VISUALIZATION / CONTINUITY ONLY
-Workspace canonical main = 1769d2407550330c4a6500054a35889445a45ab8
-PR #34 = DRAFT / refresh candidate / NOT YET CANONICAL
-prior audited head = 62bafb362d12d2173a10266ecc0bafacd2d0a607 / SUPERSEDED BY MATERIAL FECH.AI DRIFT
-current candidate head = RESOLVE LIVE BEFORE REVIEW/MERGE
-exact-head audit custody = ANY HEAD CHANGE INVALIDATES PRIOR AUDIT
-Vercel latest branch Preview prior to this refresh = READY
-current exact-head deployment validation = NOT_ASSERTED UNTIL RECHECKED
 
-FECH.AI canonical main observed live = 26659c4bd450d5068e6eba311799f16465447317
-FECH.AI material decision anchor = ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be
-FECH.AI lifecycle = PR #204 MERGED / STS-M3-03 accepted / STS-M3-04 authorized not initiated
+Workspace canonical main observed =
+6a838a1ecdf1a21022f73e5382129f0a748db585
 
-current execution program = Issue #141 — Security-to-Scale 2026
+PR #34 =
+MERGED / CLOSED
 
-WBS source = docs/roadmap/fechai-security-to-scale-2026-wbs.md
-task graph source = docs/sfjm/PROGRAM_TASK_GRAPH.md
-current-state source = docs/sfjm/CURRENT_STATE.md
-typed issue source = docs/sfjm/CURRENT_ISSUES.md
-next-action source = docs/sfjm/NEXT_SAFE_ACTION.md
+PR #34 exact merged head =
+b95cade419f0d44ac2ed18a951ed8ef973718e76
 
-OBJECTIVE_INTEGRITY = PRESERVED
+PR #34 merge commit / resulting main =
+6a838a1ecdf1a21022f73e5382129f0a748db585
 
-STS-M2 = COMPLETE / ACCEPTED WITH RESIDUALS
-DATABASE_STRATEGY = V2_STRANGLER / SAME_DATABASE_FIRST
+Vercel exact-head Preview for PR #34 =
+SUCCESS / READY
 
-STS-M3 = ACTIVE
-STS-M3-01 = COMPLETE / ACCEPTED / FROZEN
-STS-M3-02 = COMPLETE / ACCEPTED WITH RESIDUALS
-STS-M3-03 = COMPLETE / ACCEPTED WITH RESIDUALS
-STS-M3-04 = AUTHORIZED / NOT_INITIATED
+post-merge correction branch =
+fix/post-merge-m3-03-production
+NOT YET CANONICAL UNTIL MERGED
 
-CURRENT_AUTHORIZED_EXECUTION = STS-M3-04_TASK_AUTHORIZED_NOT_STARTED
-CURRENT_BLOCKER_COUNT = 0
-SECURITY_GO = NOT_GRANTED
+FECH.AI canonical main observed live =
+26659c4bd450d5068e6eba311799f16465447317
 
-SNAPSHOT = MANUAL / NOT LIVE-SYNCED
+FECH.AI typed-issue decision anchor =
+ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be
+
+FECH.AI lifecycle =
+PR #204 MERGED
+STS-M3-03 COMPLETE / ACCEPTED WITH RESIDUALS
+STS-M3-04 AUTHORIZED / NOT_INITIATED
+
+snapshot transport =
+MANUAL / NOT LIVE-SYNCED
 ```
 
 ### Current journey position
@@ -51,28 +48,22 @@ Issue #141 — Security-to-Scale 2026
   → STS-M3-01 COMPLETE / ACCEPTED / FROZEN
   → STS-M3-02 COMPLETE / ACCEPTED WITH RESIDUALS
   → STS-M3-03 COMPLETE / ACCEPTED WITH RESIDUALS
-       public routine universe = 160
-       privileged candidate universe = 49
-       candidate rows disposed = 49 / 49
-       service-only commands mapped = 2 / 2
-       allowlist completeness = PROVEN TO ACCEPTED BOUNDED STANDARD
+       privileged candidates = 49 / 49 disposed
+       service-only commands = 2 / 2 mapped
   → STS-M3-04 AUTHORIZED / NOT_INITIATED
-       Redução de DML sensível direto
 ```
 
 ### Current authority boundary
 
 ```text
-M3-04 task authorization != M3-04 initiated
-M3-04 authorization != blanket mutation authority
+STS-M3-04 task authorization != task initiated
+STS-M3-04 authorization != blanket mutation authority
 
 NO blanket SQL / DDL / DML mutation
-NO migration execution
 NO blanket RLS / policy / grant / owner / search_path mutation
 NO function / trigger / RPC / Edge Function mutation
 NO Supabase/Auth/data mutation inferred
 NO deploy / production mutation inferred
-NO STS-M3-05 / STS-M3-06 substantive execution
 NO Security Go
 NO commercialization authorization
 ```
@@ -80,9 +71,6 @@ NO commercialization authorization
 ### Current issue semantics
 
 ```text
-source = FECH.AI docs/sfjm/CURRENT_ISSUES.md
-decision/validation anchor = ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be
-
 CURRENT_TASK = STS-M3-04
 CURRENT_TASK_STATE = AUTHORIZED_NOT_INITIATED
 CURRENT_AUTHORIZED_EXECUTION = STS-M3-04_TASK_AUTHORIZED_NOT_STARTED
@@ -97,55 +85,32 @@ FUTURE_GATE = 1
 CURRENT_BLOCKER_COUNT = 0
 ```
 
-M3-03 residual state is now:
-```text
-ALLOWLIST_COMPLETE
-IMPLEMENTATION_TARGET_COMPLIANCE_NOT_PROVEN
-```
+Service-only mapping is already complete in M3-03. Remaining obligation is downstream runtime/compliance assurance: trusted runtime, service owner, tenant/business binding, bounded side-effect/secret scope, runtime proof and revoke/kill path.
 
-Residuals, deferred evidence and gates remain material. They are not silently resolved and are not flattened into blocker count.
-
-### Specialist / execution routing
-
-M3-04 is authorized but not initiated.
+### Invalidation / custody
 
 ```text
-fresh live bootstrap = REQUIRED FIRST
-initial activity = READ_ONLY reconstruction
-specialist destination = RESOLVE DURING BOOTSTRAP
-automatic routing = NO
-blanket mutation authority = NO
+PR #34 exact-head audit custody = b95cade419f0d44ac2ed18a951ed8ef973718e76
+PR #34 Vercel Preview = SUCCESS / READY
+PR #34 merge custody = 6a838a1ecdf1a21022f73e5382129f0a748db585
+
+Any new correction head requires its own exact-head review before merge.
+A newer FECH.AI main invalidates this manual snapshot until re-resolved live.
 ```
 
-The receiving conversation must resolve FECH.AI live again before acting.
-
-### Objective integrity
-
-Canonical program objective remains:
-
-> Reach a sellable, operable FECH.AI with a defensible Security Go candidate and a clear path out of the current frontend/backend monolith before year-end, without hiding unresolved risk or performing a big-bang rewrite.
-
-### Current project context
-
-```text
-STS-M3 = ACTIVE
-STS-M3-03 = COMPLETE / ACCEPTED WITH RESIDUALS
-STS-M3-04 = AUTHORIZED / NOT_INITIATED
-
-current task = STS-M3-04 — Redução de DML sensível direto
-current authority = TASK AUTHORIZED / NOT STARTED
-```
+### Current FECH.AI context
 
 Canonical M3-03 artifact:
+
 `docs/security/evidence/2026-09-08-sts-m3-03-privileged-rpc-allowlist.md`
 
-### Current continuation
+Current continuation:
 
 ```text
-resolve FECH.AI live
+M3-03 closed with residuals
+→ M3-04 already authorized
 → fresh bootstrap
-→ initiate STS-M3-04
-→ READ_ONLY direct-DML/RLS/grant/policy/RPC-boundary reconstruction first
+→ initiate READ_ONLY reconstruction
 → no blanket mutation authority
 ```
 
