@@ -8,8 +8,10 @@ Workspace canonical main = 1769d2407550330c4a6500054a35889445a45ab8
 refresh candidate = PR #34 / DRAFT / NOT YET CANONICAL
 published baseline = PR #32 MERGED / recursive task decomposition + typed FECH.AI issue rendering
 
-FECH.AI canonical main observed = c075a751c70ae24b5db8fcfc924c46fba6b10e3e
-FECH.AI acceptance publication = PR #201 MERGED
+FECH.AI canonical main observed live = ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be
+FECH.AI material execution anchor = 665e3920b17849f45d8b3fcea015b1492219f115
+FECH.AI lifecycle = PR #202 MERGED / PR #203 post-merge reconciliation MERGED
+
 current execution program = Issue #141 — Security-to-Scale 2026
 
 WBS source = docs/roadmap/fechai-security-to-scale-2026-wbs.md
@@ -24,8 +26,9 @@ STS-M2 = COMPLETE / ACCEPTED WITH RESIDUALS
 DATABASE_STRATEGY = V2_STRANGLER / SAME_DATABASE_FIRST
 
 STS-M3 = ACTIVE
-STS-M3-01 = COMPLETE / ACCEPTED
-STS-M3-02 = NEXT_ELIGIBLE / NOT_AUTHORIZED
+STS-M3-01 = COMPLETE / ACCEPTED / FROZEN
+STS-M3-02 = COMPLETE / ACCEPTED WITH RESIDUALS
+STS-M3-03 = NEXT_ELIGIBLE / NOT_AUTHORIZED
 
 CURRENT_AUTHORIZED_EXECUTION = NONE
 CURRENT_BLOCKER_COUNT = 0
@@ -40,26 +43,29 @@ SNAPSHOT = MANUAL / NOT LIVE-SYNCED
 Issue #141 — Security-to-Scale 2026
 → STS-M2 COMPLETE / ACCEPTED WITH RESIDUALS
 → STS-M3 ACTIVE
-  → STS-M3-01 COMPLETE / ACCEPTED
-       identity / membership / role / team / platform-root contracts frozen
-       residuals preserved
-  → STS-M3-02 NEXT_ELIGIBLE / NOT_AUTHORIZED
+  → STS-M3-01 COMPLETE / ACCEPTED / FROZEN
+  → STS-M3-02 COMPLETE / ACCEPTED WITH RESIDUALS
+       authority contract by context = FROZEN
+  → STS-M3-03 NEXT_ELIGIBLE / NOT_AUTHORIZED
+       Privileged RPC Allowlist
 ```
 
 ### Current authority boundary
 
 ```text
-STS-M3 ACTIVE != STS-M3-02 authorized
-M3-01 acceptance != M3-02 execution authority
+STS-M3 ACTIVE != STS-M3-03 execution authority
+M3-02 acceptance != M3-03 execution authority
 CURRENT_AUTHORIZED_EXECUTION = NONE
 
+NO STS-M3-03 substantive execution
+NO M3-02 target implementation/remediation
+NO BG-06 support-mode implementation
 NO runtime/frontend implementation
 NO Supabase/Auth/data mutation
 NO SQL / DDL / DML mutation
 NO migration execution
 NO RLS / policy / grant / owner / search_path mutation
 NO function / trigger / RPC / Edge Function mutation
-NO STS-M3-02 execution
 NO deploy / production mutation
 NO Security Go
 NO commercialization authorization
@@ -69,15 +75,16 @@ NO commercialization authorization
 
 ```text
 source = FECH.AI docs/sfjm/CURRENT_ISSUES.md
-validation anchor inside CURRENT_ISSUES = 661ef0014576d473088add0052d751e0a47d306e
+validation anchor = 665e3920b17849f45d8b3fcea015b1492219f115
 
-CURRENT_TASK = STS-M3-02
+CURRENT_TASK = STS-M3-03
 CURRENT_TASK_STATE = ELIGIBLE_NOT_AUTHORIZED
 CURRENT_AUTHORIZED_EXECUTION = NONE
 
 BLOCKING = 0
 REQUIRED_CURRENT = 0
-RESIDUAL = 6
+RESIDUAL declared = 11
+RESIDUAL table rows = 12
 DEFERRED_EVIDENCE = 3
 SECURITY_GATE = 3
 FUTURE_GATE = 1
@@ -85,48 +92,66 @@ FUTURE_GATE = 1
 CURRENT_BLOCKER_COUNT = 0
 ```
 
-The additional M3-01 residuals are preserved:
-- root dual authority source;
-- team lifecycle legacy relation;
-- criar-usuario target divergence.
+### Source inconsistency preserved
 
-Residuals, deferred evidence and gates remain material. They are not silently resolved and are not flattened into the current-blocker count.
+```text
+CURRENT_ISSUES declares RESIDUAL = 11
+but publishes 12 STS-RESIDUAL-* table rows
+
+Workspace behavior:
+- preserve all 12 published residual rows;
+- do not silently delete or merge a residual;
+- expose the count mismatch in provenance;
+- do not convert the mismatch into execution authority or Security Go.
+```
+
+### M3-02 frozen contract
+
+```text
+principal = auth.uid()
+tenant authority = canonical active corretores + active empresa + canonical tenant role + operation-specific permission
+team authority = same empresa + active team + canonical gestor + operation-specific permission
+individual authority = same empresa + persisted responsibility + operation-specific permission
+platform root = active public.admins role=admin_global + explicit platform operation
+service-only = explicit SERVICE_ONLY_COMMAND + trusted runtime + owner + bounded server-side authorization/proof
+root tenant business access = NO IMPLICIT AUTHORITY
+insufficient/inconsistent evidence = FAIL CLOSED / DENY
+```
 
 ### Specialist / execution routing
 
-No M3-02 specialist execution route is current merely from eligibility.
+No M3-03 specialist execution route is current because execution is not authorized.
 
 ```text
-STS-M3-02 authorization = REQUIRED FIRST
+STS-M3-03 authorization = REQUIRED FIRST
 specialist destination = RESOLVE AFTER AUTHORIZATION / BOOTSTRAP
 automatic routing = NO
-transport = MANUAL COPY/PASTE when/if a route becomes authorized
+transport = MANUAL COPY/PASTE only after route resolution
 ```
 
 The receiving conversation must resolve FECH.AI live again before acting.
 
 ## Single next safe action
 
-Resolve FECH.AI `main` live from the observed anchor `c075a751c70ae24b5db8fcfc924c46fba6b10e3e`.
+Resolve FECH.AI `main` live from observed `ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be`.
 
-If no material invalidator has changed the accepted M3-01 contract, the next material program gate is:
+If no material invalidator changed the accepted M3-02 contract, the next material program gate is:
 
 ```text
 PRODUCT AUTHORITY MAY SEPARATELY AUTHORIZE
 
-STS-M3-02 —
-AUTHORITY CONTRACT BY CONTEXT
-READ_ONLY FIRST
+STS-M3-03 —
+PRIVILEGED RPC ALLOWLIST
 ```
 
-Before any M3-02 work, consume the frozen M3-01 contract.
+Before M3-03, consume the frozen M3-01 and M3-02 contracts and reconstruct the privileged routine inventory.
 
-Until that authorization exists:
+Until separate authorization exists:
 
 ```text
-DO NOT execute STS-M3-02
-DO NOT reopen STS-M2 or STS-M3-01 without material invalidator
-DO NOT implement V2
+DO NOT execute STS-M3-03
+DO NOT implement M3-02 target remediation
+DO NOT implement BG-06
 DO NOT mutate Supabase/Auth/data/runtime
 DO NOT deploy
 DO NOT grant Security Go
