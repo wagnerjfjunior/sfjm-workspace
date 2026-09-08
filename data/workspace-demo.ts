@@ -183,7 +183,7 @@ export const workspaceDemo = {
   checks: [
     { label: "Último milestone", value: "STS-M2 fechado · accepted with residuals" },
     { label: "Milestone atual", value: "STS-M3 · ACTIVE" },
-    { label: "Próxima ação", value: "Product Authority · autorizar bounded STS-M3-03 Privileged RPC Allowlist" },
+    { label: "Próxima ação", value: "Iniciar STS-M3-04 · Redução de DML sensível direto" },
     { label: "Objetivo principal", value: "Preservado · Issue #141" },
     { label: "Histórico", value: "Preservado" },
     { label: "Security Go", value: "Não concedido" }
@@ -193,8 +193,8 @@ export const workspaceDemo = {
     {
       name: "FECH.AI",
       kind: "Projeto externo",
-      continuityState: "STS-M2 COMPLETE / ACCEPTED WITH RESIDUALS · STS-M3 ACTIVE · STS-M3-01 COMPLETE / ACCEPTED / FROZEN · STS-M3-02 COMPLETE / ACCEPTED WITH RESIDUALS · STS-M3-03 NEXT_ELIGIBLE / NOT_AUTHORIZED",
-      nextSafeAction: "Product Authority → autorizar separadamente STS-M3-03 — Privileged RPC Allowlist. CURRENT_AUTHORIZED_EXECUTION = NONE; não executar M3-03 sem nova autorização.",
+      continuityState: "STS-M2 COMPLETE / ACCEPTED WITH RESIDUALS · STS-M3 ACTIVE · STS-M3-01 COMPLETE / ACCEPTED / FROZEN · STS-M3-02 COMPLETE / ACCEPTED WITH RESIDUALS · STS-M3-03 COMPLETE / ACCEPTED WITH RESIDUALS · STS-M3-04 AUTHORIZED / NOT_INITIATED",
+      nextSafeAction: "Iniciar STS-M3-04 — Redução de DML sensível direto — sob autorização existente, após fresh live bootstrap/reconstruction. Começar READ_ONLY; não inferir blanket mutation authority.",
       issues: [
         {
           id: "STS-GATE-SECURITY-GO",
@@ -204,7 +204,7 @@ export const workspaceDemo = {
           label: "Security Go continua NOT_GRANTED",
           blockingForCurrentTask: false,
           source: "docs/sfjm/CURRENT_ISSUES.md",
-          sourceRef: "665e3920b17849f45d8b3fcea015b1492219f115",
+          sourceRef: "ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be",
           lastValidatedAt: "2026-09-08",
           resolutionCondition: "Product Authority Security Go após evidência/assurance exigida",
           displayPolicy: "PROGRAM_SECURITY_GATES"
@@ -217,7 +217,7 @@ export const workspaceDemo = {
           label: "Broad paid commercialization permanece bloqueada",
           blockingForCurrentTask: false,
           source: "docs/sfjm/CURRENT_ISSUES.md",
-          sourceRef: "665e3920b17849f45d8b3fcea015b1492219f115",
+          sourceRef: "ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be",
           lastValidatedAt: "2026-09-08",
           resolutionCondition: "decisão comercial separada da Product Authority quando condições de launch/security permitirem",
           displayPolicy: "PROGRAM_SECURITY_GATES"
@@ -230,7 +230,7 @@ export const workspaceDemo = {
           label: "J4 environment-dependent evidence",
           blockingForCurrentTask: false,
           source: "docs/security/evidence/F1-02_REMEDIATION_MASTER_PLAN.md",
-          sourceRef: "665e3920b17849f45d8b3fcea015b1492219f115",
+          sourceRef: "ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be",
           lastValidatedAt: "2026-09-08",
           resolutionCondition: "Supabase Pro + ambiente isolado non-production + autorização explícita",
           displayPolicy: "DEFERRED_EVIDENCE"
@@ -243,7 +243,7 @@ export const workspaceDemo = {
           label: "IMP-003 permanece NOT_DETERMINED",
           blockingForCurrentTask: false,
           source: "docs/security/evidence/F1-02_REMEDIATION_MASTER_PLAN.md",
-          sourceRef: "665e3920b17849f45d8b3fcea015b1492219f115",
+          sourceRef: "ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be",
           lastValidatedAt: "2026-09-08",
           resolutionCondition: "bounded evidence run após reopen gate",
           displayPolicy: "DEFERRED_EVIDENCE"
@@ -256,7 +256,7 @@ export const workspaceDemo = {
           label: "ROLLBACK_REAPPLY permanece NOT_DETERMINED",
           blockingForCurrentTask: false,
           source: "docs/security/evidence/F1-02_REMEDIATION_MASTER_PLAN.md",
-          sourceRef: "665e3920b17849f45d8b3fcea015b1492219f115",
+          sourceRef: "ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be",
           lastValidatedAt: "2026-09-08",
           resolutionCondition: "bounded evidence run após reopen gate",
           displayPolicy: "DEFERRED_EVIDENCE"
@@ -269,7 +269,7 @@ export const workspaceDemo = {
           label: "OC-01 é requerido antes de external users",
           blockingForCurrentTask: false,
           source: "docs/security/evidence/F1-02_REMEDIATION_MASTER_PLAN.md",
-          sourceRef: "665e3920b17849f45d8b3fcea015b1492219f115",
+          sourceRef: "ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be",
           lastValidatedAt: "2026-09-08",
           resolutionCondition: "satisfazer/adjudicar OC-01 antes da admissão de external users",
           displayPolicy: "PROGRAM_SECURITY_GATES"
@@ -282,7 +282,7 @@ export const workspaceDemo = {
           label: "Current implementation target-compliant = NOT_PROVEN",
           blockingForCurrentTask: false,
           source: "docs/sfjm/CURRENT_STATE.md",
-          sourceRef: "665e3920b17849f45d8b3fcea015b1492219f115",
+          sourceRef: "ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be",
           lastValidatedAt: "2026-09-08",
           resolutionCondition: "implementação + validação independente suficiente para estabelecer target compliance",
           displayPolicy: "RESIDUAL_RISKS"
@@ -295,7 +295,7 @@ export const workspaceDemo = {
           label: "Residuals 004, 031, 036, 047, 119, 127 permanecem",
           blockingForCurrentTask: false,
           source: "docs/sfjm/BLOCKED_ACTIONS.md",
-          sourceRef: "665e3920b17849f45d8b3fcea015b1492219f115",
+          sourceRef: "ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be",
           lastValidatedAt: "2026-09-08",
           resolutionCondition: "implementation/lifecycle/runtime work separadamente autorizado",
           displayPolicy: "RESIDUAL_RISKS"
@@ -308,7 +308,7 @@ export const workspaceDemo = {
           label: "D-01..D-08 remediation permanece NOT_IMPLEMENTED",
           blockingForCurrentTask: false,
           source: "docs/sfjm/BLOCKED_ACTIONS.md",
-          sourceRef: "665e3920b17849f45d8b3fcea015b1492219f115",
+          sourceRef: "ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be",
           lastValidatedAt: "2026-09-08",
           resolutionCondition: "remediation separadamente autorizada + adjudicação",
           displayPolicy: "RESIDUAL_RISKS"
@@ -321,7 +321,7 @@ export const workspaceDemo = {
           label: "M3-01 root dual authority source remains proven live / not remediated",
           blockingForCurrentTask: false,
           source: "docs/security/evidence/2026-09-07-sts-m3-01-identity-membership-team-role-model.md",
-          sourceRef: "665e3920b17849f45d8b3fcea015b1492219f115",
+          sourceRef: "ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be",
           lastValidatedAt: "2026-09-08",
           resolutionCondition: "migrar callers para public.admins root authority, provar zero legacy dependency e autorizar retirement separadamente",
           displayPolicy: "RESIDUAL_RISKS"
@@ -334,7 +334,7 @@ export const workspaceDemo = {
           label: "M3-01 team lifecycle legacy relation remains proven live / not remediated",
           blockingForCurrentTask: false,
           source: "docs/security/evidence/2026-09-07-sts-m3-01-identity-membership-team-role-model.md",
-          sourceRef: "665e3920b17849f45d8b3fcea015b1492219f115",
+          sourceRef: "ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be",
           lastValidatedAt: "2026-09-08",
           resolutionCondition: "lifecycle remediation separadamente governada com invariantes same-tenant/role/state e rollback",
           displayPolicy: "RESIDUAL_RISKS"
@@ -347,7 +347,7 @@ export const workspaceDemo = {
           label: "criar-usuario authority derivation differs from M3-01 target",
           blockingForCurrentTask: false,
           source: "docs/security/evidence/2026-09-07-sts-m3-01-identity-membership-team-role-model.md",
-          sourceRef: "665e3920b17849f45d8b3fcea015b1492219f115",
+          sourceRef: "ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be",
           lastValidatedAt: "2026-09-08",
           resolutionCondition: "fechar em STS-M3-05 com canonical authority derivada no servidor + validação independente",
           displayPolicy: "RESIDUAL_RISKS"
@@ -360,7 +360,7 @@ export const workspaceDemo = {
           label: "Legacy authority convergence remains open after M3-02 target acceptance",
           blockingForCurrentTask: false,
           source: "docs/security/evidence/2026-09-08-sts-m3-02-authority-contract-by-context.md",
-          sourceRef: "665e3920b17849f45d8b3fcea015b1492219f115",
+          sourceRef: "ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be",
           lastValidatedAt: "2026-09-08",
           resolutionCondition: "mapear/migrar privileged callers e Auth/Admin compatibility surfaces em trabalho downstream separadamente autorizado",
           displayPolicy: "RESIDUAL_RISKS"
@@ -373,7 +373,7 @@ export const workspaceDemo = {
           label: "Exceptional root tenant support mode remains not implemented / not authorized",
           blockingForCurrentTask: false,
           source: "docs/security/evidence/2026-09-08-sts-m3-02-authority-contract-by-context.md",
-          sourceRef: "665e3920b17849f45d8b3fcea015b1492219f115",
+          sourceRef: "ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be",
           lastValidatedAt: "2026-09-08",
           resolutionCondition: "autorizar BG-06 separadamente antes de design/implementação e validar sob security test plan",
           displayPolicy: "RESIDUAL_RISKS"
@@ -386,7 +386,7 @@ export const workspaceDemo = {
           label: "Service-only trusted runtime mapping and runtime proof remain downstream obligations",
           blockingForCurrentTask: false,
           source: "docs/security/evidence/2026-09-08-sts-m3-02-authority-contract-by-context.md",
-          sourceRef: "665e3920b17849f45d8b3fcea015b1492219f115",
+          sourceRef: "ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be",
           lastValidatedAt: "2026-09-08",
           resolutionCondition: "mapear SERVICE_ONLY_COMMAND sob M3-03 e provar trusted runtime, owner, tenant/business binding, bounded side-effects, proof e kill path",
           displayPolicy: "RESIDUAL_RISKS"
@@ -395,13 +395,13 @@ export const workspaceDemo = {
           id: "STS-RESIDUAL-M3-03-RPC-COMPLIANCE",
           class: "RESIDUAL",
           scope: "STS-M3-03",
-          state: "NOT_PROVEN",
-          label: "Privileged RPC authority compliance remains NOT_PROVEN",
+          state: "ALLOWLIST_COMPLETE / IMPLEMENTATION_TARGET_COMPLIANCE_NOT_PROVEN",
+          label: "Privileged RPC allowlist complete; implementation/ACL target compliance remains not proven",
           blockingForCurrentTask: false,
-          source: "docs/security/evidence/2026-09-08-sts-m3-02-authority-contract-by-context.md",
-          sourceRef: "665e3920b17849f45d8b3fcea015b1492219f115",
+          source: "docs/security/evidence/2026-09-08-sts-m3-03-privileged-rpc-allowlist.md",
+          sourceRef: "ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be",
           lastValidatedAt: "2026-09-08",
-          resolutionCondition: "completar privileged RPC allowlist mapping contra o frozen authority contract",
+          resolutionCondition: "separately authorized bounded remediation + M3-06 assurance sufficient to prove implementation/runtime compliance",
           displayPolicy: "RESIDUAL_RISKS"
         },
         {
@@ -412,7 +412,7 @@ export const workspaceDemo = {
           label: "Sensitive direct-DML authority compliance remains NOT_PROVEN",
           blockingForCurrentTask: false,
           source: "docs/security/evidence/2026-09-08-sts-m3-02-authority-contract-by-context.md",
-          sourceRef: "665e3920b17849f45d8b3fcea015b1492219f115",
+          sourceRef: "ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be",
           lastValidatedAt: "2026-09-08",
           resolutionCondition: "reconciliar direct DML, RLS, grants e RPC-only boundaries",
           displayPolicy: "RESIDUAL_RISKS"
@@ -425,7 +425,7 @@ export const workspaceDemo = {
           label: "Hostile-client / cross-tenant / AppSec authority assurance remains unproven",
           blockingForCurrentTask: false,
           source: "docs/security/evidence/2026-09-08-sts-m3-02-authority-contract-by-context.md",
-          sourceRef: "665e3920b17849f45d8b3fcea015b1492219f115",
+          sourceRef: "ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be",
           lastValidatedAt: "2026-09-08",
           resolutionCondition: "executar negative assurance isolado separadamente autorizado + AppSec review",
           displayPolicy: "RESIDUAL_RISKS"
@@ -434,13 +434,13 @@ export const workspaceDemo = {
           id: "STS-GATE-M3-M6",
           class: "FUTURE_GATE",
           scope: "STS-M3..STS-M6",
-          state: "STS-M3 ACTIVE / STS-M3-02 ACCEPTED_WITH_RESIDUALS / STS-M3-03 NEXT_ELIGIBLE / NOT_AUTHORIZED",
-          label: "STS-M3 está ACTIVE; STS-M3-02 foi aceito com residuals; STS-M3-03 é o próximo gate elegível e continua não autorizado",
+          state: "STS-M3 ACTIVE / STS-M3-03 ACCEPTED_WITH_RESIDUALS / STS-M3-04 AUTHORIZED_NOT_INITIATED",
+          label: "STS-M3 está ACTIVE; STS-M3-03 foi aceito com residuals; STS-M3-04 está autorizado e ainda não iniciado",
           blockingForCurrentTask: false,
           source: "docs/sfjm/PROGRAM_TASK_GRAPH.md",
-          sourceRef: "665e3920b17849f45d8b3fcea015b1492219f115",
+          sourceRef: "ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be",
           lastValidatedAt: "2026-09-08",
-          resolutionCondition: "Product Authority pode autorizar separadamente bounded STS-M3-03 Privileged RPC Allowlist; demais milestones permanecem sequencialmente gated",
+          resolutionCondition: "iniciar STS-M3-04 após fresh bootstrap; STS-M3-05/06 permanecem separadamente gated",
           displayPolicy: "ROADMAP_GATES"
         }
       ] satisfies ProjectIssue[],
@@ -451,7 +451,7 @@ export const workspaceDemo = {
       taskDecompositions: [{
         parentTaskId: "STS-M2-04",
         parentLabel: "Política target de DEFINER / RLS / DML",
-        source: "FECH.AI docs/sfjm/PROGRAM_TASK_GRAPH.md + CURRENT_STATE.md + NEXT_SAFE_ACTION.md @ ec42e7b…",
+        source: "FECH.AI docs/sfjm/PROGRAM_TASK_GRAPH.md + CURRENT_STATE.md + NEXT_SAFE_ACTION.md @ 26659c4b…",
         items: [
           {
             id: "STS-M2-04B",
@@ -554,8 +554,8 @@ export const workspaceDemo = {
   fechaiProgram: {
     name: "FECH.AI Security-to-Scale 2026",
     repository: "wagnerjfjunior/fecha.ai",
-    observedSha: "ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be",
-    observedAt: "8 Sep 2026 · PR #203 merged / STS-M3-02 accepted with residuals / M3-03 next",
+    observedSha: "26659c4bd450d5068e6eba311799f16465447317",
+    observedAt: "8 Sep 2026 · PR #204 merged / M3-03 accepted / M3-04 authorized not initiated",
     programIssue: "#141",
     programObjective: "Reach a sellable, operable FECH.AI with a defensible Security Go candidate and a clear path out of the current frontend/backend monolith before year-end, without hiding unresolved risk or performing a big-bang rewrite.",
     objectiveSource: "FECH.AI Issue #141 + program-hierarchy BCR",
@@ -565,8 +565,8 @@ export const workspaceDemo = {
     specialistRouting: [] as SpecialistRoute[],
     lastCompletedMilestone: "STS-M2 — COMPLETE / ACCEPTED WITH IMPLEMENTATION-LIFECYCLE-CALLSITE-RUNTIME-APPSEC RESIDUALS",
     nextProgramMilestone: "STS-M4 — Frontend Modularization / App.jsx Extraction · PLANNED_NOT_AUTHORIZED",
-    activeWorkstream: "STS-M3 ACTIVE · STS-M3-01 COMPLETE / ACCEPTED / FROZEN · STS-M3-02 COMPLETE / ACCEPTED WITH RESIDUALS · STS-M3-03 NEXT_ELIGIBLE / NOT_AUTHORIZED · CURRENT_AUTHORIZED_EXECUTION = NONE",
-    nextSafeAction: "Resolve live FECH.AI main → consume frozen M3-01 + M3-02 contracts → request separate Product Authority authorization for STS-M3-03 Privileged RPC Allowlist → do not execute M3-03 without that authorization",
+    activeWorkstream: "STS-M3 ACTIVE · STS-M3-01 COMPLETE / ACCEPTED / FROZEN · STS-M3-02 COMPLETE / ACCEPTED WITH RESIDUALS · STS-M3-03 COMPLETE / ACCEPTED WITH RESIDUALS · STS-M3-04 AUTHORIZED / NOT_INITIATED",
+    nextSafeAction: "Resolve live FECH.AI main → fresh bootstrap/reconstruction → initiate STS-M3-04 READ_ONLY-first under existing task authorization → no blanket SQL/RLS/grant/RPC/Supabase mutation authority",
     securityGo: "NOT GRANTED",
     commercialization: "BLOCKED",
     weightingBasis: "Peso = duração planejada; progresso só avança quando o gate do milestone é aceito.",
@@ -608,7 +608,7 @@ export const workspaceDemo = {
         label: "Backend Authority Contract Freeze",
         window: "9–30 Oct",
         weight: 18.75,
-        acceptedPercent: 34.21052631578947,
+        acceptedPercent: 50,
         status: "ACTIVE",
         owner: "Backend/Data + AppSec + Architecture",
         exit: "Canonical authority model + commands/queries + privileged allowlist + staging/security plan."
@@ -837,7 +837,17 @@ export const workspaceDemo = {
       }
     ] satisfies ExecutionItem[],
 
-    active: [] satisfies ExecutionItem[],
+    active: [
+      {
+        id: "STS-M3-04",
+        label: "Redução de DML sensível direto",
+        category: "PROGRAM",
+        state: "PLANNED",
+        owner: "Backend/Data + Product Authority gate",
+        evidence: "AUTHORIZED / NOT_INITIATED. Fresh live bootstrap required before initiation; start READ_ONLY reconstruction.",
+        nextAction: "Initiate STS-M3-04 after live bootstrap; do not infer blanket mutation authority."
+      }
+    ] satisfies ExecutionItem[],
 
     future: [
       {
@@ -941,22 +951,23 @@ export const workspaceDemo = {
       { date: "7 Sep 2026", text: "PR #201 mergeada: STS-M3-01 COMPLETE / ACCEPTED; STS-M3 ACTIVE; STS-M3-02 NEXT_ELIGIBLE / NOT_AUTHORIZED", kind: "PROGRAM" },
       { date: "8 Sep 2026", text: "PR #202 mergeada: STS-M3-02 COMPLETE / ACCEPTED WITH RESIDUALS; authority contract by context frozen", kind: "PROGRAM" },
       { date: "8 Sep 2026", text: "PR #203 mergeada: post-merge SFJM reconciliado; STS-M3-03 NEXT_ELIGIBLE / NOT_AUTHORIZED", kind: "PROGRAM" },
+      { date: "8 Sep 2026", text: "PR #204 mergeada: STS-M3-03 COMPLETE / ACCEPTED WITH RESIDUALS; STS-M3-04 AUTHORIZED / NOT_INITIATED", kind: "PROGRAM" },
       { date: "8 Sep 2026", text: "Vercel branch Preview mais recente = READY; tentativa anterior bloqueada por quota tratada como evento transitório/superseded", kind: "EVIDENCE" }
     ] satisfies TimelineItem[]
 
   } satisfies ProgramSnapshot,
 
   fechaiWbs: {
-    source: "WBS structure: docs/roadmap/fechai-security-to-scale-2026-wbs.md · operational overlay: docs/sfjm/PROGRAM_TASK_GRAPH.md · current meaning: CURRENT_STATE.md + NEXT_SAFE_ACTION.md @ ec42e7b…",
+    source: "WBS structure: docs/roadmap/fechai-security-to-scale-2026-wbs.md · operational overlay: docs/sfjm/PROGRAM_TASK_GRAPH.md · current meaning: CURRENT_STATE.md + NEXT_SAFE_ACTION.md @ 26659c4b…",
     basis: "Planning estimates for visibility, not clocked timesheets.",
     totalCriticalHours: 832,
-    completedHours: 372,
-    remainingCriticalHours: 460,
+    completedHours: 396,
+    remainingCriticalHours: 436,
     preSecurityGoBacklogHours: 116,
     plannedBacklogHours: 104,
     currentPackage: "STS-M3 — ACTIVE",
-    currentTask: "STS-M3-03 · Allowlist de RPCs privilegiadas · NEXT_ELIGIBLE / NOT_AUTHORIZED · 24h",
-    note: "Rótulos/horas vêm da WBS estrutural; identidade externa usa STS-Mx-yy e wbsId preserva Mx-yy. STS-M3 está ACTIVE; STS-M3-01 está COMPLETE / ACCEPTED / FROZEN; STS-M3-02 está COMPLETE / ACCEPTED WITH RESIDUALS; STS-M3-03 é NEXT_ELIGIBLE / NOT_AUTHORIZED. Horas são planejamento, não timesheet.",
+    currentTask: "STS-M3-04 · Redução de DML sensível direto · AUTHORIZED / NOT_INITIATED · 24h",
+    note: "Rótulos/horas vêm da WBS estrutural; identidade externa usa STS-Mx-yy e wbsId preserva Mx-yy. STS-M3-03 está COMPLETE / ACCEPTED WITH RESIDUALS; STS-M3-04 está AUTHORIZED / NOT_INITIATED. Horas são planejamento, não timesheet.",
     milestones: [
       {
         id: "STS-M0",
@@ -1007,8 +1018,8 @@ export const workspaceDemo = {
         tasks: [
           { id: "STS-M3-01", wbsId: "M3-01", label: "Identity / membership / team / role model", hours: 24, state: "COMPLETE", note: "COMPLETE / ACCEPTED · children = NONE YET per PROGRAM_TASK_GRAPH · residuals preserved in CURRENT_ISSUES." },
           { id: "STS-M3-02", wbsId: "M3-02", label: "Authority contract por contexto", hours: 28, state: "COMPLETE", note: "COMPLETE / ACCEPTED WITH RESIDUALS · authority contract frozen · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M3-03", wbsId: "M3-03", label: "Allowlist de RPCs privilegiadas", hours: 24, state: "PLANNED", note: "NEXT_ELIGIBLE / NOT_AUTHORIZED · consumes frozen M3-01 + M3-02 contracts · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M3-04", wbsId: "M3-04", label: "Redução de DML sensível direto", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
+          { id: "STS-M3-03", wbsId: "M3-03", label: "Allowlist de RPCs privilegiadas", hours: 24, state: "COMPLETE", note: "COMPLETE / ACCEPTED WITH RESIDUALS · 49/49 candidates disposed · 2/2 service-only mapped · children = NONE YET per PROGRAM_TASK_GRAPH" },
+          { id: "STS-M3-04", wbsId: "M3-04", label: "Redução de DML sensível direto", hours: 24, state: "PLANNED", note: "AUTHORIZED / NOT_INITIATED · fresh live bootstrap required · start READ_ONLY reconstruction · children = NONE YET per PROGRAM_TASK_GRAPH" },
           { id: "STS-M3-05", wbsId: "M3-05", label: "Fechamento Auth / Admin flows", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
           { id: "STS-M3-06", wbsId: "M3-06", label: "Staging / test plan de segurança", hours: 28, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" }
         ]
@@ -1090,7 +1101,7 @@ export const workspaceDemo = {
   contexts: [
     { icon: "🧠", label: "Objetivo Preservado", value: "Issue #141" },
     { icon: "☑", label: "Histórico Preservado", value: "Append-only" },
-    { icon: "🗺", label: "Plano Futuro", value: "M3-03 → STS-M6" },
+    { icon: "🗺", label: "Plano Futuro", value: "M3-04 → STS-M6" },
     { icon: "📁", label: "Evidências Canônicas", value: "GitHub" },
     { icon: "🔒", label: "Governança Mantida", value: "Ativa" },
     { icon: "◉", label: "Fonte Verificada", value: "main" }
@@ -1099,12 +1110,12 @@ export const workspaceDemo = {
   currentState: [
     { label: "Último milestone concluído", value: "STS-M2 · accepted with residuals" },
     { label: "Milestone atual", value: "STS-M3 · ACTIVE" },
-    { label: "Próxima continuidade", value: "Product Authority · autorizar STS-M3-03 Privileged RPC Allowlist" },
+    { label: "Próxima continuidade", value: "Iniciar STS-M3-04 após fresh live bootstrap" },
     { label: "Objetivo", value: "Issue #141 · PRESERVED" }
   ] satisfies SourceRow[],
 
   sources: [
-    { label: "FECH.AI main", value: "ec42e7b…", badge: true },
+    { label: "FECH.AI main", value: "26659c4b…", badge: true },
     { label: "Program objective", value: "#141 OPEN · PRESERVED", badge: true },
     { label: "Current state source", value: "docs/sfjm/CURRENT_STATE.md", badge: true },
     { label: "Program task graph", value: "docs/sfjm/PROGRAM_TASK_GRAPH.md", badge: true },
