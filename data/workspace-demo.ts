@@ -940,7 +940,8 @@ export const workspaceDemo = {
       { date: "7 Sep 2026", text: "PR #200 mergeada: STS-M2-06 aceito com V2_STRANGLER / SAME_DATABASE_FIRST; STS-M2 fechado com residuals; STS-M3-01 torna-se NEXT_ELIGIBLE / NOT_AUTHORIZED", kind: "PROGRAM" },
       { date: "7 Sep 2026", text: "PR #201 mergeada: STS-M3-01 COMPLETE / ACCEPTED; STS-M3 ACTIVE; STS-M3-02 NEXT_ELIGIBLE / NOT_AUTHORIZED", kind: "PROGRAM" },
       { date: "8 Sep 2026", text: "PR #202 mergeada: STS-M3-02 COMPLETE / ACCEPTED WITH RESIDUALS; authority contract by context frozen", kind: "PROGRAM" },
-      { date: "8 Sep 2026", text: "PR #203 mergeada: post-merge SFJM reconciliado; STS-M3-03 NEXT_ELIGIBLE / NOT_AUTHORIZED", kind: "PROGRAM" }
+      { date: "8 Sep 2026", text: "PR #203 mergeada: post-merge SFJM reconciliado; STS-M3-03 NEXT_ELIGIBLE / NOT_AUTHORIZED", kind: "PROGRAM" },
+      { date: "8 Sep 2026", text: "Vercel branch Preview mais recente = READY; tentativa anterior bloqueada por quota tratada como evento transitório/superseded", kind: "EVIDENCE" }
     ] satisfies TimelineItem[]
 
   } satisfies ProgramSnapshot,
@@ -1109,7 +1110,8 @@ export const workspaceDemo = {
     { label: "Program task graph", value: "docs/sfjm/PROGRAM_TASK_GRAPH.md", badge: true },
     { label: "Current issues", value: "docs/sfjm/CURRENT_ISSUES.md · typed", badge: true },
     { label: "WBS structure", value: "832h · structural baseline", badge: true },
+    { label: "Vercel Preview", value: "READY · latest branch preview", badge: true },
     { label: "SES main / routing", value: "61cee7b3… · manual", badge: true },
-    { label: "Snapshot", value: "Manual · validated 7 Sep · not live-synced", badge: true }
+    { label: "Snapshot", value: "Manual · validated 8 Sep · not live-synced", badge: true }
   ] satisfies SourceRow[]
 };
