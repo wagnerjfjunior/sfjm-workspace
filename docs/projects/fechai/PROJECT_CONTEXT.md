@@ -1,31 +1,38 @@
 # FECH.AI — Current Project Context
 
-## CURRENT AUTHORITY — MANUAL DERIVED SNAPSHOT — 2026-09-05
+## CURRENT AUTHORITY — MANUAL DERIVED SNAPSHOT — 2026-09-08
 
 ```text
 Workspace role = DERIVED VISUALIZATION / CONTINUITY ONLY
-Workspace canonical main at preparation = 107a249528fac505c8c93427b00383eb5775212d
-FECH.AI canonical main observed = 558a0eb5b504e85c670be4bc7cc8b7878ff3745f
-SES canonical main observed = 61cee7b39d1220543d75b35f58472f562ffa2fc7
+Workspace canonical main = 1769d2407550330c4a6500054a35889445a45ab8
+refresh candidate = PR #34 / DRAFT / NOT YET CANONICAL
+
+FECH.AI canonical main observed = c075a751c70ae24b5db8fcfc924c46fba6b10e3e
+FECH.AI acceptance publication = PR #201 MERGED
 
 current execution program = Issue #141 — Security-to-Scale 2026
-program hierarchy = docs/governance/2026-09-04-fechai-bcr-security-to-scale-program-hierarchy-core-dod.md
 WBS structure source = docs/roadmap/fechai-security-to-scale-2026-wbs.md
-current-state source = docs/sfjm/CURRENT_STATE.md + NEXT_SAFE_ACTION.md + handoffs/CURRENT.md
-specialist-routing source = docs/skills/SES_SPECIALIST_ROUTING.md + SES archetypes/REGISTRY.md
+task graph source = docs/sfjm/PROGRAM_TASK_GRAPH.md
+current-state source = docs/sfjm/CURRENT_STATE.md
+next-action source = docs/sfjm/NEXT_SAFE_ACTION.md
+typed issue source = docs/sfjm/CURRENT_ISSUES.md
 
 OBJECTIVE_INTEGRITY = PRESERVED
-STS-M2 = STARTED
-STS-M2-01 = COMPLETE / ACCEPTED
-STS-M2-02 = COMPLETE / ACCEPTED WITH RESIDUALS
-STS-M2-03 = COMPLETE / ACCEPTED WITH RESIDUALS
-STS-M2-04 = NEXT GATE / NOT STARTED
+
+STS-M2 = COMPLETE / ACCEPTED WITH RESIDUALS
+DATABASE STRATEGY = V2_STRANGLER / SAME_DATABASE_FIRST
+
+STS-M3 = ACTIVE
+STS-M3-01 = COMPLETE / ACCEPTED
+STS-M3-02 = NEXT_ELIGIBLE / NOT_AUTHORIZED
+
+CURRENT_AUTHORIZED_EXECUTION = NONE
 SECURITY_GO = NOT_GRANTED
 ```
 
 ### Objective integrity
 
-Canonical program objective, derived from FECH.AI Issue #141 and its hierarchy BCR:
+Canonical program objective remains:
 
 > Reach a sellable, operable FECH.AI with a defensible Security Go candidate and a clear path out of the current frontend/backend monolith before year-end, without hiding unresolved risk or performing a big-bang rewrite.
 
@@ -39,93 +46,86 @@ material objective change
 -> must exist in the canonical external project
 -> must be explicitly approved/versioned there
 -> otherwise Workspace reports OBJECTIVE_DRIFT / STATE_INCONSISTENT
--> do not claim safe continuity
 ```
-
-### Source-role classification
-
-```text
-CURRENT_STATE
-  = top current FECH.AI SFJM semantic overrides
-
-STRUCTURAL_BASELINE
-  = WBS task labels / hours / milestone structure
-  != current task status when the WBS embeds an older state-at-canonicalization snapshot
-
-HISTORICAL_LINEAGE
-  = preserved provenance
-  != current authority
-
-SUPERSEDED
-  = must never drive next action
-
-EXTERNAL_SNAPSHOT
-  = manual and invalidated by material external-project drift
-```
-
-This prevents an older “current” block or an embedded WBS status from overriding newer canonical continuity.
 
 ### Current journey position
 
 ```text
 Issue #141 — Security-to-Scale 2026
--> STS-M2 — Database Simplification & Optimization Plan / STARTED
--> STS-M2-01 COMPLETE
--> STS-M2-02 COMPLETE WITH RESIDUALS
--> STS-M2-03 COMPLETE WITH RESIDUALS
--> STS-M2-04 NEXT GATE / NOT STARTED
--> STS-M2-05 Database Contract Map
--> STS-M2-06 architectural database decision
+-> STS-M2 COMPLETE / ACCEPTED WITH RESIDUALS
+-> STS-M3 ACTIVE
+   -> STS-M3-01 COMPLETE / ACCEPTED
+      frozen authority model:
+      auth principal = auth.uid()
+      tenant identity = public.corretores
+      membership = corretores.empresa_id
+      tenant role = corretores.role
+      team = public.times
+      team membership = corretores.time_id
+      team manager = times.gestor_id
+      platform root = active public.admins role=admin_global
+   -> STS-M3-02 NEXT_ELIGIBLE / NOT_AUTHORIZED
 ```
 
-Opening a new conversation alone does not turn STS-M2-04 into STARTED. Only a material canonical project event may change that state.
+M3-01 residuals remain preserved and do not reopen the accepted task automatically:
+- root dual authority source;
+- team lifecycle legacy relation;
+- criar-usuario authority derivation divergence;
+- implementation target compliance not proven;
+- hostile-client / cross-tenant assurance not proven;
+- AppSec PASS not performed.
+
+### Source-role classification
+
+```text
+CURRENT_STATE
+  = top current FECH.AI semantic authority
+
+PROGRAM_TASK_GRAPH
+  = operational task/milestone/decomposition overlay
+
+WBS STRUCTURE
+  = IDs / labels / order / hours / exit contracts
+
+CURRENT_ISSUES
+  = typed blocker/residual/deferred/gate view
+
+HISTORICAL_LINEAGE
+  = preserved provenance
+  != current authority
+
+EXTERNAL_SNAPSHOT
+  = manual
+  = invalidated by material FECH.AI drift
+```
 
 ### Specialist destination
 
-```text
-1. backend_data
-   -> backend-data-platform-specialist
-   -> SES — Backend & Data Platform Specialist
-   -> REQUIRED / PRIMARY
-
-2. architecture
-   -> software-systems-architect
-   -> SES — Software Systems Architect
-   -> REQUIRED / SECOND
-
-3. application_security
-   -> application-security-assurance-specialist
-   -> SES — Application Security Assurance Specialist
-   -> CONDITIONAL / bounded target-security-policy assurance only
-
-TRANSPORT = MANUAL COPY/PASTE
-WORKSPACE ACTION = INDICATE DESTINATION ONLY
-AUTOMATIC ROUTING / SEND = NO
-```
-
-
-## FECH.AI context preserved by the Workspace
-
-The Workspace must preserve the distinction between the FECH.AI **program objective** and the current task. STS-M2-04 is not an isolated database-security exercise: it consumes M2-01..03 and must produce a target authority policy that feeds M2-05 Database Contract Map and M2-06 architectural decision.
-
-Current M2-03 durable evidence remains external FECH.AI authority:
-
-- `docs/security/evidence/2026-09-05-sts-m2-02-database-authority-map.md`;
-- `docs/security/evidence/2026-09-05-sts-m2-03-index-acl-contradictions.md`.
-
-The Workspace does not copy those artifacts into its own authority model. It records where the operator is in the journey and which source must be resolved.
-
-## Objective-drift gate
-
-A future refresh that observes a materially different objective in the canonical project must not silently rewrite the Workspace objective. The projection must move to an inconsistent/attention state until the change is proven versioned and approved by the project authority.
+No specialist destination is current for STS-M3-02 because execution is not authorized.
 
 ```text
-canonical objective changed materially
-AND approval/provenance unresolved
-=> OBJECTIVE_DRIFT
-=> CONTINUATION_NOT_SAFE
+STS-M3-02 authorization = REQUIRED FIRST
+specialist route = NOT_RESOLVED
+bootstrap = REQUIRED AFTER AUTHORIZATION
+transport = MANUAL COPY/PASTE only when a route is resolved
+automatic routing / send = NO
 ```
 
+### Current authority boundary
+
+```text
+STS-M3 ACTIVE != STS-M3-02 execution authority
+CURRENT_AUTHORIZED_EXECUTION = NONE
+
+NO STS-M3-02 execution
+NO V2 implementation
+NO runtime/frontend mutation
+NO Supabase/Auth/data mutation
+NO deploy
+NO Security Go
+```
+
+A new conversation must resolve FECH.AI live again before acting.
 
 ---
 
