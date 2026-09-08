@@ -445,9 +445,9 @@ export const workspaceDemo = {
         }
       ] satisfies ProjectIssue[],
       repository: "wagnerjfjunior/fecha.ai",
-      observedSha: "ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be",
-      observedAt: "8 Sep 2026 · PR #203 merged / PR #202 post-merge SFJM reconciliation",
-      verification: "Snapshot manual observado em ec42e7b… · material state/issue anchor = 665e3920… após PR #202; CURRENT_ISSUES declara RESIDUAL=11, mas publica 12 linhas residuais — mismatch preservado/visível · sem live sync",
+      observedSha: "26659c4bd450d5068e6eba311799f16465447317",
+      observedAt: "8 Sep 2026 · PR #204 merged / STS-M3-03 accepted / STS-M3-04 authorized",
+      verification: "Snapshot manual observado em 26659c4b… · CURRENT_ISSUES decision anchor = ec42e7b… · RESIDUAL=12 / published residual rows=12 · sem live sync",
       taskDecompositions: [{
         parentTaskId: "STS-M2-04",
         parentLabel: "Política target de DEFINER / RLS / DML",
