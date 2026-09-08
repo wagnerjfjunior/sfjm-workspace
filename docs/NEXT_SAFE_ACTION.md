@@ -1,16 +1,23 @@
 # SFJM Workspace — Current Next Safe Action
 
-## CURRENT AUTHORITY — MANUAL DERIVED SNAPSHOT — 2026-09-07
+## CURRENT AUTHORITY — MANUAL DERIVED SNAPSHOT — 2026-09-08
 
 ```text
 Workspace role = DERIVED VISUALIZATION / CONTINUITY ONLY
-Workspace canonical main = RESOLVE LIVE
-PR #32 lifecycle = MERGED / CLOSED
-PR #32 merge anchor = 98bad9cdfbded6d0beaecde89fbce5839c8a305e
-published feature = recursive task decomposition + typed FECH.AI issue rendering
-FECH.AI canonical main observed = a8c607228e413f5f2ca8162c1c0adeac9fb22729
+Workspace canonical main = 1769d2407550330c4a6500054a35889445a45ab8
+PR #34 = DRAFT / refresh candidate / NOT YET CANONICAL
+prior audited head = 62bafb362d12d2173a10266ecc0bafacd2d0a607 / SUPERSEDED BY MATERIAL FECH.AI DRIFT
+current candidate head = RESOLVE LIVE BEFORE REVIEW/MERGE
+exact-head audit custody = ANY HEAD CHANGE INVALIDATES PRIOR AUDIT
+Vercel latest branch Preview prior to this refresh = READY
+current exact-head deployment validation = NOT_ASSERTED UNTIL RECHECKED
+
+FECH.AI canonical main observed live = 26659c4bd450d5068e6eba311799f16465447317
+FECH.AI material decision anchor = ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be
+FECH.AI lifecycle = PR #204 MERGED / STS-M3-03 accepted / STS-M3-04 authorized not initiated
 
 current execution program = Issue #141 — Security-to-Scale 2026
+
 WBS source = docs/roadmap/fechai-security-to-scale-2026-wbs.md
 task graph source = docs/sfjm/PROGRAM_TASK_GRAPH.md
 current-state source = docs/sfjm/CURRENT_STATE.md
@@ -18,91 +25,127 @@ typed issue source = docs/sfjm/CURRENT_ISSUES.md
 next-action source = docs/sfjm/NEXT_SAFE_ACTION.md
 
 OBJECTIVE_INTEGRITY = PRESERVED
-STS-M2 = ACTIVE
-STS-M2-01 = COMPLETE / ACCEPTED
-STS-M2-02 = COMPLETE / ACCEPTED WITH RESIDUALS
-STS-M2-03 = COMPLETE / ACCEPTED WITH RESIDUALS
-STS-M2-04 = COMPLETE / ACCEPTED WITH IMPLEMENTATION-LIFECYCLE-RUNTIME RESIDUALS
-STS-M2-05 = COMPLETE / ACCEPTED WITH RESIDUALS
-STS-M2-06 = AUTHORIZED_READ_ONLY / READY_TO_EXECUTE
-CURRENT_TASK_BLOCKERS = 0
+
+STS-M2 = COMPLETE / ACCEPTED WITH RESIDUALS
+DATABASE_STRATEGY = V2_STRANGLER / SAME_DATABASE_FIRST
+
+STS-M3 = ACTIVE
+STS-M3-01 = COMPLETE / ACCEPTED / FROZEN
+STS-M3-02 = COMPLETE / ACCEPTED WITH RESIDUALS
+STS-M3-03 = COMPLETE / ACCEPTED WITH RESIDUALS
+STS-M3-04 = AUTHORIZED / NOT_INITIATED
+
+CURRENT_AUTHORIZED_EXECUTION = STS-M3-04_TASK_AUTHORIZED_NOT_STARTED
+CURRENT_BLOCKER_COUNT = 0
 SECURITY_GO = NOT_GRANTED
 
 SNAPSHOT = MANUAL / NOT LIVE-SYNCED
-```
-
-### Objective integrity
-
-Canonical program objective remains Issue #141: reach a sellable, operable FECH.AI with a defensible Security Go candidate and a clear path out of the current monolith without hiding unresolved risk or performing a big-bang rewrite.
-
-Workspace remains a consumer:
-
-```text
-WORKSPACE_RENDERING != FECH.AI_AUTHORITY
-SNAPSHOT_MANUAL != LIVE_SYNC
-NON_PASS_FACT != CURRENT_BLOCKER
 ```
 
 ### Current journey position
 
 ```text
 Issue #141 — Security-to-Scale 2026
-→ STS-M2 — ACTIVE
-→ STS-M2-01 COMPLETE
-→ STS-M2-02 COMPLETE WITH RESIDUALS
-→ STS-M2-03 COMPLETE WITH RESIDUALS
-→ STS-M2-04 COMPLETE / ACCEPTED WITH RESIDUALS
-→ STS-M2-05 COMPLETE / ACCEPTED WITH RESIDUALS
-→ STS-M2-06 AUTHORIZED_READ_ONLY / READY_TO_EXECUTE
+→ STS-M2 COMPLETE / ACCEPTED WITH RESIDUALS
+→ STS-M3 ACTIVE
+  → STS-M3-01 COMPLETE / ACCEPTED / FROZEN
+  → STS-M3-02 COMPLETE / ACCEPTED WITH RESIDUALS
+  → STS-M3-03 COMPLETE / ACCEPTED WITH RESIDUALS
+       public routine universe = 160
+       privileged candidate universe = 49
+       candidate rows disposed = 49 / 49
+       service-only commands mapped = 2 / 2
+       allowlist completeness = PROVEN TO ACCEPTED BOUNDED STANDARD
+  → STS-M3-04 AUTHORIZED / NOT_INITIATED
+       Redução de DML sensível direto
 ```
 
-### Specialist destination
+### Current authority boundary
 
 ```text
-1. architecture
-   → software-systems-architect
-   → SES — Software Systems Architect
-   → REQUIRED / PRIMARY for STS-M2-06
+M3-04 task authorization != M3-04 initiated
+M3-04 authorization != blanket mutation authority
 
-2. backend_data
-   → backend-data-platform-specialist
-   → SES — Backend & Data Platform Specialist
-   → CONDITIONAL / evidence support
-
-3. application_security
-   → application-security-assurance-specialist
-   → SES — Application Security Assurance Specialist
-   → CONDITIONAL / bounded assurance
-
-TRANSPORT = MANUAL COPY/PASTE
-AUTOMATIC ROUTING / SEND = NO
+NO blanket SQL / DDL / DML mutation
+NO migration execution
+NO blanket RLS / policy / grant / owner / search_path mutation
+NO function / trigger / RPC / Edge Function mutation
+NO Supabase/Auth/data mutation inferred
+NO deploy / production mutation inferred
+NO STS-M3-05 / STS-M3-06 substantive execution
+NO Security Go
+NO commercialization authorization
 ```
 
-## Single next safe action
-
-Resolve FECH.AI `main` live from the observed anchor `a8c607228e413f5f2ca8162c1c0adeac9fb22729`.
-
-If no material invalidator has changed the STS-M2-06 contract, continue only with the already-authorized bounded **STS-M2-06 — Database Architecture Decision — READ_ONLY** work:
-
-1. reconstruct only the additional current architecture evidence required by STS-M2-06;
-2. consume accepted STS-M2-01..STS-M2-05 evidence without global replay;
-3. compare `EVOLVE_IN_PLACE` vs `V2_STRANGLER` vs `NEW_DATABASE`;
-4. analyze multi-tenancy, trust boundaries, coupling, migration blast radius, rollback and proof obligations;
-5. return an evidence-backed recommendation to Product Authority for adjudication.
-
-Current typed issue view:
+### Current issue semantics
 
 ```text
 source = FECH.AI docs/sfjm/CURRENT_ISSUES.md
-current blockers = 0
-residuals = 3
-deferred evidence = 3
-program/security gates = 4
+decision/validation anchor = ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be
+
+CURRENT_TASK = STS-M3-04
+CURRENT_TASK_STATE = AUTHORIZED_NOT_INITIATED
+CURRENT_AUTHORIZED_EXECUTION = STS-M3-04_TASK_AUTHORIZED_NOT_STARTED
+
+BLOCKING = 0
+REQUIRED_CURRENT = 0
+RESIDUAL = 12
+DEFERRED_EVIDENCE = 3
+SECURITY_GATE = 3
+FUTURE_GATE = 1
+
+CURRENT_BLOCKER_COUNT = 0
 ```
 
-Do not treat those residual/deferred/gate counts as STS-M2-06 blockers merely because they remain open.
+M3-03 residual state is now:
+```text
+ALLOWLIST_COMPLETE
+IMPLEMENTATION_TARGET_COMPLIANCE_NOT_PROVEN
+```
 
-No implementation, runtime/frontend mutation, Supabase/Auth/data mutation, SQL/DDL/DML, migration execution, RLS/policy/grant/function/trigger mutation, STS-M3 execution, deploy, Security Go or commercialization is authorized by this Workspace state.
+Residuals, deferred evidence and gates remain material. They are not silently resolved and are not flattened into blocker count.
+
+### Specialist / execution routing
+
+M3-04 is authorized but not initiated.
+
+```text
+fresh live bootstrap = REQUIRED FIRST
+initial activity = READ_ONLY reconstruction
+specialist destination = RESOLVE DURING BOOTSTRAP
+automatic routing = NO
+blanket mutation authority = NO
+```
+
+The receiving conversation must resolve FECH.AI live again before acting.
+
+## Single next safe action
+
+Resolve FECH.AI `main` live from observed `26659c4bd450d5068e6eba311799f16465447317`.
+
+If no material invalidator changes the accepted M3-03 state:
+
+```text
+INITIATE STS-M3-04 —
+REDUÇÃO DE DML SENSÍVEL DIRETO
+
+under existing Product Authority task authorization
+after fresh live bootstrap/reconstruction
+```
+
+Initial scope:
+
+```text
+READ_ONLY reconstruction of
+- sensitive direct-DML surfaces
+- RLS
+- table grants
+- policies
+- RPC-only boundaries
+- call sites
+```
+
+Do not infer blanket mutation authority from task authorization.
 
 ---
 
