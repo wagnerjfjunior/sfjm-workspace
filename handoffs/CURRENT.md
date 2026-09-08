@@ -1,6 +1,6 @@
 # SFJM Workspace — Current Handoff
 
-## CURRENT AUTHORITY — MANUAL DERIVED SNAPSHOT — 2026-09-07
+## CURRENT AUTHORITY — MANUAL DERIVED SNAPSHOT — 2026-09-08
 
 ```text
 Workspace role = DERIVED VISUALIZATION / CONTINUITY ONLY
@@ -8,8 +8,8 @@ Workspace canonical main = 1769d2407550330c4a6500054a35889445a45ab8
 refresh candidate = PR #34 / DRAFT / NOT YET CANONICAL
 published baseline = PR #32 MERGED / recursive task decomposition + typed FECH.AI issue rendering
 
-FECH.AI canonical main observed = 661ef0014576d473088add0052d751e0a47d306e
-FECH.AI acceptance publication = PR #200 MERGED
+FECH.AI canonical main observed = c075a751c70ae24b5db8fcfc924c46fba6b10e3e
+FECH.AI acceptance publication = PR #201 MERGED
 current execution program = Issue #141 — Security-to-Scale 2026
 
 WBS source = docs/roadmap/fechai-security-to-scale-2026-wbs.md
@@ -20,13 +20,13 @@ next-action source = docs/sfjm/NEXT_SAFE_ACTION.md
 
 OBJECTIVE_INTEGRITY = PRESERVED
 
-STS-M2 = COMPLETE / ACCEPTED WITH IMPLEMENTATION-LIFECYCLE-CALLSITE-RUNTIME-APPSEC RESIDUALS
-STS-M2-06 = COMPLETE / ACCEPTED
+STS-M2 = COMPLETE / ACCEPTED WITH RESIDUALS
 DATABASE_STRATEGY = V2_STRANGLER / SAME_DATABASE_FIRST
-NEW_PRODUCTION_DATABASE = NOT_SELECTED_AT_THIS_STAGE
 
-STS-M3 = NEXT_ELIGIBLE / NOT_AUTHORIZED
-STS-M3-01 = NEXT_ELIGIBLE / NOT_AUTHORIZED
+STS-M3 = ACTIVE
+STS-M3-01 = COMPLETE / ACCEPTED
+STS-M3-02 = NEXT_ELIGIBLE / NOT_AUTHORIZED
+
 CURRENT_AUTHORIZED_EXECUTION = NONE
 CURRENT_BLOCKER_COUNT = 0
 SECURITY_GO = NOT_GRANTED
@@ -39,22 +39,18 @@ SNAPSHOT = MANUAL / NOT LIVE-SYNCED
 ```text
 Issue #141 — Security-to-Scale 2026
 → STS-M2 COMPLETE / ACCEPTED WITH RESIDUALS
-  → STS-M2-01 COMPLETE
-  → STS-M2-02 COMPLETE WITH RESIDUALS
-  → STS-M2-03 COMPLETE WITH RESIDUALS
-  → STS-M2-04 COMPLETE / ACCEPTED WITH RESIDUALS
-  → STS-M2-05 COMPLETE / ACCEPTED WITH RESIDUALS
-  → STS-M2-06 COMPLETE / ACCEPTED
-       DATABASE STRATEGY = V2_STRANGLER / SAME_DATABASE_FIRST
-→ STS-M3 NEXT_ELIGIBLE / NOT_AUTHORIZED
-  → STS-M3-01 NEXT_ELIGIBLE / NOT_AUTHORIZED
+→ STS-M3 ACTIVE
+  → STS-M3-01 COMPLETE / ACCEPTED
+       identity / membership / role / team / platform-root contracts frozen
+       residuals preserved
+  → STS-M3-02 NEXT_ELIGIBLE / NOT_AUTHORIZED
 ```
 
 ### Current authority boundary
 
 ```text
-M2 acceptance != V2 implementation authority
-M3 eligibility != M3 execution authority
+STS-M3 ACTIVE != STS-M3-02 authorized
+M3-01 acceptance != M3-02 execution authority
 CURRENT_AUTHORIZED_EXECUTION = NONE
 
 NO runtime/frontend implementation
@@ -63,7 +59,7 @@ NO SQL / DDL / DML mutation
 NO migration execution
 NO RLS / policy / grant / owner / search_path mutation
 NO function / trigger / RPC / Edge Function mutation
-NO STS-M3 execution
+NO STS-M3-02 execution
 NO deploy / production mutation
 NO Security Go
 NO commercialization authorization
@@ -73,11 +69,15 @@ NO commercialization authorization
 
 ```text
 source = FECH.AI docs/sfjm/CURRENT_ISSUES.md
-validation anchor inside CURRENT_ISSUES = 83186f5775e563e150329fa0b95dd1d7f3f3a516
+validation anchor inside CURRENT_ISSUES = 661ef0014576d473088add0052d751e0a47d306e
+
+CURRENT_TASK = STS-M3-02
+CURRENT_TASK_STATE = ELIGIBLE_NOT_AUTHORIZED
+CURRENT_AUTHORIZED_EXECUTION = NONE
 
 BLOCKING = 0
 REQUIRED_CURRENT = 0
-RESIDUAL = 3
+RESIDUAL = 6
 DEFERRED_EVIDENCE = 3
 SECURITY_GATE = 3
 FUTURE_GATE = 1
@@ -85,14 +85,19 @@ FUTURE_GATE = 1
 CURRENT_BLOCKER_COUNT = 0
 ```
 
+The additional M3-01 residuals are preserved:
+- root dual authority source;
+- team lifecycle legacy relation;
+- criar-usuario target divergence.
+
 Residuals, deferred evidence and gates remain material. They are not silently resolved and are not flattened into the current-blocker count.
 
 ### Specialist / execution routing
 
-No specialist execution route is current merely from STS-M3 eligibility.
+No M3-02 specialist execution route is current merely from eligibility.
 
 ```text
-STS-M3-01 authorization = REQUIRED FIRST
+STS-M3-02 authorization = REQUIRED FIRST
 specialist destination = RESOLVE AFTER AUTHORIZATION / BOOTSTRAP
 automatic routing = NO
 transport = MANUAL COPY/PASTE when/if a route becomes authorized
@@ -104,20 +109,21 @@ The receiving conversation must resolve FECH.AI live again before acting.
 
 ```text
 WHERE WE ARE
-  STS-M2 COMPLETE / ACCEPTED WITH RESIDUALS
-  STS-M2-06 COMPLETE / ACCEPTED
-  DATABASE STRATEGY = V2_STRANGLER / SAME_DATABASE_FIRST
+  STS-M3 ACTIVE
+  STS-M3-01 COMPLETE / ACCEPTED
+  M3-01 authority model frozen
 
 WHERE WE ARE GOING
-  STS-M3-01 is the next eligible task
+  STS-M3-02 is next eligible
   but execution remains NOT_AUTHORIZED
 
 NEXT GATE
-  separate Product Authority authorization
-  for bounded STS-M3-01
+  Product Authority may separately authorize
+  STS-M3-02 — Authority Contract by Context
+  READ_ONLY first
 ```
 
-This Workspace snapshot does not authorize implementation, V2 runtime work, Supabase/Auth/data mutation, STS-M3 execution, deploy, Security Go or commercialization.
+This Workspace snapshot does not authorize M3-02 execution, implementation, Supabase/Auth/data mutation, deploy, Security Go or commercialization.
 
 ---
 
