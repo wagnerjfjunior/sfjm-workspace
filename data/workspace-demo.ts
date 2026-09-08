@@ -388,7 +388,7 @@ export const workspaceDemo = {
           source: "docs/security/evidence/2026-09-08-sts-m3-02-authority-contract-by-context.md",
           sourceRef: "ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be",
           lastValidatedAt: "2026-09-08",
-          resolutionCondition: "mapear SERVICE_ONLY_COMMAND sob M3-03 e provar trusted runtime, owner, tenant/business binding, bounded side-effects, proof e kill path",
+          resolutionCondition: "mapping 2/2 concluído em M3-03; provar trusted runtime, service owner, tenant/business binding, bounded side-effects/secret scope, runtime proof e revoke/kill path em assurance downstream separadamente autorizada, incluindo M3-06 quando aplicável",
           displayPolicy: "RESIDUAL_RISKS"
         },
         {
@@ -834,6 +834,15 @@ export const workspaceDemo = {
         owner: "Backend/Data + Architecture + Product Authority",
         evidence: "COMPLETE / ACCEPTED WITH RESIDUALS. Authority contract by context frozen; implementation/runtime/AppSec downstream residuals preserved.",
         nextAction: "Consumir contrato congelado em M3-03; não reabrir M3-02 sem material invalidator."
+      },
+      {
+        id: "STS-M3-03",
+        label: "Privileged RPC Allowlist",
+        category: "PROGRAM",
+        state: "COMPLETE",
+        owner: "Backend/Data + Architecture + Product Authority",
+        evidence: "COMPLETE / ACCEPTED WITH RESIDUALS. 49/49 privileged candidates disposed; 2/2 service-only commands mapped; allowlist completeness proven to accepted bounded standard.",
+        nextAction: "Preservar allowlist; implementação/ACL/runtime compliance e AppSec assurance permanecem downstream."
       }
     ] satisfies ExecutionItem[],
 
