@@ -564,7 +564,7 @@ export const workspaceDemo = {
     specialistTransport: "NOT_RESOLVED · aguarda autorização/bootstrap antes de qualquer destino",
     specialistRouting: [] as SpecialistRoute[],
     lastCompletedMilestone: "STS-M2 — COMPLETE / ACCEPTED WITH IMPLEMENTATION-LIFECYCLE-CALLSITE-RUNTIME-APPSEC RESIDUALS",
-    nextProgramMilestone: "STS-M3 — Backend Authority Contract Freeze · ACTIVE",
+    nextProgramMilestone: "STS-M4 — Frontend Modularization / App.jsx Extraction · PLANNED_NOT_AUTHORIZED",
     activeWorkstream: "STS-M3 ACTIVE · STS-M3-01 COMPLETE / ACCEPTED / FROZEN · STS-M3-02 COMPLETE / ACCEPTED WITH RESIDUALS · STS-M3-03 NEXT_ELIGIBLE / NOT_AUTHORIZED · CURRENT_AUTHORIZED_EXECUTION = NONE",
     nextSafeAction: "Resolve live FECH.AI main → consume frozen M3-01 + M3-02 contracts → request separate Product Authority authorization for STS-M3-03 Privileged RPC Allowlist → do not execute M3-03 without that authorization",
     securityGo: "NOT GRANTED",
