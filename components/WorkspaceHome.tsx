@@ -36,8 +36,12 @@ function milestoneIsEligibleButUnauthorized(milestone: WbsMilestone) {
   return milestone.operationalState === "ELIGIBLE_NOT_AUTHORIZED";
 }
 
-function findOperationalMilestone(milestones: WbsMilestone[]) {
-  return milestones.find((milestone) => milestone.state === "ACTIVE") ??
+function findActiveMilestone(milestones: WbsMilestone[]) {
+  return milestones.find((milestone) => milestone.state === "ACTIVE");
+}
+
+function findDisplayMilestone(milestones: WbsMilestone[]) {
+  return findActiveMilestone(milestones) ??
     milestones.find(milestoneIsEligibleButUnauthorized) ??
     milestones.find((milestone) => milestone.state !== "COMPLETE") ??
     milestones[0];
@@ -498,7 +502,7 @@ function TaskDecompositionPanel({
 function NextActionCard({ project }: { project: ExternalProject }) {
   const isFechai = project.name === FECHAI;
   const program = workspaceDemo.fechaiProgram;
-  const operationalMilestone = findOperationalMilestone(workspaceDemo.fechaiWbs.milestones);
+  const operationalMilestone = findDisplayMilestone(workspaceDemo.fechaiWbs.milestones);
   const operationalTasks: WbsTask[] = operationalMilestone?.tasks ?? [];
   const focusTask = operationalTasks.find(taskIsEligibleButUnauthorized) ??
     operationalTasks.find((task) => task.note?.includes("NEXT GATE")) ??
@@ -536,17 +540,23 @@ function NextActionCard({ project }: { project: ExternalProject }) {
                   </div>
                 ) : null}
               </div>
-              <div className="actionFooter actionFooterStack">
-                <div>
-                  <span className="manualChip">CÓPIA MANUAL</span>
-                  <span>{program.specialistTransport}</span>
-                </div>
-                {conditionalRoute ? (
-                  <div className="conditionalRoute">
-                    <strong>Escalonamento condicional:</strong> {conditionalRoute.targetName} · {conditionalRoute.purpose}
+              {program.specialistRouting.length ? (
+                <div className="actionFooter actionFooterStack">
+                  <div>
+                    <span className="manualChip">CÓPIA MANUAL</span>
+                    <span>{program.specialistTransport}</span>
                   </div>
-                ) : null}
-              </div>
+                  {conditionalRoute ? (
+                    <div className="conditionalRoute">
+                      <strong>Escalonamento condicional:</strong> {conditionalRoute.targetName} · {conditionalRoute.purpose}
+                    </div>
+                  ) : null}
+                </div>
+              ) : (
+                <div className="actionFooter">
+                  <span>Roteamento de especialista ainda não definido · aguarda autorização/bootstrap</span>
+                </div>
+              )}
             </>
           ) : (
             <div className="actionFooter">
@@ -589,6 +599,9 @@ function RisksCard({ project }: { project: ExternalProject }) {
 
   const currentBlockers = issues.filter(
     (issue) => issue.class === "BLOCKING" || issue.class === "REQUIRED_CURRENT"
+  );
+  const issueValidationAnchors = Array.from(
+    new Set(issues.map((issue) => issue.sourceRef).filter(Boolean))
   );
 
   const groups = [
@@ -658,7 +671,7 @@ function RisksCard({ project }: { project: ExternalProject }) {
       <div className="riskSource">
         <span>Fonte tipada</span>
         <strong>docs/sfjm/CURRENT_ISSUES.md</strong>
-        <code>{project.observedSha}</code>
+        <code>{issueValidationAnchors.length === 1 ? issueValidationAnchors[0] : issueValidationAnchors.join(" · ")}</code>
       </div>
     </article>
   );
@@ -788,16 +801,17 @@ function WbsMilestoneTab({
 
 function WbsCommandCenter({ project }: { project: ExternalProject }) {
   const wbs = workspaceDemo.fechaiWbs;
-  const operationalMilestone = findOperationalMilestone(wbs.milestones);
+  const activeMilestone = findActiveMilestone(wbs.milestones);
+  const displayMilestone = findDisplayMilestone(wbs.milestones);
 
-  const [selectedMilestoneId, setSelectedMilestoneId] = useState(operationalMilestone.id);
+  const [selectedMilestoneId, setSelectedMilestoneId] = useState(displayMilestone.id);
   const [expandedWbsTaskId, setExpandedWbsTaskId] = useState<string | null>(null);
 
   const selectedMilestone: WbsMilestone =
     wbs.milestones.find((milestone) => milestone.id === selectedMilestoneId) ??
-    operationalMilestone;
+    displayMilestone;
 
-  const operationalTasks: WbsTask[] = operationalMilestone.tasks;
+  const operationalTasks: WbsTask[] = displayMilestone.tasks;
   const focusTask =
     operationalTasks.find(taskIsEligibleButUnauthorized) ??
     operationalTasks.find((task) => task.note?.includes("NEXT GATE")) ??
@@ -820,15 +834,17 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
     ? (selectedCompletedTasks / selectedMilestone.tasks.length) * 100
     : 0;
 
-  const selectedIsActive = selectedMilestone.id === operationalMilestone.id;
+  const selectedIsActive = Boolean(activeMilestone && selectedMilestone.id === activeMilestone.id);
   const selectedStateLabel =
     selectedMilestone.state === "COMPLETE"
       ? "CONCLUÍDO"
       : selectedMilestone.state === "ACTIVE"
         ? "ACTIVE"
-        : selectedMilestone.operationalState === "PLANNED_NOT_AUTHORIZED"
-          ? "PLANEJADO · NÃO AUTORIZADO"
-          : "PLANEJADO";
+        : selectedMilestone.operationalState === "ELIGIBLE_NOT_AUTHORIZED"
+          ? "PRÓXIMO ELEGÍVEL · NÃO AUTORIZADO"
+          : selectedMilestone.operationalState === "PLANNED_NOT_AUTHORIZED"
+            ? "PLANEJADO · NÃO AUTORIZADO"
+            : "PLANEJADO";
 
   const selectedFocusId = selectedIsActive ? focusTask?.id : undefined;
 
@@ -855,7 +871,7 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
         {wbs.milestones.map((milestone) => (
           <WbsMilestoneTab
             milestone={milestone}
-            active={milestone.id === operationalMilestone.id}
+            active={Boolean(activeMilestone && milestone.id === activeMilestone.id)}
             selected={milestone.id === selectedMilestone.id}
             totalHours={wbs.totalCriticalHours}
             onSelect={() => setSelectedMilestoneId(milestone.id)}
@@ -876,7 +892,7 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
               {selectedStateLabel}
             </span>
             {!selectedIsActive ? (
-              <small>Bloco operacional atual: {operationalMilestone.id}</small>
+              <small>{activeMilestone ? `Bloco operacional atual: ${activeMilestone.id}` : `Nenhum bloco com execução ativa · próximo elegível: ${displayMilestone.id}`}</small>
             ) : null}
           </div>
         </div>
@@ -910,7 +926,7 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
       </section>
 
       <div className="wbsFootnote">
-        Seleção é apenas navegação visual. O bloco operacional atual continua sendo {operationalMilestone.id}. Horas não são timesheet, confiança ou Security Go.
+        Seleção é apenas navegação visual. {activeMilestone ? `O bloco operacional atual continua sendo ${activeMilestone.id}.` : `Nenhum bloco tem execução ativa; ${displayMilestone.id} é apenas o próximo elegível.`} Horas não são timesheet, confiança ou Security Go.
       </div>
     </article>
   );
@@ -932,7 +948,7 @@ function EvidenceCard({ project }: { project: ExternalProject }) {
         <div><span>SHA observado</span><code>{project.observedSha}</code></div>
         <div><span>Verificação</span><strong>{project.verification}</strong></div>
         <div><span>Observado em</span><strong>{project.observedAt}</strong></div>
-        <div><span>Handoff</span><strong>{isFechai ? workspaceDemo.fechaiProgram.specialistTransport : "Não definido neste snapshot"}</strong></div>
+        <div><span>Handoff</span><strong>{isFechai ? (workspaceDemo.fechaiProgram.specialistRouting.length ? workspaceDemo.fechaiProgram.specialistTransport : "Não definido · aguarda autorização/bootstrap") : "Não definido neste snapshot"}</strong></div>
       </div>
       {isFechai ? (
         <div className="evidenceBoundaryCompact">
