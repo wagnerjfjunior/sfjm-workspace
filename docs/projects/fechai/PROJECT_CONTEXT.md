@@ -6,29 +6,130 @@
 Workspace role = DERIVED VISUALIZATION / CONTINUITY ONLY
 Workspace canonical main = 1769d2407550330c4a6500054a35889445a45ab8
 refresh candidate = PR #34 / DRAFT / NOT YET CANONICAL
+published baseline = PR #32 MERGED / recursive task decomposition + typed FECH.AI issue rendering
 
-FECH.AI canonical main observed = c075a751c70ae24b5db8fcfc924c46fba6b10e3e
-FECH.AI acceptance publication = PR #201 MERGED
+FECH.AI canonical main observed live = ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be
+FECH.AI material execution anchor = 665e3920b17849f45d8b3fcea015b1492219f115
+FECH.AI lifecycle = PR #202 MERGED / PR #203 post-merge reconciliation MERGED
 
 current execution program = Issue #141 — Security-to-Scale 2026
-WBS structure source = docs/roadmap/fechai-security-to-scale-2026-wbs.md
+
+WBS source = docs/roadmap/fechai-security-to-scale-2026-wbs.md
 task graph source = docs/sfjm/PROGRAM_TASK_GRAPH.md
 current-state source = docs/sfjm/CURRENT_STATE.md
-next-action source = docs/sfjm/NEXT_SAFE_ACTION.md
 typed issue source = docs/sfjm/CURRENT_ISSUES.md
+next-action source = docs/sfjm/NEXT_SAFE_ACTION.md
 
 OBJECTIVE_INTEGRITY = PRESERVED
 
 STS-M2 = COMPLETE / ACCEPTED WITH RESIDUALS
-DATABASE STRATEGY = V2_STRANGLER / SAME_DATABASE_FIRST
+DATABASE_STRATEGY = V2_STRANGLER / SAME_DATABASE_FIRST
 
 STS-M3 = ACTIVE
-STS-M3-01 = COMPLETE / ACCEPTED
-STS-M3-02 = NEXT_ELIGIBLE / NOT_AUTHORIZED
+STS-M3-01 = COMPLETE / ACCEPTED / FROZEN
+STS-M3-02 = COMPLETE / ACCEPTED WITH RESIDUALS
+STS-M3-03 = NEXT_ELIGIBLE / NOT_AUTHORIZED
 
 CURRENT_AUTHORIZED_EXECUTION = NONE
+CURRENT_BLOCKER_COUNT = 0
 SECURITY_GO = NOT_GRANTED
+
+SNAPSHOT = MANUAL / NOT LIVE-SYNCED
 ```
+
+### Current journey position
+
+```text
+Issue #141 — Security-to-Scale 2026
+→ STS-M2 COMPLETE / ACCEPTED WITH RESIDUALS
+→ STS-M3 ACTIVE
+  → STS-M3-01 COMPLETE / ACCEPTED / FROZEN
+  → STS-M3-02 COMPLETE / ACCEPTED WITH RESIDUALS
+       authority contract by context = FROZEN
+  → STS-M3-03 NEXT_ELIGIBLE / NOT_AUTHORIZED
+       Privileged RPC Allowlist
+```
+
+### Current authority boundary
+
+```text
+STS-M3 ACTIVE != STS-M3-03 execution authority
+M3-02 acceptance != M3-03 execution authority
+CURRENT_AUTHORIZED_EXECUTION = NONE
+
+NO STS-M3-03 substantive execution
+NO M3-02 target implementation/remediation
+NO BG-06 support-mode implementation
+NO runtime/frontend implementation
+NO Supabase/Auth/data mutation
+NO SQL / DDL / DML mutation
+NO migration execution
+NO RLS / policy / grant / owner / search_path mutation
+NO function / trigger / RPC / Edge Function mutation
+NO deploy / production mutation
+NO Security Go
+NO commercialization authorization
+```
+
+### Current issue semantics
+
+```text
+source = FECH.AI docs/sfjm/CURRENT_ISSUES.md
+validation anchor = 665e3920b17849f45d8b3fcea015b1492219f115
+
+CURRENT_TASK = STS-M3-03
+CURRENT_TASK_STATE = ELIGIBLE_NOT_AUTHORIZED
+CURRENT_AUTHORIZED_EXECUTION = NONE
+
+BLOCKING = 0
+REQUIRED_CURRENT = 0
+RESIDUAL declared = 11
+RESIDUAL table rows = 12
+DEFERRED_EVIDENCE = 3
+SECURITY_GATE = 3
+FUTURE_GATE = 1
+
+CURRENT_BLOCKER_COUNT = 0
+```
+
+### Source inconsistency preserved
+
+```text
+CURRENT_ISSUES declares RESIDUAL = 11
+but publishes 12 STS-RESIDUAL-* table rows
+
+Workspace behavior:
+- preserve all 12 published residual rows;
+- do not silently delete or merge a residual;
+- expose the count mismatch in provenance;
+- do not convert the mismatch into execution authority or Security Go.
+```
+
+### M3-02 frozen contract
+
+```text
+principal = auth.uid()
+tenant authority = canonical active corretores + active empresa + canonical tenant role + operation-specific permission
+team authority = same empresa + active team + canonical gestor + operation-specific permission
+individual authority = same empresa + persisted responsibility + operation-specific permission
+platform root = active public.admins role=admin_global + explicit platform operation
+service-only = explicit SERVICE_ONLY_COMMAND + trusted runtime + owner + bounded server-side authorization/proof
+root tenant business access = NO IMPLICIT AUTHORITY
+insufficient/inconsistent evidence = FAIL CLOSED / DENY
+```
+
+### Specialist / execution routing
+
+No M3-03 specialist execution route is current because execution is not authorized.
+
+```text
+STS-M3-03 authorization = REQUIRED FIRST
+specialist destination = RESOLVE AFTER AUTHORIZATION / BOOTSTRAP
+automatic routing = NO
+transport = MANUAL COPY/PASTE only after route resolution
+```
+
+The receiving conversation must resolve FECH.AI live again before acting.
 
 ### Objective integrity
 
@@ -36,96 +137,28 @@ Canonical program objective remains:
 
 > Reach a sellable, operable FECH.AI with a defensible Security Go candidate and a clear path out of the current frontend/backend monolith before year-end, without hiding unresolved risk or performing a big-bang rewrite.
 
-Workspace rule:
+### Current project context
 
 ```text
-OBJECTIVE != ACTIVE_TASK
-PROGRAM -> MILESTONE -> TASK -> SUCCESSOR
+STS-M3 = ACTIVE
+STS-M3-01 = COMPLETE / ACCEPTED / FROZEN
+STS-M3-02 = COMPLETE / ACCEPTED WITH RESIDUALS
+STS-M3-03 = NEXT_ELIGIBLE / NOT_AUTHORIZED
 
-material objective change
--> must exist in the canonical external project
--> must be explicitly approved/versioned there
--> otherwise Workspace reports OBJECTIVE_DRIFT / STATE_INCONSISTENT
+current next task = STS-M3-03 — Privileged RPC Allowlist
+current execution authority = NONE
 ```
 
-### Current journey position
+M3-02 accepted residuals remain downstream obligations, including legacy authority convergence, support-mode implementation, service-only runtime proof, RPC/DML compliance and security assurance.
+
+### Current continuation
 
 ```text
-Issue #141 — Security-to-Scale 2026
--> STS-M2 COMPLETE / ACCEPTED WITH RESIDUALS
--> STS-M3 ACTIVE
-   -> STS-M3-01 COMPLETE / ACCEPTED
-      frozen authority model:
-      auth principal = auth.uid()
-      tenant identity = public.corretores
-      membership = corretores.empresa_id
-      tenant role = corretores.role
-      team = public.times
-      team membership = corretores.time_id
-      team manager = times.gestor_id
-      platform root = active public.admins role=admin_global
-   -> STS-M3-02 NEXT_ELIGIBLE / NOT_AUTHORIZED
+resolve FECH.AI live
+→ consume frozen M3-01 + M3-02 contracts
+→ request separate Product Authority authorization for STS-M3-03
+→ no substantive M3-03 execution before that authorization
 ```
-
-M3-01 residuals remain preserved and do not reopen the accepted task automatically:
-- root dual authority source;
-- team lifecycle legacy relation;
-- criar-usuario authority derivation divergence;
-- implementation target compliance not proven;
-- hostile-client / cross-tenant assurance not proven;
-- AppSec PASS not performed.
-
-### Source-role classification
-
-```text
-CURRENT_STATE
-  = top current FECH.AI semantic authority
-
-PROGRAM_TASK_GRAPH
-  = operational task/milestone/decomposition overlay
-
-WBS STRUCTURE
-  = IDs / labels / order / hours / exit contracts
-
-CURRENT_ISSUES
-  = typed blocker/residual/deferred/gate view
-
-HISTORICAL_LINEAGE
-  = preserved provenance
-  != current authority
-
-EXTERNAL_SNAPSHOT
-  = manual
-  = invalidated by material FECH.AI drift
-```
-
-### Specialist destination
-
-No specialist destination is current for STS-M3-02 because execution is not authorized.
-
-```text
-STS-M3-02 authorization = REQUIRED FIRST
-specialist route = NOT_RESOLVED
-bootstrap = REQUIRED AFTER AUTHORIZATION
-transport = MANUAL COPY/PASTE only when a route is resolved
-automatic routing / send = NO
-```
-
-### Current authority boundary
-
-```text
-STS-M3 ACTIVE != STS-M3-02 execution authority
-CURRENT_AUTHORIZED_EXECUTION = NONE
-
-NO STS-M3-02 execution
-NO V2 implementation
-NO runtime/frontend mutation
-NO Supabase/Auth/data mutation
-NO deploy
-NO Security Go
-```
-
-A new conversation must resolve FECH.AI live again before acting.
 
 ---
 
