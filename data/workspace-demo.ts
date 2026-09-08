@@ -483,7 +483,7 @@ export const workspaceDemo = {
     objectiveSource: "FECH.AI Issue #141 + program-hierarchy BCR",
     objectiveIntegrity: "PRESERVED · no approved objective drift observed",
     objectiveChangePolicy: "Material objective change must be versioned in the canonical project and explicitly approved; otherwise flag OBJECTIVE_DRIFT and do not claim safe continuity.",
-    specialistTransport: "MANUAL COPY/PASTE · Workspace only indicates the destination",
+    specialistTransport: "NOT_RESOLVED · aguarda autorização/bootstrap antes de qualquer destino",
     specialistRouting: [] as SpecialistRoute[],
     lastCompletedMilestone: "STS-M2 — COMPLETE / ACCEPTED WITH IMPLEMENTATION-LIFECYCLE-CALLSITE-RUNTIME-APPSEC RESIDUALS",
     nextProgramMilestone: "STS-M3 — Backend Authority Contract Freeze · ACTIVE",
@@ -750,17 +750,7 @@ export const workspaceDemo = {
       }
     ] satisfies ExecutionItem[],
 
-    active: [
-      {
-        id: "STS-M3-02",
-        label: "Authority contract por contexto",
-        category: "PROGRAM",
-        state: "PLANNED",
-        owner: "Product Authority gate",
-        evidence: "NEXT_ELIGIBLE / NOT_AUTHORIZED. CURRENT_AUTHORIZED_EXECUTION = NONE.",
-        nextAction: "Obter autorização separada da Product Authority para STS-M3-02 READ_ONLY-first antes de qualquer execução."
-      }
-    ] satisfies ExecutionItem[],
+    active: [] satisfies ExecutionItem[],
 
     future: [
       {
