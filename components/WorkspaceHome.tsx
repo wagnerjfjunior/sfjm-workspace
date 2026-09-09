@@ -555,7 +555,6 @@ function NextActionCard({ project }: { project: ExternalProject }) {
   const focusEligibleUnauthorized = isFechai && focusTask ? taskIsEligibleButUnauthorized(focusTask) : false;
   const focusAuthorizedNotInitiated = isFechai && focusTask ? taskIsAuthorizedNotInitiated(focusTask) : false;
   const focusActiveGated = isFechai && focusTask ? taskIsActiveButExecutionGated(focusTask) : false;
-  const focusRebaseline = isFechai && focusTask ? taskRequiresRebaseline(focusTask) : false;
 
   return (
     <article className="commandCard nextActionCard" id="next-action">
@@ -566,7 +565,7 @@ function NextActionCard({ project }: { project: ExternalProject }) {
               <div className="eyebrow">Próxima ação segura</div>
               <h2>{isFechai && focusTask
                 ? focusActiveGated
-                  ? "Selecionar e autorizar o próximo gate material STS-M3"
+                  ? "Continuar o próximo trabalho normal do WBS"
                   : focusTask.label
                 : project.nextSafeAction}</h2>
             </div>
