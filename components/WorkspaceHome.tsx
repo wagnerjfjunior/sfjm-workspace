@@ -349,8 +349,6 @@ function TaskDecompositionPanel({
 
   const renderCanonicalChildNode = (child: DecompositionItem) => {
     const descendants = child.children ?? [];
-    const visibleDescendants = descendants.slice(0, 8);
-    const hiddenDescendantCount = descendants.length - visibleDescendants.length;
 
     return (
       <li className={`decompositionChildNode ${child.state.toLowerCase()}`} key={child.id}>
@@ -367,16 +365,10 @@ function TaskDecompositionPanel({
           <span className="decompositionChildState">{decompositionVisualStateLabel(child)}</span>
         </div>
 
-        {visibleDescendants.length ? (
+        {descendants.length ? (
           <ol className="decompositionNestedChildren" role="list" aria-label={`Subetapas de ${child.id}`}>
-            {visibleDescendants.map((descendant) => renderCanonicalChildNode(descendant))}
+            {descendants.map((descendant) => renderCanonicalChildNode(descendant))}
           </ol>
-        ) : null}
-
-        {hiddenDescendantCount > 0 ? (
-          <div className="decompositionOverflowNote nested">
-            {hiddenDescendantCount} descendentes adicionais não expandidos neste nível
-          </div>
         ) : null}
       </li>
     );
@@ -388,9 +380,6 @@ function TaskDecompositionPanel({
     regionId: string,
     hidden: boolean
   ) => {
-    const visibleChildren = children.slice(0, 8);
-    const hiddenChildCount = children.length - visibleChildren.length;
-
     return (
       <div
         className="decompositionChildrenRegion"
@@ -399,13 +388,8 @@ function TaskDecompositionPanel({
         hidden={hidden}
       >
         <ol className="decompositionChildrenList" role="list">
-          {visibleChildren.map((child) => renderCanonicalChildNode(child))}
+          {children.map((child) => renderCanonicalChildNode(child))}
         </ol>
-        {hiddenChildCount > 0 ? (
-          <div className="decompositionOverflowNote">
-            {hiddenChildCount} subetapas adicionais não expandidas neste nível
-          </div>
-        ) : null}
       </div>
     );
   };
@@ -891,6 +875,7 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
   const remaining = wbs.totalCriticalHours - completedHours;
 
   const selectedCompletedTasks = selectedMilestone.tasks.filter(taskIsFinalClosed).length;
+  const selectedRebaselineRequired = selectedMilestone.tasks.some(taskRequiresRebaseline);
   const selectedProgress = selectedMilestone.tasks.length
     ? (selectedCompletedTasks / selectedMilestone.tasks.length) * 100
     : 0;
@@ -959,12 +944,14 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
         </div>
 
         <div className="selectedBlockProgressMeta">
-          <span>{selectedCompletedTasks}/{selectedMilestone.tasks.length} tarefas concluídas</span>
-          <strong>{selectedProgress.toFixed(0)}%</strong>
+          <span>{selectedCompletedTasks}/{selectedMilestone.tasks.length} tarefas final-fechadas no nível principal</span>
+          <strong>{selectedRebaselineRequired ? "REBASELINE" : `${selectedProgress.toFixed(0)}%`}</strong>
         </div>
-        <div className="currentBlockProgress" aria-label={`${selectedProgress.toFixed(0)}% das tarefas do bloco selecionado concluídas`}>
-          <span style={{ width: `${selectedProgress}%` }} />
-        </div>
+        {!selectedRebaselineRequired ? (
+          <div className="currentBlockProgress" aria-label={`${selectedProgress.toFixed(0)}% das tarefas do bloco selecionado concluídas`}>
+            <span style={{ width: `${selectedProgress}%` }} />
+          </div>
+        ) : null}
 
         <div className="selectedBlockListLabel">
           <span>Nível principal</span>
