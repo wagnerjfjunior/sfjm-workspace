@@ -1002,7 +1002,6 @@ export const workspaceDemo = {
       { date: "8 Sep 2026", text: "PR #205/#206: STS-M3-04-01 aplicada, validada e aceita com residuals", kind: "REMEDIATION" },
       { date: "8 Sep 2026", text: "PR #207/#208: STS-M3-04-02 aplicada, catalog validation PASS e aceita com residuals", kind: "REMEDIATION" },
       { date: "8 Sep 2026", text: "PR #209: Security Go assurance program + relationship catalogs publicados; M3-04 expandida para 10 children e REBASELINE_REQUIRED", kind: "PROGRAM" },
-      { date: "8 Sep 2026", text: "PR #204 mergeada: STS-M3-03 COMPLETE / ACCEPTED WITH RESIDUALS; STS-M3-04 AUTHORIZED / NOT_INITIATED", kind: "PROGRAM" },
       { date: "8 Sep 2026", text: "Vercel branch Preview mais recente = READY; tentativa anterior bloqueada por quota tratada como evento transitório/superseded", kind: "EVIDENCE" }
     ] satisfies TimelineItem[]
 
@@ -1174,6 +1173,6 @@ export const workspaceDemo = {
     { label: "WBS structure", value: "832h baseline · M3-04 REBASELINE_REQUIRED", badge: true },
     { label: "Vercel Preview", value: "READY · latest branch preview", badge: true },
     { label: "SES main / routing", value: "61cee7b3… · manual", badge: true },
-    { label: "Snapshot", value: "Manual · validated 8 Sep · not live-synced", badge: true }
+    { label: "Snapshot", value: "Manual · validated 9 Sep · not live-synced", badge: true }
   ] satisfies SourceRow[]
 };
