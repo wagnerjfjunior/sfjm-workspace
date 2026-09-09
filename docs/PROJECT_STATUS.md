@@ -156,6 +156,20 @@ STS-M3-04
 └─ STS-M3-04-10 DEFINED_NOT_AUTHORIZED
 ```
 
+
+## SUPERSEDED EXACT-HEAD AUDIT CUSTODY
+
+The following evidence is historical custody only and must not be interpreted as validation of the current PR #36 head:
+
+```text
+prior audited head = 62bafb362d12d2173a10266ecc0bafacd2d0a607
+prior audit disposition = SUPERSEDED BY MATERIAL FECH.AI DRIFT
+prior branch Preview state = READY
+current exact-head deployment validation at refresh start = NOT_ASSERTED UNTIL RECHECKED
+```
+
+Any new commit on PR #36 invalidates prior exact-head review custody and requires a fresh exact-head review/deployment check.
+
 ---
 
 ## HISTORICAL LINEAGE — DO NOT USE AS CURRENT AUTHORITY
