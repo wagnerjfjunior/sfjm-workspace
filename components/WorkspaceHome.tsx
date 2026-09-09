@@ -70,6 +70,16 @@ function taskRequiresRebaseline(task: WbsTask) {
   return task.note?.includes("REBASELINE_REQUIRED") ?? false;
 }
 
+function taskHasWorkspaceEstimate(task: WbsTask) {
+  return task.effortSource === "WORKSPACE_ESTIMATE" || task.effortSource === "DERIVED_FROM_CHILDREN";
+}
+
+function taskEffortLabel(task: WbsTask) {
+  if (taskHasWorkspaceEstimate(task)) return `${task.hours}h est.`;
+  if (taskRequiresRebaseline(task)) return "REBASELINE";
+  return `${task.hours}h`;
+}
+
 function taskHasFinalClosurePending(task: WbsTask) {
   return task.note?.includes("FINAL_CLOSURE_PENDING") ?? false;
 }
@@ -231,14 +241,12 @@ function ProjectHeader({
   const isFechai = project.name === FECHAI;
   const programProgress = calculateAcceptedProgramProgress(workspaceDemo.fechaiProgram.milestones);
   const wbs = workspaceDemo.fechaiWbs;
-  const criticalHours = wbs.milestones.reduce((total, milestone) => total + milestone.hours, 0);
-  const completedHours = wbs.milestones.reduce(
-    (total, milestone) =>
-      total + milestone.tasks.filter(taskIsFinalClosed).reduce((sum, task) => sum + task.hours, 0),
-    0
-  );
-  const wbsPercent = criticalHours ? (completedHours / criticalHours) * 100 : 0;
-  const wbsRebaselineRequired = wbs.note.includes("REBASELINE_REQUIRED");
+  const criticalHours = wbs.totalCriticalHours;
+  const completedHours = wbs.forecastCompletedHours;
+  const wbsPercent = wbs.forecastPercent;
+  const activeMilestone = findActiveMilestone(wbs.milestones);
+  const activeMilestoneCompleted = activeMilestone?.completedHours ?? 0;
+  const activeMilestonePercent = activeMilestone?.hours ? (activeMilestoneCompleted / activeMilestone.hours) * 100 : 0;
 
   return (
     <section className="projectHero" id="overview">
@@ -267,22 +275,20 @@ function ProjectHeader({
         </div>
         <div className="heroMetric progressMetric">
           <span>Conclusão total</span>
-          <strong>{isFechai ? (wbsRebaselineRequired ? "REBASELINE" : `${wbsPercent.toFixed(1)}%`) : "—"}</strong>
-          {isFechai && !wbsRebaselineRequired ? (
-            <div className="totalProgressTrack" aria-label={`${wbsPercent.toFixed(1)}% do WBS crítico concluído`}>
+          <strong>{isFechai ? `${wbsPercent.toFixed(1)}% EST.` : "—"}</strong>
+          {isFechai ? (
+            <div className="totalProgressTrack" aria-label={`${wbsPercent.toFixed(1)}% do forecast crítico estimado concluído`}>
               <span style={{ width: `${wbsPercent}%` }} />
             </div>
           ) : null}
           <small>{isFechai
-            ? wbsRebaselineRequired
-              ? `${wbs.totalCriticalHours}h = baseline histórica · progresso agregado atual não calculado`
-              : `${completedHours}h de ${criticalHours}h`
+            ? `${completedHours}h de ${criticalHours}h forecast · baseline histórica ${wbs.historicalCriticalHours}h`
             : "Sem WBS canônica suficiente no snapshot"}</small>
         </div>
         <div className="heroMetric">
           <span>Bloco atual</span>
           <strong>{isFechai ? wbs.currentPackage : "Não modelado"}</strong>
-          <small>{isFechai ? (wbsRebaselineRequired ? "Percentual macro suspenso durante o rebaseline" : `${programProgress.toFixed(2)}% de gates aceitos no macro programa`) : "Sem inferência automática"}</small>
+          <small>{isFechai ? `${activeMilestonePercent.toFixed(1)}% do ${activeMilestone?.id ?? "bloco"} por esforço estimado · macro gates históricos ${programProgress.toFixed(2)}%` : "Sem inferência automática"}</small>
         </div>
         <div className="heroMetric sourceMetric">
           <span>Canônico externo</span>
@@ -360,7 +366,9 @@ function TaskDecompositionPanel({
               <strong>{child.id}</strong>
               <span>{child.label}</span>
             </span>
-            <small className="decompositionChildCanonicalStatus">{child.status}</small>
+            <small className="decompositionChildCanonicalStatus">
+              {child.status}{child.hours ? ` · ${child.hours}h ${child.effortSource === "WORKSPACE_ESTIMATE" ? "EST." : ""}${child.complexity ? ` · ${child.complexity}` : ""}` : ""}
+            </small>
           </span>
           <span className="decompositionChildState">{decompositionVisualStateLabel(child)}</span>
         </div>
@@ -492,7 +500,9 @@ function TaskDecompositionPanel({
                           {decompositionVisualStateLabel(item)}
                         </span>
                       </span>
-                      <small className="decompositionCanonicalStatus">{item.status}</small>
+                      <small className="decompositionCanonicalStatus">
+                        {item.status}{item.hours ? ` · ${item.hours}h ${item.effortSource === "WORKSPACE_ESTIMATE" ? "EST." : ""}${item.complexity ? ` · ${item.complexity}` : ""}` : ""}
+                      </small>
                     </span>
                   </button>
 
@@ -513,7 +523,9 @@ function TaskDecompositionPanel({
                     <span className={`decompositionStatusPill ${item.state.toLowerCase()}`}>
                       {decompositionVisualStateLabel(item)}
                     </span>
-                    <small className="decompositionCanonicalStatus">{item.status}</small>
+                    <small className="decompositionCanonicalStatus">
+                      {item.status}{item.hours ? ` · ${item.hours}h ${item.effortSource === "WORKSPACE_ESTIMATE" ? "EST." : ""}${item.complexity ? ` · ${item.complexity}` : ""}` : ""}
+                    </small>
                   </span>
                 </div>
               )}
@@ -574,7 +586,7 @@ function NextActionCard({ project }: { project: ExternalProject }) {
               <p className="safeSequence" title={program.nextSafeAction}>{project.nextSafeAction}</p>
               <div className="actionFacts">
                 <div><span>Bloco</span><strong>{operationalMilestone.id}</strong></div>
-                <div><span>Tarefa</span><strong>{focusTask.id} · {focusRebaseline ? "REBASELINE" : `${focusTask.hours}h`}</strong></div>
+                <div><span>Tarefa</span><strong>{focusTask.id} · {taskEffortLabel(focusTask)}</strong></div>
                 <div><span>Situação</span><strong>{taskStateLabel(focusTask, true)}</strong></div>
                 {requiredRoutes.length ? (
                   <div>
@@ -615,6 +627,7 @@ function NextActionCard({ project }: { project: ExternalProject }) {
 
 function RisksCard({ project }: { project: ExternalProject }) {
   const issues = project.issues ?? [];
+  const currentRestrictions = project.currentRestrictions ?? [];
 
   if (!issues.length) {
     const blockers = project.blockers ?? [];
@@ -643,16 +656,21 @@ function RisksCard({ project }: { project: ExternalProject }) {
     (issue) => issue.class === "BLOCKING" || issue.class === "REQUIRED_CURRENT"
   );
   const issueValidationAnchors = Array.from(
-    new Set(issues.map((issue) => issue.sourceRef).filter(Boolean))
+    new Set([...issues, ...currentRestrictions].map((issue) => issue.sourceRef).filter(Boolean))
   );
   const issueSources = Array.from(
-    new Set(issues.map((issue) => issue.source).filter(Boolean))
+    new Set([...issues, ...currentRestrictions].map((issue) => issue.source).filter(Boolean))
   );
 
   const groups = [
     {
+      key: "current",
+      label: "Restrições materiais atuais · main",
+      items: currentRestrictions
+    },
+    {
       key: "blockers",
-      label: "Bloqueios atuais",
+      label: "Bloqueios tipados · CURRENT_ISSUES 08/09",
       items: currentBlockers
     },
     {
@@ -679,12 +697,12 @@ function RisksCard({ project }: { project: ExternalProject }) {
       <div className="cardHeading compact">
         <div>
           <div className="eyebrow">Problemas / restrições</div>
-          <h2>{currentBlockers.length} bloqueios na taxonomia publicada</h2>
+          <h2>{currentBlockers.length} bloqueios tipados · {currentRestrictions.length} restrições materiais atuais</h2>
           <small className="riskFreshness">
-            Proveniência por item · estado material observado em {project.observedAt} · sem live sync
+            CURRENT_ISSUES continua em 08/09; restrições atuais foram reconciliadas com {project.observedAt}
           </small>
         </div>
-        <span className="countBadge">{currentBlockers.length}</span>
+        <span className="countBadge">{currentRestrictions.length}</span>
       </div>
 
       <div className="issueSummaryGrid">
@@ -782,7 +800,7 @@ function WbsFocusTask({
             <span className="taskSplitChevron" aria-hidden="true">{expanded ? "⌄" : "›"}</span>
           </button>
         ) : null}
-        <b>{taskRequiresRebaseline(task) ? "REBASELINE" : `${task.hours}h`}</b>
+        <b>{taskEffortLabel(task)}</b>
       </div>
 
       {decomposition ? (
@@ -813,8 +831,8 @@ function WbsMilestoneTab({
   onSelect: () => void;
 }) {
   const completed = milestone.tasks.filter(taskIsFinalClosed).length;
-  const milestoneRebaseline = milestone.tasks.some(taskRequiresRebaseline);
   const effortShare = totalHours ? (milestone.hours / totalHours) * 100 : 0;
+  const effortSuffix = milestone.effortSource === "MIXED_ESTIMATE" ? " est." : "";
   const operationalLabel =
     milestone.state === "COMPLETE" ? "Concluído" :
     milestone.state === "ACTIVE" ? "Atual" :
@@ -832,7 +850,7 @@ function WbsMilestoneTab({
     >
       <div>
         <span>{milestone.id}</span>
-        <b>{milestoneRebaseline ? "REBASELINE" : `${milestone.hours}h · ${effortShare.toFixed(2)}%`}</b>
+        <b>{milestone.hours}h{effortSuffix} · {effortShare.toFixed(2)}%</b>
       </div>
       <strong>{milestone.label}</strong>
       <div className="milestoneMetaLine">
@@ -863,21 +881,15 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
     operationalTasks.find((task) => task.note?.includes("NEXT GATE")) ??
     operationalTasks.find((task) => task.state !== "COMPLETE");
 
-  const completedHours = wbs.milestones.reduce(
-    (total, milestone) =>
-      total +
-      milestone.tasks
-        .filter(taskIsFinalClosed)
-        .reduce((sum, task) => sum + task.hours, 0),
-    0
-  );
-  const programRebaselineRequired = wbs.note.includes("REBASELINE_REQUIRED");
-  const remaining = wbs.totalCriticalHours - completedHours;
+  const completedHours = wbs.forecastCompletedHours;
+  const remaining = wbs.forecastRemainingHours;
 
   const selectedCompletedTasks = selectedMilestone.tasks.filter(taskIsFinalClosed).length;
-  const selectedRebaselineRequired = selectedMilestone.tasks.some(taskRequiresRebaseline);
-  const selectedProgress = selectedMilestone.tasks.length
-    ? (selectedCompletedTasks / selectedMilestone.tasks.length) * 100
+  const selectedCompletedHours = selectedMilestone.completedHours ?? selectedMilestone.tasks
+    .filter(taskIsFinalClosed)
+    .reduce((sum, task) => sum + task.hours, 0);
+  const selectedProgress = selectedMilestone.hours
+    ? (selectedCompletedHours / selectedMilestone.hours) * 100
     : 0;
 
   const selectedIsActive = Boolean(activeMilestone && selectedMilestone.id === activeMilestone.id);
@@ -907,9 +919,9 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
           <h2>Tarefas principais do bloco e decomposição sob demanda</h2>
         </div>
         <div className="wbsTotals">
-          <span><small>Concluído</small><strong>{programRebaselineRequired ? "POR TAREFA" : `${completedHours}h`}</strong></span>
-          <span><small>Restante</small><strong>{programRebaselineRequired ? "REBASELINE" : `${remaining}h`}</strong></span>
-          <span><small>Baseline</small><strong>{programRebaselineRequired ? `${wbs.totalCriticalHours}h HIST.` : `${wbs.totalCriticalHours}h`}</strong></span>
+          <span><small>Concluído</small><strong>{completedHours}h</strong></span>
+          <span><small>Restante</small><strong>{remaining}h</strong></span>
+          <span><small>Forecast</small><strong>{wbs.totalCriticalHours}h EST.</strong></span>
         </div>
       </div>
 
@@ -944,14 +956,12 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
         </div>
 
         <div className="selectedBlockProgressMeta">
-          <span>{selectedCompletedTasks}/{selectedMilestone.tasks.length} tarefas final-fechadas no nível principal</span>
-          <strong>{selectedRebaselineRequired ? "REBASELINE" : `${selectedProgress.toFixed(0)}%`}</strong>
+          <span>{selectedCompletedHours}h / {selectedMilestone.hours}h · {selectedCompletedTasks}/{selectedMilestone.tasks.length} tarefas-mãe final-fechadas</span>
+          <strong>{selectedProgress.toFixed(1)}%{selectedMilestone.effortSource === "MIXED_ESTIMATE" ? " EST." : ""}</strong>
         </div>
-        {!selectedRebaselineRequired ? (
-          <div className="currentBlockProgress" aria-label={`${selectedProgress.toFixed(0)}% das tarefas do bloco selecionado concluídas`}>
-            <span style={{ width: `${selectedProgress}%` }} />
-          </div>
-        ) : null}
+        <div className="currentBlockProgress" aria-label={`${selectedProgress.toFixed(1)}% do esforço do bloco selecionado concluído`}>
+          <span style={{ width: `${selectedProgress}%` }} />
+        </div>
 
         <div className="selectedBlockListLabel">
           <span>Nível principal</span>
@@ -978,7 +988,7 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
       </section>
 
       <div className="wbsFootnote">
-        Regra de visualização: o WBS mostra sempre as tarefas de primeiro nível do bloco. Filhos canônicos só aparecem por expansão manual da tarefa-mãe e permanecem recolhidos por padrão. O Workspace não cria tarefas; apenas consome a hierarquia publicada pelo projeto. {activeMilestone ? `O bloco operacional atual continua sendo ${activeMilestone.id}.` : `Nenhum bloco tem execução ativa; ${displayMilestone.id} é apenas o próximo elegível.`}
+        Regra de visualização: o WBS mostra sempre as tarefas de primeiro nível do bloco. Filhos canônicos só aparecem por expansão manual da tarefa-mãe. O Workspace não cria tarefas. Horas marcadas “est.” são forecast derivado por complexidade (S=8h, M=16h, L=24h, XL=32h); ${wbs.historicalCriticalHours}h permanece a baseline histórica do FECH.AI. {activeMilestone ? `O bloco operacional atual continua sendo ${activeMilestone.id}.` : `Nenhum bloco tem execução ativa; ${displayMilestone.id} é apenas o próximo elegível.`}
       </div>
     </article>
   );
