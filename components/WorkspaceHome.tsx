@@ -532,7 +532,6 @@ function NextActionCard({ project }: { project: ExternalProject }) {
     operationalTasks.find((task) => task.state !== "COMPLETE");
   const requiredRoutes = program.specialistRouting.filter((route) => route.requirement === "REQUIRED");
   const conditionalRoute = program.specialistRouting.find((route) => route.requirement === "CONDITIONAL");
-  const decomposition = findTaskDecomposition(project, focusTask?.id);
   const focusEligibleUnauthorized = isFechai && focusTask ? taskIsEligibleButUnauthorized(focusTask) : false;
   const focusAuthorizedNotInitiated = isFechai && focusTask ? taskIsAuthorizedNotInitiated(focusTask) : false;
   const focusActiveGated = isFechai && focusTask ? taskIsActiveButExecutionGated(focusTask) : false;
@@ -540,7 +539,7 @@ function NextActionCard({ project }: { project: ExternalProject }) {
 
   return (
     <article className="commandCard nextActionCard" id="next-action">
-      <div className={`nextActionLayout ${decomposition ? "hasDecomposition" : ""}`}>
+      <div className="nextActionLayout">
         <div className="nextActionPrimary">
           <div className="cardHeading">
             <div>
@@ -601,7 +600,6 @@ function NextActionCard({ project }: { project: ExternalProject }) {
           )}
         </div>
 
-        {decomposition ? <TaskDecompositionPanel decomposition={decomposition} instanceId="next-action" /> : null}
       </div>
     </article>
   );
@@ -897,7 +895,7 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
       <div className="sectionHeader">
         <div>
           <div className="eyebrow">WBS / effort</div>
-          <h2>Bloco, tarefa e caminho operacional</h2>
+          <h2>Tarefas principais do bloco e decomposição sob demanda</h2>
         </div>
         <div className="wbsTotals">
           <span><small>Concluído</small><strong>{completedHours}h</strong></span>
@@ -944,6 +942,10 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
           <span style={{ width: `${selectedProgress}%` }} />
         </div>
 
+        <div className="selectedBlockListLabel">
+          <span>Nível principal</span>
+          <strong>{selectedMilestone.tasks.length} tarefas-mãe · subtarefas recolhidas por padrão</strong>
+        </div>
         <ul className="focusTaskList selectedTaskList">
           {selectedMilestone.tasks.map((task) => {
             const decomposition = findTaskDecomposition(project, task.id);
@@ -965,7 +967,7 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
       </section>
 
       <div className="wbsFootnote">
-        Seleção é apenas navegação visual. {activeMilestone ? `O bloco operacional atual continua sendo ${activeMilestone.id}.` : `Nenhum bloco tem execução ativa; ${displayMilestone.id} é apenas o próximo elegível.`} Horas não são timesheet, confiança ou Security Go.
+        Regra de visualização: o WBS mostra sempre as tarefas de primeiro nível do bloco. Filhos canônicos só aparecem por expansão manual da tarefa-mãe e permanecem recolhidos por padrão. O Workspace não cria tarefas; apenas consome a hierarquia publicada pelo projeto. {activeMilestone ? `O bloco operacional atual continua sendo ${activeMilestone.id}.` : `Nenhum bloco tem execução ativa; ${displayMilestone.id} é apenas o próximo elegível.`}
       </div>
     </article>
   );
