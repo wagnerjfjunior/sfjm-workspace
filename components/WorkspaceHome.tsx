@@ -65,6 +65,14 @@ function taskRequiresRebaseline(task: WbsTask) {
   return task.note?.includes("REBASELINE_REQUIRED") ?? false;
 }
 
+function taskHasFinalClosurePending(task: WbsTask) {
+  return task.note?.includes("FINAL_CLOSURE_PENDING") ?? false;
+}
+
+function taskIsFinalClosed(task: WbsTask) {
+  return task.state === "COMPLETE" && !taskHasFinalClosurePending(task);
+}
+
 function taskIsActiveButExecutionGated(task: WbsTask) {
   const note = task.note ?? "";
   return task.state === "ACTIVE" && (
@@ -75,6 +83,7 @@ function taskIsActiveButExecutionGated(task: WbsTask) {
 }
 
 function taskStateLabel(task: WbsTask, isFocus: boolean) {
+  if (taskHasFinalClosurePending(task)) return "Baseline aceito · fechamento final pendente";
   if (task.state === "COMPLETE") return "Concluída";
   if (taskIsActiveButExecutionGated(task)) return "Ativa · aguardando próximo gate";
   if (task.state === "ACTIVE") return "Em execução";
@@ -88,6 +97,7 @@ function taskStateLabel(task: WbsTask, isFocus: boolean) {
 }
 
 function taskStateIcon(task: WbsTask, isFocus: boolean) {
+  if (taskHasFinalClosurePending(task)) return "◐";
   if (task.state === "COMPLETE") return "✓";
   if (taskIsActiveButExecutionGated(task)) return "Ⅱ";
   if (taskIsEligibleButUnauthorized(task) || taskIsPlannedButUnauthorized(task)) return "⊘";
@@ -217,7 +227,7 @@ function ProjectHeader({
   const criticalHours = wbs.milestones.reduce((total, milestone) => total + milestone.hours, 0);
   const completedHours = wbs.milestones.reduce(
     (total, milestone) =>
-      total + milestone.tasks.filter((task) => task.state === "COMPLETE").reduce((sum, task) => sum + task.hours, 0),
+      total + milestone.tasks.filter(taskIsFinalClosed).reduce((sum, task) => sum + task.hours, 0),
     0
   );
   const wbsPercent = criticalHours ? (completedHours / criticalHours) * 100 : 0;
@@ -250,18 +260,22 @@ function ProjectHeader({
         </div>
         <div className="heroMetric progressMetric">
           <span>Conclusão total</span>
-          <strong>{isFechai ? `${wbsPercent.toFixed(1)}%` : "—"}</strong>
-          {isFechai ? (
+          <strong>{isFechai ? (wbsRebaselineRequired ? "REBASELINE" : `${wbsPercent.toFixed(1)}%`) : "—"}</strong>
+          {isFechai && !wbsRebaselineRequired ? (
             <div className="totalProgressTrack" aria-label={`${wbsPercent.toFixed(1)}% do WBS crítico concluído`}>
               <span style={{ width: `${wbsPercent}%` }} />
             </div>
           ) : null}
-          <small>{isFechai ? `${completedHours}h de ${criticalHours}h da baseline estrutural${wbsRebaselineRequired ? " · M3-04 REBASELINE_REQUIRED" : ""}` : "Sem WBS canônica suficiente no snapshot"}</small>
+          <small>{isFechai
+            ? wbsRebaselineRequired
+              ? `${wbs.totalCriticalHours}h = baseline histórica · progresso agregado atual não calculado`
+              : `${completedHours}h de ${criticalHours}h`
+            : "Sem WBS canônica suficiente no snapshot"}</small>
         </div>
         <div className="heroMetric">
           <span>Bloco atual</span>
           <strong>{isFechai ? wbs.currentPackage : "Não modelado"}</strong>
-          <small>{isFechai ? `${programProgress.toFixed(2)}% de gates aceitos no macro programa` : "Sem inferência automática"}</small>
+          <small>{isFechai ? (wbsRebaselineRequired ? "Percentual macro suspenso durante o rebaseline" : `${programProgress.toFixed(2)}% de gates aceitos no macro programa`) : "Sem inferência automática"}</small>
         </div>
         <div className="heroMetric sourceMetric">
           <span>Canônico externo</span>
@@ -804,7 +818,8 @@ function WbsMilestoneTab({
   totalHours: number;
   onSelect: () => void;
 }) {
-  const completed = milestone.tasks.filter((task) => task.state === "COMPLETE").length;
+  const completed = milestone.tasks.filter(taskIsFinalClosed).length;
+  const milestoneRebaseline = milestone.tasks.some(taskRequiresRebaseline);
   const effortShare = totalHours ? (milestone.hours / totalHours) * 100 : 0;
   const operationalLabel =
     milestone.state === "COMPLETE" ? "Concluído" :
@@ -823,7 +838,7 @@ function WbsMilestoneTab({
     >
       <div>
         <span>{milestone.id}</span>
-        <b>{milestone.hours}h · {effortShare.toFixed(2)}%</b>
+        <b>{milestoneRebaseline ? "REBASELINE" : `${milestone.hours}h · ${effortShare.toFixed(2)}%`}</b>
       </div>
       <strong>{milestone.label}</strong>
       <div className="milestoneMetaLine">
@@ -858,15 +873,14 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
     (total, milestone) =>
       total +
       milestone.tasks
-        .filter((task) => task.state === "COMPLETE")
+        .filter(taskIsFinalClosed)
         .reduce((sum, task) => sum + task.hours, 0),
     0
   );
+  const programRebaselineRequired = wbs.note.includes("REBASELINE_REQUIRED");
   const remaining = wbs.totalCriticalHours - completedHours;
 
-  const selectedCompletedTasks = selectedMilestone.tasks.filter(
-    (task) => task.state === "COMPLETE"
-  ).length;
+  const selectedCompletedTasks = selectedMilestone.tasks.filter(taskIsFinalClosed).length;
   const selectedProgress = selectedMilestone.tasks.length
     ? (selectedCompletedTasks / selectedMilestone.tasks.length) * 100
     : 0;
@@ -898,9 +912,9 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
           <h2>Tarefas principais do bloco e decomposição sob demanda</h2>
         </div>
         <div className="wbsTotals">
-          <span><small>Concluído</small><strong>{completedHours}h</strong></span>
-          <span><small>Restante</small><strong>{remaining}h</strong></span>
-          <span><small>Total</small><strong>{wbs.totalCriticalHours}h</strong></span>
+          <span><small>Concluído</small><strong>{programRebaselineRequired ? "POR TAREFA" : `${completedHours}h`}</strong></span>
+          <span><small>Restante</small><strong>{programRebaselineRequired ? "REBASELINE" : `${remaining}h`}</strong></span>
+          <span><small>Baseline</small><strong>{programRebaselineRequired ? `${wbs.totalCriticalHours}h HIST.` : `${wbs.totalCriticalHours}h`}</strong></span>
         </div>
       </div>
 
