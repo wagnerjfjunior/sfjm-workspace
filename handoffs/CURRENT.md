@@ -87,6 +87,39 @@ THE NEXT MATERIAL STS-M3 GATE
 
 Automatic selection of STS-M3-04-03 is explicitly NO.
 
+### Workspace WBS presentation contract
+
+```text
+TASK DEFINITION / HIERARCHY AUTHORITY = FECH.AI canonical repository only
+WORKSPACE MAY CREATE TASKS = NO
+
+MILESTONE VIEW =
+show immediate canonical children only
+
+EXAMPLE STS-M3 =
+STS-M3-01
+STS-M3-02
+STS-M3-03
+STS-M3-04
+STS-M3-05
+STS-M3-06
+
+DECOMPOSITION =
+collapsed by default
+manual expansion from parent row
+recursive when canonical descendants exist
+never flattened into the main WBS list
+
+NEXT SAFE ACTION CARD =
+no task-tree expansion
+no recursive child dump
+
+WORKSPACE RESPONSIBILITY =
+presentation / navigation / continuity semantics only
+```
+
+A newly published FECH.AI child may be consumed under its canonical parent, but must not replace, hide or flatten the parent-level WBS view.
+
 ### WBS / effort integrity
 
 ```text
