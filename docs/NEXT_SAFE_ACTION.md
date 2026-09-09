@@ -1,20 +1,17 @@
 # SFJM Workspace — Current Next Safe Action
 
-## CURRENT AUTHORITY — MANUAL DERIVED SNAPSHOT — 2026-09-08
+## CURRENT AUTHORITY — MANUAL DERIVED SNAPSHOT — 2026-09-09
 
 ```text
 Workspace role = DERIVED VISUALIZATION / CONTINUITY ONLY
-Workspace canonical main = 1769d2407550330c4a6500054a35889445a45ab8
-PR #34 = DRAFT / refresh candidate / NOT YET CANONICAL
-prior audited head = 62bafb362d12d2173a10266ecc0bafacd2d0a607 / SUPERSEDED BY MATERIAL FECH.AI DRIFT
-current candidate head = RESOLVE LIVE BEFORE REVIEW/MERGE
+Workspace canonical main = 6a838a1ecdf1a21022f73e5382129f0a748db585
+refresh candidate = PR #36 / DRAFT / NOT YET CANONICAL
+candidate exact head = RESOLVE LIVE BEFORE REVIEW/MERGE
 exact-head audit custody = ANY HEAD CHANGE INVALIDATES PRIOR AUDIT
-Vercel latest branch Preview prior to this refresh = READY
-current exact-head deployment validation = NOT_ASSERTED UNTIL RECHECKED
 
-FECH.AI canonical main observed live = 26659c4bd450d5068e6eba311799f16465447317
-FECH.AI material decision anchor = ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be
-FECH.AI lifecycle = PR #204 MERGED / STS-M3-03 accepted / STS-M3-04 authorized not initiated
+FECH.AI canonical main observed live = ac20a30fea9095f036d8d466e83794432d58ca89
+FECH.AI CURRENT_ISSUES decision anchor = ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be
+FECH.AI lifecycle = PR #209 MERGED / Security Go assurance program + expanded STS-M3-04 scope
 
 current execution program = Issue #141 — Security-to-Scale 2026
 
@@ -27,16 +24,17 @@ next-action source = docs/sfjm/NEXT_SAFE_ACTION.md
 OBJECTIVE_INTEGRITY = PRESERVED
 
 STS-M2 = COMPLETE / ACCEPTED WITH RESIDUALS
-DATABASE_STRATEGY = V2_STRANGLER / SAME_DATABASE_FIRST
-
 STS-M3 = ACTIVE
 STS-M3-01 = COMPLETE / ACCEPTED / FROZEN
 STS-M3-02 = COMPLETE / ACCEPTED WITH RESIDUALS
 STS-M3-03 = COMPLETE / ACCEPTED WITH RESIDUALS
-STS-M3-04 = AUTHORIZED / NOT_INITIATED
 
-CURRENT_AUTHORIZED_EXECUTION = STS-M3-04_TASK_AUTHORIZED_NOT_STARTED
-CURRENT_BLOCKER_COUNT = 0
+STS-M3-04 = ACTIVE / SCOPE_EXPANDED / REBASELINE_REQUIRED
+STS-M3-04-01 = COMPLETE / ACCEPTED WITH RESIDUALS
+STS-M3-04-02 = COMPLETE / ACCEPTED WITH RESIDUALS
+STS-M3-04-03..10 = DEFINED_NOT_AUTHORIZED
+
+CURRENT_AUTHORIZED_TECHNICAL_EXECUTION = NONE
 SECURITY_GO = NOT_GRANTED
 
 SNAPSHOT = MANUAL / NOT LIVE-SYNCED
@@ -51,101 +49,96 @@ Issue #141 — Security-to-Scale 2026
   → STS-M3-01 COMPLETE / ACCEPTED / FROZEN
   → STS-M3-02 COMPLETE / ACCEPTED WITH RESIDUALS
   → STS-M3-03 COMPLETE / ACCEPTED WITH RESIDUALS
-       public routine universe = 160
-       privileged candidate universe = 49
-       candidate rows disposed = 49 / 49
-       service-only commands mapped = 2 / 2
-       allowlist completeness = PROVEN TO ACCEPTED BOUNDED STANDARD
-  → STS-M3-04 AUTHORIZED / NOT_INITIATED
-       Redução de DML sensível direto
+  → STS-M3-04 ACTIVE / SCOPE_EXPANDED / REBASELINE_REQUIRED
+       ├─ STS-M3-04-01 COMPLETE / ACCEPTED WITH RESIDUALS
+       ├─ STS-M3-04-02 COMPLETE / ACCEPTED WITH RESIDUALS
+       └─ STS-M3-04-03..10 DEFINED_NOT_AUTHORIZED
 ```
 
 ### Current authority boundary
 
 ```text
-M3-04 task authorization != M3-04 initiated
-M3-04 authorization != blanket mutation authority
+M3-04 ACTIVE != current technical execution authority
 
-NO blanket SQL / DDL / DML mutation
+CURRENT_AUTHORIZED_TECHNICAL_EXECUTION = NONE
+
+NO automatic M3-04-03 selection
+NO automatic M3-04 closure
+NO automatic M3-05 execution
+
+NO runtime/frontend mutation
+NO Supabase/Auth/data mutation
+NO SQL / DDL / DML
 NO migration execution
-NO blanket RLS / policy / grant / owner / search_path mutation
-NO function / trigger / RPC / Edge Function mutation
-NO Supabase/Auth/data mutation inferred
-NO deploy / production mutation inferred
-NO STS-M3-05 / STS-M3-06 substantive execution
+NO RLS / policy / grant / owner / search_path mutation
+NO RPC/function/trigger/Edge Function mutation
+NO hostile-client production test
 NO Security Go
 NO commercialization authorization
 ```
 
-### Current issue semantics
+### Current safe continuation
 
 ```text
-source = FECH.AI docs/sfjm/CURRENT_ISSUES.md
-decision/validation anchor = ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be
-
-CURRENT_TASK = STS-M3-04
-CURRENT_TASK_STATE = AUTHORIZED_NOT_INITIATED
-CURRENT_AUTHORIZED_EXECUTION = STS-M3-04_TASK_AUTHORIZED_NOT_STARTED
-
-BLOCKING = 0
-REQUIRED_CURRENT = 0
-RESIDUAL = 12
-DEFERRED_EVIDENCE = 3
-SECURITY_GATE = 3
-FUTURE_GATE = 1
-
-CURRENT_BLOCKER_COUNT = 0
+PRODUCT AUTHORITY MUST SELECT
+AND SEPARATELY AUTHORIZE
+THE NEXT MATERIAL STS-M3 GATE
 ```
 
-M3-03 residual state is now:
+Automatic selection of STS-M3-04-03 is explicitly NO.
+
+### WBS / effort integrity
+
 ```text
-ALLOWLIST_COMPLETE
-IMPLEMENTATION_TARGET_COMPLIANCE_NOT_PROVEN
+832h = structural baseline only
+STS-M3-04 previous 24h estimate = SUPERSEDED FOR CURRENT EFFORT DISPLAY
+STS-M3-04 = REBASELINE_REQUIRED
 ```
 
-Residuals, deferred evidence and gates remain material. They are not silently resolved and are not flattened into blocker count.
+Do not derive a new total or synthetic percentage until the FECH.AI publishes a material rebaseline.
+
+### Current issue freshness
+
+```text
+CURRENT_STATE / NEXT_SAFE_ACTION / PROGRAM_TASK_GRAPH = materially newer at ac20a30fea9095f036d8d466e83794432d58ca89
+CURRENT_ISSUES = typed taxonomy anchored at ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be
+```
+
+The Workspace preserves the typed issue taxonomy but does not let that older issue anchor override newer material state.
 
 ### Specialist / execution routing
 
-M3-04 is authorized but not initiated.
+No specialist route is current because no next technical gate has been selected/authorized.
 
 ```text
-fresh live bootstrap = REQUIRED FIRST
-initial activity = READ_ONLY reconstruction
-specialist destination = RESOLVE DURING BOOTSTRAP
+specialist destination = NOT_RESOLVED
 automatic routing = NO
-blanket mutation authority = NO
+transport = MANUAL only after future authorization/bootstrap
 ```
 
 The receiving conversation must resolve FECH.AI live again before acting.
 
 ## Single next safe action
 
-Resolve FECH.AI `main` live from observed `26659c4bd450d5068e6eba311799f16465447317`.
+Resolve FECH.AI `main` live from observed `ac20a30fea9095f036d8d466e83794432d58ca89`.
 
-If no material invalidator changes the accepted M3-03 state:
-
-```text
-INITIATE STS-M3-04 —
-REDUÇÃO DE DML SENSÍVEL DIRETO
-
-under existing Product Authority task authorization
-after fresh live bootstrap/reconstruction
-```
-
-Initial scope:
+If no material invalidator changes the accepted slice state:
 
 ```text
-READ_ONLY reconstruction of
-- sensitive direct-DML surfaces
-- RLS
-- table grants
-- policies
-- RPC-only boundaries
-- call sites
+PRODUCT AUTHORITY
+SELECT / AUTHORIZE
+THE NEXT MATERIAL STS-M3 GATE
 ```
 
-Do not infer blanket mutation authority from task authorization.
+Explicitly:
+
+```text
+automatic STS-M3-04-03 selection = NO
+automatic STS-M3-04 closure = NO
+automatic STS-M3-05 execution = NO
+```
+
+No technical mutation is authorized by the Workspace refresh itself.
 
 ---
 
