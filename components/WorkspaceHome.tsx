@@ -61,8 +61,22 @@ function taskIsAuthorizedNotInitiated(task: WbsTask) {
     note.includes("AUTHORIZED_NOT_INITIATED");
 }
 
+function taskRequiresRebaseline(task: WbsTask) {
+  return task.note?.includes("REBASELINE_REQUIRED") ?? false;
+}
+
+function taskIsActiveButExecutionGated(task: WbsTask) {
+  const note = task.note ?? "";
+  return task.state === "ACTIVE" && (
+    note.includes("CURRENT_AUTHORIZED_TECHNICAL_EXECUTION = NONE") ||
+    note.includes("NEXT MATERIAL GATE REQUIRES PRODUCT AUTHORITY") ||
+    note.includes("ACTIVE_REBASELINE_REQUIRED")
+  );
+}
+
 function taskStateLabel(task: WbsTask, isFocus: boolean) {
   if (task.state === "COMPLETE") return "Concluída";
+  if (taskIsActiveButExecutionGated(task)) return "Ativa · aguardando próximo gate";
   if (task.state === "ACTIVE") return "Em execução";
   if (taskIsAuthorizedReadOnly(task)) return "Autorizada READ_ONLY · Pronta";
   if (taskIsAuthorizedNotInitiated(task)) return "Autorizada · Não iniciada";
@@ -75,6 +89,7 @@ function taskStateLabel(task: WbsTask, isFocus: boolean) {
 
 function taskStateIcon(task: WbsTask, isFocus: boolean) {
   if (task.state === "COMPLETE") return "✓";
+  if (taskIsActiveButExecutionGated(task)) return "Ⅱ";
   if (taskIsEligibleButUnauthorized(task) || taskIsPlannedButUnauthorized(task)) return "⊘";
   if (taskIsAuthorizedReadOnly(task) || taskIsAuthorizedNotInitiated(task) || isFocus || task.state === "ACTIVE") return "▶";
   return "○";
@@ -206,6 +221,7 @@ function ProjectHeader({
     0
   );
   const wbsPercent = criticalHours ? (completedHours / criticalHours) * 100 : 0;
+  const wbsRebaselineRequired = wbs.note.includes("REBASELINE_REQUIRED");
 
   return (
     <section className="projectHero" id="overview">
@@ -240,7 +256,7 @@ function ProjectHeader({
               <span style={{ width: `${wbsPercent}%` }} />
             </div>
           ) : null}
-          <small>{isFechai ? `${completedHours}h de ${criticalHours}h do WBS crítico` : "Sem WBS canônica suficiente no snapshot"}</small>
+          <small>{isFechai ? `${completedHours}h de ${criticalHours}h da baseline estrutural${wbsRebaselineRequired ? " · M3-04 REBASELINE_REQUIRED" : ""}` : "Sem WBS canônica suficiente no snapshot"}</small>
         </div>
         <div className="heroMetric">
           <span>Bloco atual</span>
@@ -749,7 +765,7 @@ function WbsFocusTask({
             <span className="taskSplitChevron" aria-hidden="true">{expanded ? "⌄" : "›"}</span>
           </button>
         ) : null}
-        <b>{task.hours}h</b>
+        <b>{taskRequiresRebaseline(task) ? "REBASELINE" : `${task.hours}h`}</b>
       </div>
 
       {decomposition ? (
