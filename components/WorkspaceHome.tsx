@@ -61,6 +61,11 @@ function taskIsAuthorizedNotInitiated(task: WbsTask) {
     note.includes("AUTHORIZED_NOT_INITIATED");
 }
 
+function taskIsAuthorizedDeferred(task: WbsTask) {
+  const note = task.note ?? "";
+  return note.includes("AUTHORIZED_DEFERRED");
+}
+
 function taskRequiresRebaseline(task: WbsTask) {
   return task.note?.includes("REBASELINE_REQUIRED") ?? false;
 }
@@ -88,6 +93,7 @@ function taskStateLabel(task: WbsTask, isFocus: boolean) {
   if (taskIsActiveButExecutionGated(task)) return "Ativa · aguardando próximo gate";
   if (task.state === "ACTIVE") return "Em execução";
   if (taskIsAuthorizedReadOnly(task)) return "Autorizada READ_ONLY · Pronta";
+  if (taskIsAuthorizedDeferred(task)) return "Autorizada · Adiada / não é ação atual";
   if (taskIsAuthorizedNotInitiated(task)) return "Autorizada · Não iniciada";
   if (taskIsEligibleButUnauthorized(task)) return "Próxima elegível · Não autorizada";
   if (taskIsPlannedButUnauthorized(task)) return "Planejada · Não autorizada";
@@ -101,6 +107,7 @@ function taskStateIcon(task: WbsTask, isFocus: boolean) {
   if (task.state === "COMPLETE") return "✓";
   if (taskIsActiveButExecutionGated(task)) return "Ⅱ";
   if (taskIsEligibleButUnauthorized(task) || taskIsPlannedButUnauthorized(task)) return "⊘";
+  if (taskIsAuthorizedDeferred(task)) return "Ⅱ";
   if (taskIsAuthorizedReadOnly(task) || taskIsAuthorizedNotInitiated(task) || isFocus || task.state === "ACTIVE") return "▶";
   return "○";
 }
@@ -306,6 +313,9 @@ function decompositionStateLabel(state: ProjectTaskDecomposition["items"][number
 }
 
 function decompositionVisualStateLabel(item: ProjectTaskDecomposition["items"][number]) {
+  if (item.status.includes("AUTHORIZED_DEFERRED")) {
+    return "Autorizado · adiado";
+  }
   if (item.state === "NOT_AUTHORIZED" && item.status.includes("NEXT CANDIDATE")) {
     return "Próxima · Não autorizado";
   }
