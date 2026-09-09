@@ -193,8 +193,8 @@ export const workspaceDemo = {
     {
       name: "FECH.AI",
       kind: "Projeto externo",
-      continuityState: "STS-M2 COMPLETE / ACCEPTED WITH RESIDUALS · STS-M3 ACTIVE · STS-M3-04 ACTIVE / SCOPE_EXPANDED / REBASELINE_REQUIRED · STS-M3-04-01 COMPLETE / ACCEPTED WITH RESIDUALS · STS-M3-04-02 COMPLETE / ACCEPTED WITH RESIDUALS · CURRENT_AUTHORIZED_TECHNICAL_EXECUTION = NONE",
-      nextSafeAction: "Product Authority → selecionar e autorizar separadamente o próximo gate material de STS-M3. automatic STS-M3-04-03 selection = NO; automatic STS-M3-04 closure = NO; automatic STS-M3-05 execution = NO.",
+      continuityState: "STS-M2 COMPLETE / ACCEPTED WITH RESIDUALS · STS-M3 ACTIVE · ZERO-MATERIAL-RESIDUAL WBS CANONICAL · M3-03 FINAL_CLOSURE_PENDING · M3-04 ACTIVE / REBASELINE_REQUIRED · M3-05/M3-06 PLANNED_NOT_AUTHORIZED · CURRENT_AUTHORIZED_TECHNICAL_EXECUTION = NONE",
+      nextSafeAction: "Product Authority → selecionar e autorizar separadamente o próximo bounded STS-M3 technical execution child. Nenhum filho é selecionado automaticamente; nenhuma execução, Supabase mutation, deploy ou Security Go decorre da publicação do WBS.",
       issues: [
         {
           id: "STS-GATE-SECURITY-GO",
@@ -438,20 +438,20 @@ export const workspaceDemo = {
           label: "STS-M3-04 está ACTIVE com escopo expandido; slices 01/02 aceitos; próximo gate material exige seleção/autorização separada",
           blockingForCurrentTask: false,
           source: "docs/sfjm/CURRENT_STATE.md + NEXT_SAFE_ACTION.md + PROGRAM_TASK_GRAPH.md",
-          sourceRef: "ac20a30fea9095f036d8d466e83794432d58ca89",
+          sourceRef: "157f0f6f1f9bd4e80cf909e95cc48aa76ebe97d5",
           lastValidatedAt: "2026-09-09",
           resolutionCondition: "Product Authority seleciona e autoriza separadamente o próximo gate material; M3-04-03 não é selecionado automaticamente",
           displayPolicy: "ROADMAP_GATES"
         }
       ] satisfies ProjectIssue[],
       repository: "wagnerjfjunior/fecha.ai",
-      observedSha: "ac20a30fea9095f036d8d466e83794432d58ca89",
-      observedAt: "9 Sep 2026 · PR #209 merged / M3-04 scope expanded · slices 01/02 accepted",
-      verification: "Snapshot manual observado em ac20a30f… · CURRENT_STATE/NEXT_SAFE_ACTION atuais; CURRENT_ISSUES permanece ancorado em ec42e7b… e é exibido como taxonomia tipada mais antiga · sem live sync",
+      observedSha: "157f0f6f1f9bd4e80cf909e95cc48aa76ebe97d5",
+      observedAt: "9 Sep 2026 · PR #212 post-merge reconciliation · zero-material-residual WBS canonical",
+      verification: "Snapshot manual observado em 157f0f6f… · PR #212 reconciliou o lifecycle pós-PR #211; CURRENT_STATE/NEXT_SAFE_ACTION/PROGRAM_TASK_GRAPH/WBS atuais; CURRENT_ISSUES permanece taxonomia tipada mais antiga · sem live sync",
       taskDecompositions: [{
         parentTaskId: "STS-M2-04",
         parentLabel: "Política target de DEFINER / RLS / DML",
-        source: "FECH.AI docs/sfjm/PROGRAM_TASK_GRAPH.md + CURRENT_STATE.md + NEXT_SAFE_ACTION.md @ ac20a30f…",
+        source: "FECH.AI docs/sfjm/PROGRAM_TASK_GRAPH.md + CURRENT_STATE.md + NEXT_SAFE_ACTION.md @ 157f0f6f…",
         items: [
           {
             id: "STS-M2-04B",
@@ -533,9 +533,22 @@ export const workspaceDemo = {
         ]
       },
       {
+        parentTaskId: "STS-M3-03",
+        parentLabel: "Privileged RPC Allowlist + Implementation Convergence",
+        source: "FECH.AI docs/sfjm/PROGRAM_TASK_GRAPH.md + canonical WBS @ 157f0f6f…",
+        items: [
+          { id: "STS-M3-03-01", label: "Accepted privileged RPC allowlist baseline", state: "COMPLETE", status: "HISTORICAL_ACCEPTED_EVIDENCE", note: "Accepted baseline preserved as historical evidence; not sufficient by itself for final M3 closure." },
+          { id: "STS-M3-03-02", label: "Resource-Bound Privileged RPC Remediation", state: "NOT_AUTHORIZED", status: "DEFINED_NOT_AUTHORIZED" },
+          { id: "STS-M3-03-03", label: "Tenant-Scoped Analytics RPC Remediation", state: "NOT_AUTHORIZED", status: "DEFINED_NOT_AUTHORIZED" },
+          { id: "STS-M3-03-04", label: "Internal-Helper Reachability Convergence", state: "NOT_AUTHORIZED", status: "DEFINED_NOT_AUTHORIZED" },
+          { id: "STS-M3-03-05", label: "RPC EXECUTE Principal Convergence", state: "NOT_AUTHORIZED", status: "DEFINED_NOT_AUTHORIZED" },
+          { id: "STS-M3-03-06", label: "Independent RPC Authority Closure Review", state: "NOT_AUTHORIZED", status: "DEFINED_NOT_AUTHORIZED" }
+        ]
+      },
+      {
         parentTaskId: "STS-M3-04",
         parentLabel: "Redução de DML sensível direto + Integridade Estrutural Multi-Tenant",
-        source: "FECH.AI docs/sfjm/PROGRAM_TASK_GRAPH.md @ ac20a30f…",
+        source: "FECH.AI docs/sfjm/PROGRAM_TASK_GRAPH.md @ 157f0f6f…",
         items: [
           {
             id: "STS-M3-04-01",
@@ -561,6 +574,30 @@ export const workspaceDemo = {
           { id: "STS-M3-04-09", label: "Structural Cross-Tenant Negative Proofs", state: "NOT_AUTHORIZED", status: "DEFINED_NOT_AUTHORIZED" },
           { id: "STS-M3-04-10", label: "Independent AppSec Closure Review", state: "NOT_AUTHORIZED", status: "DEFINED_NOT_AUTHORIZED" }
         ]
+      },
+      {
+        parentTaskId: "STS-M3-05",
+        parentLabel: "Auth / Admin Final Closure",
+        source: "FECH.AI docs/sfjm/PROGRAM_TASK_GRAPH.md + canonical WBS @ 157f0f6f…",
+        items: [
+          { id: "STS-M3-05-01", label: "Create-user canonical authority convergence", state: "NOT_AUTHORIZED", status: "DEFINED_NOT_AUTHORIZED" },
+          { id: "STS-M3-05-02", label: "Password-reset / admin authority closure", state: "NOT_AUTHORIZED", status: "DEFINED_NOT_AUTHORIZED" },
+          { id: "STS-M3-05-03", label: "Root / admin-local / gestor compatibility cleanup", state: "NOT_AUTHORIZED", status: "DEFINED_NOT_AUTHORIZED" },
+          { id: "STS-M3-05-04", label: "Auth/Admin negative proofs", state: "NOT_AUTHORIZED", status: "DEFINED_NOT_AUTHORIZED" },
+          { id: "STS-M3-05-05", label: "Independent Auth/Admin closure review", state: "NOT_AUTHORIZED", status: "DEFINED_NOT_AUTHORIZED" }
+        ]
+      },
+      {
+        parentTaskId: "STS-M3-06",
+        parentLabel: "Security Staging + Service Boundary Hardening",
+        source: "FECH.AI docs/sfjm/PROGRAM_TASK_GRAPH.md + canonical WBS @ 157f0f6f…",
+        items: [
+          { id: "STS-M3-06-01", label: "Isolated security staging topology + fixtures", state: "NOT_AUTHORIZED", status: "DEFINED_NOT_AUTHORIZED" },
+          { id: "STS-M3-06-02", label: "mesa-worker-proxy auth/authorization disposition", state: "NOT_AUTHORIZED", status: "DEFINED_NOT_AUTHORIZED" },
+          { id: "STS-M3-06-03", label: "Service-to-service credential / payload / rate boundary", state: "NOT_AUTHORIZED", status: "DEFINED_NOT_AUTHORIZED" },
+          { id: "STS-M3-06-04", label: "Hostile-client / cross-tenant harness readiness", state: "NOT_AUTHORIZED", status: "DEFINED_NOT_AUTHORIZED" },
+          { id: "STS-M3-06-05", label: "M3 Final Security Implementation Closure", state: "NOT_AUTHORIZED", status: "DEFINED_NOT_AUTHORIZED" }
+        ]
       }]
     },
     {
@@ -584,8 +621,8 @@ export const workspaceDemo = {
   fechaiProgram: {
     name: "FECH.AI Security-to-Scale 2026",
     repository: "wagnerjfjunior/fecha.ai",
-    observedSha: "ac20a30fea9095f036d8d466e83794432d58ca89",
-    observedAt: "9 Sep 2026 · PR #209 merged / M3-04 expanded assurance graph; slices 01/02 accepted",
+    observedSha: "157f0f6f1f9bd4e80cf909e95cc48aa76ebe97d5",
+    observedAt: "9 Sep 2026 · PR #212 reconciled PR #211 post-merge lifecycle / zero-material-residual WBS canonical",
     programIssue: "#141",
     programObjective: "Reach a sellable, operable FECH.AI with a defensible Security Go candidate and a clear path out of the current frontend/backend monolith before year-end, without hiding unresolved risk or performing a big-bang rewrite.",
     objectiveSource: "FECH.AI Issue #141 + program-hierarchy BCR",
@@ -595,11 +632,11 @@ export const workspaceDemo = {
     specialistRouting: [] as SpecialistRoute[],
     lastCompletedMilestone: "STS-M2 — COMPLETE / ACCEPTED WITH IMPLEMENTATION-LIFECYCLE-CALLSITE-RUNTIME-APPSEC RESIDUALS",
     nextProgramMilestone: "STS-M4 — Frontend Modularization / App.jsx Extraction · PLANNED_NOT_AUTHORIZED",
-    activeWorkstream: "STS-M3 ACTIVE · STS-M3-04 ACTIVE / SCOPE_EXPANDED / REBASELINE_REQUIRED · M3-04-01/02 COMPLETE / ACCEPTED WITH RESIDUALS · CURRENT_AUTHORIZED_TECHNICAL_EXECUTION = NONE",
-    nextSafeAction: "Resolve live FECH.AI main → Product Authority select/separately authorize next material STS-M3 gate → automatic M3-04-03 selection = NO → no automatic M3-04 closure or M3-05 execution",
+    activeWorkstream: "STS-M3 ACTIVE · M3-03 FINAL_CLOSURE_PENDING / REBASELINE_REQUIRED · M3-04 ACTIVE / REBASELINE_REQUIRED · M3-05/M3-06 PLANNED_NOT_AUTHORIZED / REBASELINE_REQUIRED · CURRENT_AUTHORIZED_TECHNICAL_EXECUTION = NONE",
+    nextSafeAction: "Resolve live FECH.AI main → Product Authority separately selects/authorizes the next bounded STS-M3 technical execution child → automatic child selection = NO → no automatic mutation/deploy/Security Go",
     securityGo: "NOT GRANTED",
     commercialization: "BLOCKED",
-    weightingBasis: "Peso = duração planejada; progresso só avança quando o gate do milestone é aceito.",
+    weightingBasis: "832h = historical planning baseline only. M3 and M5 require rebaseline; aggregate current progress must not be inferred from stale hours.",
     evidenceBoundary: "OBJECTIVE != TASK · WBS_STRUCTURE != CURRENT_STATE · STATIC != LIVE != RUNTIME · VERSIONED != APPLIED · RUNTIME_BOUNDED != SECURITY_GO",
     invalidatesOn: "Mudança material no plano #141, evidência, findings, Security Go, comercialização ou classificação de workstreams.",
     milestones: [
@@ -1002,22 +1039,23 @@ export const workspaceDemo = {
       { date: "8 Sep 2026", text: "PR #205/#206: STS-M3-04-01 aplicada, validada e aceita com residuals", kind: "REMEDIATION" },
       { date: "8 Sep 2026", text: "PR #207/#208: STS-M3-04-02 aplicada, catalog validation PASS e aceita com residuals", kind: "REMEDIATION" },
       { date: "8 Sep 2026", text: "PR #209: Security Go assurance program + relationship catalogs publicados; M3-04 expandida para 10 children e REBASELINE_REQUIRED", kind: "PROGRAM" },
+      { date: "9 Sep 2026", text: "PR #211/#212: zero-material-residual WBS publicado e reconciliado; M3-03/05/06 decompostos, M5 expandido para M5-00..07 e aggregate effort marcado para rebaseline", kind: "PROGRAM" },
       { date: "8 Sep 2026", text: "Vercel branch Preview mais recente = READY; tentativa anterior bloqueada por quota tratada como evento transitório/superseded", kind: "EVIDENCE" }
     ] satisfies TimelineItem[]
 
   } satisfies ProgramSnapshot,
 
   fechaiWbs: {
-    source: "WBS structure baseline: docs/roadmap/fechai-security-to-scale-2026-wbs.md · operational overlay: docs/sfjm/PROGRAM_TASK_GRAPH.md · current meaning: CURRENT_STATE.md + NEXT_SAFE_ACTION.md @ ac20a30f…",
+    source: "WBS/current hierarchy: docs/roadmap/fechai-security-to-scale-2026-wbs.md + docs/sfjm/PROGRAM_TASK_GRAPH.md · current meaning: CURRENT_STATE.md + NEXT_SAFE_ACTION.md @ 157f0f6f…",
     basis: "Planning estimates for visibility, not clocked timesheets.",
     totalCriticalHours: 832,
-    completedHours: 396,
-    remainingCriticalHours: 436,
+    historicalCompletedHoursAtPreviousBaseline: 396,
+    historicalRemainingHoursAtPreviousBaseline: 436,
     preSecurityGoBacklogHours: 116,
     plannedBacklogHours: 104,
     currentPackage: "STS-M3 — ACTIVE",
-    currentTask: "STS-M3-04 · ACTIVE / SCOPE_EXPANDED / REBASELINE_REQUIRED · próximo gate material não selecionado",
-    note: "832h é baseline estrutural histórica. STS-M3-04 foi expandida para 10 children e exige rebaseline; antigo 24h não deve ser tratado como estimativa corrente. CURRENT_AUTHORIZED_TECHNICAL_EXECUTION = NONE.",
+    currentTask: "STS-M3 · zero-material-residual closure graph ativo · M3-03 final closure pending · M3-04 active · próximo bounded child ainda não selecionado",
+    note: "832h é baseline histórica. M3 e M5 = REBASELINE_REQUIRED; M3-03/04/05/06 e M5-00/06/07 não devem exibir horas antigas como estimativa corrente. CURRENT_AUTHORIZED_TECHNICAL_EXECUTION = NONE.",
     milestones: [
       {
         id: "STS-M0",
@@ -1067,11 +1105,11 @@ export const workspaceDemo = {
         state: "ACTIVE",
         tasks: [
           { id: "STS-M3-01", wbsId: "M3-01", label: "Identity / membership / team / role model", hours: 24, state: "COMPLETE", note: "COMPLETE / ACCEPTED / FROZEN" },
-          { id: "STS-M3-02", wbsId: "M3-02", label: "Authority contract por contexto", hours: 28, state: "COMPLETE", note: "COMPLETE / ACCEPTED WITH RESIDUALS" },
-          { id: "STS-M3-03", wbsId: "M3-03", label: "Allowlist de RPCs privilegiadas", hours: 24, state: "COMPLETE", note: "COMPLETE / ACCEPTED WITH RESIDUALS" },
+          { id: "STS-M3-02", wbsId: "M3-02", label: "Authority contract por contexto", hours: 28, state: "COMPLETE", note: "COMPLETE_WITH_RESIDUALS / ACCEPTED" },
+          { id: "STS-M3-03", wbsId: "M3-03", label: "Privileged RPC Allowlist + Implementation Convergence", hours: 24, state: "COMPLETE", note: "COMPLETE_WITH_RESIDUALS / FINAL_CLOSURE_PENDING · REBASELINE_REQUIRED" },
           { id: "STS-M3-04", wbsId: "M3-04", label: "Redução de DML sensível direto + Integridade Estrutural Multi-Tenant", hours: 24, state: "ACTIVE", note: "ACTIVE_REBASELINE_REQUIRED · CURRENT_AUTHORIZED_TECHNICAL_EXECUTION = NONE" },
-          { id: "STS-M3-05", wbsId: "M3-05", label: "Fechamento Auth / Admin flows", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED" },
-          { id: "STS-M3-06", wbsId: "M3-06", label: "Staging / test plan de segurança", hours: 28, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED" }
+          { id: "STS-M3-05", wbsId: "M3-05", label: "Auth / Admin Final Closure", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · REBASELINE_REQUIRED" },
+          { id: "STS-M3-06", wbsId: "M3-06", label: "Security Staging + Service Boundary Hardening", hours: 28, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · REBASELINE_REQUIRED" }
         ]
       },
       {
@@ -1096,12 +1134,14 @@ export const workspaceDemo = {
         state: "PLANNED",
         operationalState: "PLANNED_NOT_AUTHORIZED",
         tasks: [
-          { id: "STS-M5-01", wbsId: "M5-01", label: "Hostile-client suite isolada", hours: 28, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M5-02", wbsId: "M5-02", label: "Regressão tenant / role / auth / storage", hours: 28, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M5-03", wbsId: "M5-03", label: "Dependency / CVE gate", hours: 12, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M5-04", wbsId: "M5-04", label: "Secrets / config / deploy gate", hours: 16, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M5-05", wbsId: "M5-05", label: "Observabilidade / rollback / incidente", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M5-06", wbsId: "M5-06", label: "Adjudicação de residual risk", hours: 20, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" }
+          { id: "STS-M5-00", wbsId: "M5-00", label: "Global Security Assurance Coverage Reconciliation", hours: 0, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · REBASELINE_REQUIRED" },
+          { id: "STS-M5-01", wbsId: "M5-01", label: "Hostile-client suite isolada", hours: 28, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED" },
+          { id: "STS-M5-02", wbsId: "M5-02", label: "Regressão tenant / role / auth / storage", hours: 28, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED" },
+          { id: "STS-M5-03", wbsId: "M5-03", label: "Dependency / CVE gate", hours: 12, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED" },
+          { id: "STS-M5-04", wbsId: "M5-04", label: "Secrets / config / deploy gate", hours: 16, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED" },
+          { id: "STS-M5-05", wbsId: "M5-05", label: "Observabilidade / rollback / incidente", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED" },
+          { id: "STS-M5-06", wbsId: "M5-06", label: "Material Residual Elimination Gate", hours: 20, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · REBASELINE_REQUIRED" },
+          { id: "STS-M5-07", wbsId: "M5-07", label: "Independent Integrated AppSec Final Review", hours: 0, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · REBASELINE_REQUIRED" }
         ]
       },
       {
@@ -1151,7 +1191,7 @@ export const workspaceDemo = {
   contexts: [
     { icon: "🧠", label: "Objetivo Preservado", value: "Issue #141" },
     { icon: "☑", label: "Histórico Preservado", value: "Append-only" },
-    { icon: "🗺", label: "Plano Futuro", value: "M3-04-03..10 → STS-M6" },
+    { icon: "🗺", label: "Plano Futuro", value: "M3-03/04/05/06 → M4 → M5 → M6" },
     { icon: "📁", label: "Evidências Canônicas", value: "GitHub" },
     { icon: "🔒", label: "Governança Mantida", value: "Ativa" },
     { icon: "◉", label: "Fonte Verificada", value: "main" }
@@ -1165,12 +1205,12 @@ export const workspaceDemo = {
   ] satisfies SourceRow[],
 
   sources: [
-    { label: "FECH.AI main", value: "ac20a30f…", badge: true },
+    { label: "FECH.AI main", value: "157f0f6f…", badge: true },
     { label: "Program objective", value: "#141 OPEN · PRESERVED", badge: true },
     { label: "Current state source", value: "docs/sfjm/CURRENT_STATE.md", badge: true },
     { label: "Program task graph", value: "docs/sfjm/PROGRAM_TASK_GRAPH.md", badge: true },
     { label: "Current issues", value: "docs/sfjm/CURRENT_ISSUES.md · typed", badge: true },
-    { label: "WBS structure", value: "832h baseline · M3-04 REBASELINE_REQUIRED", badge: true },
+    { label: "WBS structure", value: "832h historical baseline · M3/M5 REBASELINE_REQUIRED", badge: true },
     { label: "Vercel Preview", value: "READY · latest branch preview", badge: true },
     { label: "SES main / routing", value: "61cee7b3… · manual", badge: true },
     { label: "Snapshot", value: "Manual · validated 9 Sep · not live-synced", badge: true }
