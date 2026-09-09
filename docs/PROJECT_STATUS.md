@@ -134,26 +134,59 @@ A newly published FECH.AI child may be consumed under its canonical parent, but 
 
 ### WBS / effort integrity
 
-```text
-832h = HISTORICAL_CRITICAL_PATH_TOTAL only
-M3 = REBASELINE_REQUIRED
-M5 = REBASELINE_REQUIRED
-M3-03 / M3-04 / M3-05 / M3-06 = REBASELINE_REQUIRED
-M5-00 / M5-06 / M5-07 = REBASELINE_REQUIRED
-CURRENT_ACCEPTED_COMPLETE = preserve verified accepted task states
-REMAINING_CRITICAL_PATH = REBASELINE_REQUIRED
-```
+FECH.AI remains authoritative for canonical task identity, hierarchy, state and any canonical hours it publishes. The Workspace carries a separate, explicitly non-canonical planning forecast requested by Product Authority.
 
-Do not derive a new total, remaining-hours figure or synthetic aggregate completion percentage until FECH.AI publishes an approved material rebaseline.
+~~~text
+CANONICAL HISTORICAL_CRITICAL_PATH_TOTAL = 832h
+FECH.AI M3 = REBASELINE_REQUIRED
+FECH.AI M5 = REBASELINE_REQUIRED
+
+WORKSPACE FORECAST MODEL = WORKSPACE_COMPLEXITY_V1
+S = 8h
+M = 16h
+L = 24h
+XL = 32h
+
+RULE =
+use canonical hours when published
+use explicit complexity estimate only for TBD / REBASELINE work
+parent estimate = sum(children)
+no parent/child double count
+
+WORKSPACE FORECAST CRITICAL TOTAL = 1304h
+WORKSPACE FORECAST COMPLETED / ACCEPTED EFFORT = 420h
+WORKSPACE FORECAST REMAINING = 884h
+WORKSPACE FORECAST COMPLETION = 32.21%
+
+M3 FORECAST = 580h
+M3 COMPLETED / ACCEPTED EFFORT = 100h
+M3 FORECAST COMPLETION = 17.24%
+
+M5 FORECAST = 172h
+
+FORECAST UPLIFT VS HISTORICAL 832h = +472h / +56.73%
+~~~
+
+These figures are Workspace estimates, not FECH.AI canonical hours, actual timesheets or Security Go evidence. Any later canonical rebaseline from FECH.AI supersedes the Workspace estimate.
 
 ### Current issue freshness
 
-```text
-CURRENT_STATE / NEXT_SAFE_ACTION / PROGRAM_TASK_GRAPH / WBS = observed on canonical GitHub main b274adac84f2d4a27a7a5147c551dc23469a610c
-CURRENT_ISSUES = typed taxonomy anchored at ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be
-```
+~~~text
+CURRENT_STATE / NEXT_SAFE_ACTION / PROGRAM_TASK_GRAPH / WBS =
+observed on canonical GitHub main b274adac84f2d4a27a7a5147c551dc23469a610c
+validated = 2026-09-09
 
-The Workspace preserves the typed issue taxonomy but does not let that older issue anchor override newer material state.
+CURRENT_ISSUES =
+typed taxonomy dated 2026-09-08
+decision anchor = ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be
+CURRENT_BLOCKER_COUNT at that historical typed snapshot = 0
+
+WORKSPACE CURRENT MATERIAL RESTRICTIONS =
+derived directly from current 2026-09-09 CURRENT_STATE + NEXT_SAFE_ACTION
+count = 6
+~~~
+
+The dashboard must not present the CURRENT_ISSUES zero-blocker count as if it had been revalidated on the 2026-09-09 main. It shows the older typed blocker count separately from the six current material restrictions.
 
 ### Specialist / execution routing
 
@@ -180,14 +213,16 @@ live synchronization = NO
 
 ### WBS display state
 
-```text
-structural baseline = 832h
-accepted/completed baseline task hours = 396h
-baseline remaining = 436h
-M3-04 current effort = REBASELINE_REQUIRED
-```
+~~~text
+FECH.AI historical baseline = 832h
+Workspace forecast v2 = 1304h
+forecast completed/accepted effort = 420h
+forecast remaining = 884h
+forecast completion = 32.21%
+M3 forecast = 580h / 100h completed-accepted / 17.24%
+~~~
 
-The 396/832 ratio is a structural-baseline indicator only while M3-04 is under rebaseline; it is not a new canonical total.
+The forecast is a Workspace-derived planning model. It does not overwrite FECH.AI canonical rebaseline status.
 
 ### Recursive decomposition
 
