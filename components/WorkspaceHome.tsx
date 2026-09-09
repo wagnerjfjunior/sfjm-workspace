@@ -535,6 +535,8 @@ function NextActionCard({ project }: { project: ExternalProject }) {
   const decomposition = findTaskDecomposition(project, focusTask?.id);
   const focusEligibleUnauthorized = isFechai && focusTask ? taskIsEligibleButUnauthorized(focusTask) : false;
   const focusAuthorizedNotInitiated = isFechai && focusTask ? taskIsAuthorizedNotInitiated(focusTask) : false;
+  const focusActiveGated = isFechai && focusTask ? taskIsActiveButExecutionGated(focusTask) : false;
+  const focusRebaseline = isFechai && focusTask ? taskRequiresRebaseline(focusTask) : false;
 
   return (
     <article className="commandCard nextActionCard" id="next-action">
@@ -543,14 +545,20 @@ function NextActionCard({ project }: { project: ExternalProject }) {
           <div className="cardHeading">
             <div>
               <div className="eyebrow">Próxima ação segura</div>
-              <h2>{isFechai && focusTask ? focusTask.label : project.nextSafeAction}</h2>
+              <h2>{isFechai && focusTask
+                ? focusActiveGated
+                  ? "Selecionar e autorizar o próximo gate material STS-M3"
+                  : focusTask.label
+                : project.nextSafeAction}</h2>
             </div>
-            <span className={`statusPill ${focusEligibleUnauthorized ? "restricted" : "next"}`}>
-              {focusEligibleUnauthorized
-                ? "PRÓXIMA ELEGÍVEL · NÃO AUTORIZADA"
-                : focusAuthorizedNotInitiated
-                  ? "AUTORIZADA · NÃO INICIADA"
-                  : "PRÓXIMA"}
+            <span className={`statusPill ${focusEligibleUnauthorized || focusActiveGated ? "restricted" : "next"}`}>
+              {focusActiveGated
+                ? "AGUARDANDO SELEÇÃO / AUTORIZAÇÃO"
+                : focusEligibleUnauthorized
+                  ? "PRÓXIMA ELEGÍVEL · NÃO AUTORIZADA"
+                  : focusAuthorizedNotInitiated
+                    ? "AUTORIZADA · NÃO INICIADA"
+                    : "PRÓXIMA"}
             </span>
           </div>
 
@@ -559,7 +567,7 @@ function NextActionCard({ project }: { project: ExternalProject }) {
               <p className="safeSequence" title={program.nextSafeAction}>{project.nextSafeAction}</p>
               <div className="actionFacts">
                 <div><span>Bloco</span><strong>{operationalMilestone.id}</strong></div>
-                <div><span>Tarefa</span><strong>{focusTask.id} · {focusTask.hours}h</strong></div>
+                <div><span>Tarefa</span><strong>{focusTask.id} · {focusRebaseline ? "REBASELINE" : `${focusTask.hours}h`}</strong></div>
                 <div><span>Situação</span><strong>{taskStateLabel(focusTask, true)}</strong></div>
                 {requiredRoutes.length ? (
                   <div>
@@ -631,6 +639,9 @@ function RisksCard({ project }: { project: ExternalProject }) {
   const issueValidationAnchors = Array.from(
     new Set(issues.map((issue) => issue.sourceRef).filter(Boolean))
   );
+  const issueSources = Array.from(
+    new Set(issues.map((issue) => issue.source).filter(Boolean))
+  );
 
   const groups = [
     {
@@ -662,9 +673,9 @@ function RisksCard({ project }: { project: ExternalProject }) {
       <div className="cardHeading compact">
         <div>
           <div className="eyebrow">Problemas / restrições</div>
-          <h2>{currentBlockers.length} bloqueios atuais</h2>
+          <h2>{currentBlockers.length} bloqueios na taxonomia publicada</h2>
           <small className="riskFreshness">
-            Snapshot manual · validado em {project.observedAt} · sem live sync
+            Proveniência por item · estado material observado em {project.observedAt} · sem live sync
           </small>
         </div>
         <span className="countBadge">{currentBlockers.length}</span>
@@ -685,7 +696,7 @@ function RisksCard({ project }: { project: ExternalProject }) {
                       <strong>{issue.label}</strong>
                       <span>{issue.state}</span>
                     </div>
-                    <small>{issue.scope} · {issue.id}</small>
+                    <small>{issue.scope} · {issue.id} · {issue.source} · validado {issue.lastValidatedAt}</small>
                   </li>
                 ))}
               </ul>
@@ -697,8 +708,8 @@ function RisksCard({ project }: { project: ExternalProject }) {
       </div>
 
       <div className="riskSource">
-        <span>Fonte tipada</span>
-        <strong>docs/sfjm/CURRENT_ISSUES.md</strong>
+        <span>Proveniência das restrições</span>
+        <strong>{issueSources.join(" · ")}</strong>
         <code>{issueValidationAnchors.length === 1 ? issueValidationAnchors[0] : issueValidationAnchors.join(" · ")}</code>
       </div>
     </article>
