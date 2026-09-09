@@ -1066,12 +1066,12 @@ export const workspaceDemo = {
         hours: 152,
         state: "ACTIVE",
         tasks: [
-          { id: "STS-M3-01", wbsId: "M3-01", label: "Identity / membership / team / role model", hours: 24, state: "COMPLETE", note: "COMPLETE / ACCEPTED · children = NONE YET per PROGRAM_TASK_GRAPH · residuals preserved in CURRENT_ISSUES." },
-          { id: "STS-M3-02", wbsId: "M3-02", label: "Authority contract por contexto", hours: 28, state: "COMPLETE", note: "COMPLETE / ACCEPTED WITH RESIDUALS · authority contract frozen · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M3-03", wbsId: "M3-03", label: "Allowlist de RPCs privilegiadas", hours: 24, state: "COMPLETE", note: "COMPLETE / ACCEPTED WITH RESIDUALS · 49/49 candidates disposed · 2/2 service-only mapped · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M3-04", wbsId: "M3-04", label: "Redução de DML sensível direto + Integridade Estrutural Multi-Tenant", hours: 24, state: "ACTIVE", note: "ACTIVE_REBASELINE_REQUIRED · SCOPE_EXPANDED · children=10 · M3-04-01/02 COMPLETE_WITH_RESIDUALS · M3-04-03..10 DEFINED_NOT_AUTHORIZED · CURRENT_AUTHORIZED_TECHNICAL_EXECUTION = NONE" },
-          { id: "STS-M3-05", wbsId: "M3-05", label: "Fechamento Auth / Admin flows", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" },
-          { id: "STS-M3-06", wbsId: "M3-06", label: "Staging / test plan de segurança", hours: 28, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · children = NONE YET per PROGRAM_TASK_GRAPH" }
+          { id: "STS-M3-01", wbsId: "M3-01", label: "Identity / membership / team / role model", hours: 24, state: "COMPLETE", note: "COMPLETE / ACCEPTED / FROZEN" },
+          { id: "STS-M3-02", wbsId: "M3-02", label: "Authority contract por contexto", hours: 28, state: "COMPLETE", note: "COMPLETE / ACCEPTED WITH RESIDUALS" },
+          { id: "STS-M3-03", wbsId: "M3-03", label: "Allowlist de RPCs privilegiadas", hours: 24, state: "COMPLETE", note: "COMPLETE / ACCEPTED WITH RESIDUALS" },
+          { id: "STS-M3-04", wbsId: "M3-04", label: "Redução de DML sensível direto + Integridade Estrutural Multi-Tenant", hours: 24, state: "ACTIVE", note: "ACTIVE_REBASELINE_REQUIRED · CURRENT_AUTHORIZED_TECHNICAL_EXECUTION = NONE" },
+          { id: "STS-M3-05", wbsId: "M3-05", label: "Fechamento Auth / Admin flows", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED" },
+          { id: "STS-M3-06", wbsId: "M3-06", label: "Staging / test plan de segurança", hours: 28, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED" }
         ]
       },
       {
