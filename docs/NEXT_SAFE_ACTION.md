@@ -4,10 +4,14 @@
 
 ```text
 Workspace role = DERIVED VISUALIZATION / CONTINUITY ONLY
-Workspace canonical main = 6a838a1ecdf1a21022f73e5382129f0a748db585
-refresh candidate = PR #36 / DRAFT / NOT YET CANONICAL
-candidate exact head = RESOLVE LIVE BEFORE REVIEW/MERGE
-exact-head audit custody = ANY HEAD CHANGE INVALIDATES PRIOR AUDIT
+Workspace canonical source = GitHub main / RESOLVE LIVE
+Workspace current-main SHA = DO NOT HARDCODE IN SELF-REFERENTIAL CONTINUITY DOCS
+last material Workspace delivery anchor = PR #36 / MERGED / CLOSED
+last material delivery merge commit = 0005f2c566ca5e2b3a11d7f7573574acb7079ba6
+PR #36 final audited head = 5e5f7c7cb00b71207a9b44d798c4d77eb2d43685
+PR #36 independent exact-head review = CLEAN / NO MAJOR ISSUES
+PR #36 post-merge Vercel status = SUCCESS
+continuity reconciliation rule = ADMINISTRATIVE DOC MERGES DO NOT REQUIRE A NEW SELF-RECONCILIATION PR
 
 FECH.AI canonical GitHub main observed live = b274adac84f2d4a27a7a5147c551dc23469a610c
 FECH.AI material decision merge anchor = dbc1e246b66d9726e7d3831085e62d27cab6908d
@@ -40,6 +44,25 @@ CURRENT_IMMEDIATE_AUTHORIZED_TECHNICAL_EXECUTION = NONE
 SECURITY_GO = NOT_GRANTED
 
 SNAPSHOT = MANUAL / NOT LIVE-SYNCED
+```
+
+### Self-reconciliation loop guard
+
+```text
+CANONICAL WORKSPACE SOURCE = GitHub main resolved live
+
+DO NOT:
+- hardcode the current Workspace main SHA as a value that must be rewritten after every administrative merge
+- open a new PR solely to record that the previous reconciliation PR merged
+- treat documentation-only lifecycle bookkeeping as a new material product state
+
+DO:
+- preserve immutable SHAs only as historical/audit anchors
+- open a reconciliation PR only when material product state, FECH.AI-consumed state, authority, WBS, evidence or safe-next-action changes
+- resolve the current Workspace main SHA directly from GitHub when a live SHA is required
+
+RESULT:
+merging an administrative continuity-doc PR does not recursively require another continuity-doc PR
 ```
 
 ### Current journey position
@@ -178,9 +201,22 @@ THROUGH THE EXISTING PRODUCT AUTHORITY TASK-BY-TASK PROCESS
 
 Do not jump to STS-M3-06 / STS-M5-01 / STS-M5-02. Their authorization is deferred to the final offensive-test window. No paid security lab, technical mutation, deploy or Security Go is authorized by the Workspace refresh itself.
 
-## SUPERSEDED EXACT-HEAD AUDIT CUSTODY
+## PR #36 FINAL EXACT-HEAD / MERGE CUSTODY
 
-The following evidence is historical custody only and must not be interpreted as validation of the current PR #36 head:
+```text
+final audited head = 5e5f7c7cb00b71207a9b44d798c4d77eb2d43685
+independent exact-head review = CLEAN / "Didn't find any major issues"
+exact-head Vercel validation before merge = SUCCESS
+Ready transition = AUTHORIZED / APPLIED
+merge = AUTHORIZED / EXECUTED
+merge commit = 0005f2c566ca5e2b3a11d7f7573574acb7079ba6
+post-merge Vercel validation = SUCCESS
+PR #36 = MERGED / CLOSED
+```
+
+This custody validates the bounded PR #36 Workspace change that is now canonical on `main`. It does not authorize FECH.AI execution, deployment mutation, Security Go, offensive testing or any future Workspace change.
+
+### Older superseded audit custody
 
 ```text
 prior audited head = 62bafb362d12d2173a10266ecc0bafacd2d0a607
@@ -189,7 +225,7 @@ prior branch Preview state = READY
 current exact-head deployment validation at refresh start = NOT_ASSERTED UNTIL RECHECKED
 ```
 
-Any new commit on PR #36 invalidates prior exact-head review custody and requires a fresh exact-head review/deployment check.
+This older custody is retained only for historical traceability.
 
 ---
 
