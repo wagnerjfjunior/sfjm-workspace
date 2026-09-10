@@ -32,7 +32,7 @@ export type ConnectedProject = ExternalProject & {
   sourceRefs?: string[];
 };
 
-const MORENUMTEGRA_SHA = "347b62298d30ba3567a76d3f48a815e9f0f5b26c";
+const MORENUMTEGRA_SHA = "f0e89bfc159e7638347997b46290c919f2e5efc7";
 
 function mntIssue(
   id: string,
@@ -61,24 +61,34 @@ function mntIssue(
 
 const morenumtegraIssues: ProjectIssue[] = [
   mntIssue(
-    "MNT-ISSUE-MEASUREMENT-NOT-PROVEN",
+    "MNT-ISSUE-MEASUREMENT-INCOMPLETE",
     "REQUIRED_CURRENT",
     "MNT-M2",
     "OPEN",
-    "MoreNumTegra-specific Measurement stack is not configured/proven",
-    "docs/PROJECT_STATUS.md",
-    "Authorize and complete Measurement Foundation design; implementation and QA remain separately gated",
+    "GTM Consent Mode is published and validated, but the full MoreNumTegra Measurement stack is not complete",
+    "docs/sfjm/CURRENT_PROGRAM_STATE.json",
+    "Complete transport/dedup, taxonomy, conversion, ownership/implementation and end-to-end Measurement QA tasks",
     "CURRENT_MATERIAL_RESTRICTIONS"
   ),
   mntIssue(
-    "MNT-ISSUE-CONSENT-ENFORCEMENT",
+    "MNT-RESIDUAL-MEASUREMENT-DUPLICATION",
     "REQUIRED_CURRENT",
-    "RESF-CONSENT / MNT-M2",
-    "OPEN / NOT_PROVEN",
-    "LGPD modal is observed but denied/granted enforcement is not proven",
-    "docs/PROJECT_STATUS.md",
-    "Define and execute consent proof obligations under authorized Measurement work",
+    "MNT-M2-02",
+    "OPEN / REQUIRED_NEXT_INPUT",
+    "T0 captured two Green /page/view writes across www to non-www navigation with distinct page IDs",
+    "docs/measurement/MNT_M2_01_TRACKING_RUNTIME_INVENTORY_2026-09-10.md",
+    "Define transport and duplicate-event prevention architecture in MNT-M2-02",
     "CURRENT_MATERIAL_RESTRICTIONS"
+  ),
+  mntIssue(
+    "MNT-ISSUE-CONSENT-THIRD-PARTY-BOUNDARY",
+    "RESIDUAL",
+    "RESF-CONSENT / MNT-M2",
+    "OPEN / NON_BLOCKING_FOR_GTM_CONSENT_STATE",
+    "GTM consent-state handling is proven; site-wide third-party telemetry gating, including historical YouTube behavior, is not fully proven",
+    "docs/measurement/MNT_M2_GTM_CONSENT_T1_2026-09-10.md",
+    "Address platform/third-party behavior when transport architecture and later end-to-end QA make it material",
+    "RESIDUAL_RISKS"
   ),
   mntIssue(
     "MNT-RESIDUAL-CANONICAL",
@@ -111,21 +121,21 @@ const morenumtegraIssues: ProjectIssue[] = [
     "RESIDUAL_RISKS"
   ),
   mntIssue(
-    "MNT-GATE-M2-START",
+    "MNT-GATE-M2-NEXT",
     "FUTURE_GATE",
-    "MNT-M2",
-    "NOT_AUTHORIZED",
-    "MNT-M2 READ_ONLY / DESIGN start requires explicit Product Authority authorization",
+    "MNT-M2-02",
+    "NOT_AUTHORIZED_BY_DOCUMENTATION_RECONCILIATION",
+    "MNT-M2-02 transport/dedup execution remains a separate next-task gate",
     "docs/NEXT_SAFE_ACTION.md",
-    "Product Authority explicitly authorizes bounded MNT-M2 design start",
+    "Obtain explicit next-task execution authority before MNT-M2-02 work",
     "ROADMAP_GATES"
   ),
   mntIssue(
     "MNT-GATE-EXTERNAL-MUTATIONS",
     "FUTURE_GATE",
     "TRACKING / ADS / DNS / DEPLOY",
-    "NOT_AUTHORIZED_BY_MNT_M1_CLOSURE",
-    "Tracking, Ads, DNS and production mutations require separate Product Authority gates",
+    "SEPARATE_GATE_REQUIRED",
+    "Additional tracking, Ads, DNS and production mutations require separate Product Authority gates",
     "docs/BLOCKED_ACTIONS.md",
     "Obtain explicit scope-specific authorization after prerequisite design/evidence",
     "ROADMAP_GATES"
@@ -134,15 +144,15 @@ const morenumtegraIssues: ProjectIssue[] = [
 
 const morenumtegraWbs: ProjectWbsSnapshot = {
   source: `MoreNumTegra docs/sfjm/PROJECT_READ_MODEL.json + CURRENT_PROGRAM_STATE.json + PROGRAM_TASK_GRAPH.json @ ${MORENUMTEGRA_SHA}`,
-  basis: "Project-published MNT-RESF planning forecast. M0 is retrospective scope-equivalent; M1 is accepted planning scope after lifecycle closure; future phases remain forecast.",
+  basis: "Project-published MNT-RESF planning forecast. M0 and M1 are accepted scope-equivalent; M2 accepted hours come only from project-published completed tasks. Partial work contributes 0 accepted hours until its exit criteria are accepted.",
   estimationPolicy: "PROJECT_PUBLISHED_PLANNING_ESTIMATE · parent=sum(immediate children) · no parent/child double count · stronger future project hours supersede prior estimates",
   totalCriticalHours: 1240,
-  forecastCompletedHours: 256,
-  forecastRemainingHours: 984,
-  forecastPercent: 20.65,
-  currentPackage: "MNT-M2 — PLANNED_NOT_AUTHORIZED / NEXT",
-  currentTask: "MNT-M2-01 · next candidate · no active task until Product Authority authorizes bounded MNT-M2 READ_ONLY / DESIGN",
-  note: "Commercial V1 is already operational. Program progress is not product-readiness percentage. No MNT-M2 execution or external/runtime mutation is authorized by the MNT-M1 closure.",
+  forecastCompletedHours: 296,
+  forecastRemainingHours: 944,
+  forecastPercent: 23.87,
+  currentPackage: "MNT-M2 — ACTIVE_WAITING_NEXT_TASK_AUTHORIZATION",
+  currentTask: "Nenhuma task em execução · MNT-M2-02 é a próxima candidata / PLANNED_NOT_AUTHORIZED",
+  note: "Commercial V1 is already operational. Program progress is accepted scope-equivalent, not product readiness. MNT-M2-09 is PARTIAL_IMPLEMENTED and contributes 0 accepted hours. No additional tracking/runtime mutation is authorized by this reconciliation.",
   effortSemantics: "PROJECT_PUBLISHED_PLANNING_FORECAST_NOT_ACTUAL_TIMESHEET",
   historicalCriticalHours: 160,
   milestones: [
@@ -180,28 +190,27 @@ const morenumtegraWbs: ProjectWbsSnapshot = {
         { id: "MNT-M1-05", label: "Register GSC T0 baseline observed 2026-09-10", hours: 8, state: "COMPLETE" },
         { id: "MNT-M1-06", label: "Register gaps, overrides and residual risks", hours: 8, state: "COMPLETE" },
         { id: "MNT-M1-07", label: "Publish consumer-readable WBS/task graph and continuity entrypoints", hours: 16, state: "COMPLETE" },
-        { id: "MNT-M1-08", label: "Schema/consistency review, documentation audit and PR lifecycle", hours: 16, state: "COMPLETE", note: "Closure anchor: PR #39 merged; post-merge state reconciled by PR #40." }
+        { id: "MNT-M1-08", label: "Schema/consistency review, documentation audit and PR lifecycle", hours: 16, state: "COMPLETE", note: "Closure anchor: MoreNumTegra PR #39 / dba0de3b…" }
       ]
     },
     {
       id: "MNT-M2",
       label: "Measurement Foundation & Consent",
       hours: 144,
-      state: "PLANNED",
-      operationalState: "PLANNED_NOT_AUTHORIZED",
-      completedHours: 0,
+      state: "ACTIVE",
+      completedHours: 40,
       effortSource: "CANONICAL",
       tasks: [
-        { id: "MNT-M2-01", label: "Inventory tracking already present in live runtime", hours: 8, state: "PLANNED", note: "NEXT_CANDIDATE · PLANNED_NOT_AUTHORIZED" },
-        { id: "MNT-M2-02", label: "Define transport architecture and duplicate-event prevention", hours: 16, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED" },
-        { id: "MNT-M2-03", label: "Define canonical event taxonomy", hours: 16, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED" },
-        { id: "MNT-M2-04", label: "Define primary and secondary conversions", hours: 8, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED" },
-        { id: "MNT-M2-05", label: "Define ownership for MoreNumTegra GTM and GA4", hours: 8, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED" },
-        { id: "MNT-M2-06", label: "Define ownership for Meta Pixel/Dataset", hours: 8, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED" },
-        { id: "MNT-M2-07", label: "Define consent model and LGPD gating", hours: 16, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED" },
-        { id: "MNT-M2-08", label: "Define denied/granted consent QA contract", hours: 16, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED" },
-        { id: "MNT-M2-09", label: "Implement authorized tracking configuration", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · EXTERNAL_MUTATION_GATE" },
-        { id: "MNT-M2-10", label: "Execute end-to-end Measurement QA", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED" }
+        { id: "MNT-M2-01", label: "Inventory tracking already present in live runtime", hours: 8, state: "COMPLETE", note: "ACCEPTED_HISTORICAL_T0 · PRE_GTM_RUNTIME_CAPTURE" },
+        { id: "MNT-M2-02", label: "Define transport architecture and duplicate-event prevention", hours: 16, state: "PLANNED", note: "NEXT_CANDIDATE · PLANNED_NOT_AUTHORIZED" },
+        { id: "MNT-M2-03", label: "Define canonical event taxonomy", hours: 16, state: "PLANNED" },
+        { id: "MNT-M2-04", label: "Define primary and secondary conversions", hours: 8, state: "PLANNED" },
+        { id: "MNT-M2-05", label: "Define ownership for MoreNumTegra GTM and GA4", hours: 8, state: "PLANNED", note: "PARTIAL_EVIDENCE · ACCEPTED_HOURS=0" },
+        { id: "MNT-M2-06", label: "Define ownership for Meta Pixel/Dataset", hours: 8, state: "PLANNED" },
+        { id: "MNT-M2-07", label: "Define consent model and LGPD gating", hours: 16, state: "COMPLETE", note: "GTM Consent Mode published and validated" },
+        { id: "MNT-M2-08", label: "Define denied/granted consent QA contract", hours: 16, state: "COMPLETE", note: "Denied/granted persistence validated in GTM Preview / Tag Assistant" },
+        { id: "MNT-M2-09", label: "Implement authorized tracking configuration", hours: 24, state: "PLANNED", note: "PARTIAL_IMPLEMENTED · ACCEPTED_HOURS=0 · FURTHER_MUTATION_REQUIRES_SEPARATE_GATE" },
+        { id: "MNT-M2-10", label: "Execute end-to-end Measurement QA", hours: 24, state: "PLANNED" }
       ]
     },
     {
@@ -336,24 +345,25 @@ export const connectedProjects: ConnectedProject[] = [
     programId: "MNT-RESF",
     name: "MoreNumTegra",
     kind: "Projeto externo",
-    continuityState: "MNT-M1 COMPLETE · MNT-M2 PLANNED_NOT_AUTHORIZED · Green commercial V1 operational",
-    nextSafeAction: "Obter autorização explícita da Product Authority antes de iniciar MNT-M2 em READ_ONLY / DESIGN. Nenhuma mutação de tracking, Green, Vercel, DNS, Search Console, Ads ou spend está autorizada pela conclusão de MNT-M1.",
+    continuityState: "MNT-M1 COMPLETE · MNT-M2 ACTIVE_WAITING_NEXT_TASK_AUTHORIZATION · Green commercial V1 operational",
+    nextSafeAction: "MNT-M2-02 — Define transport architecture and duplicate-event prevention — é a próxima task candidata e permanece PLANNED_NOT_AUTHORIZED. Nenhuma execução técnica imediata ou mutação adicional de GTM/GA4/Meta/Green/Ads está autorizada pelo estado atual.",
     issues: morenumtegraIssues,
-    currentRestrictions: morenumtegraIssues.filter((issue) => issue.class === "REQUIRED_CURRENT" || issue.id === "MNT-GATE-M2-START"),
+    currentRestrictions: morenumtegraIssues.filter((issue) => issue.class === "REQUIRED_CURRENT" || issue.id === "MNT-GATE-M2-NEXT"),
     repository: "wagnerjfjunior/MoreNumTegra",
     observedSha: MORENUMTEGRA_SHA,
-    observedAt: "10 Sep 2026 · PR #40 merged · MNT-M1 canonical closure consumed",
-    verification: "Snapshot manual derivado de PROJECT_READ_MODEL + CURRENT_PROGRAM_STATE + PROGRAM_TASK_GRAPH; sem live sync; stale se MoreNumTegra main divergir de 347b622…",
+    observedAt: "10 Sep 2026 · PR #44 merged · MNT-M2 GTM Consent evidence/lifecycle reconciled",
+    verification: "Snapshot manual derivado de PROJECT_READ_MODEL + CURRENT_PROGRAM_STATE + PROGRAM_TASK_GRAPH @ f0e89bfc…; sem live sync; stale em novo drift de main",
     objective: "Operate and evolve a mobile-first Tegra real-estate discovery and Search-to-Lead experience with verified product truth, organic discoverability, conversion, measurement and controlled paid-media readiness.",
     objectiveSource: "MoreNumTegra docs/baseline/FUNCTIONAL_BASELINE_V2.md",
     wbs: morenumtegraWbs,
-    evidenceBoundary: "PROJECT TRUTH != WORKSPACE SNAPSHOT · PROGRAM PROGRESS != V1 READINESS · PLANNED != AUTHORIZED · DOCUMENTED != IMPLEMENTED != DEPLOYED != VALIDATED",
+    evidenceBoundary: "PROJECT TRUTH != WORKSPACE SNAPSHOT · PROGRAM PROGRESS != V1 READINESS · PLANNED != AUTHORIZED · PARTIAL != COMPLETE · DOCUMENTED != IMPLEMENTED != DEPLOYED != VALIDATED",
     specialistTransport: "SES routing is separate from Workspace read-model consumption",
     sourceRefs: [
       `MoreNumTegra@${MORENUMTEGRA_SHA}/docs/sfjm/PROJECT_READ_MODEL.json`,
       `MoreNumTegra@${MORENUMTEGRA_SHA}/docs/sfjm/CURRENT_PROGRAM_STATE.json`,
       `MoreNumTegra@${MORENUMTEGRA_SHA}/docs/sfjm/PROGRAM_TASK_GRAPH.json`,
-      `MoreNumTegra@${MORENUMTEGRA_SHA}/docs/NEXT_SAFE_ACTION.md`
+      `MoreNumTegra@${MORENUMTEGRA_SHA}/docs/NEXT_SAFE_ACTION.md`,
+      `MoreNumTegra@${MORENUMTEGRA_SHA}/docs/measurement/MNT_M2_GTM_CONSENT_T1_2026-09-10.md`
     ]
   }
 ];
