@@ -1,20 +1,17 @@
 # FECH.AI — Current Project Context
 
-## CURRENT AUTHORITY — MANUAL DERIVED SNAPSHOT — 2026-09-08
+## CURRENT AUTHORITY — MANUAL DERIVED SNAPSHOT — 2026-09-09
 
 ```text
 Workspace role = DERIVED VISUALIZATION / CONTINUITY ONLY
-Workspace canonical main = 1769d2407550330c4a6500054a35889445a45ab8
-PR #34 = DRAFT / refresh candidate / NOT YET CANONICAL
-prior audited head = 62bafb362d12d2173a10266ecc0bafacd2d0a607 / SUPERSEDED BY MATERIAL FECH.AI DRIFT
-current candidate head = RESOLVE LIVE BEFORE REVIEW/MERGE
+Workspace canonical main = 6a838a1ecdf1a21022f73e5382129f0a748db585
+refresh candidate = PR #36 / DRAFT / NOT YET CANONICAL
+candidate exact head = RESOLVE LIVE BEFORE REVIEW/MERGE
 exact-head audit custody = ANY HEAD CHANGE INVALIDATES PRIOR AUDIT
-Vercel latest branch Preview prior to this refresh = READY
-current exact-head deployment validation = NOT_ASSERTED UNTIL RECHECKED
 
-FECH.AI canonical main observed live = 26659c4bd450d5068e6eba311799f16465447317
-FECH.AI material decision anchor = ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be
-FECH.AI lifecycle = PR #204 MERGED / STS-M3-03 accepted / STS-M3-04 authorized not initiated
+FECH.AI canonical GitHub main observed live = b274adac84f2d4a27a7a5147c551dc23469a610c
+FECH.AI material decision merge anchor = dbc1e246b66d9726e7d3831085e62d27cab6908d
+FECH.AI lifecycle = PR #213 MERGED / PR #214 POST-MERGE RECONCILIATION MERGED
 
 current execution program = Issue #141 — Security-to-Scale 2026
 
@@ -27,16 +24,19 @@ next-action source = docs/sfjm/NEXT_SAFE_ACTION.md
 OBJECTIVE_INTEGRITY = PRESERVED
 
 STS-M2 = COMPLETE / ACCEPTED WITH RESIDUALS
-DATABASE_STRATEGY = V2_STRANGLER / SAME_DATABASE_FIRST
-
 STS-M3 = ACTIVE
 STS-M3-01 = COMPLETE / ACCEPTED / FROZEN
 STS-M3-02 = COMPLETE / ACCEPTED WITH RESIDUALS
-STS-M3-03 = COMPLETE / ACCEPTED WITH RESIDUALS
-STS-M3-04 = AUTHORIZED / NOT_INITIATED
+STS-M3-03 = COMPLETE_WITH_RESIDUALS / FINAL_CLOSURE_PENDING / REBASELINE_REQUIRED
+STS-M3-04 = ACTIVE / SCOPE_EXPANDED / REBASELINE_REQUIRED
+STS-M3-05 = PLANNED_NOT_AUTHORIZED / REBASELINE_REQUIRED
+STS-M3-06 = AUTHORIZED_DEFERRED / NOT_STARTED / NOT_CURRENT_ACTION / REBASELINE_REQUIRED
 
-CURRENT_AUTHORIZED_EXECUTION = STS-M3-04_TASK_AUTHORIZED_NOT_STARTED
-CURRENT_BLOCKER_COUNT = 0
+STS-M5-01 = AUTHORIZED_DEFERRED_FINAL_TEST / NOT_STARTED / NOT_CURRENT_ACTION
+STS-M5-02 = AUTHORIZED_DEFERRED_FINAL_TEST / NOT_STARTED / NOT_CURRENT_ACTION
+COST-BEARING SECURITY LAB = NOT_AUTHORIZED TO CREATE NOW
+
+CURRENT_IMMEDIATE_AUTHORIZED_TECHNICAL_EXECUTION = NONE
 SECURITY_GO = NOT_GRANTED
 
 SNAPSHOT = MANUAL / NOT LIVE-SYNCED
@@ -48,106 +48,196 @@ SNAPSHOT = MANUAL / NOT LIVE-SYNCED
 Issue #141 — Security-to-Scale 2026
 → STS-M2 COMPLETE / ACCEPTED WITH RESIDUALS
 → STS-M3 ACTIVE
-  → STS-M3-01 COMPLETE / ACCEPTED / FROZEN
-  → STS-M3-02 COMPLETE / ACCEPTED WITH RESIDUALS
-  → STS-M3-03 COMPLETE / ACCEPTED WITH RESIDUALS
-       public routine universe = 160
-       privileged candidate universe = 49
-       candidate rows disposed = 49 / 49
-       service-only commands mapped = 2 / 2
-       allowlist completeness = PROVEN TO ACCEPTED BOUNDED STANDARD
-  → STS-M3-04 AUTHORIZED / NOT_INITIATED
-       Redução de DML sensível direto
+  ├─ STS-M3-01 COMPLETE / ACCEPTED / FROZEN
+  ├─ STS-M3-02 COMPLETE / ACCEPTED WITH RESIDUALS
+  ├─ STS-M3-03 FINAL_CLOSURE_PENDING / REBASELINE_REQUIRED
+  │    └─ 6 canonical children · collapsed by default in Workspace
+  ├─ STS-M3-04 ACTIVE / REBASELINE_REQUIRED
+  │    └─ 10 canonical children · 01/02 historical accepted slices
+  ├─ STS-M3-05 PLANNED_NOT_AUTHORIZED / REBASELINE_REQUIRED
+  │    └─ 5 canonical children
+  └─ STS-M3-06 AUTHORIZED_DEFERRED / NOT_CURRENT_ACTION
+       └─ 5 canonical children · final offensive-security admission remains deferred
+
+→ STS-M4 = 6 first-level tasks / PLANNED_NOT_AUTHORIZED
+→ STS-M5 = M5-00..07
+   ├─ M5-01 AUTHORIZED_DEFERRED_FINAL_TEST
+   └─ M5-02 AUTHORIZED_DEFERRED_FINAL_TEST
+→ STS-M6 = M6-01..05 / PLANNED_NOT_AUTHORIZED
 ```
 
 ### Current authority boundary
 
 ```text
-M3-04 task authorization != M3-04 initiated
-M3-04 authorization != blanket mutation authority
+CURRENT_IMMEDIATE_AUTHORIZED_TECHNICAL_EXECUTION = NONE
 
-NO blanket SQL / DDL / DML mutation
-NO migration execution
-NO blanket RLS / policy / grant / owner / search_path mutation
-NO function / trigger / RPC / Edge Function mutation
-NO Supabase/Auth/data mutation inferred
-NO deploy / production mutation inferred
-NO STS-M3-05 / STS-M3-06 substantive execution
-NO Security Go
-NO commercialization authorization
+M3-06 AUTHORIZED_DEFERRED != execute now
+M5-01/M5-02 AUTHORIZED_DEFERRED_FINAL_TEST != execute now
+
+NO jump to offensive lab
+NO paid Supabase clone/branch/security lab now
+NO real customer/lead/business data in future offensive lab
+NO destructive attack in production
+NO automatic runtime/frontend mutation
+NO automatic Supabase/Auth/data mutation
+NO automatic SQL / DDL / DML
+NO automatic migration execution
+NO automatic RLS / policy / grant / RPC mutation
+NO automatic deploy
+NO automatic Security Go
 ```
 
-### Current issue semantics
+### Current safe continuation
 
 ```text
-source = FECH.AI docs/sfjm/CURRENT_ISSUES.md
-decision/validation anchor = ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be
+CONTINUE THE NORMAL NEXT FECH.AI WBS TASK
+THROUGH THE EXISTING PRODUCT AUTHORITY TASK-BY-TASK PROCESS
 
-CURRENT_TASK = STS-M3-04
-CURRENT_TASK_STATE = AUTHORIZED_NOT_INITIATED
-CURRENT_AUTHORIZED_EXECUTION = STS-M3-04_TASK_AUTHORIZED_NOT_STARTED
-
-BLOCKING = 0
-REQUIRED_CURRENT = 0
-RESIDUAL = 12
-DEFERRED_EVIDENCE = 3
-SECURITY_GATE = 3
-FUTURE_GATE = 1
-
-CURRENT_BLOCKER_COUNT = 0
+DO NOT jump to STS-M3-06 / STS-M5-01 / STS-M5-02
+DO NOT create the cost-bearing security lab now
 ```
 
-M3-03 residual state is now:
+The preserved offensive-security authorization becomes executable only at the declared final-test admission window, after fresh bootstrap/live refs, isolated synthetic-environment readiness, rollback/teardown readiness and explicit cost confirmation if cost will be incurred.
+
+### Workspace WBS presentation contract
+
 ```text
-ALLOWLIST_COMPLETE
-IMPLEMENTATION_TARGET_COMPLIANCE_NOT_PROVEN
+TASK DEFINITION / HIERARCHY AUTHORITY = FECH.AI canonical repository only
+WORKSPACE MAY CREATE TASKS = NO
+
+MILESTONE VIEW =
+show immediate canonical children only
+
+EXAMPLE STS-M3 =
+STS-M3-01
+STS-M3-02
+STS-M3-03
+STS-M3-04
+STS-M3-05
+STS-M3-06
+
+DECOMPOSITION =
+collapsed by default
+manual expansion from parent row
+recursive when canonical descendants exist
+never flattened into the main WBS list
+
+NEXT SAFE ACTION CARD =
+no task-tree expansion
+no recursive child dump
+
+WORKSPACE RESPONSIBILITY =
+presentation / navigation / continuity semantics only
 ```
 
-Residuals, deferred evidence and gates remain material. They are not silently resolved and are not flattened into blocker count.
+A newly published FECH.AI child may be consumed under its canonical parent, but must not replace, hide or flatten the parent-level WBS view.
+
+### WBS / effort integrity
+
+FECH.AI remains authoritative for canonical task identity, hierarchy, state and any canonical hours it publishes. The Workspace carries a separate, explicitly non-canonical planning forecast requested by Product Authority.
+
+~~~text
+CANONICAL HISTORICAL_CRITICAL_PATH_TOTAL = 832h
+FECH.AI M3 = REBASELINE_REQUIRED
+FECH.AI M5 = REBASELINE_REQUIRED
+
+WORKSPACE FORECAST MODEL = WORKSPACE_COMPLEXITY_V1
+S = 8h
+M = 16h
+L = 24h
+XL = 32h
+
+RULE =
+use canonical hours when published
+use explicit complexity estimate only for TBD / REBASELINE work
+parent estimate = sum(children)
+no parent/child double count
+
+WORKSPACE FORECAST CRITICAL TOTAL = 1304h
+WORKSPACE FORECAST COMPLETED / ACCEPTED EFFORT = 420h
+WORKSPACE FORECAST REMAINING = 884h
+WORKSPACE FORECAST COMPLETION = 32.21%
+
+M3 FORECAST = 580h
+M3 COMPLETED / ACCEPTED EFFORT = 100h
+M3 FORECAST COMPLETION = 17.24%
+
+M5 FORECAST = 172h
+
+FORECAST UPLIFT VS HISTORICAL 832h = +472h / +56.73%
+~~~
+
+These figures are Workspace estimates, not FECH.AI canonical hours, actual timesheets or Security Go evidence. Any later canonical rebaseline from FECH.AI supersedes the Workspace estimate.
+
+### Current issue freshness
+
+~~~text
+CURRENT_STATE / NEXT_SAFE_ACTION / PROGRAM_TASK_GRAPH / WBS =
+observed on canonical GitHub main b274adac84f2d4a27a7a5147c551dc23469a610c
+validated = 2026-09-09
+
+CURRENT_ISSUES =
+typed taxonomy dated 2026-09-08
+decision anchor = ec42e7b087dd1bf9b7ddc0cf05316e9d3e7979be
+CURRENT_BLOCKER_COUNT at that historical typed snapshot = 0
+
+WORKSPACE CURRENT MATERIAL RESTRICTIONS =
+derived directly from current 2026-09-09 CURRENT_STATE + NEXT_SAFE_ACTION
+count = 6
+~~~
+
+The dashboard must not present the CURRENT_ISSUES zero-blocker count as if it had been revalidated on the 2026-09-09 main. It shows the older typed blocker count separately from the six current material restrictions.
 
 ### Specialist / execution routing
 
-M3-04 is authorized but not initiated.
+No specialist route is current because no next technical gate has been selected/authorized.
 
 ```text
-fresh live bootstrap = REQUIRED FIRST
-initial activity = READ_ONLY reconstruction
-specialist destination = RESOLVE DURING BOOTSTRAP
+specialist destination = NOT_RESOLVED
 automatic routing = NO
-blanket mutation authority = NO
+transport = MANUAL only after future authorization/bootstrap
 ```
 
 The receiving conversation must resolve FECH.AI live again before acting.
 
 ### Objective integrity
 
-Canonical program objective remains:
-
-> Reach a sellable, operable FECH.AI with a defensible Security Go candidate and a clear path out of the current frontend/backend monolith before year-end, without hiding unresolved risk or performing a big-bang rewrite.
+Canonical program objective remains unchanged.
 
 ### Current project context
 
-```text
+~~~text
 STS-M3 = ACTIVE
-STS-M3-03 = COMPLETE / ACCEPTED WITH RESIDUALS
-STS-M3-04 = AUTHORIZED / NOT_INITIATED
-
-current task = STS-M3-04 — Redução de DML sensível direto
-current authority = TASK AUTHORIZED / NOT STARTED
-```
-
-Canonical M3-03 artifact:
-`docs/security/evidence/2026-09-08-sts-m3-03-privileged-rpc-allowlist.md`
+STS-M3-03 = FINAL_CLOSURE_PENDING / REBASELINE_REQUIRED
+STS-M3-04 = ACTIVE / SCOPE_EXPANDED / REBASELINE_REQUIRED
+STS-M3-05 = PLANNED_NOT_AUTHORIZED / REBASELINE_REQUIRED
+STS-M3-06 = AUTHORIZED_DEFERRED / NOT_CURRENT_ACTION
+STS-M5-01 + STS-M5-02 = AUTHORIZED_DEFERRED_FINAL_TEST / NOT_CURRENT_ACTION
+CURRENT_IMMEDIATE_AUTHORIZED_TECHNICAL_EXECUTION = NONE
+~~~
 
 ### Current continuation
 
-```text
+~~~text
 resolve FECH.AI live
-→ fresh bootstrap
-→ initiate STS-M3-04
-→ READ_ONLY direct-DML/RLS/grant/policy/RPC-boundary reconstruction first
-→ no blanket mutation authority
+→ continue normal WBS task-by-task
+→ do not jump to deferred offensive-security tasks
+~~~
+
+No paid lab, destructive production test or Security Go is inferred.
+
+## SUPERSEDED EXACT-HEAD AUDIT CUSTODY
+
+The following evidence is historical custody only and must not be interpreted as validation of the current PR #36 head:
+
+```text
+prior audited head = 62bafb362d12d2173a10266ecc0bafacd2d0a607
+prior audit disposition = SUPERSEDED BY MATERIAL FECH.AI DRIFT
+prior branch Preview state = READY
+current exact-head deployment validation at refresh start = NOT_ASSERTED UNTIL RECHECKED
 ```
+
+Any new commit on PR #36 invalidates prior exact-head review custody and requires a fresh exact-head review/deployment check.
 
 ---
 

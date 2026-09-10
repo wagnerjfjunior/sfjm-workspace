@@ -61,10 +61,49 @@ function taskIsAuthorizedNotInitiated(task: WbsTask) {
     note.includes("AUTHORIZED_NOT_INITIATED");
 }
 
+function taskIsAuthorizedDeferred(task: WbsTask) {
+  const note = task.note ?? "";
+  return note.includes("AUTHORIZED_DEFERRED");
+}
+
+function taskRequiresRebaseline(task: WbsTask) {
+  return task.note?.includes("REBASELINE_REQUIRED") ?? false;
+}
+
+function taskHasWorkspaceEstimate(task: WbsTask) {
+  return task.effortSource === "WORKSPACE_ESTIMATE" || task.effortSource === "DERIVED_FROM_CHILDREN";
+}
+
+function taskEffortLabel(task: WbsTask) {
+  if (taskHasWorkspaceEstimate(task)) return `${task.hours}h est.`;
+  if (taskRequiresRebaseline(task)) return "REBASELINE";
+  return `${task.hours}h`;
+}
+
+function taskHasFinalClosurePending(task: WbsTask) {
+  return task.note?.includes("FINAL_CLOSURE_PENDING") ?? false;
+}
+
+function taskIsFinalClosed(task: WbsTask) {
+  return task.state === "COMPLETE" && !taskHasFinalClosurePending(task);
+}
+
+function taskIsActiveButExecutionGated(task: WbsTask) {
+  const note = task.note ?? "";
+  return task.state === "ACTIVE" && (
+    note.includes("CURRENT_AUTHORIZED_TECHNICAL_EXECUTION = NONE") ||
+    note.includes("NEXT MATERIAL GATE REQUIRES PRODUCT AUTHORITY") ||
+    note.includes("ACTIVE_REBASELINE_REQUIRED")
+  );
+}
+
 function taskStateLabel(task: WbsTask, isFocus: boolean) {
+  if (taskHasFinalClosurePending(task)) return "Baseline aceito · fechamento final pendente";
   if (task.state === "COMPLETE") return "Concluída";
+  if (taskIsActiveButExecutionGated(task)) return "Ativa · aguardando próximo gate";
   if (task.state === "ACTIVE") return "Em execução";
   if (taskIsAuthorizedReadOnly(task)) return "Autorizada READ_ONLY · Pronta";
+  if (taskIsAuthorizedDeferred(task)) return "Autorizada · Adiada / não é ação atual";
   if (taskIsAuthorizedNotInitiated(task)) return "Autorizada · Não iniciada";
   if (taskIsEligibleButUnauthorized(task)) return "Próxima elegível · Não autorizada";
   if (taskIsPlannedButUnauthorized(task)) return "Planejada · Não autorizada";
@@ -74,8 +113,11 @@ function taskStateLabel(task: WbsTask, isFocus: boolean) {
 }
 
 function taskStateIcon(task: WbsTask, isFocus: boolean) {
+  if (taskHasFinalClosurePending(task)) return "◐";
   if (task.state === "COMPLETE") return "✓";
+  if (taskIsActiveButExecutionGated(task)) return "Ⅱ";
   if (taskIsEligibleButUnauthorized(task) || taskIsPlannedButUnauthorized(task)) return "⊘";
+  if (taskIsAuthorizedDeferred(task)) return "Ⅱ";
   if (taskIsAuthorizedReadOnly(task) || taskIsAuthorizedNotInitiated(task) || isFocus || task.state === "ACTIVE") return "▶";
   return "○";
 }
@@ -199,13 +241,12 @@ function ProjectHeader({
   const isFechai = project.name === FECHAI;
   const programProgress = calculateAcceptedProgramProgress(workspaceDemo.fechaiProgram.milestones);
   const wbs = workspaceDemo.fechaiWbs;
-  const criticalHours = wbs.milestones.reduce((total, milestone) => total + milestone.hours, 0);
-  const completedHours = wbs.milestones.reduce(
-    (total, milestone) =>
-      total + milestone.tasks.filter((task) => task.state === "COMPLETE").reduce((sum, task) => sum + task.hours, 0),
-    0
-  );
-  const wbsPercent = criticalHours ? (completedHours / criticalHours) * 100 : 0;
+  const criticalHours = wbs.totalCriticalHours;
+  const completedHours = wbs.forecastCompletedHours;
+  const wbsPercent = wbs.forecastPercent;
+  const activeMilestone = findActiveMilestone(wbs.milestones);
+  const activeMilestoneCompleted = activeMilestone?.completedHours ?? 0;
+  const activeMilestonePercent = activeMilestone?.hours ? (activeMilestoneCompleted / activeMilestone.hours) * 100 : 0;
 
   return (
     <section className="projectHero" id="overview">
@@ -234,18 +275,20 @@ function ProjectHeader({
         </div>
         <div className="heroMetric progressMetric">
           <span>Conclusão total</span>
-          <strong>{isFechai ? `${wbsPercent.toFixed(1)}%` : "—"}</strong>
+          <strong>{isFechai ? `${wbsPercent.toFixed(1)}% EST.` : "—"}</strong>
           {isFechai ? (
-            <div className="totalProgressTrack" aria-label={`${wbsPercent.toFixed(1)}% do WBS crítico concluído`}>
+            <div className="totalProgressTrack" aria-label={`${wbsPercent.toFixed(1)}% do forecast crítico estimado concluído`}>
               <span style={{ width: `${wbsPercent}%` }} />
             </div>
           ) : null}
-          <small>{isFechai ? `${completedHours}h de ${criticalHours}h do WBS crítico` : "Sem WBS canônica suficiente no snapshot"}</small>
+          <small>{isFechai
+            ? `${completedHours}h de ${criticalHours}h forecast · baseline histórica ${wbs.historicalCriticalHours}h`
+            : "Sem WBS canônica suficiente no snapshot"}</small>
         </div>
         <div className="heroMetric">
           <span>Bloco atual</span>
           <strong>{isFechai ? wbs.currentPackage : "Não modelado"}</strong>
-          <small>{isFechai ? `${programProgress.toFixed(2)}% de gates aceitos no macro programa` : "Sem inferência automática"}</small>
+          <small>{isFechai ? `${activeMilestonePercent.toFixed(1)}% do ${activeMilestone?.id ?? "bloco"} por esforço estimado · macro gates históricos ${programProgress.toFixed(2)}%` : "Sem inferência automática"}</small>
         </div>
         <div className="heroMetric sourceMetric">
           <span>Canônico externo</span>
@@ -276,6 +319,9 @@ function decompositionStateLabel(state: ProjectTaskDecomposition["items"][number
 }
 
 function decompositionVisualStateLabel(item: ProjectTaskDecomposition["items"][number]) {
+  if (item.status.includes("AUTHORIZED_DEFERRED")) {
+    return "Autorizado · adiado";
+  }
   if (item.state === "NOT_AUTHORIZED" && item.status.includes("NEXT CANDIDATE")) {
     return "Próxima · Não autorizado";
   }
@@ -309,8 +355,6 @@ function TaskDecompositionPanel({
 
   const renderCanonicalChildNode = (child: DecompositionItem) => {
     const descendants = child.children ?? [];
-    const visibleDescendants = descendants.slice(0, 8);
-    const hiddenDescendantCount = descendants.length - visibleDescendants.length;
 
     return (
       <li className={`decompositionChildNode ${child.state.toLowerCase()}`} key={child.id}>
@@ -322,21 +366,17 @@ function TaskDecompositionPanel({
               <strong>{child.id}</strong>
               <span>{child.label}</span>
             </span>
-            <small className="decompositionChildCanonicalStatus">{child.status}</small>
+            <small className="decompositionChildCanonicalStatus">
+              {child.status}{child.hours ? ` · ${child.hours}h ${child.effortSource === "WORKSPACE_ESTIMATE" ? "EST." : ""}${child.complexity ? ` · ${child.complexity}` : ""}` : ""}
+            </small>
           </span>
           <span className="decompositionChildState">{decompositionVisualStateLabel(child)}</span>
         </div>
 
-        {visibleDescendants.length ? (
+        {descendants.length ? (
           <ol className="decompositionNestedChildren" role="list" aria-label={`Subetapas de ${child.id}`}>
-            {visibleDescendants.map((descendant) => renderCanonicalChildNode(descendant))}
+            {descendants.map((descendant) => renderCanonicalChildNode(descendant))}
           </ol>
-        ) : null}
-
-        {hiddenDescendantCount > 0 ? (
-          <div className="decompositionOverflowNote nested">
-            {hiddenDescendantCount} descendentes adicionais não expandidos neste nível
-          </div>
         ) : null}
       </li>
     );
@@ -348,9 +388,6 @@ function TaskDecompositionPanel({
     regionId: string,
     hidden: boolean
   ) => {
-    const visibleChildren = children.slice(0, 8);
-    const hiddenChildCount = children.length - visibleChildren.length;
-
     return (
       <div
         className="decompositionChildrenRegion"
@@ -359,13 +396,8 @@ function TaskDecompositionPanel({
         hidden={hidden}
       >
         <ol className="decompositionChildrenList" role="list">
-          {visibleChildren.map((child) => renderCanonicalChildNode(child))}
+          {children.map((child) => renderCanonicalChildNode(child))}
         </ol>
-        {hiddenChildCount > 0 ? (
-          <div className="decompositionOverflowNote">
-            {hiddenChildCount} subetapas adicionais não expandidas neste nível
-          </div>
-        ) : null}
       </div>
     );
   };
@@ -468,7 +500,9 @@ function TaskDecompositionPanel({
                           {decompositionVisualStateLabel(item)}
                         </span>
                       </span>
-                      <small className="decompositionCanonicalStatus">{item.status}</small>
+                      <small className="decompositionCanonicalStatus">
+                        {item.status}{item.hours ? ` · ${item.hours}h ${item.effortSource === "WORKSPACE_ESTIMATE" ? "EST." : ""}${item.complexity ? ` · ${item.complexity}` : ""}` : ""}
+                      </small>
                     </span>
                   </button>
 
@@ -489,7 +523,9 @@ function TaskDecompositionPanel({
                     <span className={`decompositionStatusPill ${item.state.toLowerCase()}`}>
                       {decompositionVisualStateLabel(item)}
                     </span>
-                    <small className="decompositionCanonicalStatus">{item.status}</small>
+                    <small className="decompositionCanonicalStatus">
+                      {item.status}{item.hours ? ` · ${item.hours}h ${item.effortSource === "WORKSPACE_ESTIMATE" ? "EST." : ""}${item.complexity ? ` · ${item.complexity}` : ""}` : ""}
+                    </small>
                   </span>
                 </div>
               )}
@@ -516,25 +552,31 @@ function NextActionCard({ project }: { project: ExternalProject }) {
     operationalTasks.find((task) => task.state !== "COMPLETE");
   const requiredRoutes = program.specialistRouting.filter((route) => route.requirement === "REQUIRED");
   const conditionalRoute = program.specialistRouting.find((route) => route.requirement === "CONDITIONAL");
-  const decomposition = findTaskDecomposition(project, focusTask?.id);
   const focusEligibleUnauthorized = isFechai && focusTask ? taskIsEligibleButUnauthorized(focusTask) : false;
   const focusAuthorizedNotInitiated = isFechai && focusTask ? taskIsAuthorizedNotInitiated(focusTask) : false;
+  const focusActiveGated = isFechai && focusTask ? taskIsActiveButExecutionGated(focusTask) : false;
 
   return (
     <article className="commandCard nextActionCard" id="next-action">
-      <div className={`nextActionLayout ${decomposition ? "hasDecomposition" : ""}`}>
+      <div className="nextActionLayout">
         <div className="nextActionPrimary">
           <div className="cardHeading">
             <div>
               <div className="eyebrow">Próxima ação segura</div>
-              <h2>{isFechai && focusTask ? focusTask.label : project.nextSafeAction}</h2>
+              <h2>{isFechai && focusTask
+                ? focusActiveGated
+                  ? "Continuar o próximo trabalho normal do WBS"
+                  : focusTask.label
+                : project.nextSafeAction}</h2>
             </div>
-            <span className={`statusPill ${focusEligibleUnauthorized ? "restricted" : "next"}`}>
-              {focusEligibleUnauthorized
-                ? "PRÓXIMA ELEGÍVEL · NÃO AUTORIZADA"
-                : focusAuthorizedNotInitiated
-                  ? "AUTORIZADA · NÃO INICIADA"
-                  : "PRÓXIMA"}
+            <span className={`statusPill ${focusEligibleUnauthorized || focusActiveGated ? "restricted" : "next"}`}>
+              {focusActiveGated
+                ? "AGUARDANDO SELEÇÃO / AUTORIZAÇÃO"
+                : focusEligibleUnauthorized
+                  ? "PRÓXIMA ELEGÍVEL · NÃO AUTORIZADA"
+                  : focusAuthorizedNotInitiated
+                    ? "AUTORIZADA · NÃO INICIADA"
+                    : "PRÓXIMA"}
             </span>
           </div>
 
@@ -543,7 +585,7 @@ function NextActionCard({ project }: { project: ExternalProject }) {
               <p className="safeSequence" title={program.nextSafeAction}>{project.nextSafeAction}</p>
               <div className="actionFacts">
                 <div><span>Bloco</span><strong>{operationalMilestone.id}</strong></div>
-                <div><span>Tarefa</span><strong>{focusTask.id} · {focusTask.hours}h</strong></div>
+                <div><span>Tarefa</span><strong>{focusTask.id} · {taskEffortLabel(focusTask)}</strong></div>
                 <div><span>Situação</span><strong>{taskStateLabel(focusTask, true)}</strong></div>
                 {requiredRoutes.length ? (
                   <div>
@@ -577,7 +619,6 @@ function NextActionCard({ project }: { project: ExternalProject }) {
           )}
         </div>
 
-        {decomposition ? <TaskDecompositionPanel decomposition={decomposition} instanceId="next-action" /> : null}
       </div>
     </article>
   );
@@ -585,6 +626,7 @@ function NextActionCard({ project }: { project: ExternalProject }) {
 
 function RisksCard({ project }: { project: ExternalProject }) {
   const issues = project.issues ?? [];
+  const currentRestrictions = project.currentRestrictions ?? [];
 
   if (!issues.length) {
     const blockers = project.blockers ?? [];
@@ -613,13 +655,21 @@ function RisksCard({ project }: { project: ExternalProject }) {
     (issue) => issue.class === "BLOCKING" || issue.class === "REQUIRED_CURRENT"
   );
   const issueValidationAnchors = Array.from(
-    new Set(issues.map((issue) => issue.sourceRef).filter(Boolean))
+    new Set([...issues, ...currentRestrictions].map((issue) => issue.sourceRef).filter(Boolean))
+  );
+  const issueSources = Array.from(
+    new Set([...issues, ...currentRestrictions].map((issue) => issue.source).filter(Boolean))
   );
 
   const groups = [
     {
+      key: "current",
+      label: "Restrições materiais atuais · main",
+      items: currentRestrictions
+    },
+    {
       key: "blockers",
-      label: "Bloqueios atuais",
+      label: "Bloqueios tipados · CURRENT_ISSUES 08/09",
       items: currentBlockers
     },
     {
@@ -646,12 +696,12 @@ function RisksCard({ project }: { project: ExternalProject }) {
       <div className="cardHeading compact">
         <div>
           <div className="eyebrow">Problemas / restrições</div>
-          <h2>{currentBlockers.length} bloqueios atuais</h2>
+          <h2>{currentBlockers.length} bloqueios tipados · {currentRestrictions.length} restrições materiais atuais</h2>
           <small className="riskFreshness">
-            Snapshot manual · validado em {project.observedAt} · sem live sync
+            CURRENT_ISSUES continua em 08/09; restrições atuais foram reconciliadas com {project.observedAt}
           </small>
         </div>
-        <span className="countBadge">{currentBlockers.length}</span>
+        <span className="countBadge">{currentRestrictions.length}</span>
       </div>
 
       <div className="issueSummaryGrid">
@@ -669,7 +719,7 @@ function RisksCard({ project }: { project: ExternalProject }) {
                       <strong>{issue.label}</strong>
                       <span>{issue.state}</span>
                     </div>
-                    <small>{issue.scope} · {issue.id}</small>
+                    <small>{issue.scope} · {issue.id} · {issue.source} · validado {issue.lastValidatedAt}</small>
                   </li>
                 ))}
               </ul>
@@ -681,8 +731,8 @@ function RisksCard({ project }: { project: ExternalProject }) {
       </div>
 
       <div className="riskSource">
-        <span>Fonte tipada</span>
-        <strong>docs/sfjm/CURRENT_ISSUES.md</strong>
+        <span>Proveniência das restrições</span>
+        <strong>{issueSources.join(" · ")}</strong>
         <code>{issueValidationAnchors.length === 1 ? issueValidationAnchors[0] : issueValidationAnchors.join(" · ")}</code>
       </div>
     </article>
@@ -749,7 +799,7 @@ function WbsFocusTask({
             <span className="taskSplitChevron" aria-hidden="true">{expanded ? "⌄" : "›"}</span>
           </button>
         ) : null}
-        <b>{task.hours}h</b>
+        <b>{taskEffortLabel(task)}</b>
       </div>
 
       {decomposition ? (
@@ -779,8 +829,9 @@ function WbsMilestoneTab({
   totalHours: number;
   onSelect: () => void;
 }) {
-  const completed = milestone.tasks.filter((task) => task.state === "COMPLETE").length;
+  const completed = milestone.tasks.filter(taskIsFinalClosed).length;
   const effortShare = totalHours ? (milestone.hours / totalHours) * 100 : 0;
+  const effortSuffix = milestone.effortSource === "MIXED_ESTIMATE" ? " est." : "";
   const operationalLabel =
     milestone.state === "COMPLETE" ? "Concluído" :
     milestone.state === "ACTIVE" ? "Atual" :
@@ -798,7 +849,7 @@ function WbsMilestoneTab({
     >
       <div>
         <span>{milestone.id}</span>
-        <b>{milestone.hours}h · {effortShare.toFixed(2)}%</b>
+        <b>{milestone.hours}h{effortSuffix} · {effortShare.toFixed(2)}%</b>
       </div>
       <strong>{milestone.label}</strong>
       <div className="milestoneMetaLine">
@@ -829,21 +880,15 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
     operationalTasks.find((task) => task.note?.includes("NEXT GATE")) ??
     operationalTasks.find((task) => task.state !== "COMPLETE");
 
-  const completedHours = wbs.milestones.reduce(
-    (total, milestone) =>
-      total +
-      milestone.tasks
-        .filter((task) => task.state === "COMPLETE")
-        .reduce((sum, task) => sum + task.hours, 0),
-    0
-  );
-  const remaining = wbs.totalCriticalHours - completedHours;
+  const completedHours = wbs.forecastCompletedHours;
+  const remaining = wbs.forecastRemainingHours;
 
-  const selectedCompletedTasks = selectedMilestone.tasks.filter(
-    (task) => task.state === "COMPLETE"
-  ).length;
-  const selectedProgress = selectedMilestone.tasks.length
-    ? (selectedCompletedTasks / selectedMilestone.tasks.length) * 100
+  const selectedCompletedTasks = selectedMilestone.tasks.filter(taskIsFinalClosed).length;
+  const selectedCompletedHours = selectedMilestone.completedHours ?? selectedMilestone.tasks
+    .filter(taskIsFinalClosed)
+    .reduce((sum, task) => sum + task.hours, 0);
+  const selectedProgress = selectedMilestone.hours
+    ? (selectedCompletedHours / selectedMilestone.hours) * 100
     : 0;
 
   const selectedIsActive = Boolean(activeMilestone && selectedMilestone.id === activeMilestone.id);
@@ -870,12 +915,12 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
       <div className="sectionHeader">
         <div>
           <div className="eyebrow">WBS / effort</div>
-          <h2>Bloco, tarefa e caminho operacional</h2>
+          <h2>Tarefas principais do bloco e decomposição sob demanda</h2>
         </div>
         <div className="wbsTotals">
           <span><small>Concluído</small><strong>{completedHours}h</strong></span>
           <span><small>Restante</small><strong>{remaining}h</strong></span>
-          <span><small>Total</small><strong>{wbs.totalCriticalHours}h</strong></span>
+          <span><small>Forecast</small><strong>{wbs.totalCriticalHours}h EST.</strong></span>
         </div>
       </div>
 
@@ -910,13 +955,17 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
         </div>
 
         <div className="selectedBlockProgressMeta">
-          <span>{selectedCompletedTasks}/{selectedMilestone.tasks.length} tarefas concluídas</span>
-          <strong>{selectedProgress.toFixed(0)}%</strong>
+          <span>{selectedCompletedHours}h / {selectedMilestone.hours}h · {selectedCompletedTasks}/{selectedMilestone.tasks.length} tarefas-mãe final-fechadas</span>
+          <strong>{selectedProgress.toFixed(1)}%{selectedMilestone.effortSource === "MIXED_ESTIMATE" ? " EST." : ""}</strong>
         </div>
-        <div className="currentBlockProgress" aria-label={`${selectedProgress.toFixed(0)}% das tarefas do bloco selecionado concluídas`}>
+        <div className="currentBlockProgress" aria-label={`${selectedProgress.toFixed(1)}% do esforço do bloco selecionado concluído`}>
           <span style={{ width: `${selectedProgress}%` }} />
         </div>
 
+        <div className="selectedBlockListLabel">
+          <span>Nível principal</span>
+          <strong>{selectedMilestone.tasks.length} tarefas-mãe · subtarefas recolhidas por padrão</strong>
+        </div>
         <ul className="focusTaskList selectedTaskList">
           {selectedMilestone.tasks.map((task) => {
             const decomposition = findTaskDecomposition(project, task.id);
@@ -938,7 +987,7 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
       </section>
 
       <div className="wbsFootnote">
-        Seleção é apenas navegação visual. {activeMilestone ? `O bloco operacional atual continua sendo ${activeMilestone.id}.` : `Nenhum bloco tem execução ativa; ${displayMilestone.id} é apenas o próximo elegível.`} Horas não são timesheet, confiança ou Security Go.
+        Regra de visualização: o WBS mostra sempre as tarefas de primeiro nível do bloco. Filhos canônicos só aparecem por expansão manual da tarefa-mãe. O Workspace não cria tarefas. Horas marcadas “est.” são forecast derivado por complexidade (S=8h, M=16h, L=24h, XL=32h); {wbs.historicalCriticalHours}h permanece a baseline histórica do FECH.AI. {activeMilestone ? `O bloco operacional atual continua sendo ${activeMilestone.id}.` : `Nenhum bloco tem execução ativa; ${displayMilestone.id} é apenas o próximo elegível.`}
       </div>
     </article>
   );
