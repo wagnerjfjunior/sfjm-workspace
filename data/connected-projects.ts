@@ -310,6 +310,11 @@ if (!existingFechai) {
   throw new Error("FECH.AI snapshot missing from workspaceDemo");
 }
 
+const fechaiWbs: ProjectWbsSnapshot = {
+  ...workspaceDemo.fechaiWbs,
+  effortSemantics: "WORKSPACE_ESTIMATE_NOT_CANONICAL_ACTUAL_TIMESHEET"
+};
+
 export const connectedProjects: ConnectedProject[] = [
   {
     ...existingFechai,
@@ -317,7 +322,7 @@ export const connectedProjects: ConnectedProject[] = [
     programId: "STS",
     objective: workspaceDemo.fechaiProgram.programObjective,
     objectiveSource: workspaceDemo.fechaiProgram.objectiveSource,
-    wbs: workspaceDemo.fechaiWbs as unknown as ProjectWbsSnapshot,
+    wbs: fechaiWbs,
     evidenceBoundary: workspaceDemo.fechaiProgram.evidenceBoundary,
     specialistTransport: workspaceDemo.fechaiProgram.specialistTransport,
     sourceRefs: [
