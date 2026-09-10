@@ -4,13 +4,14 @@
 
 ```text
 Workspace role = DERIVED VISUALIZATION / CONTINUITY ONLY
-Workspace canonical main = 0005f2c566ca5e2b3a11d7f7573574acb7079ba6
-PR #36 = MERGED / CLOSED
+Workspace canonical source = GitHub main / RESOLVE LIVE
+Workspace current-main SHA = DO NOT HARDCODE IN SELF-REFERENTIAL CONTINUITY DOCS
+last material Workspace delivery anchor = PR #36 / MERGED / CLOSED
+last material delivery merge commit = 0005f2c566ca5e2b3a11d7f7573574acb7079ba6
 PR #36 final audited head = 5e5f7c7cb00b71207a9b44d798c4d77eb2d43685
 PR #36 independent exact-head review = CLEAN / NO MAJOR ISSUES
-PR #36 merge commit = 0005f2c566ca5e2b3a11d7f7573574acb7079ba6
 PR #36 post-merge Vercel status = SUCCESS
-post-merge reconciliation = BOUNDED DOCUMENTATION ONLY / THIS BRANCH NOT YET CANONICAL
+continuity reconciliation rule = ADMINISTRATIVE DOC MERGES DO NOT REQUIRE A NEW SELF-RECONCILIATION PR
 
 FECH.AI canonical GitHub main observed live = b274adac84f2d4a27a7a5147c551dc23469a610c
 FECH.AI material decision merge anchor = dbc1e246b66d9726e7d3831085e62d27cab6908d
@@ -43,6 +44,25 @@ CURRENT_IMMEDIATE_AUTHORIZED_TECHNICAL_EXECUTION = NONE
 SECURITY_GO = NOT_GRANTED
 
 SNAPSHOT = MANUAL / NOT LIVE-SYNCED
+```
+
+### Self-reconciliation loop guard
+
+```text
+CANONICAL WORKSPACE SOURCE = GitHub main resolved live
+
+DO NOT:
+- hardcode the current Workspace main SHA as a value that must be rewritten after every administrative merge
+- open a new PR solely to record that the previous reconciliation PR merged
+- treat documentation-only lifecycle bookkeeping as a new material product state
+
+DO:
+- preserve immutable SHAs only as historical/audit anchors
+- open a reconciliation PR only when material product state, FECH.AI-consumed state, authority, WBS, evidence or safe-next-action changes
+- resolve the current Workspace main SHA directly from GitHub when a live SHA is required
+
+RESULT:
+merging an administrative continuity-doc PR does not recursively require another continuity-doc PR
 ```
 
 ### Current journey position
