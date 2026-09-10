@@ -8,10 +8,81 @@ import {
   type WbsMilestone,
   type WbsTask
 } from "@/data/workspace-demo";
+import { morenumtegraCanonical } from "@/data/morenumtegra-canonical";
 
 const FECHAI = "FECH.AI";
+const MORENUMTEGRA = "MoreNumTegra";
+
+const FECHAI_PROGRAM_PROGRESS = calculateAcceptedProgramProgress(workspaceDemo.fechaiProgram.milestones);
 
 type ProjectTaskDecomposition = NonNullable<ExternalProject["taskDecompositions"]>[number];
+
+type DashboardWbs = {
+  id?: string;
+  name?: string;
+  currentPackage: string;
+  currentTask: string;
+  currentTaskId?: string;
+  totalCriticalHours: number;
+  historicalCriticalHours: number;
+  forecastCompletedHours: number;
+  forecastRemainingHours: number;
+  forecastPercent: number;
+  milestones: WbsMilestone[];
+};
+
+type DashboardProject = ExternalProject & {
+  wbs?: DashboardWbs;
+  objective?: {
+    id: string;
+    text: string;
+    source: string;
+  };
+  continuityHeadline?: string;
+  continuityDetail?: string;
+  progressBasisLabel?: string;
+  blockProgressDetail?: string;
+  wbsForecastIsCanonical?: boolean;
+  wbsFootnote?: string;
+  evidenceHandoff?: string;
+};
+
+const dashboardProjects: DashboardProject[] = workspaceDemo.externalProjects.map((project) => {
+  if (project.name === FECHAI) {
+    const wbs = workspaceDemo.fechaiWbs as DashboardWbs;
+    return {
+      ...project,
+      wbs,
+      continuityHeadline: wbs.currentPackage,
+      continuityDetail: wbs.currentTask,
+      progressBasisLabel: `estimativa Workspace · baseline histórica ${wbs.historicalCriticalHours}h`,
+      blockProgressDetail: `macro gates históricos ${FECHAI_PROGRAM_PROGRESS.toFixed(2)}%`,
+      wbsForecastIsCanonical: false,
+      wbsFootnote: `Regra de visualização: o WBS mostra sempre as tarefas de primeiro nível do bloco. Filhos canônicos só aparecem por expansão manual da tarefa-mãe. O Workspace não cria tarefas. Horas marcadas “est.” são forecast derivado por complexidade (S=8h, M=16h, L=24h, XL=32h); ${wbs.historicalCriticalHours}h permanece a baseline histórica do FECH.AI.`,
+      evidenceHandoff: workspaceDemo.fechaiProgram.specialistRouting.length
+        ? workspaceDemo.fechaiProgram.specialistTransport
+        : "Não definido · aguarda autorização/bootstrap"
+    };
+  }
+
+  if (project.name === MORENUMTEGRA) {
+    const wbs = morenumtegraCanonical.wbs as unknown as DashboardWbs;
+    return {
+      ...morenumtegraCanonical.project,
+      wbs,
+      objective: morenumtegraCanonical.objective,
+      continuityHeadline: morenumtegraCanonical.project.continuityState,
+      continuityDetail: wbs.currentTask,
+      progressBasisLabel: "planning forecast publicado pelo projeto · não timesheet",
+      blockProgressDetail: "accepted scope-equivalent preservado em 160h",
+      wbsForecastIsCanonical: true,
+      wbsFootnote: "Regra de visualização: o WBS reproduz as tarefas publicadas pelo MoreNumTegra. As horas são planning forecast/scope-equivalent publicadas no repositório canônico, não horas reais trabalhadas. O Workspace não cria tarefas, não inventa horas e não soma pai + filhos em duplicidade.",
+      evidenceHandoff: `${morenumtegraCanonical.source.readModel} → ${morenumtegraCanonical.source.taskGraph}`
+    };
+  }
+
+  return project;
+});
 
 function normalizeWbsTaskIdentity(taskId: string) {
   return taskId.startsWith("STS-") ? taskId.slice(4) : taskId;
@@ -74,7 +145,12 @@ function taskHasWorkspaceEstimate(task: WbsTask) {
   return task.effortSource === "WORKSPACE_ESTIMATE" || task.effortSource === "DERIVED_FROM_CHILDREN";
 }
 
+function taskHasCanonicalPlanningForecast(task: WbsTask) {
+  return task.note?.includes("PROJECT_PLANNING_FORECAST") ?? false;
+}
+
 function taskEffortLabel(task: WbsTask) {
+  if (taskHasCanonicalPlanningForecast(task)) return `${task.hours}h forecast`;
   if (taskHasWorkspaceEstimate(task)) return `${task.hours}h est.`;
   if (taskRequiresRebaseline(task)) return "REBASELINE";
   return `${task.hours}h`;
@@ -154,7 +230,7 @@ function Sidebar({
   onSelectProject: (name: string) => void;
   onClose: () => void;
 }) {
-  const selectedIsFechai = selectedProject === FECHAI;
+  const selectedHasWbs = Boolean(dashboardProjects.find((project) => project.name === selectedProject)?.wbs);
 
   return (
     <>
@@ -180,7 +256,7 @@ function Sidebar({
 
         <div className="sidebarSectionLabel">Continue</div>
         <nav className="projectNav" aria-label="Projetos disponíveis">
-          {workspaceDemo.externalProjects.map((project) => {
+          {dashboardProjects.map((project) => {
             const active = project.name === selectedProject;
             return (
               <div className={`projectNavGroup ${active ? "active" : ""}`} key={project.name}>
@@ -205,7 +281,7 @@ function Sidebar({
                   <div className="projectSubnav">
                     <a href="#overview">Estado & continuidade</a>
                     <a href="#next-action">Próxima ação</a>
-                    {selectedIsFechai ? <a href="#wbs">WBS</a> : <span>WBS · indisponível</span>}
+                    {selectedHasWbs ? <a href="#wbs">WBS</a> : <span>WBS · indisponível</span>}
                     <a href="#risks">Problemas</a>
                     <a href="#evidence">Evidências</a>
                   </div>
@@ -234,19 +310,18 @@ function ProjectHeader({
   onMenu,
   menuButtonRef
 }: {
-  project: ExternalProject;
+  project: DashboardProject;
   onMenu: () => void;
   menuButtonRef: RefObject<HTMLButtonElement | null>;
 }) {
-  const isFechai = project.name === FECHAI;
-  const programProgress = calculateAcceptedProgramProgress(workspaceDemo.fechaiProgram.milestones);
-  const wbs = workspaceDemo.fechaiWbs;
-  const criticalHours = wbs.totalCriticalHours;
-  const completedHours = wbs.forecastCompletedHours;
-  const wbsPercent = wbs.forecastPercent;
-  const activeMilestone = findActiveMilestone(wbs.milestones);
+  const wbs = project.wbs;
+  const criticalHours = wbs?.totalCriticalHours ?? 0;
+  const completedHours = wbs?.forecastCompletedHours ?? 0;
+  const wbsPercent = wbs?.forecastPercent ?? 0;
+  const activeMilestone = wbs ? findActiveMilestone(wbs.milestones) : undefined;
   const activeMilestoneCompleted = activeMilestone?.completedHours ?? 0;
   const activeMilestonePercent = activeMilestone?.hours ? (activeMilestoneCompleted / activeMilestone.hours) * 100 : 0;
+  const progressSuffix = project.wbsForecastIsCanonical ? " FORECAST" : " EST.";
 
   return (
     <section className="projectHero" id="overview">
@@ -270,25 +345,27 @@ function ProjectHeader({
       <div className="heroMetrics">
         <div className="heroMetric continuityMetric">
           <span>Estado & continuidade</span>
-          <strong>{isFechai ? wbs.currentPackage : project.continuityState}</strong>
-          <small>{isFechai ? wbs.currentTask : "Snapshot manual do projeto"}</small>
+          <strong>{project.continuityHeadline ?? project.continuityState}</strong>
+          <small>{project.continuityDetail ?? "Snapshot manual do projeto"}</small>
         </div>
         <div className="heroMetric progressMetric">
           <span>Conclusão total</span>
-          <strong>{isFechai ? `${wbsPercent.toFixed(1)}% EST.` : "—"}</strong>
-          {isFechai ? (
-            <div className="totalProgressTrack" aria-label={`${wbsPercent.toFixed(1)}% do forecast crítico estimado concluído`}>
+          <strong>{wbs ? `${wbsPercent.toFixed(1)}%${progressSuffix}` : "—"}</strong>
+          {wbs ? (
+            <div className="totalProgressTrack" aria-label={`${wbsPercent.toFixed(1)}% do forecast representado concluído`}>
               <span style={{ width: `${wbsPercent}%` }} />
             </div>
           ) : null}
-          <small>{isFechai
-            ? `${completedHours}h de ${criticalHours}h forecast · baseline histórica ${wbs.historicalCriticalHours}h`
+          <small>{wbs
+            ? `${completedHours}h de ${criticalHours}h forecast · ${project.progressBasisLabel ?? "base publicada pelo projeto"}`
             : "Sem WBS canônica suficiente no snapshot"}</small>
         </div>
         <div className="heroMetric">
           <span>Bloco atual</span>
-          <strong>{isFechai ? wbs.currentPackage : "Não modelado"}</strong>
-          <small>{isFechai ? `${activeMilestonePercent.toFixed(1)}% do ${activeMilestone?.id ?? "bloco"} por esforço estimado · macro gates históricos ${programProgress.toFixed(2)}%` : "Sem inferência automática"}</small>
+          <strong>{wbs ? wbs.currentPackage : "Não modelado"}</strong>
+          <small>{wbs
+            ? `${activeMilestonePercent.toFixed(1)}% do ${activeMilestone?.id ?? "bloco"} por esforço representado${project.blockProgressDetail ? ` · ${project.blockProgressDetail}` : ""}`
+            : "Sem inferência automática"}</small>
         </div>
         <div className="heroMetric sourceMetric">
           <span>Canônico externo</span>
@@ -542,14 +619,22 @@ function TaskDecompositionPanel({
   );
 }
 
-function NextActionCard({ project }: { project: ExternalProject }) {
+function NextActionCard({ project }: { project: DashboardProject }) {
   const isFechai = project.name === FECHAI;
   const program = workspaceDemo.fechaiProgram;
-  const operationalMilestone = findDisplayMilestone(workspaceDemo.fechaiWbs.milestones);
+  const operationalMilestone = isFechai
+    ? findDisplayMilestone(workspaceDemo.fechaiWbs.milestones)
+    : project.wbs
+      ? findDisplayMilestone(project.wbs.milestones)
+      : undefined;
   const operationalTasks: WbsTask[] = operationalMilestone?.tasks ?? [];
-  const focusTask = operationalTasks.find(taskIsEligibleButUnauthorized) ??
-    operationalTasks.find((task) => task.note?.includes("NEXT GATE")) ??
-    operationalTasks.find((task) => task.state !== "COMPLETE");
+  const focusTask = isFechai
+    ? operationalTasks.find(taskIsEligibleButUnauthorized) ??
+      operationalTasks.find((task) => task.note?.includes("NEXT GATE")) ??
+      operationalTasks.find((task) => task.state !== "COMPLETE")
+    : project.wbs?.currentTaskId
+      ? operationalTasks.find((task) => task.id === project.wbs?.currentTaskId)
+      : operationalTasks.find((task) => task.state !== "COMPLETE");
   const requiredRoutes = program.specialistRouting.filter((route) => route.requirement === "REQUIRED");
   const conditionalRoute = program.specialistRouting.find((route) => route.requirement === "CONDITIONAL");
   const focusEligibleUnauthorized = isFechai && focusTask ? taskIsEligibleButUnauthorized(focusTask) : false;
@@ -576,7 +661,9 @@ function NextActionCard({ project }: { project: ExternalProject }) {
                   ? "PRÓXIMA ELEGÍVEL · NÃO AUTORIZADA"
                   : focusAuthorizedNotInitiated
                     ? "AUTORIZADA · NÃO INICIADA"
-                    : "PRÓXIMA"}
+                    : focusTask?.state === "ACTIVE"
+                      ? "ATUAL"
+                      : "PRÓXIMA"}
             </span>
           </div>
 
@@ -612,6 +699,18 @@ function NextActionCard({ project }: { project: ExternalProject }) {
                 </div>
               )}
             </>
+          ) : focusTask && operationalMilestone ? (
+            <>
+              <div className="actionFacts">
+                <div><span>Bloco</span><strong>{operationalMilestone.id}</strong></div>
+                <div><span>Tarefa atual</span><strong>{focusTask.id}</strong></div>
+                <div><span>Esforço</span><strong>{taskEffortLabel(focusTask)}</strong></div>
+                <div><span>Situação</span><strong>{taskStateLabel(focusTask, true)}</strong></div>
+              </div>
+              <div className="actionFooter">
+                <span>{project.verification}</span>
+              </div>
+            </>
           ) : (
             <div className="actionFooter">
               <span>{project.verification}</span>
@@ -624,7 +723,7 @@ function NextActionCard({ project }: { project: ExternalProject }) {
   );
 }
 
-function RisksCard({ project }: { project: ExternalProject }) {
+function RisksCard({ project }: { project: DashboardProject }) {
   const issues = project.issues ?? [];
   const currentRestrictions = project.currentRestrictions ?? [];
 
@@ -635,7 +734,7 @@ function RisksCard({ project }: { project: ExternalProject }) {
         <div className="cardHeading compact">
           <div>
             <div className="eyebrow">Problemas / restrições</div>
-            <h2>{blockers.length} abertos no snapshot</h2>
+            <h2>{blockers.length} itens publicados no snapshot</h2>
           </div>
           <span className="countBadge">{blockers.length}</span>
         </div>
@@ -755,6 +854,27 @@ function IntegrityStrip() {
   );
 }
 
+function ProjectObjectiveCard({ project }: { project: DashboardProject }) {
+  if (!project.objective) return null;
+
+  return (
+    <article className="commandCard" aria-label={`Objetivo preservado de ${project.name}`}>
+      <div className="sectionHeader">
+        <div>
+          <div className="eyebrow">Objetivo preservado</div>
+          <h2>{project.objective.text}</h2>
+        </div>
+        <span className="statusPill verified">CANÔNICO</span>
+      </div>
+      <div className="riskSource">
+        <span>Fonte do objetivo</span>
+        <strong>{project.objective.id}</strong>
+        <code>{project.objective.source}</code>
+      </div>
+    </article>
+  );
+}
+
 function WbsFocusTask({
   task,
   focusId,
@@ -821,17 +941,23 @@ function WbsMilestoneTab({
   active,
   selected,
   totalHours,
+  forecastIsCanonical,
   onSelect
 }: {
   milestone: WbsMilestone;
   active: boolean;
   selected: boolean;
   totalHours: number;
+  forecastIsCanonical: boolean;
   onSelect: () => void;
 }) {
   const completed = milestone.tasks.filter(taskIsFinalClosed).length;
   const effortShare = totalHours ? (milestone.hours / totalHours) * 100 : 0;
-  const effortSuffix = milestone.effortSource === "MIXED_ESTIMATE" ? " est." : "";
+  const effortSuffix = forecastIsCanonical
+    ? " forecast"
+    : milestone.effortSource === "MIXED_ESTIMATE"
+      ? " est."
+      : "";
   const operationalLabel =
     milestone.state === "COMPLETE" ? "Concluído" :
     milestone.state === "ACTIVE" ? "Atual" :
@@ -862,8 +988,8 @@ function WbsMilestoneTab({
   );
 }
 
-function WbsCommandCenter({ project }: { project: ExternalProject }) {
-  const wbs = workspaceDemo.fechaiWbs;
+function WbsCommandCenter({ project }: { project: DashboardProject }) {
+  const wbs = project.wbs as DashboardWbs;
   const activeMilestone = findActiveMilestone(wbs.milestones);
   const displayMilestone = findDisplayMilestone(wbs.milestones);
 
@@ -876,6 +1002,7 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
 
   const operationalTasks: WbsTask[] = displayMilestone.tasks;
   const focusTask =
+    (wbs.currentTaskId ? operationalTasks.find((task) => task.id === wbs.currentTaskId) : undefined) ??
     operationalTasks.find(taskIsEligibleButUnauthorized) ??
     operationalTasks.find((task) => task.note?.includes("NEXT GATE")) ??
     operationalTasks.find((task) => task.state !== "COMPLETE");
@@ -920,17 +1047,18 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
         <div className="wbsTotals">
           <span><small>Concluído</small><strong>{completedHours}h</strong></span>
           <span><small>Restante</small><strong>{remaining}h</strong></span>
-          <span><small>Forecast</small><strong>{wbs.totalCriticalHours}h EST.</strong></span>
+          <span><small>Forecast</small><strong>{wbs.totalCriticalHours}h {project.wbsForecastIsCanonical ? "FORECAST" : "EST."}</strong></span>
         </div>
       </div>
 
-      <div className="wbsTabs" role="region" aria-label="Selecione um bloco do WBS STS-M0 a STS-M6">
+      <div className="wbsTabs" role="region" aria-label={`Selecione um bloco do WBS ${wbs.id ?? project.name}`}>
         {wbs.milestones.map((milestone) => (
           <WbsMilestoneTab
             milestone={milestone}
             active={Boolean(activeMilestone && milestone.id === activeMilestone.id)}
             selected={milestone.id === selectedMilestone.id}
             totalHours={wbs.totalCriticalHours}
+            forecastIsCanonical={Boolean(project.wbsForecastIsCanonical)}
             onSelect={() => setSelectedMilestoneId(milestone.id)}
             key={milestone.id}
           />
@@ -956,7 +1084,7 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
 
         <div className="selectedBlockProgressMeta">
           <span>{selectedCompletedHours}h / {selectedMilestone.hours}h · {selectedCompletedTasks}/{selectedMilestone.tasks.length} tarefas-mãe final-fechadas</span>
-          <strong>{selectedProgress.toFixed(1)}%{selectedMilestone.effortSource === "MIXED_ESTIMATE" ? " EST." : ""}</strong>
+          <strong>{selectedProgress.toFixed(1)}%{project.wbsForecastIsCanonical ? " FORECAST" : selectedMilestone.effortSource === "MIXED_ESTIMATE" ? " EST." : ""}</strong>
         </div>
         <div className="currentBlockProgress" aria-label={`${selectedProgress.toFixed(1)}% do esforço do bloco selecionado concluído`}>
           <span style={{ width: `${selectedProgress}%` }} />
@@ -987,13 +1115,13 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
       </section>
 
       <div className="wbsFootnote">
-        Regra de visualização: o WBS mostra sempre as tarefas de primeiro nível do bloco. Filhos canônicos só aparecem por expansão manual da tarefa-mãe. O Workspace não cria tarefas. Horas marcadas “est.” são forecast derivado por complexidade (S=8h, M=16h, L=24h, XL=32h); {wbs.historicalCriticalHours}h permanece a baseline histórica do FECH.AI. {activeMilestone ? `O bloco operacional atual continua sendo ${activeMilestone.id}.` : `Nenhum bloco tem execução ativa; ${displayMilestone.id} é apenas o próximo elegível.`}
+        {project.wbsFootnote} {activeMilestone ? `O bloco operacional atual continua sendo ${activeMilestone.id}.` : `Nenhum bloco tem execução ativa; ${displayMilestone.id} é apenas o próximo elegível.`}
       </div>
     </article>
   );
 }
 
-function EvidenceCard({ project }: { project: ExternalProject }) {
+function EvidenceCard({ project }: { project: DashboardProject }) {
   const isFechai = project.name === FECHAI;
   return (
     <article className="commandCard evidenceCard" id="evidence">
@@ -1009,7 +1137,7 @@ function EvidenceCard({ project }: { project: ExternalProject }) {
         <div><span>SHA observado</span><code>{project.observedSha}</code></div>
         <div><span>Verificação</span><strong>{project.verification}</strong></div>
         <div><span>Observado em</span><strong>{project.observedAt}</strong></div>
-        <div><span>Handoff</span><strong>{isFechai ? (workspaceDemo.fechaiProgram.specialistRouting.length ? workspaceDemo.fechaiProgram.specialistTransport : "Não definido · aguarda autorização/bootstrap") : "Não definido neste snapshot"}</strong></div>
+        <div><span>Handoff / read model</span><strong>{project.evidenceHandoff ?? "Não definido neste snapshot"}</strong></div>
       </div>
       {isFechai ? (
         <div className="evidenceBoundaryCompact">
@@ -1021,7 +1149,7 @@ function EvidenceCard({ project }: { project: ExternalProject }) {
   );
 }
 
-function GenericProjectStructure({ project }: { project: ExternalProject }) {
+function GenericProjectStructure({ project }: { project: DashboardProject }) {
   return (
     <article className="commandCard unavailableWbs" id="wbs">
       <div className="emptyStateIcon" aria-hidden="true">⌁</div>
@@ -1035,13 +1163,15 @@ function GenericProjectStructure({ project }: { project: ExternalProject }) {
   );
 }
 
-function ProjectDashboard({ project }: { project: ExternalProject }) {
+function ProjectDashboard({ project }: { project: DashboardProject }) {
   const isFechai = project.name === FECHAI;
+  const hasWbs = Boolean(project.wbs);
   return (
     <>
       <NextActionCard project={project} />
       {isFechai ? <IntegrityStrip /> : null}
-      {isFechai ? <WbsCommandCenter project={project} /> : <GenericProjectStructure project={project} />}
+      <ProjectObjectiveCard project={project} />
+      {hasWbs ? <WbsCommandCenter project={project} /> : <GenericProjectStructure project={project} />}
       <RisksCard project={project} />
       <EvidenceCard project={project} />
     </>
@@ -1050,8 +1180,8 @@ function ProjectDashboard({ project }: { project: ExternalProject }) {
 
 export function WorkspaceHome() {
   const initialProject =
-    workspaceDemo.externalProjects.find((project) => project.name === FECHAI) ??
-    workspaceDemo.externalProjects[0];
+    dashboardProjects.find((project) => project.name === FECHAI) ??
+    dashboardProjects[0];
 
   const [selectedProjectName, setSelectedProjectName] = useState(initialProject.name);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -1073,7 +1203,7 @@ export function WorkspaceHome() {
   }, []);
 
   const selectedProject =
-    workspaceDemo.externalProjects.find((project) => project.name === selectedProjectName) ??
+    dashboardProjects.find((project) => project.name === selectedProjectName) ??
     initialProject;
 
   return (
