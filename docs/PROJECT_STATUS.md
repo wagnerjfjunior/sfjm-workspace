@@ -4,10 +4,13 @@
 
 ```text
 Workspace role = DERIVED VISUALIZATION / CONTINUITY ONLY
-Workspace canonical main = 6a838a1ecdf1a21022f73e5382129f0a748db585
-refresh candidate = PR #36 / DRAFT / NOT YET CANONICAL
-candidate exact head = RESOLVE LIVE BEFORE REVIEW/MERGE
-exact-head audit custody = ANY HEAD CHANGE INVALIDATES PRIOR AUDIT
+Workspace canonical main = 0005f2c566ca5e2b3a11d7f7573574acb7079ba6
+PR #36 = MERGED / CLOSED
+PR #36 final audited head = 5e5f7c7cb00b71207a9b44d798c4d77eb2d43685
+PR #36 independent exact-head review = CLEAN / NO MAJOR ISSUES
+PR #36 merge commit = 0005f2c566ca5e2b3a11d7f7573574acb7079ba6
+PR #36 post-merge Vercel status = SUCCESS
+post-merge reconciliation = BOUNDED DOCUMENTATION ONLY / THIS BRANCH NOT YET CANONICAL
 
 FECH.AI canonical GitHub main observed live = b274adac84f2d4a27a7a5147c551dc23469a610c
 FECH.AI material decision merge anchor = dbc1e246b66d9726e7d3831085e62d27cab6908d
@@ -203,9 +206,12 @@ The receiving conversation must resolve FECH.AI live again before acting.
 ### Workspace delivery state
 
 ```text
-Workspace canonical main = 6a838a1ecdf1a21022f73e5382129f0a748db585
-PR #34 = MERGED / CLOSED
-PR #36 = DRAFT refresh candidate
+Workspace canonical main = 0005f2c566ca5e2b3a11d7f7573574acb7079ba6
+PR #34 = MERGED / CLOSED / historical predecessor
+PR #36 = MERGED / CLOSED
+PR #36 final audited head = 5e5f7c7cb00b71207a9b44d798c4d77eb2d43685
+PR #36 merge commit = 0005f2c566ca5e2b3a11d7f7573574acb7079ba6
+post-merge Vercel status = SUCCESS
 FECH.AI live source = b274adac84f2d4a27a7a5147c551dc23469a610c
 snapshot transport = MANUAL
 live synchronization = NO
@@ -241,9 +247,22 @@ STS-M3-04
 ```
 
 
-## SUPERSEDED EXACT-HEAD AUDIT CUSTODY
+## PR #36 FINAL EXACT-HEAD / MERGE CUSTODY
 
-The following evidence is historical custody only and must not be interpreted as validation of the current PR #36 head:
+```text
+final audited head = 5e5f7c7cb00b71207a9b44d798c4d77eb2d43685
+independent exact-head review = CLEAN / "Didn't find any major issues"
+exact-head Vercel validation before merge = SUCCESS
+Ready transition = AUTHORIZED / APPLIED
+merge = AUTHORIZED / EXECUTED
+merge commit = 0005f2c566ca5e2b3a11d7f7573574acb7079ba6
+post-merge Vercel validation = SUCCESS
+PR #36 = MERGED / CLOSED
+```
+
+This custody validates the bounded PR #36 Workspace change that is now canonical on `main`. It does not authorize FECH.AI execution, deployment mutation, Security Go, offensive testing or any future Workspace change.
+
+### Older superseded audit custody
 
 ```text
 prior audited head = 62bafb362d12d2173a10266ecc0bafacd2d0a607
@@ -252,7 +271,7 @@ prior branch Preview state = READY
 current exact-head deployment validation at refresh start = NOT_ASSERTED UNTIL RECHECKED
 ```
 
-Any new commit on PR #36 invalidates prior exact-head review custody and requires a fresh exact-head review/deployment check.
+This older custody is retained only for historical traceability.
 
 ---
 
