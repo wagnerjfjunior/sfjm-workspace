@@ -987,7 +987,7 @@ function WbsCommandCenter({ project }: { project: ExternalProject }) {
       </section>
 
       <div className="wbsFootnote">
-        Regra de visualização: o WBS mostra sempre as tarefas de primeiro nível do bloco. Filhos canônicos só aparecem por expansão manual da tarefa-mãe. O Workspace não cria tarefas. Horas marcadas “est.” são forecast derivado por complexidade (S=8h, M=16h, L=24h, XL=32h); ${wbs.historicalCriticalHours}h permanece a baseline histórica do FECH.AI. {activeMilestone ? `O bloco operacional atual continua sendo ${activeMilestone.id}.` : `Nenhum bloco tem execução ativa; ${displayMilestone.id} é apenas o próximo elegível.`}
+        Regra de visualização: o WBS mostra sempre as tarefas de primeiro nível do bloco. Filhos canônicos só aparecem por expansão manual da tarefa-mãe. O Workspace não cria tarefas. Horas marcadas “est.” são forecast derivado por complexidade (S=8h, M=16h, L=24h, XL=32h); {wbs.historicalCriticalHours}h permanece a baseline histórica do FECH.AI. {activeMilestone ? `O bloco operacional atual continua sendo ${activeMilestone.id}.` : `Nenhum bloco tem execução ativa; ${displayMilestone.id} é apenas o próximo elegível.`}
       </div>
     </article>
   );
