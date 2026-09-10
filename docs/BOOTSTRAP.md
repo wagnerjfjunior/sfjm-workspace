@@ -167,6 +167,36 @@ Without explicit applicable authorization, do not introduce or mutate:
 
 The Workspace may represent external project snapshots, but representation is not ownership or runtime authority.
 
+## 8.1 Project-owned read models / WBS consumption
+
+When an external project publishes a structured read model/WBS contract, the Workspace may consume it as a **manual derived snapshot** without transferring project authority.
+
+Canonical Workspace architecture:
+
+`docs/architecture/PROJECT_AGNOSTIC_WBS_READ_MODEL_V1.md`.
+
+Current implementation entrypoints:
+
+- `data/connected-projects.ts` — bounded snapshot/adaptation layer;
+- `components/ProjectAgnosticWorkspaceHome.tsx` — project-agnostic dashboard/WBS renderer.
+
+Rules:
+
+```text
+PROJECT CANONICAL MAIN = PROJECT TRUTH
+WORKSPACE SNAPSHOT = DERIVED READ-ONLY REPRESENTATION
+SES PROJECT ADAPTER != WORKSPACE DATA FEED
+```
+
+For a project with WBS/read-model support, render only project-published or explicitly Workspace-labeled values. Preserve recursive hierarchy, collapse descendants by default and never double-count parent/child hours.
+
+For a project without sufficient WBS evidence, show WBS/progress as unavailable rather than inferring it.
+
+Current MoreNumTegra consumer context:
+`docs/projects/morenumtegra/PROJECT_CONTEXT.md`.
+
+No automatic SHA-drift detection exists in v1. Consumers must resolve upstream live before a current claim or bounded refresh.
+
 ## 9. Continuity entrypoint
 
 For durable current-state continuity read:

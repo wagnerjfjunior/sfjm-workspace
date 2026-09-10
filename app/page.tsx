@@ -1,5 +1,5 @@
-import { WorkspaceHome } from "@/components/WorkspaceHome";
+import { ProjectAgnosticWorkspaceHome } from "@/components/ProjectAgnosticWorkspaceHome";
 
 export default function HomePage() {
-  return <WorkspaceHome />;
+  return <ProjectAgnosticWorkspaceHome />;
 }
