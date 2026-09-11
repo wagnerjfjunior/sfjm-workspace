@@ -1,5 +1,5 @@
-import { WorkspaceHome } from "@/components/WorkspaceHome";
+import { WorkspaceWithProjects } from "@/components/WorkspaceWithProjects";
 
 export default function HomePage() {
-  return <WorkspaceHome />;
+  return <WorkspaceWithProjects />;
 }
