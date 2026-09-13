@@ -34,7 +34,9 @@ NEXT_SAFE_ACTION = execution authority
 MoreNumTegra main = project truth
 ```
 
-At the 2026-09-12 reconciliation, live MoreNumTegra main is `70f2b77e93225b65a1972c12875c58bd7198be1d`. Its WBS/current-state files publish 1240h forecast, 352h accepted scope-equivalent, 888h remaining and 28.39%. Live main also contains PR #52 while lifecycle/read-model documents still expose the earlier MNT-M2-09 state; Workspace therefore renders the WBS but flags state inconsistency rather than inventing a newer accepted state.
+At the latest 2026-09-12 reconciliation, live MoreNumTegra main is `ba2a70c793e6879d28192fda4730f950ec6cc68d` after PR #53. Project-owned current-state/read-model documents now publish 1240h forecast, 376h accepted scope-equivalent, 864h remaining and 30.32% progress. `MNT-M2-09` is COMPLETE; `MNT-M2-10` is the next task and remains `PLANNED / EXECUTION_NOT_AUTHORIZED`.
+
+The earlier PR #52 lifecycle-document drift has therefore been reconciled by the source project and must no longer be represented as a current Workspace inconsistency.
 
 ## Preservation rule
 
