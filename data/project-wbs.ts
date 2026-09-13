@@ -16,19 +16,19 @@ export type ProjectWbsSnapshot = {
   milestones: WbsMilestone[];
 };
 
-const MORENUMTEGRA_MAIN = "70f2b77e93225b65a1972c12875c58bd7198be1d";
+const MORENUMTEGRA_MAIN = "ba2a70c793e6879d28192fda4730f950ec6cc68d";
 
 const morenumtegraWbs: ProjectWbsSnapshot = {
-  source: `MoreNumTegra main ${MORENUMTEGRA_MAIN} · docs/roadmap/MNT_RESF_SEARCH_TO_LEAD_WBS.md + docs/sfjm/PROGRAM_TASK_GRAPH.json + docs/sfjm/CURRENT_PROGRAM_STATE.json`,
-  basis: "Project-published MNT-RESF planning forecast. PROGRAM_TASK_GRAPH owns hierarchy/planning hours; CURRENT_PROGRAM_STATE owns lifecycle/progress; conflict is rendered fail-closed.",
+  source: `MoreNumTegra main ${MORENUMTEGRA_MAIN} · docs/roadmap/MNT_RESF_SEARCH_TO_LEAD_WBS.md + docs/sfjm/PROGRAM_TASK_GRAPH.json + docs/sfjm/CURRENT_PROGRAM_STATE.json + docs/NEXT_SAFE_ACTION.md`,
+  basis: "Project-published MNT-RESF planning forecast. PROGRAM_TASK_GRAPH owns hierarchy/planning hours; CURRENT_PROGRAM_STATE owns lifecycle/progress; NEXT_SAFE_ACTION owns execution authority.",
   estimationPolicy: "PROJECT_PUBLISHED_PLANNING_ESTIMATE · parent=sum(immediate children) · no parent/child double count · no Workspace-invented hours",
   totalCriticalHours: 1240,
-  forecastCompletedHours: 352,
-  forecastRemainingHours: 888,
-  forecastPercent: 28.39,
-  currentPackage: "MNT-M2 — ACTIVE · SOURCE STATE RECONCILIATION REQUIRED",
-  currentTask: "Published state overlay: MNT-M2-09 PARTIAL_IMPLEMENTED. Live main already contains PR #52; lifecycle/read-model documents still publish the earlier M2-09 gate, so the Workspace must not infer a newer accepted-hour state.",
-  note: "Commercial V1 remains operational. 28.39% is accepted scope-equivalent planning progress, not product readiness or actual timesheet. Live main advanced through PR #52 while CURRENT_PROGRAM_STATE / NEXT_SAFE_ACTION remain pre-PR52; current lifecycle is therefore flagged inconsistent until MoreNumTegra reconciles its canonical state documents.",
+  forecastCompletedHours: 376,
+  forecastRemainingHours: 864,
+  forecastPercent: 30.32,
+  currentPackage: "MNT-M2 — ACTIVE_WAITING_NEXT_TASK_AUTHORIZATION",
+  currentTask: "MNT-M2-10 — Execute end-to-end Measurement QA · PLANNED / EXECUTION_NOT_AUTHORIZED",
+  note: "Commercial V1 remains operational. 30.32% is accepted scope-equivalent planning progress, not product readiness or actual timesheet. MNT-M2-09 is accepted complete; MNT-M2-10 contributes 0 accepted hours until fully accepted and requires a separate Product Authority execution gate.",
   effortSemantics: "PLANNING_FORECAST_NOT_ACTUAL_TIMESHEET",
   milestones: [
     {
@@ -73,7 +73,7 @@ const morenumtegraWbs: ProjectWbsSnapshot = {
       label: "Measurement Foundation & Consent",
       hours: 144,
       state: "ACTIVE",
-      completedHours: 96,
+      completedHours: 120,
       effortSource: "CANONICAL",
       tasks: [
         { id: "MNT-M2-01", label: "Inventory tracking already present in live runtime", hours: 8, state: "COMPLETE" },
@@ -84,8 +84,8 @@ const morenumtegraWbs: ProjectWbsSnapshot = {
         { id: "MNT-M2-06", label: "Define ownership for Meta Pixel/Dataset", hours: 8, state: "COMPLETE" },
         { id: "MNT-M2-07", label: "Define consent model and LGPD gating", hours: 16, state: "COMPLETE" },
         { id: "MNT-M2-08", label: "Define denied/granted consent QA contract", hours: 16, state: "COMPLETE" },
-        { id: "MNT-M2-09", label: "Implement authorized tracking configuration", hours: 24, state: "PLANNED", note: "PARTIAL_IMPLEMENTED · LIVE_MAIN_HAS_PR52 · CANONICAL_LIFECYCLE_DOCS_NOT_RECONCILED" },
-        { id: "MNT-M2-10", label: "Execute end-to-end Measurement QA", hours: 24, state: "PLANNED" }
+        { id: "MNT-M2-09", label: "Implement authorized tracking configuration", hours: 24, state: "COMPLETE", note: "ACCEPTED_COMPLETE · runtime fix PR #52 · lifecycle/read-model reconciliation PR #53 · GTM v7 / GA4 generate_lead Key event evidence accepted" },
+        { id: "MNT-M2-10", label: "Execute end-to-end Measurement QA", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · EXECUTION_NOT_AUTHORIZED · NEXT_TASK" }
       ]
     },
     {
