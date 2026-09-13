@@ -16,5 +16,5 @@ if (project) {
   project.repository = "wagnerjfjunior/MoreNumTegra";
   project.observedSha = LIVE_MAIN;
   project.observedAt = "12 Sep 2026 · PR #53 merged · MNT-M2-09 canonical closure";
-  project.verification = "Live main resolved at ba2a70c793e6… · CURRENT_PROGRAM_STATE/NEXT_SAFE_ACTION reconciled · MNT-M2-09 COMPLETE · 376h accepted / 864h remaining / 30.32% · MNT-M2-10 next and not authorized";
+  project.verification = "Live main resolved at ba2a70c793e6… · CURRENT_PROGRAM_STATE / PROJECT_READ_MODEL / NEXT_SAFE_ACTION reconciled · MNT-M2-09 COMPLETE · 376h accepted / 864h remaining / 30.32% · MNT-M2-10 next and not authorized";
 }
