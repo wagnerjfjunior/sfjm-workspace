@@ -5,8 +5,8 @@ Observed live on 2026-09-12.
 ## Canonical project
 
 - repository: `wagnerjfjunior/MoreNumTegra`
-- live `main`: `70f2b77e93225b65a1972c12875c58bd7198be1d`
-- latest live merge observed: PR #52 (`align Form 46 submit signal`)
+- live `main`: `ba2a70c793e6879d28192fda4730f950ec6cc68d`
+- latest live merge observed: PR #53 (`close MNT-M2-09 documentation`)
 - Workspace authority: read-only derived representation
 
 ## WBS contract
@@ -33,7 +33,7 @@ Workspace = read-only consumer
 
 - MNT-M0: 160h / COMPLETE
 - MNT-M1: 96h / COMPLETE
-- MNT-M2: 144h / ACTIVE in the published lifecycle overlay
+- MNT-M2: 144h / ACTIVE_WAITING_NEXT_TASK_AUTHORIZATION
 - MNT-M3: 144h / PLANNED
 - MNT-M4: 208h / PLANNED
 - MNT-M5: 168h / PLANNED
@@ -41,26 +41,41 @@ Workspace = read-only consumer
 - MNT-M7: 192h / PLANNED
 - total forecast: 1240h
 
-The latest integrated WBS/current-state files still publish 352h accepted, 888h remaining and 28.39% accepted scope-equivalent progress.
+Current accepted planning state published by MoreNumTegra:
 
-## Current inconsistency boundary
+```text
+accepted scope-equivalent = 376h
+remaining forecast = 864h
+program progress = 30.32%
+MNT-M2 accepted = 120h / 144h
+```
 
-Live `main` advanced through PR #52 on 2026-09-12, while `CURRENT_PROGRAM_STATE.json`, `PROJECT_READ_MODEL.json`, `NEXT_SAFE_ACTION.md`, the human WBS lifecycle section and `handoffs/CURRENT.md` still contain the earlier MNT-M2-09 lifecycle/gate state.
+## Current lifecycle
 
-Therefore the Workspace consumer MUST:
+PR #53 reconciled the project lifecycle/read-model state after the accepted MNT-M2-09 runtime result.
 
-1. render the project-published WBS hierarchy and planning hours;
-2. preserve the last explicitly published 352h / 28.39% overlay rather than invent newer accepted hours;
-3. flag continuity as `STATE INCONSISTENT` until MoreNumTegra reconciles those canonical state documents against live main;
-4. not infer MNT-M2-09 completion, MNT-M2-10 completion or new execution authority from PR #52 commit text alone;
-5. mark the snapshot stale whenever the observed MoreNumTegra SHA drifts.
+Current state:
+
+```text
+MNT-M2-01..09 = COMPLETE
+MNT-M2-10 = PLANNED / EXECUTION_NOT_AUTHORIZED
+CURRENT_ACTIVE_PHASE = MNT-M2
+CURRENT_ACTIVE_TASK = NONE
+NEXT_TASK = MNT-M2-10
+```
+
+The unique next safe action is to obtain explicit Product Authority authorization before starting `MNT-M2-10 — Execute end-to-end Measurement QA`.
+
+MNT-M2-10 authorization, if granted later, is bounded to QA/evidence. It does not automatically authorize additional GTM/GA4/Meta/Ads/Green/DNS/Search Console/Vercel mutations.
 
 ## Workspace representation boundary
 
 This reconciliation changes only the Workspace consumer. It does not mutate MoreNumTegra, Green, GA4, GTM, Meta, Vercel production, DNS, Search Console, Ads or campaign spend.
 
-`LIVE IMPLEMENTATION CHANGE != CANONICAL PROGRAM LIFECYCLE RECONCILIATION`
+Consumers must resolve live MoreNumTegra `main` before refreshing state and mark this snapshot stale when the observed SHA differs from live `main`.
 
 `WORKSPACE REPRESENTATION != PROJECT AUTHORITY`
 
 `PROGRAM PROGRESS != PRODUCT READINESS`
+
+`MNT-M2-09 COMPLETE != MNT-M2-10 AUTHORIZED != MNT-M2-10 VALIDATED != MNT-M2 COMPLETE`
