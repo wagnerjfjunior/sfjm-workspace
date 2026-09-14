@@ -1,81 +1,76 @@
 # MoreNumTegra — SFJM Workspace consumer context
 
-Observed live on 2026-09-12.
+Observed live on 2026-09-14.
 
 ## Canonical project
 
 - repository: `wagnerjfjunior/MoreNumTegra`
-- live `main`: `ba2a70c793e6879d28192fda4730f950ec6cc68d`
-- latest live merge observed: PR #53 (`close MNT-M2-09 documentation`)
+- live `main`: `1626e808c03a4bf88bd11f31d1a9078b5b6c8dfe`
+- latest live merge observed: PR #76 (`canonicalize PR75 runtime parity closure`)
 - Workspace authority: read-only derived representation
 
-## WBS contract
+## WBS contract and precedence
 
-The project publishes a complete MNT-RESF WBS:
-
-- `docs/roadmap/MNT_RESF_SEARCH_TO_LEAD_WBS.md`
-- `docs/sfjm/PROGRAM_TASK_GRAPH.json`
-- `docs/sfjm/CURRENT_PROGRAM_STATE.json`
-- `docs/sfjm/PROJECT_READ_MODEL.json`
-- `docs/NEXT_SAFE_ACTION.md`
-
-Consumption precedence remains:
+The project publishes a full MNT-RESF structural WBS and separate current-state overlays. Current consumption precedence is:
 
 ```text
-PROGRAM_TASK_GRAPH = hierarchy + planning hours
-CURRENT_PROGRAM_STATE = lifecycle + accepted progress
+PROGRAM_TASK_GRAPH / human WBS = hierarchy + planning hours
+CURRENT_PROGRAM_STATE = current lifecycle + accepted progress
+PROJECT_READ_MODEL + handoffs/CURRENT = current read model / continuity
 NEXT_SAFE_ACTION = execution authority
 MoreNumTegra main = project truth
 Workspace = read-only consumer
 ```
 
-## Published program structure
+Older structural snapshots can retain stale lifecycle fields. Current-state overlays supersede those lifecycle fields; hierarchy/task identity/planning hours remain project-owned.
 
-- MNT-M0: 160h / COMPLETE
-- MNT-M1: 96h / COMPLETE
-- MNT-M2: 144h / ACTIVE_WAITING_NEXT_TASK_AUTHORIZATION
-- MNT-M3: 144h / PLANNED
-- MNT-M4: 208h / PLANNED
-- MNT-M5: 168h / PLANNED
-- MNT-M6: 128h / PLANNED
-- MNT-M7: 192h / PLANNED
-- total forecast: 1240h
+## Current program position
 
-Current accepted planning state published by MoreNumTegra:
+Canonical current state on `main`:
 
 ```text
-accepted scope-equivalent = 376h
-remaining forecast = 864h
-program progress = 30.32%
-MNT-M2 accepted = 120h / 144h
+MNT-M0 COMPLETE
+MNT-M1 COMPLETE
+MNT-M2 COMPLETE
+MNT-M3 COMPLETE / ACCEPTED
+MNT-M4 ACTIVE
+MNT-M4-01..04 COMPLETE / MERGED
+MNT-M4-05 IN_PROGRESS / AUTHORIZED — PR #69
 ```
 
-## Current lifecycle
-
-PR #53 reconciled the project lifecycle/read-model state after the accepted MNT-M2-09 runtime result.
-
-Current state:
+Program planning rollup:
 
 ```text
-MNT-M2-01..09 = COMPLETE
-MNT-M2-10 = PLANNED / EXECUTION_NOT_AUTHORIZED
-CURRENT_ACTIVE_PHASE = MNT-M2
-CURRENT_ACTIVE_TASK = NONE
-NEXT_TASK = MNT-M2-10
+forecast total = 1240h
+accepted scope-equivalent = 640h
+remaining forecast = 600h
+program progress = 51.61%
 ```
 
-The unique next safe action is to obtain explicit Product Authority authorization before starting `MNT-M2-10 — Execute end-to-end Measurement QA`.
+`MNT-M4-05` contributes no additional accepted hours while it remains in progress.
 
-MNT-M2-10 authorization, if granted later, is bounded to QA/evidence. It does not automatically authorize additional GTM/GA4/Meta/Ads/Green/DNS/Search Console/Vercel mutations.
+## Current next safe action
+
+The unique next safe action is to complete `MNT-M4-05 — Factual JSON-LD expansion` on PR #69, validate Preview/schema, consolidate the logic into the single Green JavaScript artifact at `src-greenn/moretegra.js`, and stop at `COMPLETE_CANDIDATE / PENDING_READY_MERGE` unless a separate lifecycle authorization is given.
+
+`MNT-M4-06` does not start automatically by sequence.
+
+Ready and merge of PR #69 remain separate gates.
+
+## Runtime parity side intervention
+
+PR #75 closed the Vercel `lp.moretegra.com.br` Form 46 + Measurement runtime-parity intervention. PR #76 canonicalized that closure. This work is outside the normal M4 sequence and does not change MNT-RESF accepted-hours accounting.
+
+The production Green site remains a separate authority boundary; runtime-parity closure does not authorize replacing the native Green Form 46 or broadening GTM/GA4/Meta/Ads/DNS/Search Console/FECH.AI scope.
 
 ## Workspace representation boundary
 
-This reconciliation changes only the Workspace consumer. It does not mutate MoreNumTegra, Green, GA4, GTM, Meta, Vercel production, DNS, Search Console, Ads or campaign spend.
+This Workspace PR changes only the derived consumer snapshot. It does not mutate MoreNumTegra, Green, GTM, GA4, Meta, Ads, DNS, Search Console or production infrastructure.
 
-Consumers must resolve live MoreNumTegra `main` before refreshing state and mark this snapshot stale when the observed SHA differs from live `main`.
+Consumers must resolve live MoreNumTegra `main` before current-state claims and mark the Workspace snapshot stale whenever its observed SHA differs from live `main`.
 
 `WORKSPACE REPRESENTATION != PROJECT AUTHORITY`
 
 `PROGRAM PROGRESS != PRODUCT READINESS`
 
-`MNT-M2-09 COMPLETE != MNT-M2-10 AUTHORIZED != MNT-M2-10 VALIDATED != MNT-M2 COMPLETE`
+`MNT-M4-05 AUTHORIZED/IN_PROGRESS != COMPLETE != READY != MERGED`
