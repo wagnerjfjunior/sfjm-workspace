@@ -16,19 +16,19 @@ export type ProjectWbsSnapshot = {
   milestones: WbsMilestone[];
 };
 
-const MORENUMTEGRA_MAIN = "ba2a70c793e6879d28192fda4730f950ec6cc68d";
+const MORENUMTEGRA_MAIN = "1626e808c03a4bf88bd11f31d1a9078b5b6c8dfe";
 
 const morenumtegraWbs: ProjectWbsSnapshot = {
-  source: `MoreNumTegra main ${MORENUMTEGRA_MAIN} · docs/roadmap/MNT_RESF_SEARCH_TO_LEAD_WBS.md + docs/sfjm/PROGRAM_TASK_GRAPH.json + docs/sfjm/CURRENT_PROGRAM_STATE.json + docs/NEXT_SAFE_ACTION.md`,
-  basis: "Project-published MNT-RESF planning forecast. PROGRAM_TASK_GRAPH owns hierarchy/planning hours; CURRENT_PROGRAM_STATE owns lifecycle/progress; NEXT_SAFE_ACTION owns execution authority.",
+  source: `MoreNumTegra main ${MORENUMTEGRA_MAIN} · docs/sfjm/CURRENT_PROGRAM_STATE.json + docs/sfjm/PROJECT_READ_MODEL.json + handoffs/CURRENT.md + docs/NEXT_SAFE_ACTION.md; PROGRAM_TASK_GRAPH/human WBS retained for hierarchy/planning hours only`,
+  basis: "Project-published MNT-RESF planning forecast. PROGRAM_TASK_GRAPH owns hierarchy/planning hours; CURRENT_PROGRAM_STATE + PROJECT_READ_MODEL + CURRENT handoff own current lifecycle/progress; NEXT_SAFE_ACTION owns execution authority. Current-state overlay supersedes stale lifecycle fields in older structural snapshots.",
   estimationPolicy: "PROJECT_PUBLISHED_PLANNING_ESTIMATE · parent=sum(immediate children) · no parent/child double count · no Workspace-invented hours",
   totalCriticalHours: 1240,
-  forecastCompletedHours: 376,
-  forecastRemainingHours: 864,
-  forecastPercent: 30.32,
-  currentPackage: "MNT-M2 — ACTIVE_WAITING_NEXT_TASK_AUTHORIZATION",
-  currentTask: "MNT-M2-10 — Execute end-to-end Measurement QA · PLANNED / EXECUTION_NOT_AUTHORIZED",
-  note: "Commercial V1 remains operational. 30.32% is accepted scope-equivalent planning progress, not product readiness or actual timesheet. MNT-M2-09 is accepted complete; MNT-M2-10 contributes 0 accepted hours until fully accepted and requires a separate Product Authority execution gate.",
+  forecastCompletedHours: 640,
+  forecastRemainingHours: 600,
+  forecastPercent: 51.61,
+  currentPackage: "MNT-M4 — ACTIVE · MNT-M4-05 IN_PROGRESS / AUTHORIZED",
+  currentTask: "MNT-M4-05 — Factual JSON-LD expansion · PR #69 · IN_PROGRESS / AUTHORIZED",
+  note: "Commercial V1 remains operational. 51.61% is accepted scope-equivalent planning progress, not product readiness or actual timesheet. M0-M3 are complete/accepted; M4-01..04 are complete/merged; M4-05 is authorized and in progress but contributes 0 additional accepted hours until accepted complete. M4-06 does not start by sequence.",
   effortSemantics: "PLANNING_FORECAST_NOT_ACTUAL_TIMESHEET",
   milestones: [
     {
@@ -72,8 +72,8 @@ const morenumtegraWbs: ProjectWbsSnapshot = {
       id: "MNT-M2",
       label: "Measurement Foundation & Consent",
       hours: 144,
-      state: "ACTIVE",
-      completedHours: 120,
+      state: "COMPLETE",
+      completedHours: 144,
       effortSource: "CANONICAL",
       tasks: [
         { id: "MNT-M2-01", label: "Inventory tracking already present in live runtime", hours: 8, state: "COMPLETE" },
@@ -84,41 +84,41 @@ const morenumtegraWbs: ProjectWbsSnapshot = {
         { id: "MNT-M2-06", label: "Define ownership for Meta Pixel/Dataset", hours: 8, state: "COMPLETE" },
         { id: "MNT-M2-07", label: "Define consent model and LGPD gating", hours: 16, state: "COMPLETE" },
         { id: "MNT-M2-08", label: "Define denied/granted consent QA contract", hours: 16, state: "COMPLETE" },
-        { id: "MNT-M2-09", label: "Implement authorized tracking configuration", hours: 24, state: "COMPLETE", note: "ACCEPTED_COMPLETE · runtime fix PR #52 · lifecycle/read-model reconciliation PR #53 · GTM v7 / GA4 generate_lead Key event evidence accepted" },
-        { id: "MNT-M2-10", label: "Execute end-to-end Measurement QA", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED · EXECUTION_NOT_AUTHORIZED · NEXT_TASK" }
+        { id: "MNT-M2-09", label: "Implement authorized tracking configuration", hours: 24, state: "COMPLETE" },
+        { id: "MNT-M2-10", label: "Execute end-to-end Measurement QA", hours: 24, state: "COMPLETE" }
       ]
     },
     {
       id: "MNT-M3",
       label: "Intelligence, Product Truth & Search Contract",
       hours: 144,
-      state: "PLANNED",
-      completedHours: 0,
+      state: "COMPLETE",
+      completedHours: 144,
       effortSource: "CANONICAL",
       tasks: [
-        { id: "MNT-M3-01", label: "Market and Search demand research", hours: 24, state: "PLANNED" },
-        { id: "MNT-M3-02", label: "Extract and classify Search Console queries", hours: 16, state: "PLANNED" },
-        { id: "MNT-M3-03", label: "SERP, competitor and search-intent analysis", hours: 16, state: "PLANNED" },
-        { id: "MNT-M3-04", label: "Governed Product Fact & Claim Registry", hours: 24, state: "PLANNED" },
-        { id: "MNT-M3-05", label: "Search Intent / Query Ownership Contract", hours: 24, state: "PLANNED" },
-        { id: "MNT-M3-06", label: "Query-family to page-owner map", hours: 24, state: "PLANNED" },
-        { id: "MNT-M3-07", label: "KPI baseline and success criteria", hours: 16, state: "PLANNED" }
+        { id: "MNT-M3-01", label: "Market and Search demand research", hours: 24, state: "COMPLETE" },
+        { id: "MNT-M3-02", label: "Extract and classify Search Console queries", hours: 16, state: "COMPLETE" },
+        { id: "MNT-M3-03", label: "SERP, competitor and search-intent analysis", hours: 16, state: "COMPLETE" },
+        { id: "MNT-M3-04", label: "Governed Product Fact & Claim Registry", hours: 24, state: "COMPLETE" },
+        { id: "MNT-M3-05", label: "Search Intent / Query Ownership Contract", hours: 24, state: "COMPLETE" },
+        { id: "MNT-M3-06", label: "Query-family to page-owner map", hours: 24, state: "COMPLETE" },
+        { id: "MNT-M3-07", label: "KPI baseline and success criteria", hours: 16, state: "COMPLETE" }
       ]
     },
     {
       id: "MNT-M4",
       label: "IA, Content, Schema, GEO/AEO & Linking",
       hours: 208,
-      state: "PLANNED",
-      completedHours: 0,
+      state: "ACTIVE",
+      completedHours: 96,
       effortSource: "CANONICAL",
       tasks: [
-        { id: "MNT-M4-01", label: "Information Architecture", hours: 24, state: "PLANNED" },
-        { id: "MNT-M4-02", label: "Page contracts and page types", hours: 24, state: "PLANNED" },
-        { id: "MNT-M4-03", label: "Decision-useful content architecture", hours: 24, state: "PLANNED" },
-        { id: "MNT-M4-04", label: "Entity graph and schema contract", hours: 24, state: "PLANNED" },
-        { id: "MNT-M4-05", label: "Factual JSON-LD expansion", hours: 16, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED" },
-        { id: "MNT-M4-06", label: "GEO/AEO / answerability / AI discoverability readiness", hours: 24, state: "PLANNED" },
+        { id: "MNT-M4-01", label: "Information Architecture", hours: 24, state: "COMPLETE" },
+        { id: "MNT-M4-02", label: "Page contracts and page types", hours: 24, state: "COMPLETE" },
+        { id: "MNT-M4-03", label: "Decision-useful content architecture", hours: 24, state: "COMPLETE" },
+        { id: "MNT-M4-04", label: "Entity graph and schema contract", hours: 24, state: "COMPLETE" },
+        { id: "MNT-M4-05", label: "Factual JSON-LD expansion", hours: 16, state: "ACTIVE", note: "IN_PROGRESS / AUTHORIZED · PR #69 · complete candidate, validate Preview/schema and consolidate in src-greenn/moretegra.js; Ready/merge separate" },
+        { id: "MNT-M4-06", label: "GEO/AEO / answerability / AI discoverability readiness", hours: 24, state: "PLANNED", note: "DO_NOT_START_BY_SEQUENCE" },
         { id: "MNT-M4-07", label: "Semantic internal-linking contract", hours: 16, state: "PLANNED" },
         { id: "MNT-M4-08", label: "Implement prioritized content/architecture", hours: 32, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED" },
         { id: "MNT-M4-09", label: "Resolve technical SEO residuals: sitemap/www/canonical where capability permits", hours: 24, state: "PLANNED", note: "PLANNED_NOT_AUTHORIZED" }
