@@ -1,112 +1,76 @@
-# MoreNumTegra — External Project Context
+# MoreNumTegra — SFJM Workspace consumer context
 
-## Record status
+Observed live on 2026-09-14.
 
-`DOCUMENTATION_ONLY / MANUAL_SNAPSHOT / NO_AUTOMATIC_SYNC`
+## Canonical project
 
-Observed on: 2026-08-28
+- repository: `wagnerjfjunior/MoreNumTegra`
+- live `main`: `1626e808c03a4bf88bd11f31d1a9078b5b6c8dfe`
+- latest live merge observed: PR #76 (`canonicalize PR75 runtime parity closure`)
+- Workspace authority: read-only derived representation
 
-## Project identity
+## WBS contract and precedence
 
-- Project: MoreNumTegra
-- Canonical repository: `wagnerjfjunior/MoreNumTegra`
-- Canonical branch: `main`
-- Live `main` observed for this snapshot: `3eca0d4fc212ef5bb499c92534dedd5ac86094e6`
-- Production commercial URL observed: `https://moretegra.com.br`
-- Public homologation URL: `https://morenumtegra.vercel.app/`
-- Workspace repository: `wagnerjfjunior/sfjm-workspace`
+The project publishes a full MNT-RESF structural WBS and separate current-state overlays. Current consumption precedence is:
 
-The MoreNumTegra repository remains the only canonical source for product truth, lifecycle, implementation, Green/Vercel state, commercial data, authorization and next-safe-action state. This Workspace record is a bounded external-project snapshot and must not override MoreNumTegra versioned evidence.
+```text
+PROGRAM_TASK_GRAPH / human WBS = hierarchy + planning hours
+CURRENT_PROGRAM_STATE = current lifecycle + accepted progress
+PROJECT_READ_MODEL + handoffs/CURRENT = current read model / continuity
+NEXT_SAFE_ACTION = execution authority
+MoreNumTegra main = project truth
+Workspace = read-only consumer
+```
 
-## Current bounded state observed
+Older structural snapshots can retain stale lifecycle fields. Current-state overlays supersede those lifecycle fields; hierarchy/task identity/planning hours remain project-owned.
 
-The MoreNumTegra project documentation records the V1 Green commercial production as functionally homologated.
+## Current program position
 
-Observed state includes:
+Canonical current state on `main`:
 
-- Green Sales as commercial V1 production;
-- `moretegra.com.br` operational over HTTPS;
-- HTTP -> HTTPS redirect on the root domain;
-- favicon active;
-- 21-project catalogue;
-- filters validated on desktop/mobile;
-- search by name/neighborhood validated on mobile;
-- ELO and ODE promotional states validated in production;
-- WhatsApp CTA validated;
-- Green native Form 46 submit and lead persistence validated;
-- floating CTAs corrected through project PR #27 and observed across Form 46, HTML 02 and footer;
-- canonical future flow preserved as GitHub -> Vercel -> Green.
+```text
+MNT-M0 COMPLETE
+MNT-M1 COMPLETE
+MNT-M2 COMPLETE
+MNT-M3 COMPLETE / ACCEPTED
+MNT-M4 ACTIVE
+MNT-M4-01..04 COMPLETE / MERGED
+MNT-M4-05 IN_PROGRESS / AUTHORIZED — PR #69
+```
 
-The functional release reference recorded by MoreNumTegra is:
+Program planning rollup:
 
-`2d1f9d656761433102f95e4c80bfdebf47f3607e`
+```text
+forecast total = 1240h
+accepted scope-equivalent = 640h
+remaining forecast = 600h
+program progress = 51.61%
+```
 
-The later canonical `main` snapshot observed for this Workspace record is:
+`MNT-M4-05` contributes no additional accepted hours while it remains in progress.
 
-`3eca0d4fc212ef5bb499c92534dedd5ac86094e6`
+## Current next safe action
 
-That later SHA contains the project-state documentation closure and does not replace the functional release reference.
+The unique next safe action is to complete `MNT-M4-05 — Factual JSON-LD expansion` on PR #69, validate Preview/schema, consolidate the logic into the single Green JavaScript artifact at `src-greenn/moretegra.js`, and stop at `COMPLETE_CANDIDATE / PENDING_READY_MERGE` unless a separate lifecycle authorization is given.
 
-## Non-blocking operational pending item
+`MNT-M4-06` does not start automatically by sequence.
 
-At the observation time:
+Ready and merge of PR #69 remain separate gates.
 
-- `www.moretegra.com.br` CNAME was configured in Green Sales;
-- certificate validation for the `www` hostname remained pending;
-- the root domain `moretegra.com.br` was already operational and this `www` item was recorded as non-blocking.
+## Runtime parity side intervention
+
+PR #75 closed the Vercel `lp.moretegra.com.br` Form 46 + Measurement runtime-parity intervention. PR #76 canonicalized that closure. This work is outside the normal M4 sequence and does not change MNT-RESF accepted-hours accounting.
+
+The production Green site remains a separate authority boundary; runtime-parity closure does not authorize replacing the native Green Form 46 or broadening GTM/GA4/Meta/Ads/DNS/Search Console/FECH.AI scope.
 
 ## Workspace representation boundary
 
-SFJM Workspace may represent MoreNumTegra as an external project context using manually refreshed evidence.
+This Workspace PR changes only the derived consumer snapshot. It does not mutate MoreNumTegra, Green, GTM, GA4, Meta, Ads, DNS, Search Console or production infrastructure.
 
-This record implements no automatic behavior. It does not authorize or implement:
+Consumers must resolve live MoreNumTegra `main` before current-state claims and mark the Workspace snapshot stale whenever its observed SHA differs from live `main`.
 
-- GitHub ingestion or continuous synchronization;
-- Vercel or Green API synchronization;
-- automatic production monitoring;
-- write-back to MoreNumTegra;
-- DNS changes;
-- Green Sales publication;
-- analytics/pixels/tags;
-- Search/SEO/SEM mutation;
-- commercial-data mutation;
-- backend, database or CMS integration.
+`WORKSPACE REPRESENTATION != PROJECT AUTHORITY`
 
-Any Workspace interface derived from this record must label the data as manual/demonstrative and display repository, observed SHA and observation date.
+`PROGRAM PROGRESS != PRODUCT READINESS`
 
-## Canonical sources to consult
-
-Resolve MoreNumTegra live and read at minimum:
-
-- `bootstrap/BOOTSTRAP_CANONICO.md`;
-- `handoffs/CURRENT.md`;
-- `docs/PROJECT_STATUS.md`;
-- `docs/NEXT_SAFE_ACTION.md`;
-- `docs/BLOCKED_ACTIONS.md`;
-- applicable baselines/ADR.
-
-For specialist routing, resolve the SES Project Adapter separately; the Workspace does not replace SES registration or adoption rules.
-
-## Current next safe action observed
-
-The project next-safe-action record currently places MoreNumTegra in Green V1 operational maintenance.
-
-The immediate bounded action is:
-
-1. keep Green production stable;
-2. when Green finishes the `www` certificate, validate `https://www.moretegra.com.br`;
-3. route every future material change through GitHub branch/PR -> Vercel Preview -> merge main -> Vercel Production -> Green Sales -> production smoke.
-
-## Refresh rule
-
-This snapshot becomes stale when any of the following changes:
-
-- MoreNumTegra `main` tip;
-- project continuity or next-safe-action state;
-- Green/Vercel production state;
-- domain/certificate state;
-- catalogue/commercial facts materially relevant to the displayed state;
-- authorization boundaries;
-- Workspace representation contract.
-
-A stale snapshot must be refreshed from MoreNumTegra live before supporting a current conclusion.
+`MNT-M4-05 AUTHORIZED/IN_PROGRESS != COMPLETE != READY != MERGED`

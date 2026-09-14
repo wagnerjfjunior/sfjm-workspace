@@ -2,6 +2,7 @@
 
 import "@/data/jordanacyrela-project";
 import "@/data/jordanacyrela-p0-state";
+import "@/data/morenumtegra-project";
 import { WorkspaceHome } from "@/components/WorkspaceHome";
 
 export function WorkspaceWithProjects() {
